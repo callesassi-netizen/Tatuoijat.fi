@@ -8,6 +8,10 @@ import ArtistCard from '../ArtistCard.astro';
 import { styleImages } from '../../lib/styleImages';
 import heroTatuoija from '../../assets/bilder/hero-tatuoija.png';
 import tatuoijaMuotokuva from '../../assets/bilder/tatuoija-muotokuva.png';
+import tatuoijaStudiossa from '../../assets/bilder/tatuoija-studiossa.png';
+import japanilainenHiha from '../../assets/bilder/japanilainen-hiha.png';
+import flashTraditional from '../../assets/bilder/flash-traditional.png';
+import enkeliRealismi from '../../assets/bilder/enkeli-realismi.png';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
@@ -66,33 +70,33 @@ const ink = (angle: number, from: string, to: string, mid?: string) =>
     ? `linear-gradient(${angle}deg, ${from} 0%, ${mid} 55%, ${to} 100%)`
     : `linear-gradient(${angle}deg, ${from} 0%, ${to} 100%)`;
 
-// Masonry-collage: mix av egna miljöfoton (Bildpolicy §4) och
-// bläck-gradientplattor. { height } + antingen { image } eller { gradient }.
+// Masonry-collage av egna miljöfoton (Bildpolicy §4).
+// { height } + antingen { image } eller { gradient } (fallback).
 type Tile = { height: number; image?: ImageMetadata; gradient?: string };
 const collageMobile: Tile[][] = [
   [
     { height: 150, image: heroTatuoija },
-    { height: 104, gradient: ink(205, '#232029', '#33262a') },
-    { height: 88, gradient: ink(150, '#17171c', '#2b2229') },
+    { height: 104, image: flashTraditional },
+    { height: 88, image: enkeliRealismi },
   ],
   [
-    { height: 96, gradient: ink(195, '#211f2b', '#35282b') },
+    { height: 96, image: japanilainenHiha },
     { height: 158, image: tatuoijaMuotokuva },
-    { height: 88, gradient: ink(215, '#241f26', '#3d2f34') },
+    { height: 88, image: tatuoijaStudiossa },
   ],
 ];
 const collageDesktop: Tile[][] = [
   [
-    { height: 150, gradient: ink(160, '#1c1c22', '#33262a') },
+    { height: 150, image: japanilainenHiha },
     { height: 196, image: heroTatuoija },
   ],
   [
-    { height: 110, gradient: ink(200, '#232029', '#3d2f34') },
+    { height: 110, image: enkeliRealismi },
     { height: 240, image: tatuoijaMuotokuva },
   ],
   [
-    { height: 170, gradient: ink(190, '#211f2b', '#43302f') },
-    { height: 210, gradient: ink(215, '#241f26', '#35282b') },
+    { height: 170, image: tatuoijaStudiossa },
+    { height: 210, image: flashTraditional },
   ],
 ];
 
