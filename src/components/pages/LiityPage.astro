@@ -1,0 +1,453 @@
+---
+/**
+ * Liity mukaan / För studios (wireframe 3b mobil / 3f desktop):
+ * B2B-säljsida — prisjämförelse (Ilmainen vs Premium), FAQ, formulär.
+ * Formuläret är byggt för Netlify Forms (deploy: GitHub → Netlify).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import { getCitiesSorted, cityDisplayName } from '../../lib/content';
+import { breadcrumbLd } from '../../lib/schema';
+import { liity } from '../../data/liity';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+const c = liity[locale];
+const cities = await getCitiesSorted();
+
+const path = '/liity/';
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: c.h1, url: new URL(p(path), site).href },
+]);
+---
+
+<BaseLayout
+  title={c.metaTitle}
+  description={c.metaDescription}
+  locale={locale}
+  path={path}
+  hasAlternate
+>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
+
+  <section class="liity-hero">
+    <div class="container liity-hero-inner">
+      <p class="eyebrow">{c.eyebrow}</p>
+      <h1 class="liity-title">{c.h1}</h1>
+      <p class="liity-intro">{c.intro}</p>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <!-- Prisjämförelse -->
+      <div class="plans">
+        <div class="plan plan--free">
+          <h2 class="plan-name">{c.plans.free.name}</h2>
+          <p class="plan-price">
+            <span class="plan-amount">{c.plans.free.price}</span>
+            <span class="plan-period">{c.plans.free.period}</span>
+          </p>
+          <ul class="plan-features">
+            {
+              c.plans.free.features.map((feature) => (
+                <li>
+                  <span class="check" aria-hidden="true">✓</span>
+                  {feature}
+                </li>
+              ))
+            }
+          </ul>
+          <a class="btn-outline plan-cta" href="#ilmoittaudu">{c.plans.free.cta}</a>
+        </div>
+
+        <div class="plan plan--premium">
+          <p class="plan-badge"><span class="badge-featured">★ {t('card.featured')}</span></p>
+          <h2 class="plan-name">{c.plans.premium.name}</h2>
+          <p class="plan-price">
+            <span class="plan-amount">{c.plans.premium.price}</span>
+            <span class="plan-period">{c.plans.premium.period}</span>
+          </p>
+          <ul class="plan-features">
+            {
+              c.plans.premium.features.map((feature) => (
+                <li>
+                  <span class="check check--gold" aria-hidden="true">✓</span>
+                  {feature}
+                </li>
+              ))
+            }
+          </ul>
+          <a class="btn-cta plan-cta" href="#ilmoittaudu">{c.plans.premium.cta}</a>
+        </div>
+      </div>
+
+      <!-- FAQ + formulär (desktop sida vid sida) -->
+      <div class="bottom">
+        <section class="faq-col" aria-labelledby="liity-faq-title">
+          <h2 class="col-title" id="liity-faq-title">{c.faqTitle}</h2>
+          <div class="faq-list">
+            {
+              c.faq.map((item) => (
+                <details class="faq-item">
+                  <summary>
+                    <span class="faq-q">{item.q}</span>
+                    <span class="faq-icon" aria-hidden="true">+</span>
+                  </summary>
+                  <p class="faq-a">{item.a}</p>
+                </details>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="form-col" aria-labelledby="liity-form-title" id="ilmoittaudu">
+          <h2 class="col-title" id="liity-form-title">{c.formTitle}</h2>
+          <form
+            class="signup"
+            name="liity"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action={p('/liity/')}
+          >
+            <input type="hidden" name="form-name" value="liity" />
+            <p class="hp" aria-hidden="true">
+              <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+            </p>
+            <div class="form-field">
+              <label for="liity-name">{c.form.name}</label>
+              <input id="liity-name" name="nimi" type="text" required autocomplete="organization" />
+            </div>
+            <div class="form-field">
+              <label for="liity-city">{c.form.city}</label>
+              <div class="select-wrap">
+                <select id="liity-city" name="kaupunki" required>
+                  <option value="" disabled selected>{c.form.cityPlaceholder}</option>
+                  {
+                    cities.map((city) => (
+                      <option value={city.id}>{cityDisplayName(city, locale)}</option>
+                    ))
+                  }
+                </select>
+                <span class="caret" aria-hidden="true">▾</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="liity-email">{c.form.email}</label>
+              <input id="liity-email" name="sahkoposti" type="email" required autocomplete="email" />
+            </div>
+            <div class="form-field">
+              <label for="liity-ig">
+                {c.form.instagram} <span class="optional">{c.form.instagramOptional}</span>
+              </label>
+              <input id="liity-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
+            </div>
+            <button class="btn-cta" type="submit">{c.form.submit}</button>
+            <p class="form-note">{c.form.note}</p>
+          </form>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .liity-hero {
+    position: relative;
+    z-index: 0;
+    background:
+      radial-gradient(110% 100% at 80% 0%, rgba(77, 50, 48, 0.2) 0%, rgba(16, 16, 20, 0) 55%),
+      var(--ink);
+  }
+  .liity-hero-inner {
+    padding: 28px var(--page-pad) 56px;
+  }
+  .liity-title {
+    font-size: 42px;
+    line-height: 1.02;
+    color: var(--text-light);
+  }
+  .liity-intro {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 420px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 30px var(--page-pad) 48px;
+  }
+
+  /* Prisjämförelse */
+  .plans {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 940px;
+    margin-inline: auto;
+  }
+  .plan {
+    border-radius: var(--r-card-lg);
+    padding: 22px;
+  }
+  .plan--free {
+    background: var(--surface);
+    border: var(--card-border);
+  }
+  .plan--premium {
+    background: var(--ink);
+    color: var(--text-light);
+  }
+  .plan-badge {
+    margin: 0 0 12px;
+  }
+  .plan-name {
+    font-size: 22px;
+    color: inherit;
+  }
+  .plan-price {
+    margin: 8px 0 16px;
+  }
+  .plan-amount {
+    font-family: var(--font-display);
+    font-size: 30px;
+    color: inherit;
+  }
+  .plan-period {
+    font-size: 13px;
+    color: var(--meta);
+    margin-left: 4px;
+  }
+  .plan-features {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .plan-features li {
+    display: flex;
+    gap: 9px;
+    align-items: baseline;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .plan--premium .plan-features li {
+    color: var(--text-light);
+  }
+  .check {
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .check--gold {
+    color: var(--gold);
+  }
+  .plan-cta {
+    width: 100%;
+  }
+  .plan--premium :global(.btn-outline) {
+    color: var(--text-light);
+    border-color: rgba(237, 234, 226, 0.35);
+  }
+
+  /* FAQ + formulär */
+  .bottom {
+    margin-top: 44px;
+  }
+  .col-title {
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 0 16px;
+  }
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 0;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .faq-icon {
+    font-size: 18px;
+    color: var(--meta);
+    transition: transform var(--t-fast) ease-out;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    padding: 0 0 16px;
+  }
+
+  .form-col {
+    margin-top: 40px;
+  }
+  .signup {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    margin: 0;
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-field label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .optional {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .form-field input,
+  .form-field select {
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--text);
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 11px 14px;
+    width: 100%;
+  }
+  .form-field input:focus-visible,
+  .form-field select:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 1px;
+  }
+  .select-wrap {
+    position: relative;
+  }
+  .select-wrap select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .caret {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--meta);
+    font-size: 12px;
+    pointer-events: none;
+  }
+  .form-note {
+    font-size: 11.5px;
+    color: var(--meta);
+    text-align: center;
+    margin: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .liity-hero-inner {
+      padding: 44px var(--page-pad) 76px;
+    }
+    .liity-title {
+      font-size: 72px;
+    }
+    .liity-intro {
+      font-size: 16px;
+      max-width: 520px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .sheet-inner {
+      padding: 48px var(--page-pad) 72px;
+    }
+    .plans {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .plan {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+    }
+    .plan-features {
+      flex: 1;
+    }
+    .plan-name {
+      font-size: 25px;
+    }
+    .plan-amount {
+      font-size: 38px;
+    }
+    .bottom {
+      margin-top: 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      max-width: 1100px;
+      margin-inline: auto;
+      align-items: start;
+    }
+    .form-col {
+      margin-top: 0;
+    }
+    .col-title {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    .signup {
+      padding: 24px;
+    }
+  }
+</style>
