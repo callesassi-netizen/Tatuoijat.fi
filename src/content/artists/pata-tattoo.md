@@ -1,6 +1,6 @@
 ---
 name: "Pata tattoo"
-place: "Nivala"
+city: nivala
 styles: []
 premium: false
 address: "Kalliontie 27, Nivala"

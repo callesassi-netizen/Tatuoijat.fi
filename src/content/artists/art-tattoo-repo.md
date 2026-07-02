@@ -1,6 +1,6 @@
 ---
 name: "Art&Tattoo Repo"
-place: "Joensuu"
+city: joensuu
 styles: []
 premium: false
 address: "Koulukatu 34, Joensuu"

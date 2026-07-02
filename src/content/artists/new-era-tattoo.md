@@ -1,6 +1,6 @@
 ---
 name: "New era tattoo"
-place: "Mikkeli"
+city: mikkeli
 styles: []
 premium: false
 address: "Maaherrankatu 26, 50100 Mikkeli"

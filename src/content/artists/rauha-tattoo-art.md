@@ -1,6 +1,6 @@
 ---
 name: "Rauha Tattoo & Art"
-place: "Pyhäjoki"
+city: pyhajoki
 styles: []
 premium: false
 address: "Vanhatie 48, Pyhäjoki"

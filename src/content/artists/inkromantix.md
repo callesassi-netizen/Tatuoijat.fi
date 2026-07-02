@@ -1,6 +1,6 @@
 ---
 name: "Inkromantix"
-place: "Espoo"
+city: espoo
 styles: []
 premium: false
 address: "Kontiontie 3, Espoo"

@@ -1,6 +1,6 @@
 ---
 name: "Rosaleima"
-place: "Pori"
+city: pori
 styles: []
 premium: false
 address: "Pohjoispuisto 2"

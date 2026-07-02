@@ -1,6 +1,6 @@
 ---
 name: "Vieskan Muste"
-place: "Ylivieska"
+city: ylivieska
 styles: []
 premium: false
 address: "Juurikoskenkatu 8 lh. 2, Ylivieska"

@@ -1,6 +1,6 @@
 ---
 name: "Korpi Tattoo"
-place: "Pudasjärvi"
+city: pudasjarvi
 styles: []
 premium: false
 address: "Materonniementie 35 93390 Puhoskylä"

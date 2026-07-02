@@ -1,6 +1,6 @@
 ---
 name: "Kouvola Contemporary Tattoo & Collective"
-place: "Kouvola"
+city: kouvola
 styles: []
 premium: false
 address: "Hallituskatu 8, Kouvola"

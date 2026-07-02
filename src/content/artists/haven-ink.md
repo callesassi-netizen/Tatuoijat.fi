@@ -1,6 +1,6 @@
 ---
 name: "Haven Ink"
-place: "Mikkeli"
+city: mikkeli
 styles: []
 premium: false
 address: "Porrassalmenkatu 6, Mikkeli"

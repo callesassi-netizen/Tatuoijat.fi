@@ -1,6 +1,6 @@
 ---
 name: "TC-ink"
-place: "Vantaa"
+city: vantaa
 styles: []
 premium: false
 address: "Männistönpolku 1, Vantaa"

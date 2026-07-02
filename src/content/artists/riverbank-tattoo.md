@@ -1,6 +1,6 @@
 ---
 name: "Riverbank Tattoo"
-place: "Rauma"
+city: rauma
 styles: []
 premium: false
 address: "Urheilukatu 2, Rauma"

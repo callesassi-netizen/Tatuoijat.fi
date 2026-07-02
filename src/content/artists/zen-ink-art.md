@@ -1,6 +1,6 @@
 ---
 name: "Zen Ink & Art"
-place: "Seinäjoki"
+city: seinajoki
 styles: []
 premium: false
 address: "Seuralantie 11, 60220 Seinäjoki"

@@ -1,6 +1,6 @@
 ---
 name: "Kaurisaho Tattoo"
-place: "Joensuu"
+city: joensuu
 styles: []
 premium: false
 address: "Vanha Valtatie 20, Joensuu"

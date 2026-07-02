@@ -1,6 +1,6 @@
 ---
 name: "Original Sinner's Unicorn Factory"
-place: "Varkaus"
+city: varkaus
 styles: []
 premium: false
 address: "Ahlströminkatu 21, Varkaus"

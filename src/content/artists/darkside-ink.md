@@ -1,6 +1,6 @@
 ---
 name: "Darkside Ink"
-place: "Seinäjoki"
+city: seinajoki
 styles: []
 premium: false
 address: "Teollisuustie 14 Seinäjoki"

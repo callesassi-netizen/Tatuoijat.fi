@@ -1,6 +1,6 @@
 ---
 name: "Lindarte Tattoo"
-place: "Vaasa"
+city: vaasa
 styles: []
 premium: false
 address: "Kirkkopuistikko 18, 65100 vaasa"

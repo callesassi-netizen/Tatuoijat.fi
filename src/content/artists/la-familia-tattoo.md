@@ -1,6 +1,6 @@
 ---
 name: "La Familia Tattoo"
-place: "Joensuu"
+city: joensuu
 styles: []
 premium: false
 website: "https://lafamiliatattoo.fi/"

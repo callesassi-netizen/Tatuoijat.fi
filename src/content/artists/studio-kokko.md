@@ -1,6 +1,6 @@
 ---
 name: "Studio Kokko"
-place: "Kokkola"
+city: kokkola
 styles: []
 premium: false
 address: "Tehtaankatu 18"

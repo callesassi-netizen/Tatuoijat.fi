@@ -1,6 +1,6 @@
 ---
 name: "Studio Walhalla"
-place: "Seinäjoki"
+city: seinajoki
 styles: []
 premium: false
 address: "Kapernauminkatu 19, 60100 Seinäjoki"

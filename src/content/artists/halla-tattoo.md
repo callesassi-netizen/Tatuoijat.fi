@@ -1,6 +1,6 @@
 ---
 name: "Halla Tattoo"
-place: "Rovaniemi"
+city: rovaniemi
 styles: []
 premium: false
 address: "Pekankatu 3, Rovaniemi"

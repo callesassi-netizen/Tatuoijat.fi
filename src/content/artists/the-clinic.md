@@ -1,6 +1,6 @@
 ---
 name: "The Clinic"
-place: "Lahti"
+city: lahti
 styles: []
 premium: false
 address: "Vesijärvenkatu 36, 15140 Lahti"

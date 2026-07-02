@@ -1,6 +1,6 @@
 ---
 name: "Michael Aalto Tattoo Studio"
-place: "Riihimäki"
+city: riihimaki
 styles: []
 premium: false
 address: "Hämeenkatu 58, 11130 Riihimäki"

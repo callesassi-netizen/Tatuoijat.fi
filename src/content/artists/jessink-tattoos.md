@@ -1,6 +1,6 @@
 ---
 name: "JessInk Tattoos"
-place: "Keuruu"
+city: keuruu
 styles: []
 premium: false
 address: "Keuruuntie 17"

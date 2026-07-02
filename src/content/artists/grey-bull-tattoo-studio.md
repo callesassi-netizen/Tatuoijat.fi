@@ -1,6 +1,6 @@
 ---
 name: "Grey Bull Tattoo studio"
-place: "Porvoo"
+city: porvoo
 styles: []
 premium: false
 address: "Lundinkatu 16"

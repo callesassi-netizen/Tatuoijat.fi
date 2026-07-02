@@ -1,6 +1,6 @@
 ---
 name: "Vorssa Ink"
-place: "Forssa"
+city: forssa
 styles: []
 premium: false
 address: "Keskuskatu 7, Forssa"

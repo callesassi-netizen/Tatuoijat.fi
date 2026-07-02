@@ -1,6 +1,6 @@
 ---
 name: "LoitsuArt"
-place: "Pori"
+city: pori
 styles: []
 premium: false
 address: "Länsipuisto 16, 28100 Pori"

@@ -1,6 +1,6 @@
 ---
 name: "Black Wings tattoo & art"
-place: "Ylöjärvi"
+city: ylojarvi
 styles: []
 premium: false
 address: "Soppeentie 2, Ylöjärvi"

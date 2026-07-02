@@ -1,6 +1,6 @@
 ---
 name: "omenArt Tattoo"
-place: "Riihimäki"
+city: riihimaki
 styles: []
 premium: false
 address: "Hämeenkatu 24-26, 11100 Riihimäki"

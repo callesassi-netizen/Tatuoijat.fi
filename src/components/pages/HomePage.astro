@@ -31,7 +31,14 @@ const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((style) => [style.id, style]));
 
 const featured = sortArtists(artists.filter((artist) => artist.data.premium)).slice(0, 3);
-const popularCities = cities.slice(0, 3);
+// Störst först — griden visar topp 6, resten nås via "Kaikki →"
+const citiesByCount = [...cities].sort(
+  (a, b) =>
+    (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0) ||
+    cityDisplayName(a, locale).localeCompare(cityDisplayName(b, locale), locale),
+);
+const topCities = citiesByCount.slice(0, 6);
+const popularCities = citiesByCount.slice(0, 3);
 
 function artistMeta(artist: (typeof artists)[number]): string {
   const city = artist.data.city ? cityById.get(artist.data.city) : undefined;
@@ -217,10 +224,11 @@ const title = `${t('site.name')} — ${t('site.tagline')} | ${t('home.metaSuffix
             <p class="eyebrow">{t('home.cities.eyebrow')}</p>
             <h2 class="section-title" id="cities-title">{t('home.cities.title')}</h2>
           </div>
+          <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
         </div>
         <div class="city-grid reveal-stagger">
           {
-            cities.map((city) => {
+            topCities.map((city) => {
               const count = counts.get(city.id) ?? 0;
               return (
                 <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>

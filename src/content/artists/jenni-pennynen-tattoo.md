@@ -1,6 +1,6 @@
 ---
 name: "Jenni Pennynen Tattoo"
-place: "Riihimäki"
+city: riihimaki
 styles: []
 premium: false
 address: "Lopentie 2, Riihimäki"

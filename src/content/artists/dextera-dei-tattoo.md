@@ -1,6 +1,6 @@
 ---
 name: "Dextera Dei Tattoo"
-place: "Hyvinkää"
+city: hyvinkaa
 styles: []
 premium: false
 address: "Hämeenkatu 8, 05800 Hyvinkää"

@@ -1,6 +1,6 @@
 ---
 name: "Studio Black Cat"
-place: "Seinäjoki"
+city: seinajoki
 styles: []
 premium: false
 address: "Kalevankatu 14, Seinäjoki"

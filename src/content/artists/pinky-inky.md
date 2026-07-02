@@ -1,6 +1,6 @@
 ---
 name: "Pinky Inky"
-place: "Mikkeli"
+city: mikkeli
 styles: []
 premium: false
 address: "Porrassalmenkatu 17B, 50100 Mikkeli"

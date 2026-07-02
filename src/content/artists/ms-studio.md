@@ -1,6 +1,6 @@
 ---
 name: "Ms-studio"
-place: "Lahti"
+city: lahti
 styles: []
 premium: false
 address: "Karjalankatu 25"

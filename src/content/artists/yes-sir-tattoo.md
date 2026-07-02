@@ -1,6 +1,6 @@
 ---
 name: "Yes Sir Tattoo"
-place: "Kotka"
+city: kotka
 styles: []
 premium: false
 address: "Kirkkokatu 19, lh 10, Kotka"

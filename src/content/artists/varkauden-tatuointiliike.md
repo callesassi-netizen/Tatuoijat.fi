@@ -1,6 +1,6 @@
 ---
 name: "Varkauden Tatuointiliike"
-place: "Varkaus"
+city: varkaus
 styles: []
 premium: false
 address: "Kauppakatu 57, Varkaus"

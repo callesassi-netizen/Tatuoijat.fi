@@ -1,6 +1,6 @@
 ---
 name: "Tattoosbyroosa"
-place: "Espoo"
+city: espoo
 styles: []
 premium: false
 address: "Tähdenlennonkuja 1, Espoo"

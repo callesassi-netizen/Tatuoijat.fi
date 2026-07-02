@@ -1,6 +1,6 @@
 ---
 name: "Polka ink"
-place: "Pori"
+city: pori
 styles: []
 premium: false
 address: "Valtakatu 10, 28100 Pori"

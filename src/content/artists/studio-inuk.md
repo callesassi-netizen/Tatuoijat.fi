@@ -1,6 +1,6 @@
 ---
 name: "Studio Inuk"
-place: "Järvenpää"
+city: jarvenpaa
 styles: []
 premium: false
 address: "Helsingintie 14, jörvenpää"

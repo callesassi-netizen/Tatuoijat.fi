@@ -1,6 +1,6 @@
 ---
 name: "Revontattoo"
-place: "Nurmijärvi"
+city: nurmijarvi
 styles: []
 premium: false
 address: "kuonomäentie 1"

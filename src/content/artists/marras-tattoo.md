@@ -1,6 +1,6 @@
 ---
 name: "Marras Tattoo"
-place: "Laukaa"
+city: laukaa
 styles: []
 premium: false
 address: "Laukaantie 12 b, 40340 Laukaa"

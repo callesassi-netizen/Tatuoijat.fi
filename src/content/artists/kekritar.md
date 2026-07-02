@@ -1,6 +1,6 @@
 ---
 name: "Kekritär"
-place: "Ilmajoki"
+city: ilmajoki
 styles: []
 premium: false
 address: "Viitalantie 30"

@@ -1,6 +1,6 @@
 ---
 name: "Sanna L Tattoo"
-place: "Lahti"
+city: lahti
 styles: []
 premium: false
 address: "Vesijärvenkatu 11C, Lahti"

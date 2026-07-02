@@ -1,6 +1,6 @@
 ---
 name: "Lato Tattoo"
-place: "Himanka"
+city: himanka
 styles: []
 premium: false
 address: "Latotie 9, 68100 Himanka"

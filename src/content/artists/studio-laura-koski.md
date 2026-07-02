@@ -1,6 +1,6 @@
 ---
 name: "Studio Laura Koski"
-place: "Pori"
+city: pori
 styles: []
 premium: false
 address: "Kirkkotienpää 1"

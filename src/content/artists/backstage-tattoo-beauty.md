@@ -1,6 +1,6 @@
 ---
 name: "Backstage Tattoo & Beauty"
-place: "Järvenpää"
+city: jarvenpaa
 styles: []
 premium: false
 address: "Rantakatu 3, 04400 Järvenpää"

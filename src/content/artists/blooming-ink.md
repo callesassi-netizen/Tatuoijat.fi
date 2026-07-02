@@ -1,6 +1,6 @@
 ---
 name: "Blooming Ink"
-place: "Forssa"
+city: forssa
 styles: []
 premium: false
 address: "Rautatienkatu 17, Forssa"

@@ -1,6 +1,6 @@
 ---
 name: "Pihlaja tattoo"
-place: "Joensuu"
+city: joensuu
 styles: []
 premium: false
 address: "Kirkkokatu 14 a, 80100 Joensuu"

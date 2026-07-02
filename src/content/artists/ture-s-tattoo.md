@@ -1,6 +1,6 @@
 ---
 name: "Ture's tattoo"
-place: "Joensuu"
+city: joensuu
 styles: []
 premium: false
 address: "Aspitie 15,Joensuu"

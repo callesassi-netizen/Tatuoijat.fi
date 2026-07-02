@@ -1,6 +1,6 @@
 ---
 name: "Black Zone Art"
-place: "Kauhajoki"
+city: kauhajoki
 styles: []
 premium: false
 address: "Topeeka 17 D2, 61800 Kauhajoki"

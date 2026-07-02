@@ -1,6 +1,6 @@
 ---
 name: "Devils Ridge Tattoo"
-place: "Harjavalta"
+city: harjavalta
 styles: []
 premium: false
 address: "Killankatu 2, Harjavalta"

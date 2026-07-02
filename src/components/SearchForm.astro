@@ -38,6 +38,10 @@ const {
 const t = useTranslations(locale);
 const basePath = localePath(locale, '/');
 const chipsLabelText = chipsLabel ?? t('search.popular');
+// Dropdownen alfabetisk — lättare att hitta sin stad i en lång lista
+const citiesAlpha = [...cities].sort((a, b) =>
+  cityDisplayName(a, locale).localeCompare(cityDisplayName(b, locale), locale),
+);
 ---
 
 <div class="search">
@@ -48,7 +52,7 @@ const chipsLabelText = chipsLabel ?? t('search.popular');
         <select id={`${idPrefix}-city`} name="kaupunki">
           <option value="" selected={selectedCity === ''}>{t('search.allCities')}</option>
           {
-            cities.map((city) => (
+            citiesAlpha.map((city) => (
               <option value={city.id} selected={city.id === selectedCity}>
                 {cityDisplayName(city, locale)}
               </option>

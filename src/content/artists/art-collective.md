@@ -1,6 +1,6 @@
 ---
 name: "Art Collective"
-place: "Hyvinkää"
+city: hyvinkaa
 styles: []
 premium: false
 address: "Hämeenkatu 3, Hyvinkää"

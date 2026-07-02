@@ -1,6 +1,6 @@
 ---
 name: "Ramotattoo"
-place: "Rauma"
+city: rauma
 styles: []
 premium: false
 address: "Kauppakatu 19, Rauma"

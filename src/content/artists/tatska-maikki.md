@@ -1,6 +1,6 @@
 ---
 name: "Tatska-Maikki"
-place: "Joensuu"
+city: joensuu
 styles: []
 premium: false
 address: "80230 Joensuu"

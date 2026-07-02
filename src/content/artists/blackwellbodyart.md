@@ -1,6 +1,6 @@
 ---
 name: "Blackwellbodyart"
-place: "Rovaniemi"
+city: rovaniemi
 styles: []
 premium: false
 address: "Rovakatu 9"

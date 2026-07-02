@@ -1,6 +1,6 @@
 ---
 name: "teristattoo"
-place: "Vantaa"
+city: vantaa
 styles: []
 premium: false
 address: "Primavera 3 a lt1"

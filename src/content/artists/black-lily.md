@@ -1,6 +1,6 @@
 ---
 name: "Black Lily"
-place: "Hämeenlinna"
+city: hameenlinna
 styles: []
 premium: false
 address: "Sibeliuksenkatu 11, 13100 Hämeenlinna"

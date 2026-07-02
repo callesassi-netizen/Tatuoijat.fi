@@ -1,6 +1,6 @@
 ---
 name: "Needle Point Tattoo"
-place: "Rauma"
+city: rauma
 styles: []
 premium: false
 address: "monnankatu 24 Rauma"

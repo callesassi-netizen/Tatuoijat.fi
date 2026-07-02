@@ -1,6 +1,6 @@
 ---
 name: "Down Under Tattoo"
-place: "Lappeenranta"
+city: lappeenranta
 styles: []
 premium: false
 address: "Kiviharjunkatu 15, Lappeenranta"

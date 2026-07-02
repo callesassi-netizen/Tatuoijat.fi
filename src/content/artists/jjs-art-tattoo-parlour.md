@@ -1,6 +1,6 @@
 ---
 name: "JJS ART Tattoo Parlour"
-place: "Pori"
+city: pori
 styles: []
 premium: false
 address: "Eteläpuisto 13 28100 Pori"

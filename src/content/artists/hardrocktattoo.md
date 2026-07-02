@@ -1,6 +1,6 @@
 ---
 name: "Hardrocktattoo"
-place: "Seinäjoki"
+city: seinajoki
 styles: []
 premium: false
 address: "Kapernauminkatu 32 A7, 60100 seinäjoki"

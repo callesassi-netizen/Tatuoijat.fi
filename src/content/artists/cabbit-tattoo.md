@@ -1,6 +1,6 @@
 ---
 name: "Cabbit Tattoo"
-place: "Rovaniemi"
+city: rovaniemi
 styles: []
 premium: false
 address: "Lapinkävijäntie 29-31, Rovaniemi"

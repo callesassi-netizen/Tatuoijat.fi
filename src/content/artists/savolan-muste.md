@@ -1,6 +1,6 @@
 ---
 name: "Savolan Muste"
-place: "Savonlinna"
+city: savonlinna
 styles: []
 premium: false
 address: "Olavinkatu 41"

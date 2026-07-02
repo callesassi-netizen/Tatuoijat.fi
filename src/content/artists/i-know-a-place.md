@@ -1,6 +1,6 @@
 ---
 name: "I Know a Place"
-place: "Rovaniemi"
+city: rovaniemi
 styles: []
 premium: false
 address: "Pohjolankatu 27, Rovaniemi"

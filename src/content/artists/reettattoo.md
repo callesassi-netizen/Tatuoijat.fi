@@ -1,6 +1,6 @@
 ---
 name: "Reettattoo"
-place: "Kempele"
+city: kempele
 styles: []
 premium: false
 address: "Kempele"

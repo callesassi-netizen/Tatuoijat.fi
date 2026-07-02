@@ -1,6 +1,6 @@
 ---
 name: "Deerly tattoo"
-place: "Karkkila"
+city: karkkila
 styles: []
 premium: false
 address: "Takkointie 7, Karkkila"

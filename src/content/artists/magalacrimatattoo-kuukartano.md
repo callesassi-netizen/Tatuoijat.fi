@@ -1,6 +1,6 @@
 ---
 name: "MagaLacrimaTattoo /KuuKartano"
-place: "Koskenkorva"
+city: koskenkorva
 styles: []
 premium: false
 address: "Tiilitie 66, 61330 Koskenkorva"

@@ -1,6 +1,6 @@
 ---
 name: "Thunderdog Tattoo"
-place: "Porvoo"
+city: porvoo
 styles: []
 premium: false
 address: "Kaivokatu 29, 06100 Porvoo"

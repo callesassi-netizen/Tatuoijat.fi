@@ -1,6 +1,6 @@
 ---
 name: "Hollow Bones"
-place: "Forssa"
+city: forssa
 styles: []
 premium: false
 address: "Koulukatu 16 lh 15, Forssa"
