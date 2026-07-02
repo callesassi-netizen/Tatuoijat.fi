@@ -18,6 +18,10 @@ interface Props {
   /** Unikt prefix om komponenten renderas flera gånger på samma sida. */
   idPrefix: string;
   popularCities?: CollectionEntry<'cities'>[];
+  /** Label före chipsen (default "Suosittua:"). */
+  chipsLabel?: string;
+  /** Stads-slug som markeras som aktiv (röd) chip. */
+  activeCityChip?: string;
 }
 
 const {
@@ -27,10 +31,13 @@ const {
   selectedCity = '',
   idPrefix,
   popularCities = [],
+  chipsLabel,
+  activeCityChip = '',
 } = Astro.props;
 
 const t = useTranslations(locale);
 const basePath = localePath(locale, '/');
+const chipsLabelText = chipsLabel ?? t('search.popular');
 ---
 
 <div class="search">
@@ -69,9 +76,13 @@ const basePath = localePath(locale, '/');
   {
     popularCities.length > 0 && (
       <p class="popular">
-        <span class="popular-label">{t('search.popular')}</span>
+        <span class="popular-label">{chipsLabelText}</span>
         {popularCities.map((city) => (
-          <a class="chip" href={localePath(locale, `/tatuoijat/${city.id}/`)}>
+          <a
+            class:list={['chip', { 'chip--active': city.id === activeCityChip }]}
+            href={localePath(locale, `/tatuoijat/${city.id}/`)}
+            aria-current={city.id === activeCityChip ? 'page' : undefined}
+          >
             {cityDisplayName(city, locale)}
           </a>
         ))}

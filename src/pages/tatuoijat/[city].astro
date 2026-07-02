@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import CityPage from '../../components/pages/CityPage.astro';
+
+export async function getStaticPaths() {
+  const cities = await getCollection('cities');
+  return cities.map((city) => ({ params: { city: city.id }, props: { city } }));
+}
+
+const { city } = Astro.props;
+---
+
+<CityPage city={city} locale="fi" />

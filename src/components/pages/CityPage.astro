@@ -1,0 +1,422 @@
+---
+/**
+ * Stadssida (wireframe 2a mobil / 3d desktop): kompakt mörk hero med
+ * filmremsa, flytande sökkort med staden förvald, stil-filterchips
+ * (filtrering utan sidladdning), featured först, sedan grid.
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SearchForm from '../SearchForm.astro';
+import ArtistCard from '../ArtistCard.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  getArtists,
+  sortArtists,
+  localizedBody,
+  cityDisplayName,
+  styleDisplayName,
+} from '../../lib/content';
+import { breadcrumbLd, itemListLd } from '../../lib/schema';
+
+interface Props {
+  city: CollectionEntry<'cities'>;
+  locale: Locale;
+}
+
+const { city, locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const allArtists = await getArtists();
+const styleById = new Map(styles.map((style) => [style.id, style]));
+
+const cityName = cityDisplayName(city, locale);
+const h1City = locale === 'fi' ? city.data.nameLocative : cityName;
+const artists = sortArtists(allArtists.filter((artist) => artist.data.city === city.id));
+const featured = artists.filter((artist) => artist.data.premium);
+const regular = artists.filter((artist) => !artist.data.premium);
+const intro = localizedBody(city.body, locale);
+const countSentence =
+  artists.length === 1
+    ? t('city.introCount.one')
+    : t('city.introCount.many', { n: artists.length });
+
+function artistMeta(artist: (typeof artists)[number]): string {
+  const parts = [artist.data.district, artist.data.studio].filter(Boolean);
+  return parts.length > 0 ? parts.join(' · ') : cityName;
+}
+function artistStyleNames(artist: (typeof artists)[number]): string[] {
+  return artist.data.styles.map((slug) => {
+    const style = styleById.get(slug);
+    return style ? styleDisplayName(style, locale) : slug;
+  });
+}
+
+// Filmremsa: bläck-gradientplattor som klipps av arket
+const ink = (angle: number, from: string, to: string) =>
+  `linear-gradient(${angle}deg, ${from} 0%, ${to} 100%)`;
+const filmstrip: [string, number, number][] = [
+  [ink(160, '#1c1c22', '#33262a'), 92, 64],
+  [ink(200, '#232029', '#3d2f34'), 118, 50],
+  [ink(150, '#17171c', '#2b2229'), 76, 72],
+  [ink(215, '#241f26', '#4d3230'), 108, 56],
+  [ink(170, '#1e1c26', '#43302f'), 96, 66],
+  [ink(190, '#211f2b', '#35282b'), 124, 48],
+];
+
+const path = `/tatuoijat/${city.id}/`;
+const title = t('city.metaTitle', { city: cityName, site: t('site.name') });
+const description = t('city.metaDescription', { city: cityName });
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('nav.cities'), url: new URL(p('/tatuoijat/'), site).href },
+  { name: cityName, url: new URL(p(path), site).href },
+]);
+const itemList = itemListLd(
+  t('city.h1', { city: h1City }),
+  artists.map((artist) => new URL(p(`/artistit/${artist.id}/`), site).href),
+);
+---
+
+<BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(itemList)} slot="head" />
+
+  <!-- Kompakt mörk hero -->
+  <section class="city-hero">
+    <div class="container city-hero-inner">
+      <a class="back-link ink-link" href={p('/')}>← {t('city.back')}</a>
+      <p class="eyebrow">{t('city.eyebrow')}</p>
+      <h1 class="city-title">{t('city.h1', { city: h1City })}</h1>
+      <p class="city-intro">{countSentence} {intro}</p>
+      <div class="filmstrip" aria-hidden="true">
+        {
+          filmstrip.map(([gradient, width, height]) => (
+            <div
+              class="film-tile grain-dark"
+              style={`width:${width}px;height:${height}px;background:${gradient}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Ark + flytande sökkort med staden förvald -->
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <div class="float-search">
+        <SearchForm
+          locale={locale}
+          cities={cities}
+          styles={styles}
+          selectedCity={city.id}
+          idPrefix="cs"
+          popularCities={cities.slice(0, 4)}
+          chipsLabel={t('city.switch')}
+          activeCityChip={city.id}
+        />
+      </div>
+
+      <!-- Stil-filterchips: filtrering utan sidladdning -->
+      <div class="filter-bar" data-filter-bar role="group" aria-label={t('city.filterLabel')}>
+        <button class="chip chip--active" type="button" data-style="">{t('city.filterAll')}</button>
+        {
+          styles.map((style) => (
+            <button class="chip" type="button" data-style={style.id}>
+              {styleDisplayName(style, locale)}
+            </button>
+          ))
+        }
+      </div>
+
+      <p
+        class="results"
+        data-result-count
+        data-one={t('city.results.one')}
+        data-many={t('city.results.many', { n: '{n}' })}
+      >
+        {artists.length === 1 ? t('city.results.one') : t('city.results.many', { n: artists.length })}
+      </p>
+
+      <!-- Featured först -->
+      {
+        featured.length > 0 && (
+          <div class="featured-list">
+            {featured.map((artist) => (
+              <div
+                class="card-cell"
+                data-artist-card
+                data-styles={artist.data.styles.join(' ')}
+              >
+                <ArtistCard
+                  slug={artist.id}
+                  name={artist.data.name}
+                  meta={artistMeta(artist)}
+                  styleNames={artistStyleNames(artist)}
+                  premium
+                  size="featured"
+                  locale={locale}
+                />
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      <!-- Vanliga listningar: samma kort-anatomi, utan badge -->
+      {
+        regular.length > 0 && (
+          <div class="regular-grid">
+            {regular.map((artist) => (
+              <div
+                class="card-cell"
+                data-artist-card
+                data-styles={artist.data.styles.join(' ')}
+              >
+                <ArtistCard
+                  slug={artist.id}
+                  name={artist.data.name}
+                  meta={artistMeta(artist)}
+                  styleNames={artistStyleNames(artist)}
+                  size="compact"
+                  locale={locale}
+                />
+              </div>
+            ))}
+          </div>
+        )
+      }
+
+      <!-- Tomt läge (byggs enligt handoff-README: States) -->
+      <div class="empty" data-empty hidden>
+        <p class="empty-title">{t('city.empty.title')}</p>
+        <p class="empty-text">{t('city.empty.text')}</p>
+        <button class="btn-outline empty-reset" type="button" data-empty-reset>
+          {t('city.empty.reset')}
+        </button>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<!-- Filter-ö: göm/visa kort, uppdatera räknare och ?tyyli= i URL:en.
+     Utan JS visas hela listan — inget går sönder. -->
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-filter-bar]');
+  if (bar) {
+    const chips = Array.from(bar.querySelectorAll<HTMLButtonElement>('button[data-style]'));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-artist-card]'));
+    const counter = document.querySelector<HTMLElement>('[data-result-count]');
+    const empty = document.querySelector<HTMLElement>('[data-empty]');
+
+    function apply(styleSlug: string) {
+      let visible = 0;
+      for (const card of cards) {
+        const cardStyles = (card.dataset.styles ?? '').split(' ');
+        const show = styleSlug === '' || cardStyles.includes(styleSlug);
+        card.hidden = !show;
+        if (show) visible++;
+      }
+      for (const chip of chips) {
+        chip.classList.toggle('chip--active', (chip.dataset.style ?? '') === styleSlug);
+      }
+      if (counter) {
+        counter.textContent =
+          visible === 1
+            ? (counter.dataset.one ?? '')
+            : (counter.dataset.many ?? '').replace('{n}', String(visible));
+      }
+      if (empty) empty.hidden = visible > 0;
+      const url = new URL(window.location.href);
+      if (styleSlug) url.searchParams.set('tyyli', styleSlug);
+      else url.searchParams.delete('tyyli');
+      history.replaceState(null, '', url);
+    }
+
+    chips.forEach((chip) => chip.addEventListener('click', () => apply(chip.dataset.style ?? '')));
+    document
+      .querySelector('[data-empty-reset]')
+      ?.addEventListener('click', () => apply(''));
+
+    const initial = new URL(window.location.href).searchParams.get('tyyli') ?? '';
+    if (initial && chips.some((chip) => chip.dataset.style === initial)) apply(initial);
+  }
+</script>
+
+<style>
+  .city-hero {
+    position: relative;
+    z-index: 0;
+    background: var(--ink);
+  }
+  .city-hero-inner {
+    padding: 20px var(--page-pad) 0;
+  }
+  .back-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--meta);
+  }
+  .city-hero .eyebrow {
+    margin-top: 18px;
+  }
+  .city-title {
+    font-size: 34px;
+    line-height: 1.06;
+    color: var(--text-light);
+  }
+  .city-intro {
+    margin: 10px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--meta);
+    max-width: 340px;
+  }
+  .filmstrip {
+    display: flex;
+    gap: 6px;
+    align-items: flex-end;
+    margin-top: 18px;
+    overflow: hidden;
+  }
+  .film-tile {
+    flex: none;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 0 var(--page-pad) 36px;
+  }
+  .float-search {
+    position: relative;
+    margin-top: -40px;
+  }
+
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin: 20px calc(-1 * var(--page-pad)) 0;
+    padding: 0 var(--page-pad) 4px;
+  }
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-bar .chip {
+    flex: none;
+    font-size: 12px;
+    padding: 7px 14px;
+    background: none;
+    cursor: pointer;
+  }
+  .filter-bar .chip--active {
+    background: var(--flash);
+    border-color: var(--flash);
+    color: #fff;
+  }
+
+  .results {
+    font-size: 12.5px;
+    color: var(--meta);
+    margin: 16px 0 12px;
+  }
+
+  .featured-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .featured-list .card-cell[hidden],
+  .regular-grid .card-cell[hidden] {
+    display: none;
+  }
+  .regular-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .empty {
+    text-align: center;
+    padding: 44px 20px;
+  }
+  .empty-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--text);
+    margin: 0;
+  }
+  .empty-text {
+    font-size: 13.5px;
+    color: var(--meta);
+    max-width: 320px;
+    margin: 8px auto 18px;
+  }
+  .empty-reset {
+    width: auto;
+    display: inline-block;
+    padding: 12px 22px;
+  }
+
+  @media (min-width: 1024px) {
+    .city-hero-inner {
+      padding-top: 32px;
+    }
+    .city-title {
+      font-size: 52px;
+    }
+    .city-intro {
+      font-size: 15px;
+      max-width: 560px;
+    }
+    .filmstrip {
+      margin-top: 26px;
+      gap: 10px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .float-search {
+      max-width: 880px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .filter-bar {
+      margin: 28px 0 0;
+      padding: 0;
+      flex-wrap: wrap;
+      overflow: visible;
+    }
+    .filter-bar .chip {
+      font-size: 13px;
+    }
+    .results {
+      margin: 20px 0 16px;
+    }
+    .featured-list,
+    .regular-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .regular-grid {
+      margin-top: 20px;
+    }
+  }
+</style>
