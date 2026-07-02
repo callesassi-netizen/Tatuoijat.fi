@@ -4,8 +4,10 @@
  * artister som gör stilen, korslänkar till städerna (stad + ?tyyli=).
  */
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArtistCard from '../ArtistCard.astro';
+import { styleImages } from '../../lib/styleImages';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
@@ -81,10 +83,25 @@ const itemList = itemListLd(
   <!-- Mörk hero med stilbeskrivning -->
   <section class="style-hero">
     <div class="container style-hero-inner">
-      <a class="back-link ink-link" href={p('/tyylit/')}>← {t('nav.styles')}</a>
-      <p class="eyebrow">{t('style.eyebrow')}</p>
-      <h1 class="style-title">{styleName}</h1>
-      <p class="style-intro">{intro}</p>
+      <div class="style-hero-copy">
+        <a class="back-link ink-link" href={p('/tyylit/')}>← {t('nav.styles')}</a>
+        <p class="eyebrow">{t('style.eyebrow')}</p>
+        <h1 class="style-title">{styleName}</h1>
+        <p class="style-intro">{intro}</p>
+      </div>
+      {
+        styleImages[style.id] && (
+          <div class="style-hero-media" aria-hidden="true">
+            <Image
+              src={styleImages[style.id]!}
+              alt=""
+              widths={[500, 900]}
+              sizes="(min-width: 1024px) 38vw, 100vw"
+              loading="eager"
+            />
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -152,6 +169,18 @@ const itemList = itemListLd(
   .style-hero-inner {
     padding: 20px var(--page-pad) 56px;
   }
+  .style-hero-media {
+    margin-top: 20px;
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .style-hero-media :global(img) {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85);
+  }
   .back-link {
     font-size: 11px;
     font-weight: 600;
@@ -218,6 +247,17 @@ const itemList = itemListLd(
   @media (min-width: 1024px) {
     .style-hero-inner {
       padding: 32px var(--page-pad) 76px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .style-hero-media {
+      margin-top: 0;
+      border-radius: var(--r-card-lg);
+    }
+    .style-hero-media :global(img) {
+      height: 300px;
     }
     .style-title {
       font-size: 72px;

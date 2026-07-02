@@ -3,10 +3,12 @@
  * Prisguiden /hinnat — SEO-magneten. Long-form med hintataulukko,
  * prisfaktorer och FAQ (FAQPage-schema enligt CLAUDE.md).
  */
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { hinnat } from '../../data/hinnat';
 import { breadcrumbLd, faqLd } from '../../lib/schema';
+import heroImage from '../../assets/bilder/jalkihoito.png';
 
 interface Props {
   locale: Locale;
@@ -38,8 +40,19 @@ const faq = faqLd(c.faq);
 
   <section class="guide-hero">
     <div class="container guide-hero-inner">
-      <p class="eyebrow">{c.eyebrow}</p>
-      <h1 class="guide-title">{c.h1}</h1>
+      <div>
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h1 class="guide-title">{c.h1}</h1>
+      </div>
+      <div class="guide-hero-media" aria-hidden="true">
+        <Image
+          src={heroImage}
+          alt=""
+          widths={[500, 900]}
+          sizes="(min-width: 1024px) 38vw, 100vw"
+          loading="eager"
+        />
+      </div>
     </div>
   </section>
 
@@ -129,6 +142,18 @@ const faq = faqLd(c.faq);
   }
   .guide-hero-inner {
     padding: 28px var(--page-pad) 52px;
+  }
+  .guide-hero-media {
+    margin-top: 20px;
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .guide-hero-media :global(img) {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.9);
   }
   .guide-title {
     font-size: 36px;
@@ -317,6 +342,17 @@ const faq = faqLd(c.faq);
   @media (min-width: 1024px) {
     .guide-hero-inner {
       padding: 44px var(--page-pad) 76px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .guide-hero-media {
+      margin-top: 0;
+      border-radius: var(--r-card-lg);
+    }
+    .guide-hero-media :global(img) {
+      height: 260px;
     }
     .guide-title {
       font-size: 64px;

@@ -2,6 +2,9 @@
 dist/
 .astro/
 
+# källmaterial — bilderna som används ligger i src/assets/bilder/
+Bilder/
+
 # dependencies
 node_modules/
 

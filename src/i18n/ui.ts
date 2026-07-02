@@ -33,6 +33,10 @@ export const ui = {
     'home.artistCount.one': '1 tatuoija',
     'home.artistCount.many': '{n} tatuoijaa',
     'home.metaSuffix': 'Tatuoijat ja studiot Suomessa',
+    'home.premiumCta.title': 'Haluatko näkyä tässä?',
+    'home.premiumCta.text':
+      'Etusivun Premium-paikat ovat rajattuja ja täytetään varausjärjestyksessä. Nosta studiosi koko Suomen näkyville.',
+    'home.premiumCta.button': 'Aloita Premium',
     'how.eyebrow': 'Näin se toimii',
     'how.title': 'Kolme askelta artistiin',
     'how.step1.title': 'Etsi kaupungin tai tyylin mukaan',
@@ -122,6 +126,10 @@ export const ui = {
     'home.artistCount.one': '1 tatuerare',
     'home.artistCount.many': '{n} tatuerare',
     'home.metaSuffix': 'Tatuerare och studios i Finland',
+    'home.premiumCta.title': 'Vill du synas här?',
+    'home.premiumCta.text':
+      'Premium-platserna på startsidan är begränsade och fylls i bokningsordning. Lyft din studio inför hela Finland.',
+    'home.premiumCta.button': 'Starta Premium',
     'how.eyebrow': 'Så funkar det',
     'how.title': 'Tre steg till din artist',
     'how.step1.title': 'Sök efter stad eller stil',

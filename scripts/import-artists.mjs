@@ -44,6 +44,15 @@ function yamlString(value) {
   return `"${String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 }
 
+// Exempel-premium på startsidan tills riktiga premiumkunder finns —
+// valda för att de har verifierade webbplatser (CTA:n fungerar) och
+// ligger i olika städer. Byt/töm när claim-flödet ger riktiga kunder.
+const PREMIUM_EXAMPLES = new Set([
+  'flow-tattoo-helsinki',
+  'studio-rikuturso',
+  'la-familia-tattoo',
+]);
+
 // Städer med riktiga stadssidor (unika intro-texter) i content collections
 const knownCitySlugs = new Set(
   readdirSync(citiesDir)
@@ -99,7 +108,7 @@ for (const studio of seed.studios_grouped) {
   if (citySlug) lines.push(`city: ${citySlug}`);
   if (place) lines.push(`place: ${yamlString(place)}`);
   lines.push('styles: []');
-  lines.push('premium: false');
+  lines.push(`premium: ${PREMIUM_EXAMPLES.has(unique)}`);
   if (website) lines.push(`website: ${yamlString(website)}`);
   if (instagram) lines.push(`instagram: ${yamlString(String(instagram).replace(/^@/, ''))}`);
   if (address) lines.push(`address: ${yamlString(address)}`);

@@ -2,7 +2,7 @@
 name: "La Familia Tattoo"
 city: joensuu
 styles: []
-premium: false
+premium: true
 website: "https://lafamiliatattoo.fi/"
 address: "Yläsatamakatu 3"
 images: []

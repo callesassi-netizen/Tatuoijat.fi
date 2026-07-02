@@ -1,8 +1,10 @@
 ---
 /** Stilar-index (/tyylit/) — delad mellan fi och sv. */
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getStylesSorted, styleDisplayName } from '../../lib/content';
+import { styleImages } from '../../lib/styleImages';
 import { breadcrumbLd } from '../../lib/schema';
 
 interface Props {
@@ -53,11 +55,22 @@ const breadcrumb = breadcrumbLd([
         {
           styles.map((style, index) => (
             <a class="style-card" href={p(`/tyylit/${style.id}/`)}>
-              <span
-                class="style-bg grain-dark"
-                style={`background:${styleGradients[index % styleGradients.length]}`}
-                aria-hidden="true"
-              />
+              {styleImages[style.id] ? (
+                <Image
+                  class="style-photo"
+                  src={styleImages[style.id]!}
+                  alt=""
+                  widths={[400, 800]}
+                  sizes="(min-width: 1024px) 33vw, 50vw"
+                  loading={index < 2 ? 'eager' : 'lazy'}
+                />
+              ) : (
+                <span
+                  class="style-bg grain-dark"
+                  style={`background:${styleGradients[index % styleGradients.length]}`}
+                  aria-hidden="true"
+                />
+              )}
               <span class="style-name">{styleDisplayName(style, locale)}</span>
               <span class="style-arrow" aria-hidden="true">→</span>
             </a>
@@ -110,6 +123,19 @@ const breadcrumb = breadcrumbLd([
     inset: 0;
     z-index: -1;
     transition: transform var(--t-med) var(--ease-out);
+  }
+  .style-card :global(.style-photo) {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) contrast(0.98);
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .style-card:hover :global(.style-photo) {
+    transform: scale(1.03);
   }
   .style-card::after {
     content: '';
