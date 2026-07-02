@@ -32,9 +32,11 @@ const { data } = artist;
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
-const city = cities.find((entry) => entry.id === data.city);
-const cityName = city ? cityDisplayName(city, locale) : data.city;
+const city = data.city ? cities.find((entry) => entry.id === data.city) : undefined;
+const cityName = city ? cityDisplayName(city, locale) : undefined;
 const h1City = city && locale === 'fi' ? city.data.nameLocative : cityName;
+// Utan matchande stadssida: visa seedens plats/region — aldrig tomt
+const displayPlace = cityName ?? data.place ?? t('common.finland');
 
 const styleNames = data.styles.map((slug) => {
   const style = styles.find((entry) => entry.id === slug);
@@ -42,24 +44,41 @@ const styleNames = data.styles.map((slug) => {
 });
 
 const bio = localizedBody(artist.body, locale);
-const placeLine = [data.studio, [data.district, cityName].filter(Boolean).join(', ')]
+const studioPart = data.studio && data.studio !== data.name ? data.studio : undefined;
+const placeLine = [studioPart, [data.district, displayPlace].filter(Boolean).join(', ')]
   .filter(Boolean)
   .join(' · ');
 
+// Artister på studion (ur FTAA-seeden) — visas som egen sektion om
+// listan säger mer än studions namn
+const studioArtists =
+  data.artists.length > 0 && !(data.artists.length === 1 && data.artists[0] === data.name)
+    ? data.artists
+    : [];
+
 const instagramUrl = data.instagram ? `https://www.instagram.com/${data.instagram}/` : undefined;
 const bookingUrl = data.website ?? instagramUrl;
+const hasContact = Boolean(bookingUrl || instagramUrl);
 const worksCount = data.images.length;
 
 const path = `/artistit/${artist.id}/`;
-const title = t('artist.metaTitle', { name: data.name, city: cityName, site: t('site.name') });
-const description = bio.length > 155 ? `${bio.slice(0, 152)}…` : bio;
+const title = t('artist.metaTitle', { name: data.name, city: displayPlace, site: t('site.name') });
+const description = bio
+  ? bio.length > 155
+    ? `${bio.slice(0, 152)}…`
+    : bio
+  : t('artist.metaDescriptionFallback', { name: data.name, place: displayPlace });
 
-const breadcrumb = breadcrumbLd([
-  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
-  { name: t('city.h1', { city: h1City }), url: new URL(p(`/tatuoijat/${data.city}/`), site).href },
-  { name: data.name, url: new URL(p(path), site).href },
-]);
-const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
+const breadcrumbItems = [{ name: t('breadcrumb.home'), url: new URL(p('/'), site).href }];
+if (city && h1City) {
+  breadcrumbItems.push({
+    name: t('city.h1', { city: h1City }),
+    url: new URL(p(`/tatuoijat/${city.id}/`), site).href,
+  });
+}
+breadcrumbItems.push({ name: data.name, url: new URL(p(path), site).href });
+const breadcrumb = breadcrumbLd(breadcrumbItems);
+const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href);
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
@@ -69,9 +88,15 @@ const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
   <!-- Mörk identitets-hero -->
   <section class="artist-hero">
     <div class="container artist-hero-inner">
-      <a class="back-link ink-link" href={p(`/tatuoijat/${data.city}/`)}
-        >← {t('city.h1', { city: h1City })}</a
-      >
+      {
+        city && h1City ? (
+          <a class="back-link ink-link" href={p(`/tatuoijat/${city.id}/`)}>
+            ← {t('city.h1', { city: h1City })}
+          </a>
+        ) : (
+          <a class="back-link ink-link" href={p('/tatuoijat/')}>← {t('nav.cities')}</a>
+        )
+      }
       {
         data.premium && (
           <p class="badge-row">
@@ -97,33 +122,42 @@ const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
   <div class="sheet grain">
     <div class="container layout">
       <aside class="side">
-        <div class="contact-card">
-          {
-            bookingUrl ? (
-              <a class="btn-cta" href={bookingUrl} rel="noopener">
-                {t('artist.book')}
-              </a>
-            ) : (
-              <span class="btn-cta" aria-disabled="true">{t('artist.book')}</span>
-            )
-          }
-          {
-            instagramUrl && (
-              <a class="btn-outline" href={instagramUrl} rel="noopener">
-                Instagram · @{data.instagram}
-              </a>
-            )
-          }
-          <p class="contact-note">{t('artist.responds')}</p>
-        </div>
+        {
+          /* Kontaktkortet renderas bara när det finns riktiga länkar —
+             en död CTA ser trasig ut. Utan kontakt flyter trust-kortet
+             över skarven i stället. */
+          hasContact && (
+            <div class="contact-card">
+              {bookingUrl && (
+                <a class="btn-cta" href={bookingUrl} rel="noopener">
+                  {t('artist.book')}
+                </a>
+              )}
+              {instagramUrl && (
+                <a class="btn-outline" href={instagramUrl} rel="noopener">
+                  Instagram · @{data.instagram}
+                </a>
+              )}
+              <p class="contact-note">{t('artist.responds')}</p>
+            </div>
+          )
+        }
 
-        <div class="trust-card">
+        <div class:list={['trust-card', { 'trust-card--float': !hasContact }]}>
           <h2 class="trust-title">{t('artist.trust')}</h2>
           {
             data.verified && (
               <p class="trust-row">
                 <span class="trust-check" aria-hidden="true">✓</span>
                 {t('artist.verified')}
+              </p>
+            )
+          }
+          {
+            data.ftaaMember && (
+              <p class="trust-row">
+                <span class="trust-check" aria-hidden="true">✓</span>
+                {t('artist.ftaa')}
               </p>
             )
           }
@@ -135,16 +169,12 @@ const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
               </p>
             )
           }
-          {
-            (data.studio || data.address) && (
-              <div class="trust-studio">
-                {data.studio && <span class="trust-studio-name">{data.studio}</span>}
-                <span class="trust-studio-address">
-                  {data.address ? data.address : cityName}
-                </span>
-              </div>
-            )
-          }
+          <div class="trust-studio">
+            <span class="trust-studio-name">{data.studio ?? data.name}</span>
+            <span class="trust-studio-address">
+              {data.address ? data.address : displayPlace}
+            </span>
+          </div>
         </div>
       </aside>
 
@@ -202,6 +232,20 @@ const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
             <section class="about" aria-labelledby="about-title">
               <h2 class="about-title" id="about-title">{t('artist.about')}</h2>
               <p class="about-text">{bio}</p>
+            </section>
+          )
+        }
+
+        <!-- Artistit på studion (FTAA-seed) -->
+        {
+          studioArtists.length > 0 && (
+            <section class="about" aria-labelledby="artists-title">
+              <h2 class="about-title" id="artists-title">{t('artist.artists')}</h2>
+              <p class="studio-artists">
+                {studioArtists.map((artistName) => (
+                  <span class="chip">{artistName}</span>
+                ))}
+              </p>
             </section>
           )
         }
@@ -367,6 +411,19 @@ const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
     border-radius: var(--r-card);
     padding: 16px;
   }
+  /* Utan kontaktkort tar trust-kortet dess plats över skarven */
+  .trust-card--float {
+    margin-top: -38px;
+    border: 0;
+    border-radius: var(--r-float);
+    box-shadow: var(--shadow-float);
+  }
+  .studio-artists {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 0;
+  }
   .trust-title {
     font-size: 15px;
     color: var(--text);
@@ -431,7 +488,8 @@ const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
     .main-col {
       order: 1;
     }
-    .contact-card {
+    .contact-card,
+    .trust-card--float {
       margin-top: -44px;
     }
     .portfolio {

@@ -76,7 +76,12 @@ export const ui = {
     'artist.about': 'Tietoa',
     'artist.trust': 'Luotettavuus',
     'artist.verified': 'Vahvistettu profiili — artisti hallinnoi tietojaan itse',
+    'artist.ftaa': 'FTAA:n jäsen — Suomen Tatuointiartistien Liitto',
     'artist.website': 'Verkkosivut',
+    'artist.artists': 'Artistit',
+    'artist.metaDescriptionFallback':
+      '{name} — tatuointistudio ({place}). Profiili ja yhteystiedot MUSTE-katalogissa.',
+    'common.finland': 'Suomi',
     'style.eyebrow': 'Tyyli',
     'style.metaTitle': '{style} — tatuoijat ja portfoliot | {site}',
     'style.metaDescription':
@@ -160,7 +165,12 @@ export const ui = {
     'artist.about': 'Om',
     'artist.trust': 'Trygghet',
     'artist.verified': 'Verifierad profil — artisten hanterar sina uppgifter själv',
+    'artist.ftaa': 'Medlem i FTAA — Finlands tatueringsartisters förbund',
     'artist.website': 'Webbplats',
+    'artist.artists': 'Artister',
+    'artist.metaDescriptionFallback':
+      '{name} — tatueringsstudio ({place}). Profil och kontaktuppgifter i MUSTE-katalogen.',
+    'common.finland': 'Finland',
     'style.eyebrow': 'Stil',
     'style.metaTitle': '{style} — tatuerare och portfolios | {site}',
     'style.metaDescription':

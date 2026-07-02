@@ -47,7 +47,9 @@ const countSentence =
     : t('city.introCount.many', { n: artists.length });
 
 function artistMeta(artist: (typeof artists)[number]): string {
-  const parts = [artist.data.district, artist.data.studio].filter(Boolean);
+  const studio =
+    artist.data.studio && artist.data.studio !== artist.data.name ? artist.data.studio : '';
+  const parts = [artist.data.district, studio].filter(Boolean);
   return parts.length > 0 ? parts.join(' · ') : cityName;
 }
 function artistStyleNames(artist: (typeof artists)[number]): string[] {

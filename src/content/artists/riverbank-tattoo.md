@@ -1,0 +1,14 @@
+---
+name: "Riverbank Tattoo"
+place: "Rauma"
+styles: []
+premium: false
+address: "Urheilukatu 2, Rauma"
+images: []
+verified: false
+ftaaMember: true
+artists:
+  - "Juspe"
+  - "Jondomi"
+  - "Katja"
+---

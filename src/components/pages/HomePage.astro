@@ -34,9 +34,11 @@ const featured = sortArtists(artists.filter((artist) => artist.data.premium)).sl
 const popularCities = cities.slice(0, 3);
 
 function artistMeta(artist: (typeof artists)[number]): string {
-  const city = cityById.get(artist.data.city);
-  const place = city ? cityDisplayName(city, locale) : artist.data.city;
-  return artist.data.studio ? `${place} · ${artist.data.studio}` : place;
+  const city = artist.data.city ? cityById.get(artist.data.city) : undefined;
+  const place = city ? cityDisplayName(city, locale) : (artist.data.place ?? '');
+  const studio =
+    artist.data.studio && artist.data.studio !== artist.data.name ? artist.data.studio : '';
+  return [place, studio].filter(Boolean).join(' · ');
 }
 function artistStyleNames(artist: (typeof artists)[number]): string[] {
   return artist.data.styles.map((slug) => {
@@ -155,31 +157,33 @@ const title = `${t('site.name')} — ${t('site.tagline')} | ${t('home.metaSuffix
         />
       </div>
 
-      <!-- Nostetut artistit -->
-      <section class="section" aria-labelledby="featured-title">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">{t('home.featured.eyebrow')}</p>
-            <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
-          </div>
-          <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
-        </div>
-        <div class="featured-grid reveal-stagger">
-          {
-            featured.map((artist) => (
-              <ArtistCard
-                slug={artist.id}
-                name={artist.data.name}
-                meta={artistMeta(artist)}
-                styleNames={artistStyleNames(artist)}
-                premium={artist.data.premium}
-                size="featured"
-                locale={locale}
-              />
-            ))
-          }
-        </div>
-      </section>
+      <!-- Nostetut artistit — döljs tills premium-profiler finns -->
+      {
+        featured.length > 0 && (
+          <section class="section" aria-labelledby="featured-title">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">{t('home.featured.eyebrow')}</p>
+                <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
+              </div>
+              <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
+            </div>
+            <div class="featured-grid reveal-stagger">
+              {featured.map((artist) => (
+                <ArtistCard
+                  slug={artist.id}
+                  name={artist.data.name}
+                  meta={artistMeta(artist)}
+                  styleNames={artistStyleNames(artist)}
+                  premium={artist.data.premium}
+                  size="featured"
+                  locale={locale}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
 
       <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
       <section class="section section--styles" aria-labelledby="styles-title">

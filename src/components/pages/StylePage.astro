@@ -46,9 +46,11 @@ const citiesWithStyle = cities.filter((city) =>
 );
 
 function artistMeta(artist: (typeof artists)[number]): string {
-  const city = cityById.get(artist.data.city);
-  const place = city ? cityDisplayName(city, locale) : artist.data.city;
-  return artist.data.studio ? `${place} · ${artist.data.studio}` : place;
+  const city = artist.data.city ? cityById.get(artist.data.city) : undefined;
+  const place = city ? cityDisplayName(city, locale) : (artist.data.place ?? '');
+  const studio =
+    artist.data.studio && artist.data.studio !== artist.data.name ? artist.data.studio : '';
+  return [place, studio].filter(Boolean).join(' · ');
 }
 function artistStyleNames(artist: (typeof artists)[number]): string[] {
   return artist.data.styles.map((slug) => {

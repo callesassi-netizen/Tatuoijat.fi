@@ -41,6 +41,7 @@ export async function artistCountByCity(): Promise<Map<string, number>> {
   const artists = await getArtists();
   const counts = new Map<string, number>();
   for (const artist of artists) {
+    if (!artist.data.city) continue; // utanför stadssidorna tills staden fixats
     counts.set(artist.data.city, (counts.get(artist.data.city) ?? 0) + 1);
   }
   return counts;
