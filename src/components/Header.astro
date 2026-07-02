@@ -24,6 +24,7 @@ const navLinks = [
       </summary>
       <nav class="mobile-panel">
         {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+        <a href={p('/hinnat/')}>{t('nav.prices')}</a>
         <a href={p('/liity/')}>{t('nav.forStudios')}</a>
       </nav>
     </details>

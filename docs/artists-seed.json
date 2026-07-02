@@ -1,0 +1,4530 @@
+{
+ "meta": {
+  "source": "FTAA artistiluettelo",
+  "fetched": "2026-07-02",
+  "note": "Endast fakta fran oppen medlemslista. Bilder/IG kravs tillstand - se CLAUDE.md bildpolicy.",
+  "artist_count": 219,
+  "studio_count": 176
+ },
+ "artists": [
+  {
+   "artist": "Maria Viirros",
+   "studio": "Maria Viirros",
+   "address": "Kristianinkatu 17 A LT 4",
+   "city": null,
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kristmarian",
+   "studio": "Kristmarian",
+   "address": null,
+   "city": null,
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Julia Haaranen",
+   "studio": "Aisti Visuals",
+   "address": "Rullakkotori 1 (liiketila 1), 00240 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Apila Pepita Tattoo",
+   "studio": "Apila Tattoo",
+   "address": "Pietarinkatu 14, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Heini",
+   "studio": "Art Collective",
+   "address": "Hämeenkatu 3, Hyvinkää",
+   "city": "Hyvinkää",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Riikka Repo",
+   "studio": "Art&Tattoo Repo",
+   "address": "Koulukatu 34, Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Koivu Ink",
+   "studio": "Art&soul tattoo",
+   "address": "Hämeenkatu 22, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Annika Koivukorpi",
+   "studio": "Backbone Tattoo",
+   "address": "Antinkatu 18A Pori",
+   "city": "Pori",
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tattoo joonas",
+   "studio": "Backbone tattoo",
+   "address": "Antinkatu 18 pori",
+   "city": "Pori",
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jani Piippu",
+   "studio": "Backstage Tattoo & Beauty",
+   "address": "Rantakatu 3, 04400 Järvenpää",
+   "city": "Järvenpää",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Elina Lauermaa-Jäntti",
+   "studio": "Bad Eggs Tattoo",
+   "address": "Vaajakoskentie 127 lh1, Vaajakoski",
+   "city": "Jyväskylä",
+   "region_raw": "Jyväskylä, Vaajakoski, Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Lennilauha",
+   "studio": "Below Zero",
+   "address": "Aleksanterinkatu 26, 33100 Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kerberys",
+   "studio": "Below Zero",
+   "address": "Aleksanterinkatu 26, Tampere",
+   "city": "Tampere",
+   "region_raw": "Tampere",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Titta Free Bird",
+   "studio": "Below Zero Tattoo",
+   "address": "Aleksanterinkatu 26 Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Aliina Lintulaakso",
+   "studio": "Better Place Tattoo parlour",
+   "address": "Meritullinkatu 15, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Susanna Madelen",
+   "studio": "Black Diamond Tattoo Oulu",
+   "address": "Torikatu 70",
+   "city": "Oulu",
+   "region_raw": "Oulu",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Nina Silavuori",
+   "studio": "Black Lily",
+   "address": "Sibeliuksenkatu 11, 13100 Hämeenlinna",
+   "city": "Hämeenlinna",
+   "region_raw": "Kanta-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Emma Bayras",
+   "studio": "Black Wings tattoo & art",
+   "address": "Soppeentie 2, Ylöjärvi",
+   "city": "Ylöjärvi",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Nina Ojala",
+   "studio": "Black Zone Art",
+   "address": "Topeeka 17 D2, 61800 Kauhajoki",
+   "city": "Kauhajoki",
+   "region_raw": "Etelä-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Blackwell Ville",
+   "studio": "Blackwell bodyart",
+   "address": "Rovakatu 9 LH 3",
+   "city": "Rovaniemi",
+   "region_raw": "Rovaniemi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Blackwell Janita",
+   "studio": "Blackwellbodyart",
+   "address": "Rovakatu 9",
+   "city": "Rovaniemi",
+   "region_raw": "Rovaniemi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Roosa-Maria Virtanen",
+   "studio": "Blooming Ink",
+   "address": "Rautatienkatu 17, Forssa",
+   "city": "Forssa",
+   "region_raw": "Kanta-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "BluePunk",
+   "studio": "BluePunk Tattoo",
+   "address": "Pitkänsillanranta 17",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sakari",
+   "studio": "Body CTRL",
+   "address": "Yliopistonkatu 30, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Seriffi-Saara",
+   "studio": "Body Ctrl",
+   "address": "Yliopistonkatu 30, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Erika Vaarala",
+   "studio": "Cabbit Tattoo",
+   "address": "Lapinkävijäntie 29-31, Rovaniemi",
+   "city": "Rovaniemi",
+   "region_raw": "Lappi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jenna Eerika",
+   "studio": "Cougar Tattoo Studio",
+   "address": "Kruunuvuorenkatu 15 A, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Laura De Vil",
+   "studio": "Darkside Ink",
+   "address": "Teollisuustie 14 Seinäjoki",
+   "city": "Seinäjoki",
+   "region_raw": "Etelä-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jeve",
+   "studio": "Dead Rose Garden",
+   "address": "Iiluodontie 9, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Deerly",
+   "studio": "Deerly tattoo",
+   "address": "Takkointie 7, Karkkila",
+   "city": "Karkkila",
+   "region_raw": "Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tero Devilsridge",
+   "studio": "Devils Ridge Tattoo",
+   "address": "Killankatu 2, Harjavalta",
+   "city": "Harjavalta",
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Anna Niinimäki",
+   "studio": "Dextera Dei Tattoo",
+   "address": "Hämeenkatu 8, 05800 Hyvinkää",
+   "city": "Hyvinkää",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Katja Tsykarev",
+   "studio": "Down Under Tattoo",
+   "address": "Kiviharjunkatu 15, Lappeenranta",
+   "city": "Lappeenranta",
+   "region_raw": "Etelä-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sonja Tuomainen",
+   "studio": "Down Under tattoo",
+   "address": "Valtakatu 26, Lappeenranta",
+   "city": "Lappeenranta",
+   "region_raw": "Etelä-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "edeninked",
+   "studio": "edeninked/mustepuutarha",
+   "address": "Björkenheimin puistotie 6",
+   "city": "Tampere",
+   "region_raw": "Etelä-Pohjanmaa Ja Tampere",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Essi",
+   "studio": "Essi Tattoo & Art",
+   "address": "Vaasankatu 12, 40100 Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Face the pain tattoo",
+   "studio": "Face the pain tattoo",
+   "address": "Keskustie 16b",
+   "city": null,
+   "region_raw": "Etelä-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Fera Obscura",
+   "studio": "Fera Obscura",
+   "address": "Pursimiehenkatu 17, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Antti Rossi",
+   "studio": "Fireline Tattoo",
+   "address": "Vapaudenkatu 79 40100 Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kirvestattoo",
+   "studio": "Flow Tattoo Helsinki",
+   "address": "Ilmarinkatu 10, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": "https://flowtattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Blaksnak.art",
+   "studio": "Fomi Studio",
+   "address": "Hämeenpuisto 14, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Marianne",
+   "studio": "Golden art tattoo",
+   "address": "Kauppakartanonkatu 11 Helainki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tattoosbytomi",
+   "studio": "Golden art tattoo studio",
+   "address": "Kauppakartanonkatu 11, 00590 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Soile Johanna Tattoo",
+   "studio": "Grey Bull Tattoo studio",
+   "address": "Lundinkatu 16",
+   "city": "Porvoo",
+   "region_raw": "Porvoo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Erika",
+   "studio": "Halla Tattoo",
+   "address": "Pekankatu 3, Rovaniemi",
+   "city": "Rovaniemi",
+   "region_raw": "Lappi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Anu HallaTattoo",
+   "studio": "Halla Tattoo",
+   "address": "Pekankatu 3 liiketila 7",
+   "city": "Rovaniemi",
+   "region_raw": "Rovaniemi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Handpokebyjaate",
+   "studio": "Handpokebyjaate",
+   "address": "Vapaa-ajanmaa 3, lkt 1, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tuku's Tattoo",
+   "studio": "Hardrocktattoo",
+   "address": "Kapernauminkatu 32 A7, 60100 seinäjoki",
+   "city": "Seinäjoki",
+   "region_raw": "Seinäjoki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Anna-Kaisa Lajunen",
+   "studio": "Haven Ink",
+   "address": "Porrassalmenkatu 6, Mikkeli",
+   "city": "Mikkeli",
+   "region_raw": "Etelä-Savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Henna",
+   "studio": "Henna's Ink",
+   "address": "Mieluskylä",
+   "city": null,
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Rieputattoo",
+   "studio": "Hoivalaitos",
+   "address": "Kauppakatu 14, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "RainyInk",
+   "studio": "Hoivalaitos",
+   "address": "Kauppakatu 14 sisäpiha, Jyvöskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "SuvInk",
+   "studio": "Hoivalaitos",
+   "address": "Kauppakatu 14 lh4, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Jyväskylä",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Eetu Nurmi",
+   "studio": "Hollow Bones",
+   "address": "Koulukatu 16 lh 15, Forssa",
+   "city": "Forssa",
+   "region_raw": "Kanta-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Anski Arts",
+   "studio": "Hukka Tattoo",
+   "address": "Haapaniementie 17, Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Pohjois-Savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sawoink",
+   "studio": "Hukka Tattoo",
+   "address": "Haapaniementie 17, Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Pohjois-Savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Aino Holopainen",
+   "studio": "I Know a Place",
+   "address": "Pohjolankatu 27, Rovaniemi",
+   "city": "Rovaniemi",
+   "region_raw": "Lappi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Hanna Lehikoinen",
+   "studio": "Iki tattoo",
+   "address": "Siltasaarenkatu 28, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jussi Vento",
+   "studio": "Iki Tattoos",
+   "address": "Siltasaarenkatu 28, Helsinki.",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Antti Kuurne",
+   "studio": "IKI Tattoos",
+   "address": "Siltasaarenkatu 28 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jussi Kokkarinen",
+   "studio": "Impact Tattoo",
+   "address": "Merimiehenkatu 23, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Outi Vihlman",
+   "studio": "Impact tattoo",
+   "address": "Merimiehenkatu 23, 00150 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Lasse",
+   "studio": "Individual Ink",
+   "address": "Kauppiaskatu 13 (valopiha)",
+   "city": "Turku",
+   "region_raw": "Turku",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "sowina",
+   "studio": "Ink Studio Vanilla",
+   "address": "Hämeempuisto 21, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Lauri Artto",
+   "studio": "Inkfinite Art",
+   "address": "Pakkahuoneenkatu 12 a 4. Krs",
+   "city": null,
+   "region_raw": "Pohjois-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ella Bogdanoff",
+   "studio": "Inkfinite Art",
+   "address": "Pakkahuoneenkatu 12, Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tommi Ketonen",
+   "studio": "Inkromantix",
+   "address": "Kontiontie 3, Espoo",
+   "city": "Espoo",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Inna Kukkaslahti",
+   "studio": "Into Tattoo",
+   "address": "Puijonkatu 37, Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Kuopio",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jenni Pennynen",
+   "studio": "Jenni Pennynen Tattoo",
+   "address": "Lopentie 2, Riihimäki",
+   "city": "Riihimäki",
+   "region_raw": "Kanta-häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "JessInk Tattoos",
+   "studio": "JessInk Tattoos",
+   "address": "Keuruuntie 17",
+   "city": "Keuruu",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sippo",
+   "studio": "JJS ART Tattoo Parlour",
+   "address": "Eteläpuisto 13 28100 Pori",
+   "city": "Pori",
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Janita Mikaela",
+   "studio": "JM tatuointipalvelut",
+   "address": "Raivaajantie 1",
+   "city": "Jyväskylä",
+   "region_raw": "Jyväskylä",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "ajanvaraus.ink",
+   "studio": "k.ink",
+   "address": "Näsilinnankatu 28 E7, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kaisatattoo",
+   "studio": "KAISA",
+   "address": "Niskakuja 4, 40700 Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Jyväskylä",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Juho Laaksonen",
+   "studio": "Kakola Tattoo",
+   "address": "Graniittilinnakatu 2 N",
+   "city": null,
+   "region_raw": "Varsinais-suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kaurisaho Tattoo",
+   "studio": "Kaurisaho Tattoo",
+   "address": "Vanha Valtatie 20, Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kekritär",
+   "studio": "Kekritär",
+   "address": "Viitalantie 30",
+   "city": "Ilmajoki",
+   "region_raw": "Ilmajoki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Inka /Kerosin Ink",
+   "studio": "Kerosin Ink",
+   "address": "Puijonkatu 22, Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Pohjois-Savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kuutti Kiperä",
+   "studio": "Kiperä Tattoo",
+   "address": "Sepänkatu 4-8, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jenni Kiiski",
+   "studio": "Kivun Kauneus",
+   "address": "helsinginkatu 14, helsinki",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Korpi Tattoo",
+   "studio": "Korpi Tattoo",
+   "address": "Materonniementie 35 93390 Puhoskylä",
+   "city": "Pudasjärvi",
+   "region_raw": "Pudasjärvi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Joni Ensio",
+   "studio": "Kouvola Contemporary Tattoo & Collective",
+   "address": "Hallituskatu 8, Kouvola",
+   "city": "Kouvola",
+   "region_raw": "Kymenlaakso",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Mia Leinonen",
+   "studio": "La Familia Tattoo",
+   "address": "Yläsatamakatu 3",
+   "city": null,
+   "region_raw": "Pohjois-Karjala",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kultainen Vitsa",
+   "studio": "La Familia Tattoo",
+   "address": "Yläsatamakatu 3, 80100 Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-karjala",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Inkku Escobar",
+   "studio": "La Familia Tattoo",
+   "address": "Puijonkatu 37, Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Pohjois-Savo",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "JP Tattoo",
+   "studio": "La Familia Tattoo",
+   "address": "Puijonkatu 37, Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Pohjois-Savo",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Mustalaukka Tattoo",
+   "studio": "La Familia Tattoo",
+   "address": "Kauppakatu 8, 80110 Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-Karjala",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tasma",
+   "studio": "La Familia Tattoo",
+   "address": "Yläsatamakatu 3",
+   "city": null,
+   "region_raw": "Pohjois-karjala",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Pinja Holopainen",
+   "studio": "La Familia Tattoo",
+   "address": "Puijonkatu 37 Kuopio",
+   "city": "Kuopio",
+   "region_raw": "Kuopio",
+   "website": "https://lafamiliatattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kimmo Angervaniva",
+   "studio": "La Muerte Ink",
+   "address": "Keihäänkärjentie 3",
+   "city": "Oulu",
+   "region_raw": "Oulu",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jenni Kelokaski",
+   "studio": "Laiska tattoo",
+   "address": "Olavinkatu 38",
+   "city": null,
+   "region_raw": "Etelä-savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Joonas J",
+   "studio": "Lato Tattoo",
+   "address": "Latotie 9, 68100 Himanka",
+   "city": "Himanka",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Janne Vartio",
+   "studio": "Legacy Tattoo",
+   "address": "Sturenkatu 43-54, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ilkka Järvinen",
+   "studio": "Legacy Tattoo",
+   "address": "Sturenkatu 43-43 00550 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ellen Ariana",
+   "studio": "Leima",
+   "address": "Suolakivenkatu 20 B, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jole",
+   "studio": "Leima",
+   "address": "Suolakivenkatu 20 B, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Liisa Pihlakas",
+   "studio": "Liisa Pihlakas Tattoo",
+   "address": "Luutnantintie 10 LT 1, Helsinki, 00410",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Cat Rivers",
+   "studio": "Lillium Collective",
+   "address": "Isokatu 28 a 5, Oulu, 90100",
+   "city": "Oulu",
+   "region_raw": "Pohjois-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Lindarte Tattoo",
+   "studio": "Lindarte Tattoo",
+   "address": "Kirkkopuistikko 18, 65100 vaasa",
+   "city": "Vaasa",
+   "region_raw": "Vaasa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "LoitsuArt",
+   "studio": "LoitsuArt",
+   "address": "Länsipuisto 16, 28100 Pori",
+   "city": "Pori",
+   "region_raw": "Pori",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ottilia Mäkinen",
+   "studio": "Luova",
+   "address": "Paavontie 26 as 2",
+   "city": null,
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "MagaLacrima",
+   "studio": "MagaLacrimaTattoo /KuuKartano",
+   "address": "Tiilitie 66, 61330 Koskenkorva",
+   "city": "Koskenkorva",
+   "region_raw": "Etelä-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tuija Magenta Tattoo",
+   "studio": "Magenta Tattoo",
+   "address": "Tuureporinkatu 19",
+   "city": "Turku",
+   "region_raw": "Turku",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Susa_ink",
+   "studio": "Manala Tattoo",
+   "address": "Ratakatu 8, Oulu",
+   "city": "Oulu",
+   "region_raw": "Oulu",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ville Paakkari",
+   "studio": "Manala Tattoo",
+   "address": "Ratakatu 8",
+   "city": null,
+   "region_raw": "Pohjois-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Matias Ruohomäki/ matthaios.ttt",
+   "studio": "Manala Tattoo",
+   "address": "Ratakatu 8, Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Henna K Tattoo",
+   "studio": "Manala Tattoo",
+   "address": "Ratakatu 8, 90130, Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Viivi",
+   "studio": "ManaViivi",
+   "address": "Erämiehenkatu 6, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Marianna",
+   "studio": "Mariannastattoo",
+   "address": "Sohlberginkatu 10",
+   "city": "Jyväskylä",
+   "region_raw": "Jyväskylä",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jenni Pietikäinen",
+   "studio": "Marras Tattoo",
+   "address": "Laukaantie 12 b, 40340 Laukaa",
+   "city": "Laukaa",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Michael Aalto",
+   "studio": "Michael Aalto Tattoo Studio",
+   "address": "Hämeenkatu 58, 11130 Riihimäki",
+   "city": "Riihimäki",
+   "region_raw": "Kanta-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tattooeki",
+   "studio": "Ms-studio",
+   "address": "Karjalankatu 25",
+   "city": null,
+   "region_raw": "Päijät-häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Minna Sillanpää",
+   "studio": "MS-studio",
+   "address": "Karjalankatu 25",
+   "city": "Lahti",
+   "region_raw": "Lahti",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jukka Joensuu",
+   "studio": "Needle Point Tattoo",
+   "address": "monnankatu 24 Rauma",
+   "city": "Rauma",
+   "region_raw": "satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Juha Jousinen",
+   "studio": "New era tattoo",
+   "address": "Maaherrankatu 26, 50100 Mikkeli",
+   "city": "Mikkeli",
+   "region_raw": "Mikkeli",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tiia K",
+   "studio": "Nurja Tattoo",
+   "address": "Kinaporinkatu 2A 00500 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Iiris Sointu",
+   "studio": "Nurja Tattoo",
+   "address": "Kinaporinkatu 2, 00500, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Zsofia",
+   "studio": "Octopussy Tattoos",
+   "address": "Helsinginkatu 32",
+   "city": null,
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jessika Elo",
+   "studio": "Old 7 Tattoo",
+   "address": "Caloniuksenkatu 3, 00100 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa, Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Reetta Huotari",
+   "studio": "omenArt Tattoo",
+   "address": "Hämeenkatu 24-26, 11100 Riihimäki",
+   "city": "Riihimäki",
+   "region_raw": "Kanta-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tuukka Ahonen",
+   "studio": "One Eye Tattoi",
+   "address": "Alppikatu 3, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "One Eye Pete",
+   "studio": "One Eye Tattoo",
+   "address": "Alppikatu 3",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sinner",
+   "studio": "Original Sinner's Unicorn Factory",
+   "address": "Ahlströminkatu 21, Varkaus",
+   "city": "Varkaus",
+   "region_raw": "Pohjois-Savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Otto",
+   "studio": "Ott lee tattoo",
+   "address": "Cygnauksenkatu 9",
+   "city": "Jyväskylä",
+   "region_raw": "Jyväskylä",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Siiri H",
+   "studio": "Papa Don't Preach",
+   "address": "Sammonkatu 14-16, 33540, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Reetta",
+   "studio": "Paradise Tattoo&Piercing",
+   "address": "Kalevankatu 4, 00100 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Matti Haapala",
+   "studio": "Pata tattoo",
+   "address": "Kalliontie 27, Nivala",
+   "city": "Nivala",
+   "region_raw": "Pohjois-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ruupe Ukkonen",
+   "studio": "Pata Tattoo",
+   "address": "Näsilinnankatu 26, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Lotta Jarva",
+   "studio": "Pata Tattoo",
+   "address": "Satakunnankatu 26",
+   "city": null,
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Abenk Tattooer",
+   "studio": "Permana Ink",
+   "address": "Iso Robertinkatu 35 - 37",
+   "city": null,
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "TattooSaana",
+   "studio": "Permana Ink",
+   "address": "Iso Roobertinkatu 35-37",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Petri Paronen",
+   "studio": "Pete's Tattoo",
+   "address": "Snellmaninkatu 15, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Pihlaja tattoo",
+   "studio": "Pihlaja tattoo",
+   "address": "Kirkkokatu 14 a, 80100 Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Pikku Muusa",
+   "studio": "Pikku Muusa",
+   "address": "Keskustie 18, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tua Musakka",
+   "studio": "Pine Art & Tattoo",
+   "address": "Hämeentie 64, 00500 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "MarkoBeryl",
+   "studio": "Pine Art &Tattoo",
+   "address": "Hämeentie 64, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Pinky",
+   "studio": "Pinky Inky",
+   "address": "Porrassalmenkatu 17B, 50100 Mikkeli",
+   "city": "Mikkeli",
+   "region_raw": "Etelä-savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sanna Marjukka Tattoo",
+   "studio": "Pistokas",
+   "address": "Aleksis Kiven katu 13 D 15, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Mosse",
+   "studio": "Pitbull Tattoo & Tattoo Company",
+   "address": "Hallituskatu 11 & Hallituskatu 9 . Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Petteri Korpi",
+   "studio": "PK Tattoo",
+   "address": "Sirkkalankatu 12",
+   "city": "Turku",
+   "region_raw": "Turku",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sonja Kaski",
+   "studio": "Polaris Tattoo",
+   "address": "Snellmaninkatu 25, 00170 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Katri (Polka Ink)",
+   "studio": "Polka ink",
+   "address": "Valtakatu 10, 28100 Pori",
+   "city": "Pori",
+   "region_raw": "Satakunta, Pori",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Suski",
+   "studio": "Ramotattoo",
+   "address": "Kauppakatu 19, Rauma",
+   "city": "Rauma",
+   "region_raw": "Rauma",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ramo",
+   "studio": "RamoTattoo",
+   "address": "Kauppakatu 23",
+   "city": null,
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "adadoesart",
+   "studio": "Ramotattoo",
+   "address": "Kauppakatu 19, Rauma",
+   "city": "Rauma",
+   "region_raw": "Rauma",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Rauha Tattoo",
+   "studio": "Rauha Tattoo & Art",
+   "address": "Vanhatie 48, Pyhäjoki",
+   "city": "Pyhäjoki",
+   "region_raw": "Pohjois-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Reettattoo",
+   "studio": "Reettattoo",
+   "address": "Kempele",
+   "city": "Kempele",
+   "region_raw": "Kempele",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Freyja.and.fauna",
+   "studio": "Revontattoo",
+   "address": "kuonomäentie 1",
+   "city": "Nurmijärvi",
+   "region_raw": "nurmijärvi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jäärä.Tattoo",
+   "studio": "RevonTattoo OY",
+   "address": "Kuonomäentie 1, 01800",
+   "city": null,
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Juspe",
+   "studio": "Riverbank Tattoo",
+   "address": "Urheilukatu 2, Rauma",
+   "city": "Rauma",
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jondomi",
+   "studio": "Riverbank Tattoo",
+   "address": "Sinkokatu 19 LH 7",
+   "city": null,
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Katja",
+   "studio": "riverbank tattoo",
+   "address": "Sinkokatu 19 lh 7",
+   "city": "Rauma",
+   "region_raw": "Rauma",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "suvitattoo",
+   "studio": "Rönkkö & Moberg",
+   "address": "Pinninkatu 30, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jonna Rosa",
+   "studio": "Rosaleima",
+   "address": "Pohjoispuisto 2",
+   "city": "Pori",
+   "region_raw": "Pori",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sanna L",
+   "studio": "Sanna L Tattoo",
+   "address": "Vesijärvenkatu 11C, Lahti",
+   "city": "Lahti",
+   "region_raw": "Päijät-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Toni Korhola",
+   "studio": "Savolan Muste",
+   "address": "Olavinkatu 41",
+   "city": "Savonlinna",
+   "region_raw": "Savonlinna /etelä-savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "ssonyachristinatattoo",
+   "studio": "SC Tattoo",
+   "address": "Virpikuja 5, lt 9",
+   "city": null,
+   "region_raw": "uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Virve",
+   "studio": "Shaman arts tattoo",
+   "address": "Nokelantie 2, 90140 Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Altti",
+   "studio": "Shaman Arts Tattoo",
+   "address": "Nokelantie 2, Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jesse Silk",
+   "studio": "Silk ink",
+   "address": "Malmin raitti 17 a",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Ian",
+   "studio": "Simply Tattoo",
+   "address": "Keskustie 19, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keskisuomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Minea Mailander",
+   "studio": "Spineless Turku",
+   "address": "Juhannuskatu 10 20100 Turku",
+   "city": "Turku",
+   "region_raw": "Varsinais-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Lätkä",
+   "studio": "Spinelessturku",
+   "address": "Juhannuskatu 10",
+   "city": null,
+   "region_raw": "Varsinais-suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Susanne LA",
+   "studio": "Studio Black Cat",
+   "address": "Kalevankatu 14, Seinäjoki",
+   "city": "Seinäjoki",
+   "region_raw": "Seinäjoki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sasha Kretova",
+   "studio": "Studio Hellä",
+   "address": "Luotsikatu 3, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sointu tattoo",
+   "studio": "Studio Inuk",
+   "address": "Helsingintie 14, jörvenpää",
+   "city": "Järvenpää",
+   "region_raw": "Järvenpää",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Vesku",
+   "studio": "Studio Kaunis Alma",
+   "address": "Väinönkatu 5, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomen maakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "JonnaEmiliArt",
+   "studio": "Studio Kokko",
+   "address": "Tehtaankatu 18",
+   "city": null,
+   "region_raw": "Keski-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Bohemink",
+   "studio": "Studio Kokko",
+   "address": "Tehtaankatu 18, Kokkola",
+   "city": "Kokkola",
+   "region_raw": "Keski-pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Inna Kokko",
+   "studio": "Studio Kokko",
+   "address": "Tehtaankatu 18, 67100 Kokkola",
+   "city": "Kokkola",
+   "region_raw": "Keski-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Vihtoorink",
+   "studio": "Studio Kyy",
+   "address": "Teuvo Pakkalan tie 8 N, 00400 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tikka Nora",
+   "studio": "Studio Laura Koski",
+   "address": "Kirkkotienpää 1",
+   "city": "Pori",
+   "region_raw": "Pori",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Idis inks",
+   "studio": "Studio Laura Koski",
+   "address": "Valtakatu 7, Pori",
+   "city": "Pori",
+   "region_raw": "Satakunta",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Talvi Kuu",
+   "studio": "Studio Nokkasiili",
+   "address": "Luotsikatu 3 00160 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tuomas Koivurinne",
+   "studio": "Studio Rikuturso",
+   "address": "Keskustori 7 A 4, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": "https://www.rikuturso.com/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kipuisa Tattoo",
+   "studio": "Studio Rikuturso",
+   "address": "Keskustori 7 A 4, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": "https://www.rikuturso.com/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kalle Kukko",
+   "studio": "Studio Rikuturso",
+   "address": "Keskustori 7 A4, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": "https://www.rikuturso.com/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "iinapiina",
+   "studio": "Studio Sopu",
+   "address": "Vaasankatu 4, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Bearly Tattoo",
+   "studio": "Studio Vihreä Noita",
+   "address": "Vaasankatu 12, Jyväskylä",
+   "city": "Jyväskylä",
+   "region_raw": "Keski-Suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Laura Rebecca",
+   "studio": "Studio Vimma",
+   "address": "Sepänkatu 4-8, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Nanna Paananen",
+   "studio": "Studio Walhalla",
+   "address": "Kapernauminkatu 19, 60100 Seinäjoki",
+   "city": "Seinäjoki",
+   "region_raw": "Etelä-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "JohannArt",
+   "studio": "Taide- ja tatuointipalvelut JohannArt Oy",
+   "address": "Keskuskatu 21, 81100 Kontiolahti",
+   "city": "Kontiolahti",
+   "region_raw": "Pohjois-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Maikki",
+   "studio": "Tatska-Maikki",
+   "address": "80230 Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-Karjala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "supitattoo",
+   "studio": "tatskatytöt",
+   "address": "helsinginkatu 6, helsinki",
+   "city": "Helsinki",
+   "region_raw": "uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "DonTommiDots",
+   "studio": "Tattoo Cartel",
+   "address": "Rautatienkatu 1 B51",
+   "city": "Oulu",
+   "region_raw": "Oulu",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Riikka (Tattoo Clinic)",
+   "studio": "Tattoo Clinic",
+   "address": "Vuoreksen Puistokatu 77 lh2, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Noora / Arikatora",
+   "studio": "Tattoo Lounge Helsinki",
+   "address": "Unioninkatu 45",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Art à la Anna",
+   "studio": "Tattoo parlour Art Collective",
+   "address": "Hämeenkatu 3, Hyvinkää",
+   "city": "Hyvinkää",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jamppa Sampo",
+   "studio": "Tattoo Sampo",
+   "address": "Talvitie 19",
+   "city": null,
+   "region_raw": "pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jenni Sampo",
+   "studio": "Tattoo Sampo",
+   "address": "Kankaantaankatu 12",
+   "city": null,
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Vega Hägglund",
+   "studio": "Tattooed Salome",
+   "address": "Kauppiaankatu 13, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Mika Ilmaniemi",
+   "studio": "Tattoomika",
+   "address": "Pispalan valtatie 11, Tampere",
+   "city": "Tampere",
+   "region_raw": "Pirkanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Roosa Aho",
+   "studio": "Tattoosbyroosa",
+   "address": "Tähdenlennonkuja 1, Espoo",
+   "city": "Espoo",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Laura Merta",
+   "studio": "Tatuata",
+   "address": "Pursimiehenkatu 2, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Emma Ceau",
+   "studio": "Tatuata",
+   "address": "Pursimiehenkatu 2, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Gustav",
+   "studio": "Tatuata",
+   "address": "Pursimiehenkatu 2, Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jarno Kantanen",
+   "studio": "Tatuata",
+   "address": "Pursimiehenkatu 2, 00150 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tuomas ritola",
+   "studio": "Tatuata",
+   "address": "Pursimiehenkatu 2",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Teea",
+   "studio": "TC-ink",
+   "address": "Männistönpolku 1, Vantaa",
+   "city": "Vantaa",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Suvi Of Tear Garden",
+   "studio": "Tear Garden Tattoo co/ Papa Don't Preach",
+   "address": "Sammonkatu 14-16, 33540",
+   "city": "Tampere",
+   "region_raw": "Tampere",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "teris",
+   "studio": "teristattoo",
+   "address": "Primavera 3 a lt1",
+   "city": "Vantaa",
+   "region_raw": "vantaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Satu The Clinic",
+   "studio": "The Clinic",
+   "address": "Vesijärvenkatu 36, 15140 Lahti",
+   "city": "Lahti",
+   "region_raw": "Päijät-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Elzy",
+   "studio": "The low life collection",
+   "address": "Wallininkatu 10",
+   "city": "Helsinki",
+   "region_raw": "Helsinki",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Thunderdogtattoo",
+   "studio": "Thunderdog Tattoo",
+   "address": "Kaivokatu 29, 06100 Porvoo",
+   "city": "Porvoo",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tino",
+   "studio": "Tino's tattoo",
+   "address": "Tulliportinkatu 26",
+   "city": "Kuopio",
+   "region_raw": "Kuopio",
+   "website": "https://www.tinostattoo.fi/",
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Titta",
+   "studio": "Titta's Tattoo",
+   "address": "Niuhalanraitti 9, Vihti",
+   "city": "Vihti",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Terhi Jussila",
+   "studio": "TörKy Taide/ Neo Ink",
+   "address": "Kirkkokatu 4, Oulu",
+   "city": "Oulu",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Miamarintattoo",
+   "studio": "TRINITINK",
+   "address": "Hietakummuntie 16 Lt 2",
+   "city": null,
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tanja",
+   "studio": "Ture's tattoo",
+   "address": "Aspitie 15,Joensuu",
+   "city": "Joensuu",
+   "region_raw": "Pohjois-karjalala",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Tuta",
+   "studio": "Turku Tattoo Parlour",
+   "address": "Yliopistonkatu 9a 20100 Turku",
+   "city": "Turku",
+   "region_raw": "Varsinais-suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sammy",
+   "studio": "Turku Tattoo Parlour",
+   "address": "Satakunnantie 13, Turku",
+   "city": "Turku",
+   "region_raw": "Varsinais-suomi",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Sara Ingervo",
+   "studio": "Varkauden Tatuointiliike",
+   "address": "Kauppakatu 57, Varkaus",
+   "city": "Varkaus",
+   "region_raw": "Pohjois-Savo",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Johanna, Verigreippink",
+   "studio": "Verigreippink",
+   "address": "Ketokatu 8",
+   "city": "Oulu",
+   "region_raw": "Oulu",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Petri Uusitalo",
+   "studio": "Vieskan Muste",
+   "address": "Juurikoskenkatu 8 lh. 2, Ylivieska",
+   "city": "Ylivieska",
+   "region_raw": "Pohjois-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kata @vorssaink",
+   "studio": "Vorssa Ink",
+   "address": "Keskuskatu 7, Forssa",
+   "city": "Forssa",
+   "region_raw": "Kanta-Häme",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Jani Silvennoinen",
+   "studio": "Vortextattoo",
+   "address": "Muusantori 1 b 2 Helsinki",
+   "city": "Helsinki",
+   "region_raw": "Uusimaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Elena Sirotkaite",
+   "studio": "Yes Sir Tattoo",
+   "address": "Kirkkokatu 19, lh 10, Kotka",
+   "city": "Kotka",
+   "region_raw": "Kymenlaakso",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Kaisa Niskanen",
+   "studio": "Yksityinen työtila",
+   "address": "Jaalantie 97 47710 Jaala",
+   "city": "Jaala",
+   "region_raw": "Kymenlaakso",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  },
+  {
+   "artist": "Hessu",
+   "studio": "Zen Ink & Art",
+   "address": "Seuralantie 11, 60220 Seinäjoki",
+   "city": "Seinäjoki",
+   "region_raw": "Etelä-Pohjanmaa",
+   "website": null,
+   "instagram": null,
+   "styles": [],
+   "premium": false,
+   "verified": false,
+   "ftaa_member": true,
+   "source": "FTAA artistiluettelo (ftaa.fi/artistiluettelo) 2026-07-02"
+  }
+ ],
+ "studios_grouped": [
+  {
+   "studio": "Inkromantix",
+   "city": "Espoo",
+   "website": null,
+   "artists": [
+    "Tommi Ketonen"
+   ]
+  },
+  {
+   "studio": "Tattoosbyroosa",
+   "city": "Espoo",
+   "website": null,
+   "artists": [
+    "Roosa Aho"
+   ]
+  },
+  {
+   "studio": "Blooming Ink",
+   "city": "Forssa",
+   "website": null,
+   "artists": [
+    "Roosa-Maria Virtanen"
+   ]
+  },
+  {
+   "studio": "Hollow Bones",
+   "city": "Forssa",
+   "website": null,
+   "artists": [
+    "Eetu Nurmi"
+   ]
+  },
+  {
+   "studio": "Vorssa Ink",
+   "city": "Forssa",
+   "website": null,
+   "artists": [
+    "Kata @vorssaink"
+   ]
+  },
+  {
+   "studio": "Devils Ridge Tattoo",
+   "city": "Harjavalta",
+   "website": null,
+   "artists": [
+    "Tero Devilsridge"
+   ]
+  },
+  {
+   "studio": "Aisti Visuals",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Julia Haaranen"
+   ]
+  },
+  {
+   "studio": "Apila Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Apila Pepita Tattoo"
+   ]
+  },
+  {
+   "studio": "Better Place Tattoo parlour",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Aliina Lintulaakso"
+   ]
+  },
+  {
+   "studio": "BluePunk Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "BluePunk"
+   ]
+  },
+  {
+   "studio": "Cougar Tattoo Studio",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jenna Eerika"
+   ]
+  },
+  {
+   "studio": "Dead Rose Garden",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jeve"
+   ]
+  },
+  {
+   "studio": "Fera Obscura",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Fera Obscura"
+   ]
+  },
+  {
+   "studio": "Flow Tattoo Helsinki",
+   "city": "Helsinki",
+   "website": "https://flowtattoo.fi/",
+   "artists": [
+    "Kirvestattoo"
+   ]
+  },
+  {
+   "studio": "Golden art tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Marianne"
+   ]
+  },
+  {
+   "studio": "Golden art tattoo studio",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Tattoosbytomi"
+   ]
+  },
+  {
+   "studio": "Iki Tattoos",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jussi Vento",
+    "Antti Kuurne"
+   ]
+  },
+  {
+   "studio": "Iki tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Hanna Lehikoinen"
+   ]
+  },
+  {
+   "studio": "Impact Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jussi Kokkarinen",
+    "Outi Vihlman"
+   ]
+  },
+  {
+   "studio": "Kivun Kauneus",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jenni Kiiski"
+   ]
+  },
+  {
+   "studio": "Legacy Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Janne Vartio",
+    "Ilkka Järvinen"
+   ]
+  },
+  {
+   "studio": "Leima",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Ellen Ariana",
+    "Jole"
+   ]
+  },
+  {
+   "studio": "Liisa Pihlakas Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Liisa Pihlakas"
+   ]
+  },
+  {
+   "studio": "Nurja Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Tiia K",
+    "Iiris Sointu"
+   ]
+  },
+  {
+   "studio": "Old 7 Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jessika Elo"
+   ]
+  },
+  {
+   "studio": "One Eye Tattoi",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Tuukka Ahonen"
+   ]
+  },
+  {
+   "studio": "One Eye Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "One Eye Pete"
+   ]
+  },
+  {
+   "studio": "Paradise Tattoo&Piercing",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Reetta"
+   ]
+  },
+  {
+   "studio": "Permana Ink",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Abenk Tattooer",
+    "TattooSaana"
+   ]
+  },
+  {
+   "studio": "Pete's Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Petri Paronen"
+   ]
+  },
+  {
+   "studio": "Pine Art & Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Tua Musakka"
+   ]
+  },
+  {
+   "studio": "Pine Art &Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "MarkoBeryl"
+   ]
+  },
+  {
+   "studio": "Polaris Tattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Sonja Kaski"
+   ]
+  },
+  {
+   "studio": "Silk ink",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jesse Silk"
+   ]
+  },
+  {
+   "studio": "Studio Hellä",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Sasha Kretova"
+   ]
+  },
+  {
+   "studio": "Studio Kyy",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Vihtoorink"
+   ]
+  },
+  {
+   "studio": "Studio Nokkasiili",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Talvi Kuu"
+   ]
+  },
+  {
+   "studio": "Tattoo Lounge Helsinki",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Noora / Arikatora"
+   ]
+  },
+  {
+   "studio": "Tattooed Salome",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Vega Hägglund"
+   ]
+  },
+  {
+   "studio": "Tatuata",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Laura Merta",
+    "Emma Ceau",
+    "Gustav",
+    "Jarno Kantanen",
+    "Tuomas ritola"
+   ]
+  },
+  {
+   "studio": "The low life collection",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Elzy"
+   ]
+  },
+  {
+   "studio": "Vortextattoo",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "Jani Silvennoinen"
+   ]
+  },
+  {
+   "studio": "tatskatytöt",
+   "city": "Helsinki",
+   "website": null,
+   "artists": [
+    "supitattoo"
+   ]
+  },
+  {
+   "studio": "Lato Tattoo",
+   "city": "Himanka",
+   "website": null,
+   "artists": [
+    "Joonas J"
+   ]
+  },
+  {
+   "studio": "Art Collective",
+   "city": "Hyvinkää",
+   "website": null,
+   "artists": [
+    "Heini"
+   ]
+  },
+  {
+   "studio": "Dextera Dei Tattoo",
+   "city": "Hyvinkää",
+   "website": null,
+   "artists": [
+    "Anna Niinimäki"
+   ]
+  },
+  {
+   "studio": "Tattoo parlour Art Collective",
+   "city": "Hyvinkää",
+   "website": null,
+   "artists": [
+    "Art à la Anna"
+   ]
+  },
+  {
+   "studio": "Black Lily",
+   "city": "Hämeenlinna",
+   "website": null,
+   "artists": [
+    "Nina Silavuori"
+   ]
+  },
+  {
+   "studio": "Kekritär",
+   "city": "Ilmajoki",
+   "website": null,
+   "artists": [
+    "Kekritär"
+   ]
+  },
+  {
+   "studio": "Yksityinen työtila",
+   "city": "Jaala",
+   "website": null,
+   "artists": [
+    "Kaisa Niskanen"
+   ]
+  },
+  {
+   "studio": "Art&Tattoo Repo",
+   "city": "Joensuu",
+   "website": null,
+   "artists": [
+    "Riikka Repo"
+   ]
+  },
+  {
+   "studio": "Kaurisaho Tattoo",
+   "city": "Joensuu",
+   "website": null,
+   "artists": [
+    "Kaurisaho Tattoo"
+   ]
+  },
+  {
+   "studio": "La Familia Tattoo",
+   "city": "Joensuu",
+   "website": "https://lafamiliatattoo.fi/",
+   "artists": [
+    "Mia Leinonen",
+    "Kultainen Vitsa",
+    "Inkku Escobar",
+    "JP Tattoo",
+    "Mustalaukka Tattoo",
+    "Tasma",
+    "Pinja Holopainen"
+   ]
+  },
+  {
+   "studio": "Pihlaja tattoo",
+   "city": "Joensuu",
+   "website": null,
+   "artists": [
+    "Pihlaja tattoo"
+   ]
+  },
+  {
+   "studio": "Tatska-Maikki",
+   "city": "Joensuu",
+   "website": null,
+   "artists": [
+    "Maikki"
+   ]
+  },
+  {
+   "studio": "Ture's tattoo",
+   "city": "Joensuu",
+   "website": null,
+   "artists": [
+    "Tanja"
+   ]
+  },
+  {
+   "studio": "Bad Eggs Tattoo",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Elina Lauermaa-Jäntti"
+   ]
+  },
+  {
+   "studio": "Body CTRL",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Sakari",
+    "Seriffi-Saara"
+   ]
+  },
+  {
+   "studio": "Essi Tattoo & Art",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Essi"
+   ]
+  },
+  {
+   "studio": "Fireline Tattoo",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Antti Rossi"
+   ]
+  },
+  {
+   "studio": "Hoivalaitos",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Rieputattoo",
+    "RainyInk",
+    "SuvInk"
+   ]
+  },
+  {
+   "studio": "JM tatuointipalvelut",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Janita Mikaela"
+   ]
+  },
+  {
+   "studio": "KAISA",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Kaisatattoo"
+   ]
+  },
+  {
+   "studio": "ManaViivi",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Viivi"
+   ]
+  },
+  {
+   "studio": "Mariannastattoo",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Marianna"
+   ]
+  },
+  {
+   "studio": "Ott lee tattoo",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Otto"
+   ]
+  },
+  {
+   "studio": "Pikku Muusa",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Pikku Muusa"
+   ]
+  },
+  {
+   "studio": "Simply Tattoo",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Ian"
+   ]
+  },
+  {
+   "studio": "Studio Kaunis Alma",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Vesku"
+   ]
+  },
+  {
+   "studio": "Studio Sopu",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "iinapiina"
+   ]
+  },
+  {
+   "studio": "Studio Vihreä Noita",
+   "city": "Jyväskylä",
+   "website": null,
+   "artists": [
+    "Bearly Tattoo"
+   ]
+  },
+  {
+   "studio": "Backstage Tattoo & Beauty",
+   "city": "Järvenpää",
+   "website": null,
+   "artists": [
+    "Jani Piippu"
+   ]
+  },
+  {
+   "studio": "Studio Inuk",
+   "city": "Järvenpää",
+   "website": null,
+   "artists": [
+    "Sointu tattoo"
+   ]
+  },
+  {
+   "studio": "Deerly tattoo",
+   "city": "Karkkila",
+   "website": null,
+   "artists": [
+    "Deerly"
+   ]
+  },
+  {
+   "studio": "Black Zone Art",
+   "city": "Kauhajoki",
+   "website": null,
+   "artists": [
+    "Nina Ojala"
+   ]
+  },
+  {
+   "studio": "Reettattoo",
+   "city": "Kempele",
+   "website": null,
+   "artists": [
+    "Reettattoo"
+   ]
+  },
+  {
+   "studio": "JessInk Tattoos",
+   "city": "Keuruu",
+   "website": null,
+   "artists": [
+    "JessInk Tattoos"
+   ]
+  },
+  {
+   "studio": "Studio Kokko",
+   "city": "Kokkola",
+   "website": null,
+   "artists": [
+    "JonnaEmiliArt",
+    "Bohemink",
+    "Inna Kokko"
+   ]
+  },
+  {
+   "studio": "Taide- ja tatuointipalvelut JohannArt Oy",
+   "city": "Kontiolahti",
+   "website": null,
+   "artists": [
+    "JohannArt"
+   ]
+  },
+  {
+   "studio": "MagaLacrimaTattoo /KuuKartano",
+   "city": "Koskenkorva",
+   "website": null,
+   "artists": [
+    "MagaLacrima"
+   ]
+  },
+  {
+   "studio": "Yes Sir Tattoo",
+   "city": "Kotka",
+   "website": null,
+   "artists": [
+    "Elena Sirotkaite"
+   ]
+  },
+  {
+   "studio": "Kouvola Contemporary Tattoo & Collective",
+   "city": "Kouvola",
+   "website": null,
+   "artists": [
+    "Joni Ensio"
+   ]
+  },
+  {
+   "studio": "Hukka Tattoo",
+   "city": "Kuopio",
+   "website": null,
+   "artists": [
+    "Anski Arts",
+    "Sawoink"
+   ]
+  },
+  {
+   "studio": "Into Tattoo",
+   "city": "Kuopio",
+   "website": null,
+   "artists": [
+    "Inna Kukkaslahti"
+   ]
+  },
+  {
+   "studio": "Kerosin Ink",
+   "city": "Kuopio",
+   "website": null,
+   "artists": [
+    "Inka /Kerosin Ink"
+   ]
+  },
+  {
+   "studio": "Tino's tattoo",
+   "city": "Kuopio",
+   "website": "https://www.tinostattoo.fi/",
+   "artists": [
+    "Tino"
+   ]
+  },
+  {
+   "studio": "Ms-studio",
+   "city": "Lahti",
+   "website": null,
+   "artists": [
+    "Tattooeki",
+    "Minna Sillanpää"
+   ]
+  },
+  {
+   "studio": "Sanna L Tattoo",
+   "city": "Lahti",
+   "website": null,
+   "artists": [
+    "Sanna L"
+   ]
+  },
+  {
+   "studio": "The Clinic",
+   "city": "Lahti",
+   "website": null,
+   "artists": [
+    "Satu The Clinic"
+   ]
+  },
+  {
+   "studio": "Down Under Tattoo",
+   "city": "Lappeenranta",
+   "website": null,
+   "artists": [
+    "Katja Tsykarev",
+    "Sonja Tuomainen"
+   ]
+  },
+  {
+   "studio": "Marras Tattoo",
+   "city": "Laukaa",
+   "website": null,
+   "artists": [
+    "Jenni Pietikäinen"
+   ]
+  },
+  {
+   "studio": "Haven Ink",
+   "city": "Mikkeli",
+   "website": null,
+   "artists": [
+    "Anna-Kaisa Lajunen"
+   ]
+  },
+  {
+   "studio": "New era tattoo",
+   "city": "Mikkeli",
+   "website": null,
+   "artists": [
+    "Juha Jousinen"
+   ]
+  },
+  {
+   "studio": "Pinky Inky",
+   "city": "Mikkeli",
+   "website": null,
+   "artists": [
+    "Pinky"
+   ]
+  },
+  {
+   "studio": "Pata tattoo",
+   "city": "Nivala",
+   "website": null,
+   "artists": [
+    "Matti Haapala",
+    "Ruupe Ukkonen",
+    "Lotta Jarva"
+   ]
+  },
+  {
+   "studio": "Revontattoo",
+   "city": "Nurmijärvi",
+   "website": null,
+   "artists": [
+    "Freyja.and.fauna"
+   ]
+  },
+  {
+   "studio": "Black Diamond Tattoo Oulu",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Susanna Madelen"
+   ]
+  },
+  {
+   "studio": "Inkfinite Art",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Lauri Artto",
+    "Ella Bogdanoff"
+   ]
+  },
+  {
+   "studio": "La Muerte Ink",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Kimmo Angervaniva"
+   ]
+  },
+  {
+   "studio": "Lillium Collective",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Cat Rivers"
+   ]
+  },
+  {
+   "studio": "Manala Tattoo",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Susa_ink",
+    "Ville Paakkari",
+    "Matias Ruohomäki/ matthaios.ttt",
+    "Henna K Tattoo"
+   ]
+  },
+  {
+   "studio": "Pitbull Tattoo & Tattoo Company",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Mosse"
+   ]
+  },
+  {
+   "studio": "Shaman arts tattoo",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Virve",
+    "Altti"
+   ]
+  },
+  {
+   "studio": "Tattoo Cartel",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "DonTommiDots"
+   ]
+  },
+  {
+   "studio": "TörKy Taide/ Neo Ink",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Terhi Jussila"
+   ]
+  },
+  {
+   "studio": "Verigreippink",
+   "city": "Oulu",
+   "website": null,
+   "artists": [
+    "Johanna, Verigreippink"
+   ]
+  },
+  {
+   "studio": "Backbone Tattoo",
+   "city": "Pori",
+   "website": null,
+   "artists": [
+    "Annika Koivukorpi",
+    "Tattoo joonas"
+   ]
+  },
+  {
+   "studio": "JJS ART Tattoo Parlour",
+   "city": "Pori",
+   "website": null,
+   "artists": [
+    "Sippo"
+   ]
+  },
+  {
+   "studio": "LoitsuArt",
+   "city": "Pori",
+   "website": null,
+   "artists": [
+    "LoitsuArt"
+   ]
+  },
+  {
+   "studio": "Polka ink",
+   "city": "Pori",
+   "website": null,
+   "artists": [
+    "Katri (Polka Ink)"
+   ]
+  },
+  {
+   "studio": "Rosaleima",
+   "city": "Pori",
+   "website": null,
+   "artists": [
+    "Jonna Rosa"
+   ]
+  },
+  {
+   "studio": "Studio Laura Koski",
+   "city": "Pori",
+   "website": null,
+   "artists": [
+    "Tikka Nora",
+    "Idis inks"
+   ]
+  },
+  {
+   "studio": "Grey Bull Tattoo studio",
+   "city": "Porvoo",
+   "website": null,
+   "artists": [
+    "Soile Johanna Tattoo"
+   ]
+  },
+  {
+   "studio": "Thunderdog Tattoo",
+   "city": "Porvoo",
+   "website": null,
+   "artists": [
+    "Thunderdogtattoo"
+   ]
+  },
+  {
+   "studio": "Korpi Tattoo",
+   "city": "Pudasjärvi",
+   "website": null,
+   "artists": [
+    "Korpi Tattoo"
+   ]
+  },
+  {
+   "studio": "Rauha Tattoo & Art",
+   "city": "Pyhäjoki",
+   "website": null,
+   "artists": [
+    "Rauha Tattoo"
+   ]
+  },
+  {
+   "studio": "Needle Point Tattoo",
+   "city": "Rauma",
+   "website": null,
+   "artists": [
+    "Jukka Joensuu"
+   ]
+  },
+  {
+   "studio": "Ramotattoo",
+   "city": "Rauma",
+   "website": null,
+   "artists": [
+    "Suski",
+    "Ramo",
+    "adadoesart"
+   ]
+  },
+  {
+   "studio": "Riverbank Tattoo",
+   "city": "Rauma",
+   "website": null,
+   "artists": [
+    "Juspe",
+    "Jondomi",
+    "Katja"
+   ]
+  },
+  {
+   "studio": "Jenni Pennynen Tattoo",
+   "city": "Riihimäki",
+   "website": null,
+   "artists": [
+    "Jenni Pennynen"
+   ]
+  },
+  {
+   "studio": "Michael Aalto Tattoo Studio",
+   "city": "Riihimäki",
+   "website": null,
+   "artists": [
+    "Michael Aalto"
+   ]
+  },
+  {
+   "studio": "omenArt Tattoo",
+   "city": "Riihimäki",
+   "website": null,
+   "artists": [
+    "Reetta Huotari"
+   ]
+  },
+  {
+   "studio": "Blackwell bodyart",
+   "city": "Rovaniemi",
+   "website": null,
+   "artists": [
+    "Blackwell Ville"
+   ]
+  },
+  {
+   "studio": "Blackwellbodyart",
+   "city": "Rovaniemi",
+   "website": null,
+   "artists": [
+    "Blackwell Janita"
+   ]
+  },
+  {
+   "studio": "Cabbit Tattoo",
+   "city": "Rovaniemi",
+   "website": null,
+   "artists": [
+    "Erika Vaarala"
+   ]
+  },
+  {
+   "studio": "Halla Tattoo",
+   "city": "Rovaniemi",
+   "website": null,
+   "artists": [
+    "Erika",
+    "Anu HallaTattoo"
+   ]
+  },
+  {
+   "studio": "I Know a Place",
+   "city": "Rovaniemi",
+   "website": null,
+   "artists": [
+    "Aino Holopainen"
+   ]
+  },
+  {
+   "studio": "Savolan Muste",
+   "city": "Savonlinna",
+   "website": null,
+   "artists": [
+    "Toni Korhola"
+   ]
+  },
+  {
+   "studio": "Darkside Ink",
+   "city": "Seinäjoki",
+   "website": null,
+   "artists": [
+    "Laura De Vil"
+   ]
+  },
+  {
+   "studio": "Hardrocktattoo",
+   "city": "Seinäjoki",
+   "website": null,
+   "artists": [
+    "Tuku's Tattoo"
+   ]
+  },
+  {
+   "studio": "Studio Black Cat",
+   "city": "Seinäjoki",
+   "website": null,
+   "artists": [
+    "Susanne LA"
+   ]
+  },
+  {
+   "studio": "Studio Walhalla",
+   "city": "Seinäjoki",
+   "website": null,
+   "artists": [
+    "Nanna Paananen"
+   ]
+  },
+  {
+   "studio": "Zen Ink & Art",
+   "city": "Seinäjoki",
+   "website": null,
+   "artists": [
+    "Hessu"
+   ]
+  },
+  {
+   "studio": "Art&soul tattoo",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Koivu Ink"
+   ]
+  },
+  {
+   "studio": "Below Zero",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Lennilauha",
+    "Kerberys"
+   ]
+  },
+  {
+   "studio": "Below Zero Tattoo",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Titta Free Bird"
+   ]
+  },
+  {
+   "studio": "Fomi Studio",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Blaksnak.art"
+   ]
+  },
+  {
+   "studio": "Handpokebyjaate",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Handpokebyjaate"
+   ]
+  },
+  {
+   "studio": "Ink Studio Vanilla",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "sowina"
+   ]
+  },
+  {
+   "studio": "Kiperä Tattoo",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Kuutti Kiperä"
+   ]
+  },
+  {
+   "studio": "Papa Don't Preach",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Siiri H"
+   ]
+  },
+  {
+   "studio": "Pistokas",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Sanna Marjukka Tattoo"
+   ]
+  },
+  {
+   "studio": "Rönkkö & Moberg",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "suvitattoo"
+   ]
+  },
+  {
+   "studio": "Studio Rikuturso",
+   "city": "Tampere",
+   "website": "https://www.rikuturso.com/",
+   "artists": [
+    "Tuomas Koivurinne",
+    "Kipuisa Tattoo",
+    "Kalle Kukko"
+   ]
+  },
+  {
+   "studio": "Studio Vimma",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Laura Rebecca"
+   ]
+  },
+  {
+   "studio": "Tattoo Clinic",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Riikka (Tattoo Clinic)"
+   ]
+  },
+  {
+   "studio": "Tattoomika",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Mika Ilmaniemi"
+   ]
+  },
+  {
+   "studio": "Tear Garden Tattoo co/ Papa Don't Preach",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "Suvi Of Tear Garden"
+   ]
+  },
+  {
+   "studio": "edeninked/mustepuutarha",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "edeninked"
+   ]
+  },
+  {
+   "studio": "k.ink",
+   "city": "Tampere",
+   "website": null,
+   "artists": [
+    "ajanvaraus.ink"
+   ]
+  },
+  {
+   "studio": "Individual Ink",
+   "city": "Turku",
+   "website": null,
+   "artists": [
+    "Lasse"
+   ]
+  },
+  {
+   "studio": "Magenta Tattoo",
+   "city": "Turku",
+   "website": null,
+   "artists": [
+    "Tuija Magenta Tattoo"
+   ]
+  },
+  {
+   "studio": "PK Tattoo",
+   "city": "Turku",
+   "website": null,
+   "artists": [
+    "Petteri Korpi"
+   ]
+  },
+  {
+   "studio": "Spineless Turku",
+   "city": "Turku",
+   "website": null,
+   "artists": [
+    "Minea Mailander"
+   ]
+  },
+  {
+   "studio": "Turku Tattoo Parlour",
+   "city": "Turku",
+   "website": null,
+   "artists": [
+    "Tuta",
+    "Sammy"
+   ]
+  },
+  {
+   "studio": "Lindarte Tattoo",
+   "city": "Vaasa",
+   "website": null,
+   "artists": [
+    "Lindarte Tattoo"
+   ]
+  },
+  {
+   "studio": "TC-ink",
+   "city": "Vantaa",
+   "website": null,
+   "artists": [
+    "Teea"
+   ]
+  },
+  {
+   "studio": "teristattoo",
+   "city": "Vantaa",
+   "website": null,
+   "artists": [
+    "teris"
+   ]
+  },
+  {
+   "studio": "Original Sinner's Unicorn Factory",
+   "city": "Varkaus",
+   "website": null,
+   "artists": [
+    "Sinner"
+   ]
+  },
+  {
+   "studio": "Varkauden Tatuointiliike",
+   "city": "Varkaus",
+   "website": null,
+   "artists": [
+    "Sara Ingervo"
+   ]
+  },
+  {
+   "studio": "Titta's Tattoo",
+   "city": "Vihti",
+   "website": null,
+   "artists": [
+    "Titta"
+   ]
+  },
+  {
+   "studio": "Vieskan Muste",
+   "city": "Ylivieska",
+   "website": null,
+   "artists": [
+    "Petri Uusitalo"
+   ]
+  },
+  {
+   "studio": "Black Wings tattoo & art",
+   "city": "Ylöjärvi",
+   "website": null,
+   "artists": [
+    "Emma Bayras"
+   ]
+  },
+  {
+   "studio": "Face the pain tattoo",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Face the pain tattoo"
+   ]
+  },
+  {
+   "studio": "Henna's Ink",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Henna"
+   ]
+  },
+  {
+   "studio": "Kakola Tattoo",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Juho Laaksonen"
+   ]
+  },
+  {
+   "studio": "Kristmarian",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Kristmarian"
+   ]
+  },
+  {
+   "studio": "Laiska tattoo",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Jenni Kelokaski"
+   ]
+  },
+  {
+   "studio": "Luova",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Ottilia Mäkinen"
+   ]
+  },
+  {
+   "studio": "Maria Viirros",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Maria Viirros"
+   ]
+  },
+  {
+   "studio": "Octopussy Tattoos",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Zsofia"
+   ]
+  },
+  {
+   "studio": "RevonTattoo OY",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Jäärä.Tattoo"
+   ]
+  },
+  {
+   "studio": "SC Tattoo",
+   "city": null,
+   "website": null,
+   "artists": [
+    "ssonyachristinatattoo"
+   ]
+  },
+  {
+   "studio": "Spinelessturku",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Lätkä"
+   ]
+  },
+  {
+   "studio": "TRINITINK",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Miamarintattoo"
+   ]
+  },
+  {
+   "studio": "Tattoo Sampo",
+   "city": null,
+   "website": null,
+   "artists": [
+    "Jamppa Sampo",
+    "Jenni Sampo"
+   ]
+  }
+ ]
+}
