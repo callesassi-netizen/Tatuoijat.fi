@@ -1,0 +1,248 @@
+---
+/**
+ * Stilsida (/tyylit/{style}/): stilbeskrivning (unik fi/sv ur content),
+ * artister som gör stilen, korslänkar till städerna (stad + ?tyyli=).
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArtistCard from '../ArtistCard.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  getArtists,
+  sortArtists,
+  localizedBody,
+  cityDisplayName,
+  styleDisplayName,
+} from '../../lib/content';
+import { breadcrumbLd, itemListLd } from '../../lib/schema';
+
+interface Props {
+  style: CollectionEntry<'styles'>;
+  locale: Locale;
+}
+
+const { style, locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const allArtists = await getArtists();
+const cityById = new Map(cities.map((city) => [city.id, city]));
+const styleById = new Map(styles.map((entry) => [entry.id, entry]));
+
+const styleName = styleDisplayName(style, locale);
+const intro = localizedBody(style.body, locale);
+const artists = sortArtists(
+  allArtists.filter((artist) => artist.data.styles.includes(style.id)),
+);
+
+// Korslänka bara städer som har artister med stilen
+const citiesWithStyle = cities.filter((city) =>
+  artists.some((artist) => artist.data.city === city.id),
+);
+
+function artistMeta(artist: (typeof artists)[number]): string {
+  const city = cityById.get(artist.data.city);
+  const place = city ? cityDisplayName(city, locale) : artist.data.city;
+  return artist.data.studio ? `${place} · ${artist.data.studio}` : place;
+}
+function artistStyleNames(artist: (typeof artists)[number]): string[] {
+  return artist.data.styles.map((slug) => {
+    const entry = styleById.get(slug);
+    return entry ? styleDisplayName(entry, locale) : slug;
+  });
+}
+
+const path = `/tyylit/${style.id}/`;
+const title = t('style.metaTitle', { style: styleName, site: t('site.name') });
+const description = t('style.metaDescription', { style: styleName });
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('nav.styles'), url: new URL(p('/tyylit/'), site).href },
+  { name: styleName, url: new URL(p(path), site).href },
+]);
+const itemList = itemListLd(
+  styleName,
+  artists.map((artist) => new URL(p(`/artistit/${artist.id}/`), site).href),
+);
+---
+
+<BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(itemList)} slot="head" />
+
+  <!-- Mörk hero med stilbeskrivning -->
+  <section class="style-hero">
+    <div class="container style-hero-inner">
+      <a class="back-link ink-link" href={p('/tyylit/')}>← {t('nav.styles')}</a>
+      <p class="eyebrow">{t('style.eyebrow')}</p>
+      <h1 class="style-title">{styleName}</h1>
+      <p class="style-intro">{intro}</p>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <!-- Artister som gör stilen -->
+      <section class="section" aria-labelledby="style-artists-title">
+        <h2 class="section-title" id="style-artists-title">{t('style.artistsTitle')}</h2>
+        {
+          artists.length > 0 ? (
+            <div class="artist-grid">
+              {artists.map((artist) => (
+                <ArtistCard
+                  slug={artist.id}
+                  name={artist.data.name}
+                  meta={artistMeta(artist)}
+                  styleNames={artistStyleNames(artist)}
+                  premium={artist.data.premium}
+                  size="featured"
+                  locale={locale}
+                />
+              ))}
+            </div>
+          ) : (
+            <p class="artists-empty">
+              {t('style.artistsEmpty')}{' '}
+              <a class="ink-link empty-link" href={p('/tatuoijat/')}>{t('nav.cities')} →</a>
+            </p>
+          )
+        }
+      </section>
+
+      <!-- Korslänk till städer -->
+      {
+        citiesWithStyle.length > 0 && (
+          <section class="section" aria-labelledby="style-cities-title">
+            <h2 class="section-title section-title--small" id="style-cities-title">
+              {t('style.citiesTitle')}
+            </h2>
+            <p class="city-links">
+              {citiesWithStyle.map((city) => (
+                <a class="chip" href={p(`/tatuoijat/${city.id}/`) + `?tyyli=${style.id}`}>
+                  {t('style.inCity', {
+                    style: styleName,
+                    city: cityDisplayName(city, locale),
+                  })}
+                </a>
+              ))}
+            </p>
+          </section>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .style-hero {
+    position: relative;
+    z-index: 0;
+    background:
+      radial-gradient(110% 100% at 82% 10%, rgba(77, 50, 48, 0.22) 0%, rgba(16, 16, 20, 0) 55%),
+      var(--ink);
+  }
+  .style-hero-inner {
+    padding: 20px var(--page-pad) 56px;
+  }
+  .back-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--meta);
+  }
+  .style-hero .eyebrow {
+    margin-top: 18px;
+  }
+  .style-title {
+    font-size: 42px;
+    line-height: 1.02;
+    color: var(--text-light);
+  }
+  .style-intro {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 420px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 28px var(--page-pad) 40px;
+  }
+  .section + .section {
+    margin-top: 40px;
+  }
+  .section-title {
+    margin-bottom: 16px;
+  }
+  .section-title--small {
+    font-size: 18px;
+  }
+
+  .artist-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .artists-empty {
+    font-size: 14px;
+    color: var(--meta);
+    margin: 0;
+  }
+  .empty-link {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .city-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .style-hero-inner {
+      padding: 32px var(--page-pad) 76px;
+    }
+    .style-title {
+      font-size: 72px;
+    }
+    .style-intro {
+      font-size: 16px;
+      max-width: 560px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .sheet-inner {
+      padding: 44px var(--page-pad) 60px;
+    }
+    .section + .section {
+      margin-top: 60px;
+    }
+    .section-title {
+      margin-bottom: 22px;
+    }
+    .section-title--small {
+      font-size: 24px;
+    }
+    .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+</style>

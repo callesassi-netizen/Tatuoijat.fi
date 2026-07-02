@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import StylePage from '../../components/pages/StylePage.astro';
+
+export async function getStaticPaths() {
+  const styles = await getCollection('styles');
+  return styles.map((style) => ({ params: { style: style.id }, props: { style } }));
+}
+
+const { style } = Astro.props;
+---
+
+<StylePage style={style} locale="fi" />
