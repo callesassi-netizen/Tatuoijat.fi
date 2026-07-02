@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#e9e6df;font-family:system-ui,sans-serif}.dv-turn{padding:40px 44px 32px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 20px}.dv-tid{font:600 10px ui-monospace,Menlo,monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}.dv-tname{font:600 13px/1.2 system-ui,sans-serif;color:#1a1a1a}.dv-opts{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:9px;scroll-margin-top:16px}.dv-oid{font:600 10.5px ui-monospace,Menlo,monospace;padding:3px 7px;background:rgba(0,0,0,.08);color:#1a1a1a;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 system-ui,sans-serif;color:rgba(0,0,0,.55)}.dv-card{max-width:100%;background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.06);overflow:hidden}.dv-opt:target .dv-oid{background:#2a78d6;color:#fff}.dv-next{margin:22px 0 0;font:12px/1.5 system-ui,sans-serif;color:rgba(0,0,0,.5)}</style>
+</helmet>
+
+<section class="dv-turn" id="t3">
+<div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">Resterande sidor (artistprofil + Liity mukaan) och desktopversioner av alla — språk från <a class="dv-oid" href="#2a">2a</a>/<a class="dv-oid" href="#2b">2b</a></span></div>
+<div class="dv-opts">
+
+<!-- ============ 3a: ARTISTPROFIL MOBIL ============ -->
+<div class="dv-opt" id="3a">
+<div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>Artistprofil — mobil (portfoliot är kärnan)</div>
+<div class="dv-card" style="width:390px" data-screen-label="Artistprofil mobil 3a">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- dark hero: identity -->
+  <div style="background:#101014;padding:20px 20px 64px">
+    <a href="#2a" style="font:600 11px Inter;color:#8A8890;text-decoration:none">← Tatuoijat Helsingissä</a>
+    <div style="display:flex;align-items:center;gap:10px;margin:18px 0 8px">
+      <span style="background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+    </div>
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:36px;line-height:1.04;color:#EDEAE2">Aino Kettunen</h1>
+    <p style="margin:8px 0 0;font:400 13.5px Inter;color:#8A8890">Studio Musta Neula · Punavuori, Helsinki</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:14px">
+      <span style="font:600 11.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:5px 11px">Fineline</span>
+      <span style="font:600 11.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:5px 11px">Kasviaiheet</span>
+      <span style="font:600 11.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:5px 11px">Mustavalko</span>
+    </div>
+  </div>
+
+  <!-- sheet + floating contact card -->
+  <div style="position:relative;background:#F6F2EA;border-radius:24px 24px 0 0;margin-top:-24px;padding:0 20px 8px">
+    <div style="position:relative;margin-top:-38px;background:#fff;border-radius:16px;box-shadow:0 12px 32px rgba(16,16,20,.22);padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Varaa aika</div>
+      <div style="border:1.5px solid rgba(16,16,20,.22);color:#2B2B30;font:700 13.5px Inter;text-align:center;padding:12px;border-radius:10px">Instagram · @ainokettunen</div>
+      <div style="font:400 11.5px Inter;color:#8A8890;text-align:center">Vastaa yleensä 1–2 arkipäivässä</div>
+    </div>
+
+    <!-- portfolio: kärnan -->
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 12px">
+      <h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Portfolio</h2>
+      <span style="font:500 12px Inter;color:#8A8890">24 työtä</span>
+    </div>
+    <div style="display:flex;gap:10px">
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+        <div style="height:210px;background:#C6C3BC;border-radius:10px"></div>
+        <div style="height:150px;background:#A9A7A2;border-radius:10px"></div>
+        <div style="height:190px;background:#B8B5AE;border-radius:10px"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+        <div style="height:150px;background:#B3B0A9;border-radius:10px"></div>
+        <div style="height:220px;background:#8F8D88;border-radius:10px"></div>
+        <div style="height:180px;background:#CBC8C1;border-radius:10px"></div>
+      </div>
+    </div>
+    <div style="margin-top:14px;border:1.5px solid rgba(16,16,20,.25);border-radius:10px;text-align:center;padding:13px;font:700 13.5px Inter;color:#2B2B30">Näytä kaikki 24 työtä</div>
+
+    <!-- om -->
+    <div style="margin-top:30px">
+      <h2 style="margin:0 0 8px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#2B2B30">Tietoa</h2>
+      <p style="margin:0;font:400 14px/1.6 Inter;color:#2B2B30">Erikoistun hentoihin fineline-töihin ja kasviaiheisiin. Suunnittelen jokaisen työn yksilöllisesti — kerro ideasi, niin jatketaan siitä yhdessä.</p>
+    </div>
+
+    <!-- förtroende -->
+    <div style="margin-top:26px;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;padding:16px">
+      <h2 style="margin:0 0 12px;font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Luotettavuus</h2>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Hygieniapassi ja omavalvontasuunnitelma</span></div>
+        <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Suomen Tatuointitaiteilijat ry:n jäsen</span></div>
+        <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Studiolla vuodesta 2018</span></div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(16,16,20,.08)">
+        <div style="font:600 12.5px Inter;color:#2B2B30">Studio Musta Neula</div>
+        <div style="font:400 12.5px Inter;color:#8A8890;margin-top:2px">Iso Roobertinkatu 12, 00120 Helsinki</div>
+      </div>
+    </div>
+    <div style="height:28px"></div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3b" style="text-decoration:none;font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</a>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 3b: LIITY MUKAAN MOBIL ============ -->
+<div class="dv-opt" id="3b">
+<div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>Liity mukaan — mobil (gratis vs premium, FAQ, formulär)</div>
+<div class="dv-card" style="width:390px" data-screen-label="Liity mukaan mobil 3b">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- hero -->
+  <div style="background:#101014;padding:28px 20px 58px">
+    <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:8px">Studioille ja tatuoijille</div>
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:42px;line-height:1;color:#EDEAE2">Liity mukaan.</h1>
+    <p style="margin:12px 0 0;font:400 14.5px/1.5 Inter;color:#8A8890;max-width:320px">Näytä työsi siellä, missä asiakkaat etsivät tatuoijaa. Profiili on valmis viidessä minuutissa.</p>
+  </div>
+
+  <!-- sheet: pricing -->
+  <div style="position:relative;background:#F6F2EA;border-radius:24px 24px 0 0;margin-top:-24px;padding:28px 20px 8px">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <!-- free -->
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:14px;padding:20px">
+        <div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Ilmainen</div>
+        <div style="font:400 13px Inter;color:#8A8890;margin:2px 0 14px">0 € / vuosi</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Profiili, yhteystiedot ja tyylitunnisteet</span></div>
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">5 kuvan galleria</span></div>
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Näkyvyys kaupunki- ja tyylihauissa</span></div>
+        </div>
+        <div style="border:1.5px solid rgba(16,16,20,.22);color:#2B2B30;font:700 13.5px Inter;text-align:center;padding:12px;border-radius:10px">Luo ilmainen profiili</div>
+      </div>
+      <!-- premium -->
+      <div style="background:#101014;border-radius:14px;padding:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#EDEAE2">Premium</div>
+          <span style="background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="font:400 13px Inter;color:#8A8890;margin:2px 0 14px">190–290 € / vuosi</div>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#EDEAE2">✓</span><span style="font:400 13px Inter;color:#EDEAE2">Featured-paikka etusivulla ja kaupunkisivulla</span></div>
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#EDEAE2">✓</span><span style="font:400 13px Inter;color:#EDEAE2">24 kuvan galleria</span></div>
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#EDEAE2">✓</span><span style="font:400 13px Inter;color:#EDEAE2">Kärkipaikka hakutuloksissa</span></div>
+          <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#EDEAE2">✓</span><span style="font:400 13px Inter;color:#EDEAE2">Kaikki ilmaisen ominaisuudet</span></div>
+        </div>
+        <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Aloita Premium</div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div style="margin-top:32px">
+      <h2 style="margin:0 0 12px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Usein kysyttyä</h2>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:14px 16px"><span style="font:600 13.5px Inter;color:#2B2B30">Kuka voi liittyä?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:14px 16px"><span style="font:600 13.5px Inter;color:#2B2B30">Miten Featured-paikat jaetaan?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:14px 16px"><span style="font:600 13.5px Inter;color:#2B2B30">Voinko perua milloin vain?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:14px 16px"><span style="font:600 13.5px Inter;color:#2B2B30">Kenellä on oikeudet kuviin?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+      </div>
+    </div>
+
+    <!-- form -->
+    <div style="margin-top:32px;padding-bottom:28px">
+      <h2 style="margin:0 0 12px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Ilmoittaudu</h2>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px">
+        <div style="background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Nimi tai studio</div><div style="font:400 14px Inter;color:#8A8890">Esim. Studio Musta Neula</div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</div><div style="font:400 14px Inter;color:#8A8890">Valitse</div></div><span style="color:#8A8890;font-size:12px">▾</span></div>
+        <div style="background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Sähköposti</div><div style="font:400 14px Inter;color:#8A8890">nimi@studio.fi</div></div>
+        <div style="background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Instagram (valinnainen)</div><div style="font:400 14px Inter;color:#8A8890">@kayttajanimi</div></div>
+        <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Lähetä hakemus</div>
+        <div style="font:400 11.5px Inter;color:#8A8890;text-align:center">Vastaamme kahden arkipäivän sisällä.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 3c: HEM DESKTOP ============ -->
+<div class="dv-opt" id="3c">
+<div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Hem — desktop 1440 (samma system som <a class="dv-oid" href="#2b">2b</a>)</div>
+<div class="dv-card" style="width:1440px" data-screen-label="Hem desktop 3c">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#101014">
+    <span style="font-family:'Archivo Black',sans-serif;font-size:20px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3f" style="font:600 12.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.35);border-radius:999px;padding:8px 16px;text-decoration:none">Studioille: Liity mukaan</a>
+    </div>
+  </div>
+
+  <!-- hero: typo + sök vänster, collage höger -->
+  <div style="background:#101014;padding:48px 48px 0;display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:end">
+    <div style="padding-bottom:64px">
+      <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:110px;line-height:.92;letter-spacing:.01em;color:#EDEAE2">MUSTE</h1>
+      <p style="margin:18px 0 0;font:400 17px/1.55 Inter;color:#8A8890;max-width:460px">Suomen tatuoijat ja studiot yhdessä paikassa. Selaa portfolioita, vertaile tyylejä ja löydä oma artistisi.</p>
+      <div style="display:flex;align-items:stretch;margin-top:28px;background:#fff;border-radius:12px;overflow:hidden;max-width:580px">
+        <div style="flex:1.1;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:12px 18px">
+          <span style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</span>
+          <span style="font:500 14.5px Inter;color:#2B2B30">Kaikki kaupungit ▾</span>
+        </div>
+        <div style="width:1px;background:rgba(16,16,20,.12);margin:10px 0"></div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:12px 18px">
+          <span style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</span>
+          <span style="font:500 14.5px Inter;color:#2B2B30">Kaikki tyylit ▾</span>
+        </div>
+        <div style="display:flex;align-items:center;background:#C7361B;color:#fff;font:700 14px Inter;padding:0 26px">Näytä tatuoijat</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px">
+        <span style="font:500 12px Inter;color:#8A8890">Suosittua:</span>
+        <a href="#3d" style="text-decoration:none;font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Helsinki</a>
+        <span style="font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Tampere</span>
+        <span style="font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Turku</span>
+        <span style="font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Oulu</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:flex-end">
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:flex-end">
+        <div style="height:150px;background:#55535A;border-radius:8px"></div>
+        <div style="height:196px;background:#3E3E46;border-radius:8px 8px 0 0"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:flex-end">
+        <div style="height:110px;background:#4A4A52;border-radius:8px"></div>
+        <div style="height:240px;background:#6E6C73;border-radius:8px 8px 0 0"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:10px;justify-content:flex-end">
+        <div style="height:170px;background:#66646B;border-radius:8px"></div>
+        <div style="height:210px;background:#45434B;border-radius:8px 8px 0 0"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- sheet -->
+  <div style="position:relative;background:#F6F2EA;border-radius:32px 32px 0 0;margin-top:-30px;padding:44px 48px 8px">
+
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px">
+      <div><div style="font:700 10.5px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:5px">Premium</div><h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:30px;color:#2B2B30">Nostetut artistit</h2></div>
+      <a href="#3c" style="font:600 13px Inter;color:#2B2B30">Kaikki →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <a href="#3e" style="text-decoration:none;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden;display:block">
+        <div style="position:relative;height:230px;background:#C6C3BC"><span style="position:absolute;top:14px;left:14px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Aino Kettunen</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Helsinki · Studio Musta Neula</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span></div>
+        </div>
+      </a>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="position:relative;height:230px;background:#B3B0A9"><span style="position:absolute;top:14px;left:14px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Ville Rautio</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Tampere · Rauta Ink</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Realismi</span><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Mustavalko</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="position:relative;height:230px;background:#9C9992"><span style="position:absolute;top:14px;left:14px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Noora Heikkinen</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Turku · Musta Ruusu</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Blackwork</span><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Ornamentti</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- styles grid -->
+    <div style="margin-top:52px">
+      <div style="font:700 10.5px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:5px">Tyylit</div>
+      <h2 style="margin:0 0 18px;font-family:'Archivo Black',sans-serif;font-size:30px;color:#2B2B30">Selaa tyylin mukaan</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div style="position:relative;height:190px;border-radius:12px;background:#A9A7A2"><span style="position:absolute;left:16px;bottom:13px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Realismi</span></div>
+        <div style="position:relative;height:190px;border-radius:12px;background:#C2C0BB"><span style="position:absolute;left:16px;bottom:13px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Fineline</span></div>
+        <div style="position:relative;height:190px;border-radius:12px;background:#8F8D88"><span style="position:absolute;left:16px;bottom:13px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Blackwork</span></div>
+        <div style="position:relative;height:190px;border-radius:12px;background:#B5B2AB"><span style="position:absolute;left:16px;bottom:13px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Traditional</span></div>
+        <div style="position:relative;height:190px;border-radius:12px;background:#9C9A95"><span style="position:absolute;left:16px;bottom:13px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Japanilainen</span></div>
+        <div style="position:relative;height:190px;border-radius:12px;background:#CBC8C1"><span style="position:absolute;left:16px;bottom:13px;font-family:'Archivo Black',sans-serif;font-size:18px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Geometrinen</span></div>
+      </div>
+    </div>
+
+    <!-- cities -->
+    <div style="margin-top:52px;padding-bottom:44px">
+      <div style="font:700 10.5px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:5px">Kaupungit</div>
+      <h2 style="margin:0 0 18px;font-family:'Archivo Black',sans-serif;font-size:30px;color:#2B2B30">Selaa kaupungin mukaan</h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <a href="#3d" style="text-decoration:none;background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:18px 20px;display:block"><div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Helsinki</div><div style="font:400 13px Inter;color:#8A8890;margin-top:2px">124 tatuoijaa</div></a>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:18px 20px"><div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Tampere</div><div style="font:400 13px Inter;color:#8A8890;margin-top:2px">43 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:18px 20px"><div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Turku</div><div style="font:400 13px Inter;color:#8A8890;margin-top:2px">38 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:18px 20px"><div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Oulu</div><div style="font:400 13px Inter;color:#8A8890;margin-top:2px">21 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:18px 20px"><div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Jyväskylä</div><div style="font:400 13px Inter;color:#8A8890;margin-top:2px">17 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:18px 20px"><div style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Kuopio</div><div style="font:400 13px Inter;color:#8A8890;margin-top:2px">12 tatuoijaa</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- näin se toimii -->
+  <div style="background:#101014;padding:48px 48px 52px">
+    <div style="font:700 10.5px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:5px">Näin se toimii</div>
+    <h2 style="margin:0 0 26px;font-family:'Archivo Black',sans-serif;font-size:30px;color:#EDEAE2">Kolme askelta artistiin</h2>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:36px">
+      <div style="display:flex;gap:16px"><span style="font-family:'Archivo Black',sans-serif;font-size:34px;color:#4A4A52;line-height:1">01</span><div><div style="font:700 15px Inter;color:#EDEAE2">Etsi kaupungin tai tyylin mukaan</div><div style="font:400 13.5px/1.55 Inter;color:#8A8890;margin-top:5px">Selaa tatuoijia omasta kaupungistasi tai etsi juuri sinun tyylisi osaajaa.</div></div></div>
+      <div style="display:flex;gap:16px"><span style="font-family:'Archivo Black',sans-serif;font-size:34px;color:#4A4A52;line-height:1">02</span><div><div style="font:700 15px Inter;color:#EDEAE2">Vertaile portfolioita</div><div style="font:400 13.5px/1.55 Inter;color:#8A8890;margin-top:5px">Kaikki työt yhdessä paikassa. Katso, kenen jälki puhuttelee.</div></div></div>
+      <div style="display:flex;gap:16px"><span style="font-family:'Archivo Black',sans-serif;font-size:34px;color:#4A4A52;line-height:1">03</span><div><div style="font:700 15px Inter;color:#EDEAE2">Ota yhteyttä suoraan</div><div style="font:400 13.5px/1.55 Inter;color:#8A8890;margin-top:5px">Viesti artistille tai varaa aika — ilman välikäsiä.</div></div></div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;border-top:1px solid rgba(237,234,226,.12);padding:32px 48px 38px;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">MUSTE</div><div style="font:400 12.5px Inter;color:#8A8890;margin-top:5px">© 2026 Muste — Suomen tatuoijat yhdessä paikassa.</div></div>
+    <div style="display:flex;align-items:center;gap:26px">
+      <span style="font:500 13px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3f" style="text-decoration:none;font:500 13px Inter;color:#EDEAE2">Studioille: Liity mukaan</a>
+      <span style="font:600 12px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 3d: STADSSIDA DESKTOP ============ -->
+<div class="dv-opt" id="3d">
+<div class="dv-olabel"><a class="dv-oid" href="#3d">3d</a>Stadssida — desktop (featured överst i 3-kolumnsgrid)</div>
+<div class="dv-card" style="width:1440px" data-screen-label="Stadssida desktop 3d">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#101014">
+    <a href="#3c" style="text-decoration:none;font-family:'Archivo Black',sans-serif;font-size:20px;letter-spacing:.06em;color:#EDEAE2">MUSTE</a>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3f" style="font:600 12.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.35);border-radius:999px;padding:8px 16px;text-decoration:none">Studioille: Liity mukaan</a>
+    </div>
+  </div>
+
+  <div style="background:#101014;padding:32px 48px 0;display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end">
+    <div style="padding-bottom:70px">
+      <a href="#3c" style="font:600 12px Inter;color:#8A8890;text-decoration:none">← Etusivu</a>
+      <div style="font:700 10.5px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin:20px 0 8px">Kaupunki</div>
+      <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:52px;line-height:1.02;color:#EDEAE2">Tatuoijat Helsingissä</h1>
+      <p style="margin:14px 0 0;font:400 15.5px/1.55 Inter;color:#8A8890;max-width:460px">124 tatuoijaa ja 38 studiota. Selaa portfolioita ja suodata tyylin mukaan.</p>
+    </div>
+    <div style="display:flex;gap:8px;align-items:flex-end">
+      <div style="flex:none;width:150px;height:110px;background:#4A4A52;border-radius:8px 8px 0 0"></div>
+      <div style="flex:none;width:190px;height:84px;background:#5A5860;border-radius:8px 8px 0 0"></div>
+      <div style="flex:none;width:120px;height:128px;background:#3E3E46;border-radius:8px 8px 0 0"></div>
+      <div style="flex:none;width:160px;height:96px;background:#66646B;border-radius:8px 8px 0 0"></div>
+    </div>
+  </div>
+
+  <div style="position:relative;background:#F6F2EA;border-radius:32px 32px 0 0;margin-top:-26px;padding:0 48px 8px">
+    <!-- floating search bar -->
+    <div style="position:relative;margin-top:-40px;background:#fff;border-radius:16px;box-shadow:0 12px 32px rgba(16,16,20,.22);padding:14px 16px;display:flex;align-items:center;gap:14px">
+      <div style="display:flex;flex-direction:column;gap:1px;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:9px 16px;min-width:210px">
+        <span style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</span>
+        <span style="font:600 14px Inter;color:#2B2B30">Helsinki ▾</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1px;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:9px 16px;min-width:210px">
+        <span style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</span>
+        <span style="font:500 14px Inter;color:#2B2B30">Kaikki tyylit ▾</span>
+      </div>
+      <div style="background:#C7361B;color:#fff;font:700 14px Inter;padding:16px 26px;border-radius:10px">Näytä tatuoijat</div>
+      <div style="width:1px;align-self:stretch;background:rgba(16,16,20,.1);margin:2px 4px"></div>
+      <span style="font:500 12px Inter;color:#8A8890">Vaihda:</span>
+      <span style="font:600 12px Inter;color:#fff;background:#C7361B;border-radius:999px;padding:6px 13px">Helsinki</span>
+      <span style="font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:6px 13px">Tampere</span>
+      <span style="font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:6px 13px">Turku</span>
+      <span style="font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:6px 13px">Oulu</span>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:26px 0 16px">
+      <div style="display:flex;gap:8px">
+        <span style="font:600 12.5px Inter;color:#fff;background:#C7361B;border-radius:999px;padding:8px 15px">Kaikki</span>
+        <span style="font:600 12.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:8px 15px">Realismi</span>
+        <span style="font:600 12.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:8px 15px">Fineline</span>
+        <span style="font:600 12.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:8px 15px">Blackwork</span>
+        <span style="font:600 12.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:8px 15px">Traditional</span>
+        <span style="font:600 12.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:8px 15px">Japanilainen</span>
+        <span style="font:600 12.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:8px 15px">Geometrinen</span>
+      </div>
+      <span style="font:600 12.5px Inter;color:#2B2B30">124 tulosta · Järjestä: Suositellut ▾</span>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+      <a href="#3e" style="text-decoration:none;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden;display:block">
+        <div style="position:relative;height:230px;background:#C6C3BC"><span style="position:absolute;top:14px;left:14px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Aino Kettunen</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Punavuori · Studio Musta Neula</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span></div>
+        </div>
+      </a>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="position:relative;height:230px;background:#B3B0A9"><span style="position:absolute;top:14px;left:14px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Leo Vainio</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Kallio · Vainio Tattoo</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Japanilainen</span><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Värityöt</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="height:230px;background:#BEBBB4"></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Miro Salmela</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Kallio</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Blackwork</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="height:230px;background:#ABA8A1"></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Emmi Virtanen</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Sörnäinen</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Traditional</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="height:230px;background:#C8C5BE"></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Joel Niemi</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Töölö</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Realismi</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:14px;overflow:hidden">
+        <div style="height:230px;background:#9C9992"></div>
+        <div style="padding:16px 18px 18px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:16px;color:#2B2B30">Sara Koskinen</div>
+          <div style="font:400 13px Inter;color:#8A8890;margin:3px 0 11px">Punavuori</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap"><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Geometrinen</span><span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin:26px auto 40px;max-width:340px;border:1.5px solid rgba(16,16,20,.25);border-radius:10px;text-align:center;padding:14px;font:700 14px Inter;color:#2B2B30">Näytä lisää (118)</div>
+  </div>
+
+  <div style="background:#101014;border-top:1px solid rgba(237,234,226,.12);padding:32px 48px 38px;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">MUSTE</div><div style="font:400 12.5px Inter;color:#8A8890;margin-top:5px">© 2026 Muste — Suomen tatuoijat yhdessä paikassa.</div></div>
+    <div style="display:flex;align-items:center;gap:26px">
+      <span style="font:500 13px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3f" style="text-decoration:none;font:500 13px Inter;color:#EDEAE2">Studioille: Liity mukaan</a>
+      <span style="font:600 12px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 3e: ARTISTPROFIL DESKTOP ============ -->
+<div class="dv-opt" id="3e">
+<div class="dv-olabel"><a class="dv-oid" href="#3e">3e</a>Artistprofil — desktop (portfolio 3 kolumner + sidopanel för kontakt/förtroende)</div>
+<div class="dv-card" style="width:1440px" data-screen-label="Artistprofil desktop 3e">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#101014">
+    <a href="#3c" style="text-decoration:none;font-family:'Archivo Black',sans-serif;font-size:20px;letter-spacing:.06em;color:#EDEAE2">MUSTE</a>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3f" style="font:600 12.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.35);border-radius:999px;padding:8px 16px;text-decoration:none">Studioille: Liity mukaan</a>
+    </div>
+  </div>
+
+  <div style="background:#101014;padding:32px 48px 72px">
+    <a href="#3d" style="font:600 12px Inter;color:#8A8890;text-decoration:none">← Tatuoijat Helsingissä</a>
+    <div style="margin:22px 0 10px"><span style="background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span></div>
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:54px;line-height:1;color:#EDEAE2">Aino Kettunen</h1>
+    <p style="margin:10px 0 0;font:400 15px Inter;color:#8A8890">Studio Musta Neula · Punavuori, Helsinki</p>
+    <div style="display:flex;gap:7px;margin-top:16px">
+      <span style="font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Fineline</span>
+      <span style="font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Kasviaiheet</span>
+      <span style="font:600 12px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:6px 13px">Mustavalko</span>
+    </div>
+  </div>
+
+  <div style="position:relative;background:#F6F2EA;border-radius:32px 32px 0 0;margin-top:-26px;padding:0 48px 8px">
+    <div style="display:grid;grid-template-columns:1fr 340px;gap:44px;align-items:start">
+
+      <!-- portfolio -->
+      <div style="padding-top:30px">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+          <h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:26px;color:#2B2B30">Portfolio</h2>
+          <span style="font:500 13px Inter;color:#8A8890">24 työtä</span>
+        </div>
+        <div style="columns:3;column-gap:14px">
+          <div style="break-inside:avoid;height:240px;background:#C6C3BC;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:180px;background:#A9A7A2;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:210px;background:#B8B5AE;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:170px;background:#B3B0A9;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:250px;background:#8F8D88;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:190px;background:#CBC8C1;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:220px;background:#9C9992;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:160px;background:#C2C0BB;border-radius:10px;margin-bottom:14px"></div>
+          <div style="break-inside:avoid;height:200px;background:#ABA8A1;border-radius:10px;margin-bottom:14px"></div>
+        </div>
+        <div style="margin:8px 0 40px;border:1.5px solid rgba(16,16,20,.25);border-radius:10px;text-align:center;padding:14px;font:700 14px Inter;color:#2B2B30">Näytä kaikki 24 työtä</div>
+      </div>
+
+      <!-- sidebar -->
+      <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:40px">
+        <div style="position:relative;margin-top:-44px;background:#fff;border-radius:16px;box-shadow:0 12px 32px rgba(16,16,20,.22);padding:18px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Varaa aika</div>
+          <div style="border:1.5px solid rgba(16,16,20,.22);color:#2B2B30;font:700 13.5px Inter;text-align:center;padding:12px;border-radius:10px">Instagram · @ainokettunen</div>
+          <div style="font:400 11.5px Inter;color:#8A8890;text-align:center">Vastaa yleensä 1–2 arkipäivässä</div>
+        </div>
+        <div>
+          <h2 style="margin:0 0 8px;font-family:'Archivo Black',sans-serif;font-size:17px;color:#2B2B30">Tietoa</h2>
+          <p style="margin:0;font:400 14px/1.6 Inter;color:#2B2B30">Erikoistun hentoihin fineline-töihin ja kasviaiheisiin. Suunnittelen jokaisen työn yksilöllisesti — kerro ideasi, niin jatketaan siitä yhdessä.</p>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;padding:16px">
+          <h2 style="margin:0 0 12px;font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Luotettavuus</h2>
+          <div style="display:flex;flex-direction:column;gap:9px">
+            <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Hygieniapassi ja omavalvontasuunnitelma</span></div>
+            <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Suomen Tatuointitaiteilijat ry:n jäsen</span></div>
+            <div style="display:flex;gap:9px;align-items:baseline"><span style="font:700 12px Inter;color:#2B2B30">✓</span><span style="font:400 13px Inter;color:#2B2B30">Studiolla vuodesta 2018</span></div>
+          </div>
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(16,16,20,.08)">
+            <div style="font:600 12.5px Inter;color:#2B2B30">Studio Musta Neula</div>
+            <div style="font:400 12.5px Inter;color:#8A8890;margin-top:2px">Iso Roobertinkatu 12, 00120 Helsinki</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#101014;padding:32px 48px 38px;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">MUSTE</div><div style="font:400 12.5px Inter;color:#8A8890;margin-top:5px">© 2026 Muste — Suomen tatuoijat yhdessä paikassa.</div></div>
+    <div style="display:flex;align-items:center;gap:26px">
+      <span style="font:500 13px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13px Inter;color:#EDEAE2">Tyylit</span>
+      <a href="#3f" style="text-decoration:none;font:500 13px Inter;color:#EDEAE2">Studioille: Liity mukaan</a>
+      <span style="font:600 12px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 3f: LIITY MUKAAN DESKTOP ============ -->
+<div class="dv-opt" id="3f">
+<div class="dv-olabel"><a class="dv-oid" href="#3f">3f</a>Liity mukaan — desktop (prisjämförelse, FAQ + formulär sida vid sida)</div>
+<div class="dv-card" style="width:1440px" data-screen-label="Liity mukaan desktop 3f">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 48px;background:#101014">
+    <a href="#3c" style="text-decoration:none;font-family:'Archivo Black',sans-serif;font-size:20px;letter-spacing:.06em;color:#EDEAE2">MUSTE</a>
+    <div style="display:flex;align-items:center;gap:28px">
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:600 12.5px Inter;color:#101014;background:#EDEAE2;border-radius:999px;padding:8px 16px">Studioille: Liity mukaan</span>
+    </div>
+  </div>
+
+  <div style="background:#101014;padding:56px 48px 76px">
+    <div style="font:700 10.5px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:10px">Studioille ja tatuoijille</div>
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:72px;line-height:.96;color:#EDEAE2">Liity mukaan.</h1>
+    <p style="margin:16px 0 0;font:400 16px/1.55 Inter;color:#8A8890;max-width:520px">Näytä työsi siellä, missä asiakkaat etsivät tatuoijaa. Profiili on valmis viidessä minuutissa.</p>
+  </div>
+
+  <div style="position:relative;background:#F6F2EA;border-radius:32px 32px 0 0;margin-top:-26px;padding:44px 48px 8px">
+
+    <!-- pricing -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:940px;margin:0 auto">
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:16px;padding:28px">
+        <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#2B2B30">Ilmainen</div>
+        <div style="font:400 14px Inter;color:#8A8890;margin:3px 0 18px">0 € / vuosi</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#2B2B30">✓</span><span style="font:400 14px Inter;color:#2B2B30">Profiili, yhteystiedot ja tyylitunnisteet</span></div>
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#2B2B30">✓</span><span style="font:400 14px Inter;color:#2B2B30">5 kuvan galleria</span></div>
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#2B2B30">✓</span><span style="font:400 14px Inter;color:#2B2B30">Näkyvyys kaupunki- ja tyylihauissa</span></div>
+        </div>
+        <div style="border:1.5px solid rgba(16,16,20,.22);color:#2B2B30;font:700 14px Inter;text-align:center;padding:13px;border-radius:10px">Luo ilmainen profiili</div>
+      </div>
+      <div style="background:#101014;border-radius:16px;padding:28px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">Premium</div>
+          <span style="background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="font:400 14px Inter;color:#8A8890;margin:3px 0 18px">190–290 € / vuosi</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:22px">
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#EDEAE2">✓</span><span style="font:400 14px Inter;color:#EDEAE2">Featured-paikka etusivulla ja kaupunkisivulla</span></div>
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#EDEAE2">✓</span><span style="font:400 14px Inter;color:#EDEAE2">24 kuvan galleria</span></div>
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#EDEAE2">✓</span><span style="font:400 14px Inter;color:#EDEAE2">Kärkipaikka hakutuloksissa</span></div>
+          <div style="display:flex;gap:10px;align-items:baseline"><span style="font:700 13px Inter;color:#EDEAE2">✓</span><span style="font:400 14px Inter;color:#EDEAE2">Kaikki ilmaisen ominaisuudet</span></div>
+        </div>
+        <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Aloita Premium</div>
+      </div>
+    </div>
+
+    <!-- FAQ + form -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;max-width:940px;margin:52px auto 0;padding-bottom:44px;align-items:start">
+      <div>
+        <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:24px;color:#2B2B30">Usein kysyttyä</h2>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:15px 18px"><span style="font:600 14px Inter;color:#2B2B30">Kuka voi liittyä?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:15px 18px"><span style="font:600 14px Inter;color:#2B2B30">Miten Featured-paikat jaetaan?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:15px 18px"><span style="font:600 14px Inter;color:#2B2B30">Voinko perua milloin vain?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:10px;padding:15px 18px"><span style="font:600 14px Inter;color:#2B2B30">Kenellä on oikeudet kuviin?</span><span style="font:400 18px Inter;color:#8A8890">+</span></div>
+        </div>
+      </div>
+      <div>
+        <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:24px;color:#2B2B30">Ilmoittaudu</h2>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Nimi tai studio</div><div style="font:400 14px Inter;color:#8A8890">Esim. Studio Musta Neula</div></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</div><div style="font:400 14px Inter;color:#8A8890">Valitse</div></div><span style="color:#8A8890;font-size:12px">▾</span></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Sähköposti</div><div style="font:400 14px Inter;color:#8A8890">nimi@studio.fi</div></div>
+            <div style="background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px"><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Instagram (valinnainen)</div><div style="font:400 14px Inter;color:#8A8890">@kayttajanimi</div></div>
+          </div>
+          <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Lähetä hakemus</div>
+          <div style="font:400 11.5px Inter;color:#8A8890;text-align:center">Vastaamme kahden arkipäivän sisällä.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:#101014;padding:32px 48px 38px;display:flex;justify-content:space-between;align-items:center">
+    <div><div style="font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">MUSTE</div><div style="font:400 12.5px Inter;color:#8A8890;margin-top:5px">© 2026 Muste — Suomen tatuoijat yhdessä paikassa.</div></div>
+    <div style="display:flex;align-items:center;gap:26px">
+      <span style="font:500 13px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 13px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 13px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+      <span style="font:600 12px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Prova: "koppla ihop hela klickflödet till en skarp prototyp" · "visa fler portfoliobilder i <a class="dv-oid" href="#3a">3a</a>" · "justera prissättningen i <a class="dv-oid" href="#3b">3b</a>"</p>
+</section>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Stadssida baserad på <a class="dv-oid" href="#1b">1b</a> + Hem med justeringarna (kompakt hero, sök över vecket, chips under knappen, karusell-peek)</span></div>
+<div class="dv-opts">
+
+<!-- ============ 2a: STADSSIDA ============ -->
+<div class="dv-opt" id="2a">
+<div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a>Stadssida — Tatuoijat Helsingissä (featured överst, gratis-kort ser kompletta ut)</div>
+<div class="dv-card" style="width:390px" data-screen-label="Stadssida Helsinki 2a">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <!-- header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- compact dark hero -->
+  <div style="background:#101014;padding:20px 20px 0">
+    <a href="#2b" style="font:600 11px Inter;color:#8A8890;text-decoration:none">← Etusivu</a>
+    <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin:16px 0 6px">Kaupunki</div>
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:34px;line-height:1.06;color:#EDEAE2">Tatuoijat Helsingissä</h1>
+    <p style="margin:10px 0 0;font:400 14px/1.5 Inter;color:#8A8890;max-width:320px">124 tatuoijaa ja 38 studiota. Selaa portfolioita ja suodata tyylin mukaan.</p>
+    <!-- thin filmstrip, cut by sheet -->
+    <div style="display:flex;gap:6px;margin-top:18px;overflow:hidden;align-items:flex-end">
+      <div style="flex:none;width:92px;height:64px;background:#4A4A52;border-radius:6px 6px 0 0"></div>
+      <div style="flex:none;width:118px;height:50px;background:#5A5860;border-radius:6px 6px 0 0"></div>
+      <div style="flex:none;width:76px;height:72px;background:#3E3E46;border-radius:6px 6px 0 0"></div>
+      <div style="flex:none;width:108px;height:56px;background:#66646B;border-radius:6px 6px 0 0"></div>
+    </div>
+  </div>
+
+  <!-- bone sheet + floating search card -->
+  <div style="position:relative;background:#F6F2EA;border-radius:24px 24px 0 0;margin-top:-20px;padding:0 20px 8px">
+    <div style="position:relative;margin-top:-40px;background:#fff;border-radius:16px;box-shadow:0 12px 32px rgba(16,16,20,.22);padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</div><div style="font:600 14px Inter;color:#2B2B30">Helsinki</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki tyylit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Näytä tatuoijat</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="font:500 11px Inter;color:#8A8890">Vaihda:</span>
+        <span style="font:600 11.5px Inter;color:#fff;background:#C7361B;border-radius:999px;padding:5px 11px">Helsinki</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Tampere</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Turku</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Oulu</span>
+      </div>
+    </div>
+
+    <!-- style filter chips -->
+    <div style="display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin:20px -20px 0;padding:0 20px 4px">
+      <span style="flex:none;font:600 12px Inter;color:#fff;background:#C7361B;border-radius:999px;padding:7px 14px">Kaikki</span>
+      <span style="flex:none;font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:7px 14px">Realismi</span>
+      <span style="flex:none;font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:7px 14px">Fineline</span>
+      <span style="flex:none;font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:7px 14px">Blackwork</span>
+      <span style="flex:none;font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:7px 14px">Traditional</span>
+      <span style="flex:none;font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:7px 14px">Japanilainen</span>
+      <span style="flex:none;font:600 12px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:7px 14px">Geometrinen</span>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:baseline;margin:16px 0 12px">
+      <span style="font:500 12.5px Inter;color:#8A8890">124 tulosta</span>
+      <span style="font:600 12px Inter;color:#2B2B30">Järjestä: Suositellut ▾</span>
+    </div>
+
+    <!-- featured first -->
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="position:relative;height:190px;background:#C6C3BC">
+          <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="padding:14px 16px 16px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Aino Kettunen</div>
+          <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Punavuori · Studio Musta Neula</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span>
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="position:relative;height:190px;background:#B3B0A9">
+          <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="padding:14px 16px 16px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Leo Vainio</div>
+          <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Kallio · Vainio Tattoo</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Japanilainen</span>
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Värityöt</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- regular listings: same anatomy, 2-col -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px">
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="height:140px;background:#BEBBB4"></div>
+        <div style="padding:11px 12px 13px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:13px;color:#2B2B30">Miro Salmela</div>
+          <div style="font:400 11.5px Inter;color:#8A8890;margin:2px 0 8px">Kallio</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap"><span style="font:600 10px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:3px 8px">Blackwork</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="height:140px;background:#ABA8A1"></div>
+        <div style="padding:11px 12px 13px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:13px;color:#2B2B30">Emmi Virtanen</div>
+          <div style="font:400 11.5px Inter;color:#8A8890;margin:2px 0 8px">Sörnäinen</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap"><span style="font:600 10px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:3px 8px">Traditional</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="height:140px;background:#C8C5BE"></div>
+        <div style="padding:11px 12px 13px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:13px;color:#2B2B30">Joel Niemi</div>
+          <div style="font:400 11.5px Inter;color:#8A8890;margin:2px 0 8px">Töölö</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap"><span style="font:600 10px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:3px 8px">Realismi</span></div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="height:140px;background:#9C9992"></div>
+        <div style="padding:11px 12px 13px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:13px;color:#2B2B30">Sara Koskinen</div>
+          <div style="font:400 11.5px Inter;color:#8A8890;margin:2px 0 8px">Punavuori</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap"><span style="font:600 10px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:3px 8px">Geometrinen</span><span style="font:600 10px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:3px 8px">Fineline</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin:18px 0 28px;border:1.5px solid rgba(16,16,20,.25);border-radius:10px;text-align:center;padding:13px;font:700 13.5px Inter;color:#2B2B30">Näytä lisää (118)</div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 2b: HEM, 1b JUSTERAD ============ -->
+<div class="dv-opt" id="2b">
+<div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Hem — <a class="dv-oid" href="#1b">1b</a> justerad: kompakt collage, sökkort över vecket, chips i kortet, tydlig peek</div>
+<div class="dv-card" style="width:390px" data-screen-label="Hem mobil 2b">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <!-- header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- compact collage hero -->
+  <div style="position:relative;background:#101014">
+    <div style="display:flex;gap:6px;padding:6px 6px 0">
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+        <div style="height:112px;background:#55535A;border-radius:6px"></div>
+        <div style="height:82px;background:#3E3E46;border-radius:6px"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+        <div style="height:84px;background:#4A4A52;border-radius:6px"></div>
+        <div style="height:110px;background:#6E6C73;border-radius:6px"></div>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:64px 20px 66px;background:linear-gradient(180deg,rgba(16,16,20,0) 0%,rgba(16,16,20,.92) 58%,#101014 100%)">
+      <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:50px;line-height:.96;color:#EDEAE2">MUSTE</h1>
+      <p style="margin:8px 0 0;font:400 14px/1.45 Inter;color:#EDEAE2;opacity:.75;max-width:300px">Selaa portfolioita, vertaile tyylejä ja löydä tatuoijasi.</p>
+    </div>
+  </div>
+
+  <!-- sheet + floating card, chips under knappen -->
+  <div style="position:relative;background:#F6F2EA;border-radius:24px 24px 0 0;margin-top:-22px;padding:0 16px 8px">
+    <div style="position:relative;margin-top:-42px;background:#fff;border-radius:16px;box-shadow:0 12px 32px rgba(16,16,20,.22);padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki kaupungit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki tyylit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Näytä tatuoijat</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="font:500 11px Inter;color:#8A8890">Suosittua:</span>
+        <a href="#2a" style="text-decoration:none;font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Helsinki</a>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Tampere</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Turku</span>
+      </div>
+    </div>
+
+    <!-- Featured -->
+    <div style="padding:26px 4px 0">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Premium</div><h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Nostetut artistit</h2></div>
+        <a href="#2b" style="font:600 12px Inter;color:#2B2B30">Kaikki →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+          <div style="position:relative;height:190px;background:#C6C3BC">
+            <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+          </div>
+          <div style="padding:14px 16px 16px">
+            <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Aino Kettunen</div>
+            <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Helsinki · Studio Musta Neula</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span>
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+          <div style="position:relative;height:190px;background:#B3B0A9">
+            <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+          </div>
+          <div style="padding:14px 16px 16px">
+            <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Ville Rautio</div>
+            <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Tampere · Rauta Ink</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Realismi</span>
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Mustavalko</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Styles: karusell med tydlig peek (140px kort → ~70px av tredje syns) -->
+    <div style="margin-top:32px;padding:0 4px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Tyylit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa tyylin mukaan</h2>
+    </div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding:0 4px 8px;scrollbar-width:none">
+      <div style="flex:none;position:relative;width:140px;height:168px;border-radius:10px;background:#A9A7A2"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Realismi</span></div>
+      <div style="flex:none;position:relative;width:140px;height:168px;border-radius:10px;background:#C2C0BB"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Fineline</span></div>
+      <div style="flex:none;position:relative;width:140px;height:168px;border-radius:10px;background:#8F8D88"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Blackwork</span></div>
+      <div style="flex:none;position:relative;width:140px;height:168px;border-radius:10px;background:#B5B2AB"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Traditional</span></div>
+      <div style="flex:none;position:relative;width:140px;height:168px;border-radius:10px;background:#9C9A95"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Japanilainen</span></div>
+      <div style="flex:none;position:relative;width:140px;height:168px;border-radius:10px;background:#CBC8C1"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Geometrinen</span></div>
+    </div>
+
+    <!-- Cities -->
+    <div style="margin-top:30px;padding:0 4px 28px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Kaupungit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa kaupungin mukaan</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <a href="#2a" style="text-decoration:none;background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px;display:block"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Helsinki</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">124 tatuoijaa</div></a>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Tampere</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">43 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Turku</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">38 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Oulu</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">21 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Jyväskylä</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">17 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Kuopio</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">12 tatuoijaa</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näin se toimii (dark) -->
+  <div style="background:#101014;padding:30px 20px 34px">
+    <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Näin se toimii</div>
+    <h2 style="margin:0 0 20px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">Kolme askelta artistiin</h2>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">01</span><div><div style="font:700 14px Inter;color:#EDEAE2">Etsi kaupungin tai tyylin mukaan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Selaa tatuoijia omasta kaupungistasi tai etsi juuri sinun tyylisi osaajaa.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">02</span><div><div style="font:700 14px Inter;color:#EDEAE2">Vertaile portfolioita</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Kaikki työt yhdessä paikassa. Katso, kenen jälki puhuttelee.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">03</span><div><div style="font:700 14px Inter;color:#EDEAE2">Ota yhteyttä suoraan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Viesti artistille tai varaa aika — ilman välikäsiä.</div></div></div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;border-top:1px solid rgba(237,234,226,.12);padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Prova: "gå vidare: artistprofilen baserad på <a class="dv-oid" href="#2a">2a</a>" · "visa desktop av <a class="dv-oid" href="#2b">2b</a>" · "justera stilfiltret i <a class="dv-oid" href="#2a">2a</a>"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">MUSTE · Hem — mobil, 3 riktningar (hero · sök · stilgalleri varierar; sektionsordning &amp; artistkort konstanta)</span></div>
+<div class="dv-opts">
+
+<!-- ============ 1a: TYPOGRAFI EDELLÄ ============ -->
+<div class="dv-opt" id="1a">
+<div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Typografi dominerar — sök i heron, stilar som grid</div>
+<div class="dv-card" style="width:390px" data-screen-label="Hem mobil 1a">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <!-- header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font:700 11px Inter;letter-spacing:.16em;color:#8A8890">TATUOIJAHAKU</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- hero: giant type -->
+  <div style="background:#101014;padding:30px 20px 0">
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:78px;line-height:.94;letter-spacing:.01em;color:#EDEAE2">MUSTE</h1>
+    <p style="margin:14px 0 0;font:400 15px/1.5 Inter;color:#8A8890;max-width:320px">Suomen tatuoijat ja studiot yhdessä paikassa. Selaa portfolioita ja löydä oma artistisi.</p>
+
+    <!-- search card -->
+    <div style="margin-top:22px;background:#F6F2EA;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid rgba(16,16,20,.14);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki kaupungit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid rgba(16,16,20,.14);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki tyylit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Näytä tatuoijat</div>
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="font:500 11px Inter;color:#8A8890">Suosittua:</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Helsinki</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Tampere</span>
+        <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Turku</span>
+      </div>
+    </div>
+
+    <!-- collage strip, cut by sheet -->
+    <div style="display:flex;gap:8px;margin-top:24px;align-items:flex-end">
+      <div style="flex:1;height:120px;background:#4A4A52;border-radius:6px 6px 0 0"></div>
+      <div style="flex:1.3;height:92px;background:#5A5860;border-radius:6px 6px 0 0"></div>
+      <div style="flex:.9;height:132px;background:#3E3E46;border-radius:6px 6px 0 0"></div>
+      <div style="flex:1.1;height:104px;background:#66646B;border-radius:6px 6px 0 0"></div>
+    </div>
+  </div>
+
+  <!-- bone sheet with rounded top (motion: tar över vid scroll) -->
+  <div style="position:relative;margin-top:-26px;background:#F6F2EA;border-radius:24px 24px 0 0;padding:28px 20px 8px">
+
+    <!-- Featured -->
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+      <div><div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Premium</div><h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Nostetut artistit</h2></div>
+      <a href="#1a" style="font:600 12px Inter;color:#2B2B30">Kaikki →</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="position:relative;height:190px;background:#C6C3BC">
+          <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="padding:14px 16px 16px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Aino Kettunen</div>
+          <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Helsinki · Studio Musta Neula</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span>
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="position:relative;height:190px;background:#B3B0A9">
+          <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="padding:14px 16px 16px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Ville Rautio</div>
+          <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Tampere · Rauta Ink</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Realismi</span>
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Mustavalko</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Styles: 2-col grid -->
+    <div style="margin-top:32px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Tyylit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa tyylin mukaan</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="position:relative;height:110px;border-radius:10px;background:#A9A7A2;overflow:hidden"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Realismi</span></div>
+        <div style="position:relative;height:110px;border-radius:10px;background:#C2C0BB;overflow:hidden"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Fineline</span></div>
+        <div style="position:relative;height:110px;border-radius:10px;background:#8F8D88;overflow:hidden"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Blackwork</span></div>
+        <div style="position:relative;height:110px;border-radius:10px;background:#B5B2AB;overflow:hidden"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Traditional</span></div>
+        <div style="position:relative;height:110px;border-radius:10px;background:#9C9A95;overflow:hidden"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Japanilainen</span></div>
+        <div style="position:relative;height:110px;border-radius:10px;background:#CBC8C1;overflow:hidden"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Geometrinen</span></div>
+      </div>
+    </div>
+
+    <!-- Cities -->
+    <div style="margin-top:32px;padding-bottom:28px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Kaupungit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa kaupungin mukaan</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Helsinki</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">124 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Tampere</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">43 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Turku</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">38 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Oulu</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">21 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Jyväskylä</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">17 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Kuopio</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">12 tatuoijaa</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näin se toimii (dark) -->
+  <div style="background:#101014;padding:30px 20px 34px">
+    <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Näin se toimii</div>
+    <h2 style="margin:0 0 20px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">Kolme askelta artistiin</h2>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">01</span><div><div style="font:700 14px Inter;color:#EDEAE2">Etsi kaupungin tai tyylin mukaan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Selaa tatuoijia omasta kaupungistasi tai etsi juuri sinun tyylisi osaajaa.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">02</span><div><div style="font:700 14px Inter;color:#EDEAE2">Vertaile portfolioita</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Kaikki työt yhdessä paikassa. Katso, kenen jälki puhuttelee.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">03</span><div><div style="font:700 14px Inter;color:#EDEAE2">Ota yhteyttä suoraan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Viesti artistille tai varaa aika — ilman välikäsiä.</div></div></div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;border-top:1px solid rgba(237,234,226,.12);padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 1b: KOLLAASI EDELLÄ ============ -->
+<div class="dv-opt" id="1b">
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Collage dominerar — flytande sökkort över skarven, stilar som karusell</div>
+<div class="dv-card" style="width:390px" data-screen-label="Hem mobil 1b">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <!-- header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- hero: masonry collage with overlaid type -->
+  <div style="position:relative;background:#101014">
+    <div style="display:flex;gap:6px;padding:6px 6px 0">
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+        <div style="height:150px;background:#55535A;border-radius:6px"></div>
+        <div style="height:104px;background:#3E3E46;border-radius:6px"></div>
+        <div style="height:88px;background:#66646B;border-radius:6px"></div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+        <div style="height:96px;background:#4A4A52;border-radius:6px"></div>
+        <div style="height:158px;background:#6E6C73;border-radius:6px"></div>
+        <div style="height:88px;background:#45434B;border-radius:6px"></div>
+      </div>
+    </div>
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:90px 20px 84px;background:linear-gradient(180deg,rgba(16,16,20,0) 0%,rgba(16,16,20,.92) 62%,#101014 100%)">
+      <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:52px;line-height:.96;color:#EDEAE2">MUSTE</h1>
+      <p style="margin:10px 0 0;font:400 14.5px/1.5 Inter;color:#EDEAE2;opacity:.75;max-width:300px">Selaa portfolioita, vertaile tyylejä ja löydä tatuoijasi.</p>
+    </div>
+  </div>
+
+  <!-- bone sheet, floating search card over the seam -->
+  <div style="position:relative;background:#F6F2EA;border-radius:24px 24px 0 0;margin-top:-24px;padding:0 16px 8px">
+    <div style="position:relative;margin-top:-46px;background:#fff;border-radius:16px;box-shadow:0 12px 32px rgba(16,16,20,.22);padding:14px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki kaupungit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;background:#F6F2EA;border:1px solid rgba(16,16,20,.1);border-radius:10px;padding:10px 14px">
+        <div><div style="font:600 9.5px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</div><div style="font:500 14px Inter;color:#2B2B30">Kaikki tyylit</div></div>
+        <span style="color:#8A8890;font-size:12px">▾</span>
+      </div>
+      <div style="background:#C7361B;color:#fff;font:700 14px Inter;text-align:center;padding:14px;border-radius:10px">Näytä tatuoijat</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:12px 4px 0">
+      <span style="font:500 11px Inter;color:#8A8890">Suosittua:</span>
+      <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Helsinki</span>
+      <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Tampere</span>
+      <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Turku</span>
+      <span style="font:600 11.5px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.18);border-radius:999px;padding:5px 11px">Oulu</span>
+    </div>
+
+    <!-- Featured (samma kort) -->
+    <div style="padding:26px 4px 0">
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Premium</div><h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Nostetut artistit</h2></div>
+        <a href="#1b" style="font:600 12px Inter;color:#2B2B30">Kaikki →</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+          <div style="position:relative;height:190px;background:#C6C3BC">
+            <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+          </div>
+          <div style="padding:14px 16px 16px">
+            <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Aino Kettunen</div>
+            <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Helsinki · Studio Musta Neula</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span>
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+          <div style="position:relative;height:190px;background:#B3B0A9">
+            <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+          </div>
+          <div style="padding:14px 16px 16px">
+            <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Ville Rautio</div>
+            <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Tampere · Rauta Ink</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap">
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Realismi</span>
+              <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Mustavalko</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Styles: horisontell karusell -->
+    <div style="margin-top:32px;padding:0 4px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Tyylit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa tyylin mukaan</h2>
+    </div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding:0 4px 8px;scrollbar-width:none">
+      <div style="flex:none;position:relative;width:136px;height:170px;border-radius:10px;background:#A9A7A2"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Realismi</span></div>
+      <div style="flex:none;position:relative;width:136px;height:170px;border-radius:10px;background:#C2C0BB"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Fineline</span></div>
+      <div style="flex:none;position:relative;width:136px;height:170px;border-radius:10px;background:#8F8D88"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Blackwork</span></div>
+      <div style="flex:none;position:relative;width:136px;height:170px;border-radius:10px;background:#B5B2AB"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Traditional</span></div>
+      <div style="flex:none;position:relative;width:136px;height:170px;border-radius:10px;background:#9C9A95"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Japanilainen</span></div>
+      <div style="flex:none;position:relative;width:136px;height:170px;border-radius:10px;background:#CBC8C1"><span style="position:absolute;left:12px;bottom:10px;font-family:'Archivo Black',sans-serif;font-size:14px;color:#fff;text-shadow:0 1px 8px rgba(16,16,20,.5)">Geometrinen</span></div>
+    </div>
+
+    <!-- Cities -->
+    <div style="margin-top:30px;padding:0 4px 28px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Kaupungit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa kaupungin mukaan</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Helsinki</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">124 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Tampere</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">43 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Turku</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">38 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Oulu</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">21 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Jyväskylä</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">17 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Kuopio</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">12 tatuoijaa</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näin se toimii (dark) -->
+  <div style="background:#101014;padding:30px 20px 34px">
+    <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Näin se toimii</div>
+    <h2 style="margin:0 0 20px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">Kolme askelta artistiin</h2>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">01</span><div><div style="font:700 14px Inter;color:#EDEAE2">Etsi kaupungin tai tyylin mukaan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Selaa tatuoijia omasta kaupungistasi tai etsi juuri sinun tyylisi osaajaa.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">02</span><div><div style="font:700 14px Inter;color:#EDEAE2">Vertaile portfolioita</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Kaikki työt yhdessä paikassa. Katso, kenen jälki puhuttelee.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">03</span><div><div style="font:700 14px Inter;color:#EDEAE2">Ota yhteyttä suoraan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Viesti artistille tai varaa aika — ilman välikäsiä.</div></div></div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;border-top:1px solid rgba(237,234,226,.12);padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ============ 1c: TIIVIS HAKU ============ -->
+<div class="dv-opt" id="1c">
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Kompakt enradssök + filmremsa i heron, stilar som lista</div>
+<div class="dv-card" style="width:390px" data-screen-label="Hem mobil 1c">
+<div style="font-family:Inter,sans-serif;background:#F6F2EA">
+
+  <!-- header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:#101014">
+    <div style="display:flex;flex-direction:column;gap:4px;width:20px"><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2"></span><span style="height:2px;background:#EDEAE2;width:14px"></span></div>
+    <span style="font-family:'Archivo Black',sans-serif;font-size:17px;letter-spacing:.06em;color:#EDEAE2">MUSTE</span>
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#EDEAE2" stroke-width="1.6"></circle><path d="M12.5 12.5L16 16" stroke="#EDEAE2" stroke-width="1.6"></path></svg>
+  </div>
+
+  <!-- hero: compact -->
+  <div style="background:#101014;padding:28px 20px 0">
+    <h1 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:40px;line-height:1.04;color:#EDEAE2">Löydä<br>tatuoijasi.</h1>
+    <p style="margin:12px 0 0;font:400 14.5px/1.5 Inter;color:#8A8890;max-width:310px">Suomen tatuoijat, portfoliot ja studiot — yhdessä paikassa.</p>
+
+    <!-- one-row search bar -->
+    <div style="display:flex;align-items:stretch;margin-top:20px;background:#fff;border-radius:12px;overflow:hidden">
+      <div style="flex:1.1;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:10px 14px">
+        <span style="font:600 9px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Kaupunki</span>
+        <span style="font:600 13.5px Inter;color:#2B2B30">Helsinki ▾</span>
+      </div>
+      <div style="width:1px;background:rgba(16,16,20,.12);margin:8px 0"></div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;gap:1px;padding:10px 14px">
+        <span style="font:600 9px Inter;letter-spacing:.12em;text-transform:uppercase;color:#8A8890">Tyyli</span>
+        <span style="font:500 13.5px Inter;color:#8A8890">Kaikki ▾</span>
+      </div>
+      <div style="width:52px;display:flex;align-items:center;justify-content:center;background:#C7361B;color:#fff;font:700 18px Inter">→</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:12px">
+      <span style="font:600 11.5px Inter;color:#fff;background:#C7361B;border:1px solid #C7361B;border-radius:999px;padding:5px 11px">Helsinki</span>
+      <span style="font:600 11.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:5px 11px">Tampere</span>
+      <span style="font:600 11.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:5px 11px">Turku</span>
+      <span style="font:600 11.5px Inter;color:#EDEAE2;border:1px solid rgba(237,234,226,.3);border-radius:999px;padding:5px 11px">Oulu</span>
+    </div>
+
+    <!-- filmstrip -->
+    <div style="display:flex;gap:6px;margin-top:22px;overflow:hidden;align-items:flex-end">
+      <div style="flex:none;width:96px;height:84px;background:#4A4A52;border-radius:6px 6px 0 0"></div>
+      <div style="flex:none;width:120px;height:66px;background:#5A5860;border-radius:6px 6px 0 0"></div>
+      <div style="flex:none;width:78px;height:92px;background:#3E3E46;border-radius:6px 6px 0 0"></div>
+      <div style="flex:none;width:110px;height:74px;background:#66646B;border-radius:6px 6px 0 0"></div>
+    </div>
+  </div>
+
+  <!-- bone sheet -->
+  <div style="position:relative;margin-top:-22px;background:#F6F2EA;border-radius:24px 24px 0 0;padding:28px 20px 8px">
+
+    <!-- Featured (samma kort) -->
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px">
+      <div><div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Premium</div><h2 style="margin:0;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Nostetut artistit</h2></div>
+      <a href="#1c" style="font:600 12px Inter;color:#2B2B30">Kaikki →</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="position:relative;height:190px;background:#C6C3BC">
+          <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="padding:14px 16px 16px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Aino Kettunen</div>
+          <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Helsinki · Studio Musta Neula</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Fineline</span>
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Kasviaiheet</span>
+          </div>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid rgba(16,16,20,.08);border-radius:12px;overflow:hidden">
+        <div style="position:relative;height:190px;background:#B3B0A9">
+          <span style="position:absolute;top:12px;left:12px;background:#C9A227;color:#101014;font:700 10px Inter;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px">★ Featured</span>
+        </div>
+        <div style="padding:14px 16px 16px">
+          <div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Ville Rautio</div>
+          <div style="font:400 12.5px Inter;color:#8A8890;margin:3px 0 10px">Tampere · Rauta Ink</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Realismi</span>
+            <span style="font:600 11px Inter;color:#2B2B30;border:1px solid rgba(16,16,20,.16);border-radius:999px;padding:4px 10px">Mustavalko</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Styles: stacked list rows -->
+    <div style="margin-top:32px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Tyylit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa tyylin mukaan</h2>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="position:relative;height:72px;border-radius:10px;background:#A9A7A2;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,20,.65),rgba(16,16,20,0) 70%);display:flex;align-items:center;justify-content:space-between;padding:0 16px"><span style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff">Realismi</span><span style="color:#fff;font:600 14px Inter;opacity:.8">→</span></div></div>
+        <div style="position:relative;height:72px;border-radius:10px;background:#C2C0BB;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,20,.65),rgba(16,16,20,0) 70%);display:flex;align-items:center;justify-content:space-between;padding:0 16px"><span style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff">Fineline</span><span style="color:#fff;font:600 14px Inter;opacity:.8">→</span></div></div>
+        <div style="position:relative;height:72px;border-radius:10px;background:#8F8D88;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,20,.65),rgba(16,16,20,0) 70%);display:flex;align-items:center;justify-content:space-between;padding:0 16px"><span style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff">Blackwork</span><span style="color:#fff;font:600 14px Inter;opacity:.8">→</span></div></div>
+        <div style="position:relative;height:72px;border-radius:10px;background:#B5B2AB;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,20,.65),rgba(16,16,20,0) 70%);display:flex;align-items:center;justify-content:space-between;padding:0 16px"><span style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff">Traditional</span><span style="color:#fff;font:600 14px Inter;opacity:.8">→</span></div></div>
+        <div style="position:relative;height:72px;border-radius:10px;background:#9C9A95;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,20,.65),rgba(16,16,20,0) 70%);display:flex;align-items:center;justify-content:space-between;padding:0 16px"><span style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff">Japanilainen</span><span style="color:#fff;font:600 14px Inter;opacity:.8">→</span></div></div>
+        <div style="position:relative;height:72px;border-radius:10px;background:#CBC8C1;overflow:hidden"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(16,16,20,.65),rgba(16,16,20,0) 70%);display:flex;align-items:center;justify-content:space-between;padding:0 16px"><span style="font-family:'Archivo Black',sans-serif;font-size:17px;color:#fff">Geometrinen</span><span style="color:#fff;font:600 14px Inter;opacity:.8">→</span></div></div>
+      </div>
+    </div>
+
+    <!-- Cities -->
+    <div style="margin-top:32px;padding-bottom:28px">
+      <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Kaupungit</div>
+      <h2 style="margin:0 0 14px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#2B2B30">Selaa kaupungin mukaan</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Helsinki</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">124 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Tampere</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">43 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Turku</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">38 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Oulu</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">21 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Jyväskylä</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">17 tatuoijaa</div></div>
+        <div style="background:#fff;border:1px solid rgba(16,16,20,.1);border-radius:12px;padding:14px 16px"><div style="font-family:'Archivo Black',sans-serif;font-size:15px;color:#2B2B30">Kuopio</div><div style="font:400 12px Inter;color:#8A8890;margin-top:2px">12 tatuoijaa</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Näin se toimii (dark) -->
+  <div style="background:#101014;padding:30px 20px 34px">
+    <div style="font:700 10px Inter;letter-spacing:.14em;text-transform:uppercase;color:#8A8890;margin-bottom:4px">Näin se toimii</div>
+    <h2 style="margin:0 0 20px;font-family:'Archivo Black',sans-serif;font-size:22px;color:#EDEAE2">Kolme askelta artistiin</h2>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">01</span><div><div style="font:700 14px Inter;color:#EDEAE2">Etsi kaupungin tai tyylin mukaan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Selaa tatuoijia omasta kaupungistasi tai etsi juuri sinun tyylisi osaajaa.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">02</span><div><div style="font:700 14px Inter;color:#EDEAE2">Vertaile portfolioita</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Kaikki työt yhdessä paikassa. Katso, kenen jälki puhuttelee.</div></div></div>
+      <div style="display:flex;gap:14px"><span style="font-family:'Archivo Black',sans-serif;font-size:26px;color:#4A4A52;line-height:1">03</span><div><div style="font:700 14px Inter;color:#EDEAE2">Ota yhteyttä suoraan</div><div style="font:400 13px/1.5 Inter;color:#8A8890;margin-top:3px">Viesti artistille tai varaa aika — ilman välikäsiä.</div></div></div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#101014;border-top:1px solid rgba(237,234,226,.12);padding:24px 20px 30px">
+    <div style="font-family:'Archivo Black',sans-serif;font-size:20px;color:#EDEAE2">MUSTE</div>
+    <div style="display:flex;gap:16px;margin:14px 0 16px;flex-wrap:wrap">
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Kaupungit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Tyylit</span>
+      <span style="font:500 12.5px Inter;color:#EDEAE2">Studioille: Liity mukaan</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font:400 11px Inter;color:#8A8890">© 2026 Muste</span>
+      <span style="font:600 11.5px Inter;color:#8A8890"><span style="color:#C7361B">Suomeksi</span> · På svenska</span>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+</div>
+<p class="dv-next">Prova: "gör <a class="dv-oid" href="#1b">1b</a>:s flytande sökkort i <a class="dv-oid" href="#1a">1a</a>" · "gå vidare: stadssidan baserad på <a class="dv-oid" href="#1a">1a</a>" · "visa desktopversion"</p>
+</section>
+</x-dc>
+</body>
+</html>
