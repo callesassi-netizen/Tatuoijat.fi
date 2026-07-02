@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations, localePath } from '../i18n/ui';
+
+const t = useTranslations('fi');
+---
+
+<BaseLayout title={`404 — ${t('notFound.title')} | ${t('site.name')}`} description={t('notFound.text')} locale="fi" path="/404/">
+  <section class="not-found">
+    <h1 class="nf-code" aria-hidden="true">404</h1>
+    <h2 class="nf-title">{t('notFound.title')}</h2>
+    <p class="nf-text">{t('notFound.text')}</p>
+    <a class="btn-cta nf-cta" href={localePath('fi', '/')}>{t('notFound.cta')}</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px var(--page-pad);
+  }
+  .nf-code {
+    font-size: clamp(80px, 18vw, 140px);
+    line-height: 0.92;
+    color: var(--border-on-paper);
+  }
+  .nf-title {
+    font-size: 24px;
+    margin-top: 18px;
+  }
+  .nf-text {
+    color: var(--meta);
+    max-width: 360px;
+    margin: 10px 0 26px;
+  }
+  .nf-cta {
+    width: auto;
+    padding: 14px 28px;
+  }
+</style>

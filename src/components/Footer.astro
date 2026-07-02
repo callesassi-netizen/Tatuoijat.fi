@@ -1,0 +1,112 @@
+---
+import Logo from './Logo.astro';
+import { useTranslations, localePath, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  /** Path (utan locale-prefix) till samma sida på det andra språket. */
+  switchPath?: string;
+}
+
+const { locale, switchPath = '/' } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <a class="home-link" href={p('/')}><Logo locale={locale} size="footer" /></a>
+      <div class="footer-tagline">© {year} {t('site.name').charAt(0) + t('site.name').slice(1).toLowerCase()} — {t('footer.tagline')}</div>
+    </div>
+    <div class="footer-links">
+      <a class="ink-link" href={p('/tatuoijat/')}>{t('nav.cities')}</a>
+      <a class="ink-link" href={p('/tyylit/')}>{t('nav.styles')}</a>
+      <a class="ink-link" href={p('/liity/')}>{t('nav.forStudios')}</a>
+      <span class="lang-switch">
+        {
+          locale === 'fi' ? (
+            <>
+              <span class="lang-active">Suomeksi</span> ·{' '}
+              <a href={localePath('sv', switchPath)}>På svenska</a>
+            </>
+          ) : (
+            <>
+              <a href={localePath('fi', switchPath)}>Suomeksi</a> ·{' '}
+              <span class="lang-active">På svenska</span>
+            </>
+          )
+        }
+      </span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: var(--text-light);
+    border-top: var(--hairline-dark);
+  }
+  .footer-inner {
+    padding: 24px var(--page-pad) 30px;
+  }
+  .home-link {
+    text-decoration: none;
+  }
+  .footer-tagline {
+    font-size: 11px;
+    color: var(--meta);
+    margin-top: 6px;
+  }
+  .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+  }
+  .footer-links a {
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+  .lang-switch {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--meta);
+  }
+  .lang-switch a {
+    color: var(--meta);
+    font-size: 11.5px;
+  }
+  .lang-active {
+    color: var(--flash);
+  }
+
+  @media (min-width: 1024px) {
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+      padding-bottom: 38px;
+    }
+    .footer-tagline {
+      font-size: 12.5px;
+    }
+    .footer-links {
+      margin-top: 0;
+      gap: 26px;
+    }
+    .footer-links a {
+      font-size: 13px;
+    }
+    .lang-switch,
+    .lang-switch a {
+      font-size: 12px;
+    }
+  }
+</style>

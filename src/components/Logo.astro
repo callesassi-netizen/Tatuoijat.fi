@@ -1,0 +1,36 @@
+---
+// Logotypen som komponent — namnbyte vid domänval sker här + i18n + SITE_URL.
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  size?: 'header' | 'footer';
+}
+
+const { locale, size = 'header' } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<span class:list={['logo', `logo--${size}`]}>{t('site.name')}</span>
+
+<style>
+  .logo {
+    font-family: var(--font-display);
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+  }
+  .logo--header {
+    font-size: 17px;
+  }
+  .logo--footer {
+    font-size: 20px;
+  }
+  @media (min-width: 1024px) {
+    .logo--header {
+      font-size: 20px;
+    }
+    .logo--footer {
+      font-size: 22px;
+    }
+  }
+</style>

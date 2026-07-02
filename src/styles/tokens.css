@@ -1,0 +1,57 @@
+/* ============================================================
+   MUSTE — brand-tokens (källa: docs/design-brief-och-handoff.md
+   + MUSTE Handoff README, sektion Design Tokens)
+   ============================================================ */
+:root {
+  /* Färger */
+  --ink: #101014;            /* bläcksvart: hero, header, footer, mörka sektioner */
+  --paper: #f6f2ea;          /* benvit/papper: sidbakgrund, "arket" */
+  --surface: #ffffff;        /* vita kort, flytande sökkort */
+  --flash: #c7361b;          /* ENDAST CTA + aktiva val */
+  --flash-hover: #a92d16;
+  --gold: #c9a227;           /* ENDAST Featured-badge */
+  --text: #2b2b30;           /* brödtext/rubriker på ljust */
+  --text-light: #edeae2;     /* text på mörkt */
+  --meta: #8a8890;           /* sekundär text, labels, eyebrows */
+  --border-on-paper: #ddd8cc;
+
+  --card-border: 1px solid rgba(16, 16, 20, 0.08);
+  --card-border-strong: 1px solid rgba(16, 16, 20, 0.1);
+  --chip-border: 1px solid rgba(16, 16, 20, 0.18);
+  --chip-border-card: 1px solid rgba(16, 16, 20, 0.16);
+  --chip-border-dark: 1px solid rgba(237, 234, 226, 0.3);
+  --btn-outline-border: 1.5px solid rgba(16, 16, 20, 0.25);
+  --hairline-dark: 1px solid rgba(237, 234, 226, 0.12);
+
+  /* Typografi */
+  --font-display: 'Archivo Black', 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
+  --font-body: 'Inter Variable', Inter, 'Segoe UI', system-ui, sans-serif;
+
+  /* Radius */
+  --r-chip: 999px;
+  --r-btn: 10px;
+  --r-card: 12px;
+  --r-card-lg: 14px;
+  --r-float: 16px;
+  --r-sheet: 24px;
+
+  /* Skugga — ENDAST flytande sök-/kontaktkort */
+  --shadow-float: 0 12px 32px rgba(16, 16, 20, 0.22);
+
+  /* Layout */
+  --page-pad: 20px;
+  --sheet-overlap: -22px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --t-fast: 180ms;
+  --t-med: 300ms;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --page-pad: 48px;
+    --r-sheet: 32px;
+    --sheet-overlap: -30px;
+  }
+}
