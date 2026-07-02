@@ -1,0 +1,454 @@
+---
+/**
+ * Artist-/studioprofil (wireframe 3a mobil / 3e desktop): mörk identitets-
+ * hero, flytande kontaktkort över skarven, portfolio som kärna, Tietoa och
+ * Luotettavuus. Desktop: kontaktkort + info i höger sidopanel (340 px).
+ * Utan bilder (Bildpolicy §2): monogram-platta + tydlig Instagram-länk —
+ * får aldrig se trasigt ut. Kortets bild morphar hit via View Transition.
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MonogramPlate from '../MonogramPlate.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  localizedBody,
+  cityDisplayName,
+  styleDisplayName,
+} from '../../lib/content';
+import { breadcrumbLd, tattooParlorLd } from '../../lib/schema';
+
+interface Props {
+  artist: CollectionEntry<'artists'>;
+  locale: Locale;
+}
+
+const { artist, locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+const { data } = artist;
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const city = cities.find((entry) => entry.id === data.city);
+const cityName = city ? cityDisplayName(city, locale) : data.city;
+const h1City = city && locale === 'fi' ? city.data.nameLocative : cityName;
+
+const styleNames = data.styles.map((slug) => {
+  const style = styles.find((entry) => entry.id === slug);
+  return style ? styleDisplayName(style, locale) : slug;
+});
+
+const bio = localizedBody(artist.body, locale);
+const placeLine = [data.studio, [data.district, cityName].filter(Boolean).join(', ')]
+  .filter(Boolean)
+  .join(' · ');
+
+const instagramUrl = data.instagram ? `https://www.instagram.com/${data.instagram}/` : undefined;
+const bookingUrl = data.website ?? instagramUrl;
+const worksCount = data.images.length;
+
+const path = `/artistit/${artist.id}/`;
+const title = t('artist.metaTitle', { name: data.name, city: cityName, site: t('site.name') });
+const description = bio.length > 155 ? `${bio.slice(0, 152)}…` : bio;
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('city.h1', { city: h1City }), url: new URL(p(`/tatuoijat/${data.city}/`), site).href },
+  { name: data.name, url: new URL(p(path), site).href },
+]);
+const parlor = tattooParlorLd(artist, cityName, new URL(p(path), site).href);
+---
+
+<BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={JSON.stringify(parlor)} slot="head" />
+
+  <!-- Mörk identitets-hero -->
+  <section class="artist-hero">
+    <div class="container artist-hero-inner">
+      <a class="back-link ink-link" href={p(`/tatuoijat/${data.city}/`)}
+        >← {t('city.h1', { city: h1City })}</a
+      >
+      {
+        data.premium && (
+          <p class="badge-row">
+            <span class="badge-featured">★ {t('card.featured')}</span>
+          </p>
+        )
+      }
+      <h1 class="artist-name">{data.name}</h1>
+      {placeLine && <p class="artist-place">{placeLine}</p>}
+      {
+        styleNames.length > 0 && (
+          <p class="artist-chips">
+            {styleNames.map((styleName) => (
+              <span class="chip chip--dark">{styleName}</span>
+            ))}
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Ark: kontaktkort över skarven, portfolio, info -->
+  <div class="sheet grain">
+    <div class="container layout">
+      <aside class="side">
+        <div class="contact-card">
+          {
+            bookingUrl ? (
+              <a class="btn-cta" href={bookingUrl} rel="noopener">
+                {t('artist.book')}
+              </a>
+            ) : (
+              <span class="btn-cta" aria-disabled="true">{t('artist.book')}</span>
+            )
+          }
+          {
+            instagramUrl && (
+              <a class="btn-outline" href={instagramUrl} rel="noopener">
+                Instagram · @{data.instagram}
+              </a>
+            )
+          }
+          <p class="contact-note">{t('artist.responds')}</p>
+        </div>
+
+        <div class="trust-card">
+          <h2 class="trust-title">{t('artist.trust')}</h2>
+          {
+            data.verified && (
+              <p class="trust-row">
+                <span class="trust-check" aria-hidden="true">✓</span>
+                {t('artist.verified')}
+              </p>
+            )
+          }
+          {
+            data.website && (
+              <p class="trust-row">
+                <span class="trust-check" aria-hidden="true">✓</span>
+                <a class="ink-link" href={data.website} rel="noopener">{t('artist.website')}</a>
+              </p>
+            )
+          }
+          {
+            (data.studio || data.address) && (
+              <div class="trust-studio">
+                {data.studio && <span class="trust-studio-name">{data.studio}</span>}
+                <span class="trust-studio-address">
+                  {data.address ? data.address : cityName}
+                </span>
+              </div>
+            )
+          }
+        </div>
+      </aside>
+
+      <div class="main-col">
+        <!-- Portfolio: kärnan -->
+        <section class="portfolio" aria-labelledby="portfolio-title">
+          <div class="portfolio-head">
+            <h2 class="portfolio-title" id="portfolio-title">{t('artist.portfolio')}</h2>
+            {
+              worksCount > 0 && (
+                <span class="portfolio-count">
+                  {worksCount === 1
+                    ? t('artist.works.one')
+                    : t('artist.works.many', { n: worksCount })}
+                </span>
+              )
+            }
+          </div>
+          {
+            worksCount > 0 ? (
+              <div class="portfolio-grid">
+                {data.images.map((image, index) => (
+                  <div
+                    class="portfolio-item"
+                    style={index === 0 ? `view-transition-name: artist-image-${artist.id};` : undefined}
+                  >
+                    <img src={image} alt={`${data.name} — ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div class="portfolio-empty">
+                <div class="portfolio-plate" style={`view-transition-name: artist-image-${artist.id};`}>
+                  <MonogramPlate name={data.name} featured={data.premium} />
+                </div>
+                <div class="portfolio-empty-info">
+                  <h3 class="portfolio-empty-title">{t('artist.noImages.title')}</h3>
+                  <p class="portfolio-empty-text">{t('artist.noImages.text')}</p>
+                  {
+                    instagramUrl && (
+                      <a class="btn-outline portfolio-empty-cta" href={instagramUrl} rel="noopener">
+                        {t('artist.igCta')}
+                      </a>
+                    )
+                  }
+                </div>
+              </div>
+            )
+          }
+        </section>
+
+        <!-- Tietoa -->
+        {
+          bio && (
+            <section class="about" aria-labelledby="about-title">
+              <h2 class="about-title" id="about-title">{t('artist.about')}</h2>
+              <p class="about-text">{bio}</p>
+            </section>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .artist-hero {
+    position: relative;
+    z-index: 0;
+    background: var(--ink);
+  }
+  .artist-hero-inner {
+    padding: 20px var(--page-pad) 64px;
+  }
+  .back-link {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--meta);
+  }
+  .badge-row {
+    margin: 18px 0 8px;
+  }
+  .artist-name {
+    font-size: 36px;
+    line-height: 1.04;
+    color: var(--text-light);
+    margin-top: 8px;
+  }
+  .badge-row + .artist-name {
+    margin-top: 0;
+  }
+  .artist-place {
+    margin: 8px 0 0;
+    font-size: 13.5px;
+    color: var(--meta);
+  }
+  .artist-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 14px 0 0;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -24px;
+  }
+  .layout {
+    padding: 0 var(--page-pad) 40px;
+  }
+
+  /* Flytande kontaktkort — samma skugga som sökkortet */
+  .contact-card {
+    position: relative;
+    margin-top: -38px;
+    background: var(--surface);
+    border-radius: var(--r-float);
+    box-shadow: var(--shadow-float);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .contact-note {
+    font-size: 11.5px;
+    color: var(--meta);
+    text-align: center;
+    margin: 0;
+  }
+
+  .portfolio {
+    margin-top: 28px;
+  }
+  .portfolio-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .portfolio-title {
+    font-size: 25px;
+    color: var(--text);
+  }
+  .portfolio-count {
+    font-size: 12px;
+    color: var(--meta);
+  }
+  .portfolio-grid {
+    columns: 2;
+    column-gap: 10px;
+  }
+  .portfolio-item {
+    break-inside: avoid;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .portfolio-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Utan bilder: monogram-platta + IG-länk — aldrig "trasigt" */
+  .portfolio-empty {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card-lg);
+    overflow: hidden;
+  }
+  .portfolio-plate {
+    height: 240px;
+  }
+  .portfolio-empty-info {
+    padding: 18px;
+    text-align: center;
+  }
+  .portfolio-empty-title {
+    font-size: 16px;
+    color: var(--text);
+    margin: 0;
+  }
+  .portfolio-empty-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--meta);
+    max-width: 340px;
+    margin: 8px auto 14px;
+  }
+  .portfolio-empty-cta {
+    display: inline-block;
+    width: auto;
+    padding: 12px 22px;
+  }
+
+  .about {
+    margin-top: 32px;
+  }
+  .about-title {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .about-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    max-width: 620px;
+  }
+
+  .trust-card {
+    margin-top: 26px;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 16px;
+  }
+  .trust-title {
+    font-size: 15px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .trust-row {
+    display: flex;
+    gap: 9px;
+    align-items: baseline;
+    font-size: 13px;
+    color: var(--text);
+    margin: 0 0 9px;
+  }
+  .trust-check {
+    font-weight: 700;
+    font-size: 12px;
+  }
+  .trust-studio {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: var(--card-border);
+  }
+  .trust-studio-name {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .trust-studio-address {
+    display: block;
+    font-size: 12.5px;
+    color: var(--meta);
+    margin-top: 2px;
+  }
+
+  @media (min-width: 1024px) {
+    .artist-hero-inner {
+      padding: 32px var(--page-pad) 84px;
+    }
+    .artist-name {
+      font-size: 64px;
+    }
+    .artist-place {
+      font-size: 15px;
+    }
+    .sheet {
+      margin-top: -30px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 48px;
+      align-items: start;
+      padding-bottom: 64px;
+    }
+    /* Sidopanelen till höger, portfolio till vänster */
+    .side {
+      order: 2;
+      position: sticky;
+      top: 24px;
+    }
+    .main-col {
+      order: 1;
+    }
+    .contact-card {
+      margin-top: -44px;
+    }
+    .portfolio {
+      margin-top: 40px;
+    }
+    .portfolio-title {
+      font-size: 30px;
+    }
+    .portfolio-grid {
+      columns: 3;
+      column-gap: 12px;
+    }
+    .portfolio-plate {
+      height: 320px;
+    }
+    .about {
+      margin-top: 44px;
+    }
+  }
+</style>

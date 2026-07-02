@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import ArtistPage from '../../components/pages/ArtistPage.astro';
+
+export async function getStaticPaths() {
+  const artists = await getCollection('artists');
+  return artists.map((artist) => ({ params: { slug: artist.id }, props: { artist } }));
+}
+
+const { artist } = Astro.props;
+---
+
+<ArtistPage artist={artist} locale="fi" />
