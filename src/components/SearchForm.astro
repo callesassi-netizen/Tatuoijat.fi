@@ -1,26 +1,21 @@
 ---
 /**
- * Sök: stad + stil + röd CTA. Två varianter ur wireframen:
- *  - "card": vitt flytande kort över skarven mörk hero → benvitt ark (mobil/hem 2b)
- *  - "bar":  enrads sökbar inne i mörka heron (desktop/hem 3c)
- * Navigeringen sker med en liten inline-ö (enda JS på sidan förutom
- * scrub-fallback). Utan JS fungerar chips- och stadskorts-länkarna.
+ * Sök: stad + stil + röd CTA i ett flytande vitt kort med skugga som
+ * ligger ÖVER skarven mellan mörk hero och benvitt ark (wireframe 1b/2b).
+ * Mobil: fälten staplade. Desktop: enrads layout inne i samma kort.
+ * Navigeringen sker med en liten inline-ö. Utan JS fungerar chips-
+ * och stadskorts-länkarna.
  */
 import type { CollectionEntry } from 'astro:content';
-import {
-  useTranslations,
-  localePath,
-  type Locale,
-} from '../i18n/ui';
+import { useTranslations, localePath, type Locale } from '../i18n/ui';
 import { cityDisplayName, styleDisplayName } from '../lib/content';
 
 interface Props {
   locale: Locale;
   cities: CollectionEntry<'cities'>[];
   styles: CollectionEntry<'styles'>[];
-  variant: 'card' | 'bar';
   selectedCity?: string;
-  /** Unikt prefix när komponenten renderas flera gånger på samma sida. */
+  /** Unikt prefix om komponenten renderas flera gånger på samma sida. */
   idPrefix: string;
   popularCities?: CollectionEntry<'cities'>[];
 }
@@ -29,7 +24,6 @@ const {
   locale,
   cities,
   styles,
-  variant,
   selectedCity = '',
   idPrefix,
   popularCities = [],
@@ -39,36 +33,38 @@ const t = useTranslations(locale);
 const basePath = localePath(locale, '/');
 ---
 
-<div class:list={['search', `search--${variant}`]}>
+<div class="search">
   <form data-search data-base={basePath} action={localePath(locale, '/tatuoijat/')} method="get">
-    <div class="field">
-      <label for={`${idPrefix}-city`}>{t('search.city')}</label>
-      <select id={`${idPrefix}-city`} name="kaupunki">
-        <option value="" selected={selectedCity === ''}>{t('search.allCities')}</option>
-        {
-          cities.map((city) => (
-            <option value={city.id} selected={city.id === selectedCity}>
-              {cityDisplayName(city, locale)}
-            </option>
-          ))
-        }
-      </select>
-      <span class="caret" aria-hidden="true">▾</span>
+    <div class="fields">
+      <div class="field">
+        <label for={`${idPrefix}-city`}>{t('search.city')}</label>
+        <select id={`${idPrefix}-city`} name="kaupunki">
+          <option value="" selected={selectedCity === ''}>{t('search.allCities')}</option>
+          {
+            cities.map((city) => (
+              <option value={city.id} selected={city.id === selectedCity}>
+                {cityDisplayName(city, locale)}
+              </option>
+            ))
+          }
+        </select>
+        <span class="caret" aria-hidden="true">▾</span>
+      </div>
+      <div class="divider" aria-hidden="true"></div>
+      <div class="field">
+        <label for={`${idPrefix}-style`}>{t('search.style')}</label>
+        <select id={`${idPrefix}-style`} name="tyyli">
+          <option value="" selected>{t('search.allStyles')}</option>
+          {
+            styles.map((style) => (
+              <option value={style.id}>{styleDisplayName(style, locale)}</option>
+            ))
+          }
+        </select>
+        <span class="caret" aria-hidden="true">▾</span>
+      </div>
     </div>
-    <div class="divider" aria-hidden="true"></div>
-    <div class="field">
-      <label for={`${idPrefix}-style`}>{t('search.style')}</label>
-      <select id={`${idPrefix}-style`} name="tyyli">
-        <option value="" selected>{t('search.allStyles')}</option>
-        {
-          styles.map((style) => (
-            <option value={style.id}>{styleDisplayName(style, locale)}</option>
-          ))
-        }
-      </select>
-      <span class="caret" aria-hidden="true">▾</span>
-    </div>
-    <button class="btn-cta" type="submit">{t('search.cta')}</button>
+    <button class="btn-cta search-cta" type="submit">{t('search.cta')}</button>
   </form>
   {
     popularCities.length > 0 && (
@@ -100,11 +96,31 @@ const basePath = localePath(locale, '/');
 </script>
 
 <style>
+  /* Det flytande kortet — enda ytan på sajten med skugga */
+  form {
+    background: var(--surface);
+    border-radius: var(--r-float);
+    box-shadow: var(--shadow-float);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
   .field {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 1px;
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 10px 14px;
   }
   .field label {
     font-size: 9.5px;
@@ -139,6 +155,9 @@ const basePath = localePath(locale, '/');
     font-size: 12px;
     pointer-events: none;
   }
+  .divider {
+    display: none;
+  }
 
   .popular {
     display: flex;
@@ -153,74 +172,51 @@ const basePath = localePath(locale, '/');
     color: var(--meta);
   }
 
-  /* ---- Variant: flytande vitt kort (mobil) ---- */
-  .search--card form {
-    background: var(--surface);
-    border-radius: var(--r-float);
-    box-shadow: var(--shadow-float);
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .search--card .field {
-    background: var(--paper);
-    border: var(--card-border-strong);
-    border-radius: var(--r-btn);
-    padding: 10px 14px;
-    gap: 1px;
-  }
-  .search--card .divider {
-    display: none;
-  }
-
-  /* ---- Variant: enrads sökbar i mörka heron (desktop) ---- */
-  .search--bar form {
-    display: flex;
-    align-items: stretch;
-    background: var(--surface);
-    border-radius: var(--r-card);
-    overflow: hidden;
-    max-width: 580px;
-  }
-  .search--bar .field {
-    flex: 1;
-    padding: 12px 18px;
-    gap: 1px;
-  }
-  .search--bar .field:first-child {
-    flex: 1.1;
-  }
-  .search--bar .field select {
-    font-size: 14.5px;
-  }
-  .search--bar .divider {
-    width: 1px;
-    background: rgba(16, 16, 20, 0.12);
-    margin: 10px 0;
-  }
-  .search--bar .btn-cta {
-    width: auto;
-    border-radius: 0;
-    padding: 0 26px;
-    display: flex;
-    align-items: center;
-  }
-  .search--bar .popular {
-    margin-top: 16px;
-  }
-  .search--bar .popular-label {
-    font-size: 12px;
-  }
-  .search--bar .popular :global(.chip) {
-    color: var(--text-light);
-    border: var(--chip-border-dark);
-    font-size: 12px;
-    padding: 6px 13px;
-  }
-  .search--bar .popular :global(a.chip:hover) {
-    background: var(--text-light);
-    border-color: var(--text-light);
-    color: var(--ink);
+  /* Desktop: enrads layout inne i samma flytande kort */
+  @media (min-width: 1024px) {
+    form {
+      flex-direction: row;
+      align-items: stretch;
+      padding: 12px;
+      gap: 12px;
+    }
+    .fields {
+      flex: 1;
+      flex-direction: row;
+      gap: 0;
+      background: var(--paper);
+      border: var(--card-border-strong);
+      border-radius: var(--r-btn);
+    }
+    .field {
+      flex: 1;
+      background: none;
+      border: 0;
+      padding: 12px 18px;
+    }
+    .field:first-child {
+      flex: 1.1;
+    }
+    .field select {
+      font-size: 14.5px;
+    }
+    .divider {
+      display: block;
+      width: 1px;
+      background: rgba(16, 16, 20, 0.12);
+      margin: 10px 0;
+    }
+    .search-cta {
+      width: auto;
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+    }
+    .popular {
+      margin-top: 14px;
+    }
+    .popular-label {
+      font-size: 12px;
+    }
   }
 </style>

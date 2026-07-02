@@ -28,7 +28,7 @@ const href = localePath(locale, `/artistit/${slug}/`);
 
 <a class:list={['artist-card', `artist-card--${size}`]} href={href}>
   <div class="card-media" style={`view-transition-name: artist-image-${slug};`}>
-    <MonogramPlate name={name} />
+    <MonogramPlate name={name} featured={premium} />
     {premium && <span class="badge-featured card-badge">★ {t('card.featured')}</span>}
   </div>
   <div class="card-body">
@@ -59,8 +59,8 @@ const href = localePath(locale, `/artistit/${slug}/`);
       box-shadow var(--t-med) var(--ease-out);
   }
   .artist-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(16, 16, 20, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(16, 16, 20, 0.16);
   }
   .artist-card:hover .card-media :global(svg) {
     transform: scale(1.03);

@@ -85,30 +85,31 @@ button {
 
 /* ---- Återkommande primitiver ---- */
 
-/* Eyebrow-label ovanför sektionsrubriker */
+/* Kicker/eyebrow ovanför sektionsrubriker — liten och röd för skalkontrast */
 .eyebrow {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--meta);
-  margin-bottom: 4px;
+  color: var(--flash);
+  margin-bottom: 6px;
 }
 @media (min-width: 1024px) {
   .eyebrow {
     font-size: 10.5px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
 }
 
 /* Sektionsrubrik (H2) */
 .section-title {
-  font-size: 22px;
+  font-size: 25px;
+  line-height: 1.05;
   color: var(--text);
 }
 @media (min-width: 1024px) {
   .section-title {
-    font-size: 30px;
+    font-size: 38px;
   }
 }
 
@@ -235,6 +236,21 @@ a.chip--dark:hover {
   border-radius: inherit;
   opacity: 0.035;
   mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Grain för mörka bläckytor (screen i stället för multiply) */
+.grain-dark {
+  position: relative;
+}
+.grain-dark::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.06;
+  mix-blend-mode: screen;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 

@@ -40,28 +40,50 @@ function artistStyleNames(artist: (typeof artists)[number]): string[] {
   });
 }
 
-// Gråtonade platshållare (byts mot egna/licensierade miljöbilder — Bildpolicy §4)
-const collageMobile = [
-  ['#55535A', 112],
-  ['#4A4A52', 84],
-  ['#3E3E46', 82],
-  ['#6E6C73', 110],
-] as const;
-const collageDesktop = [
+// Bläck-gradienter i olika valörer (#1c1c22 → #4d3230-spannet, effekt-demon).
+// Byts mot egna/licensierade miljöbilder senare (Bildpolicy §4).
+const ink = (angle: number, from: string, to: string, mid?: string) =>
+  mid
+    ? `linear-gradient(${angle}deg, ${from} 0%, ${mid} 55%, ${to} 100%)`
+    : `linear-gradient(${angle}deg, ${from} 0%, ${to} 100%)`;
+
+// Masonry-collage: [gradient, höjd px]
+const collageMobile: [string, number][][] = [
   [
-    ['#55535A', 150],
-    ['#3E3E46', 196],
+    [ink(160, '#1c1c22', '#3c2b2b', '#2a2129'), 150],
+    [ink(205, '#232029', '#33262a'), 104],
+    [ink(150, '#17171c', '#2b2229'), 88],
   ],
   [
-    ['#4A4A52', 110],
-    ['#6E6C73', 240],
+    [ink(195, '#211f2b', '#35282b'), 96],
+    [ink(170, '#1e1c26', '#4d3230', '#2f2530'), 158],
+    [ink(215, '#241f26', '#3d2f34'), 88],
+  ],
+];
+const collageDesktop: [string, number][][] = [
+  [
+    [ink(160, '#1c1c22', '#33262a'), 150],
+    [ink(150, '#17171c', '#2f2732', '#221f28'), 196],
   ],
   [
-    ['#66646B', 170],
-    ['#45434B', 210],
+    [ink(200, '#232029', '#3d2f34'), 110],
+    [ink(170, '#1e1c26', '#4d3230', '#2c2329'), 240],
   ],
-] as const;
-const styleTiles = ['#A9A7A2', '#C2C0BB', '#8F8D88', '#B5B2AB', '#9C9A95', '#CBC8C1'] as const;
+  [
+    [ink(190, '#211f2b', '#43302f'), 170],
+    [ink(215, '#241f26', '#35282b'), 210],
+  ],
+];
+
+// Stilgalleriet: egen gradient-ton per stil för rytm i griden
+const styleGradients = [
+  ink(160, '#1c1c22', '#2f2732'),
+  ink(200, '#232029', '#3d2f34'),
+  ink(150, '#17171c', '#2b2229'),
+  ink(215, '#241f26', '#4d3230'),
+  ink(170, '#1e1c26', '#43302f'),
+  ink(190, '#211f2b', '#35282b'),
+];
 
 const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot Suomessa`;
 ---
@@ -70,50 +92,45 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
   <!-- ================= HERO (bläcksvart, sticky bakom arket) ================= -->
   <section class="hero">
     <div class="container hero-inner">
-      <!-- Mobil (wireframe 2b): kompakt collage med typografi ovanpå -->
+      <!-- Mobil: masonry-collage med typografi ovanpå (wireframe 1b) -->
       <div class="hero-mobile">
         <div class="hero-collage collage-mobile" aria-hidden="true">
-          <div class="collage-col">
-            <div style={`height:${collageMobile[0][1]}px;background:${collageMobile[0][0]}`}></div>
-            <div style={`height:${collageMobile[2][1]}px;background:${collageMobile[2][0]}`}></div>
-          </div>
-          <div class="collage-col">
-            <div style={`height:${collageMobile[1][1]}px;background:${collageMobile[1][0]}`}></div>
-            <div style={`height:${collageMobile[3][1]}px;background:${collageMobile[3][0]}`}></div>
-          </div>
+          {
+            collageMobile.map((column) => (
+              <div class="collage-col">
+                {column.map(([gradient, height]) => (
+                  <div class="tile grain-dark" style={`height:${height}px;background:${gradient}`} />
+                ))}
+              </div>
+            ))
+          }
         </div>
+        <div class="hero-vignette" aria-hidden="true"></div>
         <div class="hero-overlay">
           <h1 class="hero-title">{t('site.name')}</h1>
           <p class="hero-tagline">{t('hero.tagline')}</p>
         </div>
       </div>
 
-      <!-- Desktop (wireframe 3c): typo + sökbar vänster, collage höger -->
+      <!-- Desktop: affisch-typo vänster, masonry-collage höger (wireframe 3c) -->
       <div class="hero-desktop">
         <div class="hero-copy">
           <h1 class="hero-title" aria-hidden="true">{t('site.name')}</h1>
           <p class="hero-tagline">{t('site.description')}</p>
-          <div id="haku-desktop">
-            <SearchForm
-              locale={locale}
-              cities={cities}
-              styles={styles}
-              variant="bar"
-              idPrefix="hd"
-              popularCities={popularCities}
-            />
-          </div>
         </div>
-        <div class="hero-collage collage-desktop" aria-hidden="true">
-          {
-            collageDesktop.map((column) => (
-              <div class="collage-col">
-                {column.map(([color, height]) => (
-                  <div style={`height:${height}px;background:${color}`} />
-                ))}
-              </div>
-            ))
-          }
+        <div class="collage-wrap">
+          <div class="hero-collage collage-desktop" aria-hidden="true">
+            {
+              collageDesktop.map((column) => (
+                <div class="collage-col">
+                  {column.map(([gradient, height]) => (
+                    <div class="tile grain-dark" style={`height:${height}px;background:${gradient}`} />
+                  ))}
+                </div>
+              ))
+            }
+          </div>
+          <div class="hero-vignette hero-vignette--desktop" aria-hidden="true"></div>
         </div>
       </div>
     </div>
@@ -122,13 +139,12 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
   <!-- ================= BENVIT "ARK" — glider över heron ================= -->
   <div class="sheet grain">
     <div class="container sheet-inner">
-      <!-- Flytande sökkort över skarven (mobil) -->
+      <!-- Flytande sökkort ÖVER skarven — halva på mörkt, halva på ljust -->
       <div class="float-search" id="haku">
         <SearchForm
           locale={locale}
           cities={cities}
           styles={styles}
-          variant="card"
           idPrefix="hm"
           popularCities={popularCities}
         />
@@ -160,8 +176,8 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
         </div>
       </section>
 
-      <!-- Selaa tyylin mukaan -->
-      <section class="section" aria-labelledby="styles-title">
+      <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
+      <section class="section section--styles" aria-labelledby="styles-title">
         <div class="section-head">
           <div>
             <p class="eyebrow">{t('home.styles.eyebrow')}</p>
@@ -171,8 +187,14 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
         <div class="style-strip reveal-stagger">
           {
             styles.map((style, index) => (
-              <a class="style-card" href={p(`/tyylit/${style.id}/`)} style={`background:${styleTiles[index % styleTiles.length]}`}>
+              <a class="style-card" href={p(`/tyylit/${style.id}/`)}>
+                <span
+                  class="style-bg grain-dark"
+                  style={`background:${styleGradients[index % styleGradients.length]}`}
+                  aria-hidden="true"
+                />
                 <span class="style-name">{styleDisplayName(style, locale)}</span>
+                <span class="style-arrow" aria-hidden="true">→</span>
               </a>
             ))
           }
@@ -193,12 +215,25 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
               const count = counts.get(city.id) ?? 0;
               return (
                 <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>
-                  <span class="city-name">{cityDisplayName(city, locale)}</span>
+                  <span class="city-info">
+                    <span class="city-name">
+                      {cityDisplayName(city, locale)}
+                      <span class="city-arrow" aria-hidden="true">→</span>
+                    </span>
+                  </span>
                   {count > 0 && (
                     <span class="city-count">
-                      {count === 1
-                        ? t('home.artistCount.one')
-                        : t('home.artistCount.many', { n: count })}
+                      <span class="city-num" aria-hidden="true">{count}</span>
+                      <span class="city-num-label">
+                        {count === 1
+                          ? t('home.artistCount.one').replace(/^1\s*/, '')
+                          : t('home.artistCount.many', { n: '' }).trim()}
+                      </span>
+                      <span class="visually-hidden">
+                        {count === 1
+                          ? t('home.artistCount.one')
+                          : t('home.artistCount.many', { n: count })}
+                      </span>
                     </span>
                   )}
                 </a>
@@ -259,7 +294,9 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     position: sticky;
     top: 0;
     z-index: 0;
-    background: var(--ink);
+    background:
+      radial-gradient(120% 90% at 18% 22%, rgba(77, 50, 48, 0.16) 0%, rgba(16, 16, 20, 0) 60%),
+      var(--ink);
   }
   .hero-mobile {
     position: relative;
@@ -276,30 +313,45 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     gap: 6px;
     justify-content: flex-end;
   }
-  .collage-mobile .collage-col > div {
+  .tile {
     border-radius: 6px;
+  }
+
+  /* Mjuk vinjett över collaget så typografin får kontrast */
+  .hero-vignette {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      130% 110% at 50% 45%,
+      rgba(16, 16, 20, 0) 38%,
+      rgba(16, 16, 20, 0.38) 78%,
+      rgba(16, 16, 20, 0.6) 100%
+    );
   }
   .hero-overlay {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 64px var(--page-pad) 66px;
+    padding: 80px var(--page-pad) 70px;
     background: linear-gradient(
       180deg,
       rgba(16, 16, 20, 0) 0%,
-      rgba(16, 16, 20, 0.92) 58%,
+      rgba(16, 16, 20, 0.55) 34%,
+      rgba(16, 16, 20, 0.94) 64%,
       #101014 100%
     );
   }
+  /* Affisch-typo */
   .hero-title {
-    font-size: 50px;
-    line-height: 0.96;
+    font-size: clamp(56px, 15vw, 72px);
+    line-height: 0.92;
     letter-spacing: 0.01em;
     color: var(--text-light);
   }
   .hero-tagline {
-    margin: 8px 0 0;
+    margin: 10px 0 0;
     font-size: 14px;
     line-height: 1.45;
     color: var(--text-light);
@@ -319,22 +371,25 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
       grid-template-columns: 1.15fr 1fr;
       gap: 48px;
       align-items: end;
-      padding: 48px var(--page-pad) 0;
+      padding: 56px var(--page-pad) 0;
     }
     .hero-copy {
-      padding-bottom: 64px;
+      padding-bottom: 88px;
     }
     .hero-desktop .hero-title {
-      font-size: clamp(72px, 7.6vw, 110px);
-      line-height: 0.92;
+      font-size: clamp(96px, 9.5vw, 148px);
+      line-height: 0.9;
     }
     .hero-desktop .hero-tagline {
-      margin: 18px 0 28px;
+      margin: 22px 0 0;
       font-size: 17px;
       line-height: 1.55;
       color: var(--meta);
       opacity: 1;
       max-width: 460px;
+    }
+    .collage-wrap {
+      position: relative;
     }
     .collage-desktop {
       display: flex;
@@ -344,11 +399,19 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     .collage-desktop .collage-col {
       gap: 10px;
     }
-    .collage-desktop .collage-col > div {
+    .collage-desktop .tile {
       border-radius: 8px;
     }
-    .collage-desktop .collage-col > div:last-child {
+    .collage-desktop .collage-col .tile:last-child {
       border-radius: 8px 8px 0 0;
+    }
+    .hero-vignette--desktop {
+      background: radial-gradient(
+        120% 100% at 50% 40%,
+        rgba(16, 16, 20, 0) 45%,
+        rgba(16, 16, 20, 0.32) 82%,
+        rgba(16, 16, 20, 0.55) 100%
+      );
     }
   }
 
@@ -387,24 +450,26 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     margin-top: var(--sheet-overlap);
   }
   .sheet-inner {
-    padding: 0 16px 28px;
+    padding: 0 16px 32px;
   }
   .float-search {
     position: relative;
-    margin-top: -42px;
+    margin-top: -44px;
   }
 
   .section {
-    padding: 26px 4px 0;
+    margin-top: 34px;
+    padding: 0 4px;
   }
-  .section--last {
-    padding-bottom: 4px;
+  .section--styles {
+    margin-top: 48px;
+    margin-bottom: 48px;
   }
   .section-head {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
   }
   .section-all {
     font-size: 12px;
@@ -418,7 +483,7 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     gap: 14px;
   }
 
-  /* Stil-karusell: horisontell scroll-snap, nästa kort peekar (~70 px) */
+  /* Stilgalleriet: bläck-gradientplattor, horisontell scroll-snap med peek */
   .style-strip {
     display: flex;
     gap: 10px;
@@ -434,38 +499,80 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
   .style-card {
     flex: none;
     position: relative;
-    width: 140px;
-    height: 168px;
+    width: 148px;
+    height: 178px;
     border-radius: 10px;
     overflow: hidden;
     scroll-snap-align: start;
     text-decoration: none;
+    isolation: isolate;
+  }
+  .style-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
     transition: transform var(--t-med) var(--ease-out);
   }
-  .style-card:hover {
-    transform: translateY(-2px);
+  .style-card::after {
+    /* mörkare fot så namnet alltid har kontrast */
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60%;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(16, 16, 20, 0) 0%, rgba(16, 16, 20, 0.45) 100%);
   }
   .style-name {
     position: absolute;
-    left: 12px;
-    bottom: 10px;
+    left: 14px;
+    bottom: 12px;
+    z-index: 1;
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: 17px;
     color: #fff;
     text-shadow: 0 1px 8px rgba(16, 16, 20, 0.5);
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .style-arrow {
+    position: absolute;
+    right: 14px;
+    bottom: 12px;
+    z-index: 1;
+    color: var(--text-light);
+    font-size: 15px;
+    opacity: 0.55;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      opacity var(--t-med) var(--ease-out);
+  }
+  .style-card:hover .style-bg {
+    transform: scale(1.03);
+  }
+  .style-card:hover .style-name {
+    transform: translateY(-4px);
+  }
+  .style-card:hover .style-arrow {
+    opacity: 1;
+    transform: translateX(3px);
   }
 
+  /* Stads-kort: namn med bläck-underline, antal som stor siffra, glidande pil */
   .city-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
   .city-card {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     background: var(--surface);
     border: var(--card-border-strong);
     border-radius: var(--r-card);
-    padding: 14px 16px;
+    padding: 16px;
     text-decoration: none;
     transition:
       transform var(--t-med) var(--ease-out),
@@ -476,34 +583,85 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     box-shadow: 0 10px 24px rgba(16, 16, 20, 0.12);
   }
   .city-name {
-    display: block;
+    position: relative;
+    display: inline-block;
     font-family: var(--font-display);
     font-size: 15px;
     color: var(--text);
   }
+  .city-name::after {
+    /* bläck-underline som "blöder" ut från vänster (effekt-demon) */
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 16px;
+    bottom: -3px;
+    height: 2px;
+    background: var(--text);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .city-card:hover .city-name::after {
+    transform: scaleX(1);
+  }
+  .city-arrow {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 13px;
+    margin-left: 6px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      transform var(--t-med) var(--ease-out),
+      opacity var(--t-med) var(--ease-out);
+  }
+  .city-card:hover .city-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
   .city-count {
+    text-align: right;
+    line-height: 1;
+  }
+  .city-num {
     display: block;
-    font-size: 12px;
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--border-on-paper);
+    transition: color var(--t-med) ease-out;
+  }
+  .city-card:hover .city-num {
     color: var(--meta);
-    margin-top: 2px;
+  }
+  .city-num-label {
+    display: block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin-top: 4px;
   }
 
   @media (min-width: 1024px) {
     .sheet-inner {
-      padding: 44px var(--page-pad) 44px;
+      padding: 0 var(--page-pad) 56px;
     }
     .float-search {
-      display: none;
+      max-width: 880px;
+      margin: -40px auto 0;
     }
     .section {
+      margin-top: 56px;
       padding: 0;
-      margin-top: 0;
     }
-    .section + .section {
-      margin-top: 52px;
+    .section--styles {
+      margin-top: 88px;
+      margin-bottom: 88px;
     }
     .section-head {
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
     .section-all {
       font-size: 13px;
@@ -516,33 +674,38 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     .style-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      gap: 16px;
       overflow: visible;
       margin-right: 0;
       padding: 0;
     }
     .style-card {
       width: auto;
-      height: 190px;
+      height: 210px;
       border-radius: var(--r-card);
     }
     .style-name {
-      left: 16px;
-      bottom: 13px;
-      font-size: 18px;
+      left: 18px;
+      bottom: 15px;
+      font-size: 22px;
+    }
+    .style-arrow {
+      right: 18px;
+      bottom: 15px;
+      font-size: 17px;
     }
     .city-grid {
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
     .city-card {
-      padding: 18px 20px;
+      padding: 20px;
     }
     .city-name {
       font-size: 17px;
     }
-    .city-count {
-      font-size: 13px;
+    .city-num {
+      font-size: 34px;
     }
   }
 
@@ -587,11 +750,11 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
     color: var(--text-light);
   }
   .how-inner {
-    padding: 30px var(--page-pad) 34px;
+    padding: 34px var(--page-pad) 40px;
   }
   .how-title {
     color: var(--text-light);
-    margin-bottom: 20px;
+    margin-bottom: 22px;
   }
   .how-steps {
     display: flex;
@@ -624,10 +787,10 @@ const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot
 
   @media (min-width: 1024px) {
     .how-inner {
-      padding: 48px var(--page-pad) 52px;
+      padding: 56px var(--page-pad) 60px;
     }
     .how-title {
-      margin-bottom: 26px;
+      margin-bottom: 30px;
     }
     .how-steps {
       display: grid;
