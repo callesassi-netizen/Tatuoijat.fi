@@ -1,0 +1,652 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchForm from '../components/SearchForm.astro';
+import ArtistCard from '../components/ArtistCard.astro';
+import { useTranslations, localePath, type Locale } from '../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  getArtists,
+  sortArtists,
+  artistCountByCity,
+  cityDisplayName,
+  styleDisplayName,
+} from '../lib/content';
+
+const locale: Locale = 'fi';
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const artists = await getArtists();
+const counts = await artistCountByCity();
+
+const cityById = new Map(cities.map((city) => [city.id, city]));
+const styleById = new Map(styles.map((style) => [style.id, style]));
+
+const featured = sortArtists(artists.filter((artist) => artist.data.premium)).slice(0, 3);
+const popularCities = cities.slice(0, 3);
+
+function artistMeta(artist: (typeof artists)[number]): string {
+  const city = cityById.get(artist.data.city);
+  const place = city ? cityDisplayName(city, locale) : artist.data.city;
+  return artist.data.studio ? `${place} · ${artist.data.studio}` : place;
+}
+function artistStyleNames(artist: (typeof artists)[number]): string[] {
+  return artist.data.styles.map((slug) => {
+    const style = styleById.get(slug);
+    return style ? styleDisplayName(style, locale) : slug;
+  });
+}
+
+// Gråtonade platshållare (byts mot egna/licensierade miljöbilder — Bildpolicy §4)
+const collageMobile = [
+  ['#55535A', 112],
+  ['#4A4A52', 84],
+  ['#3E3E46', 82],
+  ['#6E6C73', 110],
+] as const;
+const collageDesktop = [
+  [
+    ['#55535A', 150],
+    ['#3E3E46', 196],
+  ],
+  [
+    ['#4A4A52', 110],
+    ['#6E6C73', 240],
+  ],
+  [
+    ['#66646B', 170],
+    ['#45434B', 210],
+  ],
+] as const;
+const styleTiles = ['#A9A7A2', '#C2C0BB', '#8F8D88', '#B5B2AB', '#9C9A95', '#CBC8C1'] as const;
+
+const title = `${t('site.name')} — ${t('site.tagline')} | Tatuoijat ja studiot Suomessa`;
+---
+
+<BaseLayout title={title} description={t('site.description')} locale={locale} path="/">
+  <!-- ================= HERO (bläcksvart, sticky bakom arket) ================= -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <!-- Mobil (wireframe 2b): kompakt collage med typografi ovanpå -->
+      <div class="hero-mobile">
+        <div class="hero-collage collage-mobile" aria-hidden="true">
+          <div class="collage-col">
+            <div style={`height:${collageMobile[0][1]}px;background:${collageMobile[0][0]}`}></div>
+            <div style={`height:${collageMobile[2][1]}px;background:${collageMobile[2][0]}`}></div>
+          </div>
+          <div class="collage-col">
+            <div style={`height:${collageMobile[1][1]}px;background:${collageMobile[1][0]}`}></div>
+            <div style={`height:${collageMobile[3][1]}px;background:${collageMobile[3][0]}`}></div>
+          </div>
+        </div>
+        <div class="hero-overlay">
+          <h1 class="hero-title">{t('site.name')}</h1>
+          <p class="hero-tagline">{t('hero.tagline')}</p>
+        </div>
+      </div>
+
+      <!-- Desktop (wireframe 3c): typo + sökbar vänster, collage höger -->
+      <div class="hero-desktop">
+        <div class="hero-copy">
+          <h1 class="hero-title" aria-hidden="true">{t('site.name')}</h1>
+          <p class="hero-tagline">{t('site.description')}</p>
+          <div id="haku-desktop">
+            <SearchForm
+              locale={locale}
+              cities={cities}
+              styles={styles}
+              variant="bar"
+              idPrefix="hd"
+              popularCities={popularCities}
+            />
+          </div>
+        </div>
+        <div class="hero-collage collage-desktop" aria-hidden="true">
+          {
+            collageDesktop.map((column) => (
+              <div class="collage-col">
+                {column.map(([color, height]) => (
+                  <div style={`height:${height}px;background:${color}`} />
+                ))}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BENVIT "ARK" — glider över heron ================= -->
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <!-- Flytande sökkort över skarven (mobil) -->
+      <div class="float-search" id="haku">
+        <SearchForm
+          locale={locale}
+          cities={cities}
+          styles={styles}
+          variant="card"
+          idPrefix="hm"
+          popularCities={popularCities}
+        />
+      </div>
+
+      <!-- Nostetut artistit -->
+      <section class="section" aria-labelledby="featured-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{t('home.featured.eyebrow')}</p>
+            <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
+          </div>
+          <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
+        </div>
+        <div class="featured-grid reveal-stagger">
+          {
+            featured.map((artist) => (
+              <ArtistCard
+                slug={artist.id}
+                name={artist.data.name}
+                meta={artistMeta(artist)}
+                styleNames={artistStyleNames(artist)}
+                premium={artist.data.premium}
+                size="featured"
+                locale={locale}
+              />
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Selaa tyylin mukaan -->
+      <section class="section" aria-labelledby="styles-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{t('home.styles.eyebrow')}</p>
+            <h2 class="section-title" id="styles-title">{t('home.styles.title')}</h2>
+          </div>
+        </div>
+        <div class="style-strip reveal-stagger">
+          {
+            styles.map((style, index) => (
+              <a class="style-card" href={p(`/tyylit/${style.id}/`)} style={`background:${styleTiles[index % styleTiles.length]}`}>
+                <span class="style-name">{styleDisplayName(style, locale)}</span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Selaa kaupungin mukaan -->
+      <section class="section section--last" aria-labelledby="cities-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{t('home.cities.eyebrow')}</p>
+            <h2 class="section-title" id="cities-title">{t('home.cities.title')}</h2>
+          </div>
+        </div>
+        <div class="city-grid reveal-stagger">
+          {
+            cities.map((city) => {
+              const count = counts.get(city.id) ?? 0;
+              return (
+                <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>
+                  <span class="city-name">{cityDisplayName(city, locale)}</span>
+                  {count > 0 && (
+                    <span class="city-count">
+                      {count === 1
+                        ? t('home.artistCount.one')
+                        : t('home.artistCount.many', { n: count })}
+                    </span>
+                  )}
+                </a>
+              );
+            })
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ================= NÄIN SE TOIMII (bläcksvart) ================= -->
+  <section class="how" aria-labelledby="how-title">
+    <div class="container how-inner">
+      <p class="eyebrow">{t('how.eyebrow')}</p>
+      <h2 class="section-title how-title" id="how-title">{t('how.title')}</h2>
+      <div class="how-steps">
+        {
+          (['step1', 'step2', 'step3'] as const).map((step, index) => (
+            <div class="how-step">
+              <span class="how-number" aria-hidden="true">{`0${index + 1}`}</span>
+              <div>
+                <h3 class="how-step-title">{t(`how.${step}.title`)}</h3>
+                <p class="how-step-text">{t(`how.${step}.text`)}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<!-- IntersectionObserver-fallback för hero-scrubben i webbläsare utan
+     CSS scroll-driven animations (CLAUDE.md, Motion). -->
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!CSS.supports('animation-timeline: scroll()') && !reduceMotion) {
+    const hero = document.querySelector('.hero');
+    const collages = document.querySelectorAll('.hero-collage');
+    if (hero && collages.length) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          collages.forEach((collage) =>
+            collage.classList.toggle('is-scrolled', (entry?.intersectionRatio ?? 1) < 0.55),
+          );
+        },
+        { threshold: [0.55] },
+      );
+      observer.observe(hero);
+    }
+  }
+</script>
+
+<style>
+  /* ================= Hero ================= */
+  .hero {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    background: var(--ink);
+  }
+  .hero-mobile {
+    position: relative;
+  }
+  .collage-mobile {
+    display: flex;
+    gap: 6px;
+    padding: 6px 6px 0;
+  }
+  .collage-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: flex-end;
+  }
+  .collage-mobile .collage-col > div {
+    border-radius: 6px;
+  }
+  .hero-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 64px var(--page-pad) 66px;
+    background: linear-gradient(
+      180deg,
+      rgba(16, 16, 20, 0) 0%,
+      rgba(16, 16, 20, 0.92) 58%,
+      #101014 100%
+    );
+  }
+  .hero-title {
+    font-size: 50px;
+    line-height: 0.96;
+    letter-spacing: 0.01em;
+    color: var(--text-light);
+  }
+  .hero-tagline {
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--text-light);
+    opacity: 0.75;
+    max-width: 300px;
+  }
+  .hero-desktop {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-mobile {
+      display: none;
+    }
+    .hero-desktop {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: end;
+      padding: 48px var(--page-pad) 0;
+    }
+    .hero-copy {
+      padding-bottom: 64px;
+    }
+    .hero-desktop .hero-title {
+      font-size: clamp(72px, 7.6vw, 110px);
+      line-height: 0.92;
+    }
+    .hero-desktop .hero-tagline {
+      margin: 18px 0 28px;
+      font-size: 17px;
+      line-height: 1.55;
+      color: var(--meta);
+      opacity: 1;
+      max-width: 460px;
+    }
+    .collage-desktop {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .collage-desktop .collage-col {
+      gap: 10px;
+    }
+    .collage-desktop .collage-col > div {
+      border-radius: 8px;
+    }
+    .collage-desktop .collage-col > div:last-child {
+      border-radius: 8px 8px 0 0;
+    }
+  }
+
+  /* Hero-scrub: collaget skalar/tonar medan MUSTE-typografin sitter kvar.
+     Native CSS scroll-driven animation; IO-fallback i <script> ovan. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .hero-collage {
+        animation: hero-scrub linear both;
+        animation-timeline: scroll();
+        animation-range: 0 520px;
+        transform-origin: 50% 20%;
+      }
+    }
+    .hero-collage.is-scrolled {
+      transform: scale(0.94);
+      opacity: 0.35;
+      transition:
+        transform 600ms var(--ease-out),
+        opacity 600ms var(--ease-out);
+    }
+  }
+  @keyframes hero-scrub {
+    to {
+      transform: scale(0.94);
+      opacity: 0.3;
+    }
+  }
+
+  /* ================= Arket ================= */
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: var(--sheet-overlap);
+  }
+  .sheet-inner {
+    padding: 0 16px 28px;
+  }
+  .float-search {
+    position: relative;
+    margin-top: -42px;
+  }
+
+  .section {
+    padding: 26px 4px 0;
+  }
+  .section--last {
+    padding-bottom: 4px;
+  }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .section-all {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .featured-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* Stil-karusell: horisontell scroll-snap, nästa kort peekar (~70 px) */
+  .style-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 0 0 8px;
+    margin-right: -16px;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+  .style-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .style-card {
+    flex: none;
+    position: relative;
+    width: 140px;
+    height: 168px;
+    border-radius: 10px;
+    overflow: hidden;
+    scroll-snap-align: start;
+    text-decoration: none;
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .style-card:hover {
+    transform: translateY(-2px);
+  }
+  .style-name {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(16, 16, 20, 0.5);
+  }
+
+  .city-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .city-card {
+    display: block;
+    background: var(--surface);
+    border: var(--card-border-strong);
+    border-radius: var(--r-card);
+    padding: 14px 16px;
+    text-decoration: none;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out);
+  }
+  .city-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(16, 16, 20, 0.12);
+  }
+  .city-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text);
+  }
+  .city-count {
+    display: block;
+    font-size: 12px;
+    color: var(--meta);
+    margin-top: 2px;
+  }
+
+  @media (min-width: 1024px) {
+    .sheet-inner {
+      padding: 44px var(--page-pad) 44px;
+    }
+    .float-search {
+      display: none;
+    }
+    .section {
+      padding: 0;
+      margin-top: 0;
+    }
+    .section + .section {
+      margin-top: 52px;
+    }
+    .section-head {
+      margin-bottom: 18px;
+    }
+    .section-all {
+      font-size: 13px;
+    }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .style-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      overflow: visible;
+      margin-right: 0;
+      padding: 0;
+    }
+    .style-card {
+      width: auto;
+      height: 190px;
+      border-radius: var(--r-card);
+    }
+    .style-name {
+      left: 16px;
+      bottom: 13px;
+      font-size: 18px;
+    }
+    .city-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .city-card {
+      padding: 18px 20px;
+    }
+    .city-name {
+      font-size: 17px;
+    }
+    .city-count {
+      font-size: 13px;
+    }
+  }
+
+  /* Staggered reveal: kort fadar upp sekventiellt när de scrollas in.
+     Progressive enhancement — utan stöd visas allt direkt. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .reveal-stagger > :global(*) {
+        animation: reveal-up 0.6s var(--ease-out) both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 42%;
+      }
+      .reveal-stagger > :global(*:nth-child(2)) {
+        animation-range: entry 6% entry 48%;
+      }
+      .reveal-stagger > :global(*:nth-child(3)) {
+        animation-range: entry 12% entry 54%;
+      }
+      .reveal-stagger > :global(*:nth-child(4)) {
+        animation-range: entry 18% entry 60%;
+      }
+      .reveal-stagger > :global(*:nth-child(5)) {
+        animation-range: entry 24% entry 66%;
+      }
+      .reveal-stagger > :global(*:nth-child(n + 6)) {
+        animation-range: entry 30% entry 72%;
+      }
+    }
+  }
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+  }
+
+  /* ================= Näin se toimii ================= */
+  .how {
+    position: relative;
+    z-index: 1;
+    background: var(--ink);
+    color: var(--text-light);
+  }
+  .how-inner {
+    padding: 30px var(--page-pad) 34px;
+  }
+  .how-title {
+    color: var(--text-light);
+    margin-bottom: 20px;
+  }
+  .how-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .how-step {
+    display: flex;
+    gap: 14px;
+  }
+  .how-number {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: #4a4a52;
+    line-height: 1;
+  }
+  .how-step-title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin: 0;
+  }
+  .how-step-text {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--meta);
+    margin: 3px 0 0;
+  }
+
+  @media (min-width: 1024px) {
+    .how-inner {
+      padding: 48px var(--page-pad) 52px;
+    }
+    .how-title {
+      margin-bottom: 26px;
+    }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 36px;
+    }
+    .how-step {
+      gap: 16px;
+    }
+    .how-number {
+      font-size: 34px;
+    }
+    .how-step-title {
+      font-size: 15px;
+    }
+    .how-step-text {
+      font-size: 13.5px;
+      line-height: 1.55;
+      margin-top: 5px;
+    }
+  }
+</style>

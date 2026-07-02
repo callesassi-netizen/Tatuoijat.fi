@@ -1,0 +1,120 @@
+---
+// Städer-index. Stadssidorna /tatuoijat/{slug}/ byggs i steg 3.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, localePath } from '../../i18n/ui';
+import { getCitiesSorted, artistCountByCity, cityDisplayName } from '../../lib/content';
+
+const locale = 'fi' as const;
+const t = useTranslations(locale);
+const cities = await getCitiesSorted();
+const counts = await artistCountByCity();
+const title = `${t('nav.cities')} — ${t('site.tagline')} | ${t('site.name')}`;
+---
+
+<BaseLayout title={title} description={t('site.description')} locale={locale} path="/tatuoijat/">
+  <section class="index-hero">
+    <div class="container index-hero-inner">
+      <p class="eyebrow">{t('home.cities.eyebrow')}</p>
+      <h1 class="index-title">{t('home.cities.title')}</h1>
+    </div>
+  </section>
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <div class="city-grid">
+        {
+          cities.map((city) => {
+            const count = counts.get(city.id) ?? 0;
+            return (
+              <a class="city-card" href={localePath(locale, `/tatuoijat/${city.id}/`)}>
+                <span class="city-name">{cityDisplayName(city, locale)}</span>
+                {count > 0 && (
+                  <span class="city-count">
+                    {count === 1
+                      ? t('home.artistCount.one')
+                      : t('home.artistCount.many', { n: count })}
+                  </span>
+                )}
+              </a>
+            );
+          })
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-hero {
+    background: var(--ink);
+  }
+  .index-hero-inner {
+    padding: 28px var(--page-pad) 46px;
+  }
+  .index-title {
+    font-size: 34px;
+    line-height: 1.06;
+    color: var(--text-light);
+  }
+  .sheet {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: var(--sheet-overlap);
+  }
+  .sheet-inner {
+    padding: 24px var(--page-pad) 40px;
+  }
+  .city-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .city-card {
+    display: block;
+    background: var(--surface);
+    border: var(--card-border-strong);
+    border-radius: var(--r-card);
+    padding: 14px 16px;
+    text-decoration: none;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out);
+  }
+  .city-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(16, 16, 20, 0.12);
+  }
+  .city-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text);
+  }
+  .city-count {
+    display: block;
+    font-size: 12px;
+    color: var(--meta);
+    margin-top: 2px;
+  }
+  @media (min-width: 1024px) {
+    .index-hero-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .index-title {
+      font-size: 52px;
+    }
+    .sheet-inner {
+      padding: 40px var(--page-pad) 56px;
+    }
+    .city-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .city-card {
+      padding: 18px 20px;
+    }
+    .city-name {
+      font-size: 17px;
+    }
+  }
+</style>

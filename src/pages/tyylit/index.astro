@@ -1,0 +1,110 @@
+---
+// Stilar-index. Stilsidorna /tyylit/{slug}/ byggs i steg 5.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, localePath } from '../../i18n/ui';
+import { getStylesSorted, styleDisplayName } from '../../lib/content';
+
+const locale = 'fi' as const;
+const t = useTranslations(locale);
+const styles = await getStylesSorted();
+const styleTiles = ['#A9A7A2', '#C2C0BB', '#8F8D88', '#B5B2AB', '#9C9A95', '#CBC8C1'] as const;
+const title = `${t('nav.styles')} — ${t('site.tagline')} | ${t('site.name')}`;
+---
+
+<BaseLayout title={title} description={t('site.description')} locale={locale} path="/tyylit/">
+  <section class="index-hero">
+    <div class="container index-hero-inner">
+      <p class="eyebrow">{t('home.styles.eyebrow')}</p>
+      <h1 class="index-title">{t('home.styles.title')}</h1>
+    </div>
+  </section>
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <div class="style-grid">
+        {
+          styles.map((style, index) => (
+            <a
+              class="style-card"
+              href={localePath(locale, `/tyylit/${style.id}/`)}
+              style={`background:${styleTiles[index % styleTiles.length]}`}
+            >
+              <span class="style-name">{styleDisplayName(style, locale)}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-hero {
+    background: var(--ink);
+  }
+  .index-hero-inner {
+    padding: 28px var(--page-pad) 46px;
+  }
+  .index-title {
+    font-size: 34px;
+    line-height: 1.06;
+    color: var(--text-light);
+  }
+  .sheet {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: var(--sheet-overlap);
+  }
+  .sheet-inner {
+    padding: 24px var(--page-pad) 40px;
+  }
+  .style-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .style-card {
+    position: relative;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .style-card:hover {
+    transform: translateY(-2px);
+  }
+  .style-name {
+    position: absolute;
+    left: 12px;
+    bottom: 10px;
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 1px 8px rgba(16, 16, 20, 0.5);
+  }
+  @media (min-width: 1024px) {
+    .index-hero-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .index-title {
+      font-size: 52px;
+    }
+    .sheet-inner {
+      padding: 40px var(--page-pad) 56px;
+    }
+    .style-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .style-card {
+      height: 190px;
+      border-radius: var(--r-card);
+    }
+    .style-name {
+      left: 16px;
+      bottom: 13px;
+      font-size: 18px;
+    }
+  }
+</style>

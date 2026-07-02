@@ -1,0 +1,159 @@
+---
+/**
+ * Artistkortets anatomi är KONSTANT i hela sajten (handoff-README):
+ * bild → namn (Archivo Black) → "plats · studio" (metadata) → stil-chips,
+ * ev. guld Featured-badge uppe till vänster på bilden.
+ * Gratis-listningar: exakt samma anatomi, bara utan badge.
+ */
+import MonogramPlate from './MonogramPlate.astro';
+import { useTranslations, localePath, type Locale } from '../i18n/ui';
+
+interface Props {
+  slug: string;
+  name: string;
+  /** Metadata-raden, t.ex. "Helsinki · Studio Musta Neula" eller "Kallio". */
+  meta: string;
+  /** Visningsnamn för stilarna. */
+  styleNames: string[];
+  premium?: boolean;
+  /** featured = stort kort (190/230 px bild), compact = grid-kort (140 px). */
+  size?: 'featured' | 'compact';
+  locale: Locale;
+}
+
+const { slug, name, meta, styleNames, premium = false, size = 'featured', locale } = Astro.props;
+const t = useTranslations(locale);
+const href = localePath(locale, `/artistit/${slug}/`);
+---
+
+<a class:list={['artist-card', `artist-card--${size}`]} href={href}>
+  <div class="card-media" style={`view-transition-name: artist-image-${slug};`}>
+    <MonogramPlate name={name} />
+    {premium && <span class="badge-featured card-badge">★ {t('card.featured')}</span>}
+  </div>
+  <div class="card-body">
+    <span class="card-name">{name}</span>
+    <span class="card-meta">{meta}</span>
+    {
+      styleNames.length > 0 && (
+        <span class="card-chips">
+          {styleNames.map((styleName) => (
+            <span class="card-chip">{styleName}</span>
+          ))}
+        </span>
+      )
+    }
+  </div>
+</a>
+
+<style>
+  .artist-card {
+    display: block;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    text-decoration: none;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out);
+  }
+  .artist-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(16, 16, 20, 0.12);
+  }
+  .artist-card:hover .card-media :global(svg) {
+    transform: scale(1.03);
+  }
+
+  .card-media {
+    position: relative;
+    height: 190px;
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .card-media :global(svg) {
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .card-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+
+  .card-body {
+    padding: 14px 16px 16px;
+  }
+  .card-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text);
+  }
+  .card-meta {
+    display: block;
+    font-size: 12.5px;
+    color: var(--meta);
+    margin: 3px 0 10px;
+  }
+  .card-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .card-chip {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    border: var(--chip-border-card);
+    border-radius: var(--r-chip);
+    padding: 4px 10px;
+  }
+
+  /* Kompakt grid-kort — samma anatomi, mindre mått */
+  .artist-card--compact .card-media {
+    height: 140px;
+  }
+  .artist-card--compact .card-body {
+    padding: 11px 12px 13px;
+  }
+  .artist-card--compact .card-name {
+    font-size: 13px;
+  }
+  .artist-card--compact .card-meta {
+    font-size: 11.5px;
+    margin: 2px 0 8px;
+  }
+  .artist-card--compact .card-chip {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  @media (min-width: 1024px) {
+    .artist-card--featured {
+      border-radius: var(--r-card-lg);
+    }
+    .artist-card--featured .card-media {
+      height: 230px;
+    }
+    .artist-card--featured .card-body {
+      padding: 16px 18px 18px;
+    }
+    .artist-card--featured .card-name {
+      font-size: 16px;
+    }
+    .artist-card--featured .card-meta {
+      font-size: 13px;
+      margin: 3px 0 11px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .artist-card:hover {
+      transform: none;
+    }
+    .artist-card:hover .card-media :global(svg) {
+      transform: none;
+    }
+  }
+</style>

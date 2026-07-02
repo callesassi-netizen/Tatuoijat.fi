@@ -1,0 +1,67 @@
+---
+// Placeholder — säljsidan "Liity mukaan" byggs fullt ut i ett senare steg
+// (wireframe 3b/3f: gratis vs premium, FAQ, formulär).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations } from '../../i18n/ui';
+
+const locale = 'fi' as const;
+const t = useTranslations(locale);
+const title = `Liity mukaan — studioille ja tatuoijille | ${t('site.name')}`;
+const description =
+  'Liity Suomen tatuoijien katalogiin. Ilmainen listaus kaikille studioille — Premium nostaa profiilisi kärkeen.';
+---
+
+<BaseLayout title={title} description={description} locale={locale} path="/liity/">
+  <section class="liity-hero">
+    <div class="container liity-hero-inner">
+      <p class="eyebrow">Studioille ja tatuoijille</p>
+      <h1 class="liity-title">Liity mukaan.</h1>
+      <p class="liity-text">
+        Ilmainen listaus kaikille studioille — Premium tuo featured-paikan, isomman gallerian ja
+        kärkisijoituksen. Sivu valmistuu pian; ota yhteyttä jo nyt.
+      </p>
+    </div>
+  </section>
+  <div class="sheet grain">
+    <div class="container sheet-inner"></div>
+  </div>
+</BaseLayout>
+
+<style>
+  .liity-hero {
+    background: var(--ink);
+  }
+  .liity-hero-inner {
+    padding: 28px var(--page-pad) 56px;
+  }
+  .liity-title {
+    font-size: 42px;
+    line-height: 1.02;
+    color: var(--text-light);
+  }
+  .liity-text {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 420px;
+  }
+  .sheet {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: var(--sheet-overlap);
+    min-height: 120px;
+  }
+  @media (min-width: 1024px) {
+    .liity-hero-inner {
+      padding: 44px var(--page-pad) 72px;
+    }
+    .liity-title {
+      font-size: 72px;
+    }
+    .liity-text {
+      font-size: 16px;
+    }
+  }
+</style>

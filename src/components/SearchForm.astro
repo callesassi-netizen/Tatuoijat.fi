@@ -1,0 +1,226 @@
+---
+/**
+ * Sök: stad + stil + röd CTA. Två varianter ur wireframen:
+ *  - "card": vitt flytande kort över skarven mörk hero → benvitt ark (mobil/hem 2b)
+ *  - "bar":  enrads sökbar inne i mörka heron (desktop/hem 3c)
+ * Navigeringen sker med en liten inline-ö (enda JS på sidan förutom
+ * scrub-fallback). Utan JS fungerar chips- och stadskorts-länkarna.
+ */
+import type { CollectionEntry } from 'astro:content';
+import {
+  useTranslations,
+  localePath,
+  type Locale,
+} from '../i18n/ui';
+import { cityDisplayName, styleDisplayName } from '../lib/content';
+
+interface Props {
+  locale: Locale;
+  cities: CollectionEntry<'cities'>[];
+  styles: CollectionEntry<'styles'>[];
+  variant: 'card' | 'bar';
+  selectedCity?: string;
+  /** Unikt prefix när komponenten renderas flera gånger på samma sida. */
+  idPrefix: string;
+  popularCities?: CollectionEntry<'cities'>[];
+}
+
+const {
+  locale,
+  cities,
+  styles,
+  variant,
+  selectedCity = '',
+  idPrefix,
+  popularCities = [],
+} = Astro.props;
+
+const t = useTranslations(locale);
+const basePath = localePath(locale, '/');
+---
+
+<div class:list={['search', `search--${variant}`]}>
+  <form data-search data-base={basePath} action={localePath(locale, '/tatuoijat/')} method="get">
+    <div class="field">
+      <label for={`${idPrefix}-city`}>{t('search.city')}</label>
+      <select id={`${idPrefix}-city`} name="kaupunki">
+        <option value="" selected={selectedCity === ''}>{t('search.allCities')}</option>
+        {
+          cities.map((city) => (
+            <option value={city.id} selected={city.id === selectedCity}>
+              {cityDisplayName(city, locale)}
+            </option>
+          ))
+        }
+      </select>
+      <span class="caret" aria-hidden="true">▾</span>
+    </div>
+    <div class="divider" aria-hidden="true"></div>
+    <div class="field">
+      <label for={`${idPrefix}-style`}>{t('search.style')}</label>
+      <select id={`${idPrefix}-style`} name="tyyli">
+        <option value="" selected>{t('search.allStyles')}</option>
+        {
+          styles.map((style) => (
+            <option value={style.id}>{styleDisplayName(style, locale)}</option>
+          ))
+        }
+      </select>
+      <span class="caret" aria-hidden="true">▾</span>
+    </div>
+    <button class="btn-cta" type="submit">{t('search.cta')}</button>
+  </form>
+  {
+    popularCities.length > 0 && (
+      <p class="popular">
+        <span class="popular-label">{t('search.popular')}</span>
+        {popularCities.map((city) => (
+          <a class="chip" href={localePath(locale, `/tatuoijat/${city.id}/`)}>
+            {cityDisplayName(city, locale)}
+          </a>
+        ))}
+      </p>
+    )
+  }
+</div>
+
+<script>
+  // Bygger URL:en /tatuoijat/{stad}/?tyyli={stil} av formulärvalen.
+  document.querySelectorAll<HTMLFormElement>('form[data-search]').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const base = (form.dataset.base ?? '/').replace(/\/$/, '');
+      const city = (form.elements.namedItem('kaupunki') as HTMLSelectElement).value;
+      const style = (form.elements.namedItem('tyyli') as HTMLSelectElement).value;
+      let url = city ? `${base}/tatuoijat/${city}/` : `${base}/tatuoijat/`;
+      if (style) url += `?tyyli=${encodeURIComponent(style)}`;
+      window.location.href = url;
+    });
+  });
+</script>
+
+<style>
+  .field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .field label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .field select {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 0 18px 0 0;
+    cursor: pointer;
+  }
+  .field select:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .caret {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--meta);
+    font-size: 12px;
+    pointer-events: none;
+  }
+
+  .popular {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 12px 4px 0;
+  }
+  .popular-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--meta);
+  }
+
+  /* ---- Variant: flytande vitt kort (mobil) ---- */
+  .search--card form {
+    background: var(--surface);
+    border-radius: var(--r-float);
+    box-shadow: var(--shadow-float);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .search--card .field {
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 10px 14px;
+    gap: 1px;
+  }
+  .search--card .divider {
+    display: none;
+  }
+
+  /* ---- Variant: enrads sökbar i mörka heron (desktop) ---- */
+  .search--bar form {
+    display: flex;
+    align-items: stretch;
+    background: var(--surface);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    max-width: 580px;
+  }
+  .search--bar .field {
+    flex: 1;
+    padding: 12px 18px;
+    gap: 1px;
+  }
+  .search--bar .field:first-child {
+    flex: 1.1;
+  }
+  .search--bar .field select {
+    font-size: 14.5px;
+  }
+  .search--bar .divider {
+    width: 1px;
+    background: rgba(16, 16, 20, 0.12);
+    margin: 10px 0;
+  }
+  .search--bar .btn-cta {
+    width: auto;
+    border-radius: 0;
+    padding: 0 26px;
+    display: flex;
+    align-items: center;
+  }
+  .search--bar .popular {
+    margin-top: 16px;
+  }
+  .search--bar .popular-label {
+    font-size: 12px;
+  }
+  .search--bar .popular :global(.chip) {
+    color: var(--text-light);
+    border: var(--chip-border-dark);
+    font-size: 12px;
+    padding: 6px 13px;
+  }
+  .search--bar .popular :global(a.chip:hover) {
+    background: var(--text-light);
+    border-color: var(--text-light);
+    color: var(--ink);
+  }
+</style>
