@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { useTranslations, localePath, type Locale } from '../i18n/ui';
+import { citiesIndexPath } from '../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -21,7 +22,7 @@ const year = new Date().getFullYear();
       <div class="footer-tagline">© {year} {t('site.name')} — {t('footer.tagline')}</div>
     </div>
     <div class="footer-links">
-      <a class="ink-link" href={p('/tatuoijat/')}>{t('nav.cities')}</a>
+      <a class="ink-link" href={p(citiesIndexPath(locale))}>{t('nav.cities')}</a>
       <a class="ink-link" href={p('/tyylit/')}>{t('nav.styles')}</a>
       <a class="ink-link" href={p('/hinnat/')}>{t('nav.prices')}</a>
       <a class="ink-link" href={p('/liity/')}>{t('nav.forStudios')}</a>

@@ -9,6 +9,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { useTranslations, localePath, type Locale } from '../i18n/ui';
 import { cityDisplayName, styleDisplayName } from '../lib/content';
+import { citiesIndexPath, citySlug, cityPath } from '../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -36,7 +37,9 @@ const {
 } = Astro.props;
 
 const t = useTranslations(locale);
-const basePath = localePath(locale, '/');
+// Stadskatalogens bas med locale-prefix (/tatuoijat/ resp. /sv/tatuerare/) —
+// både formulärets fallback-action och JS-navigeringen bygger på den.
+const citiesBase = localePath(locale, citiesIndexPath(locale));
 const chipsLabelText = chipsLabel ?? t('search.popular');
 // Dropdownen alfabetisk — lättare att hitta sin stad i en lång lista
 const citiesAlpha = [...cities].sort((a, b) =>
@@ -45,7 +48,7 @@ const citiesAlpha = [...cities].sort((a, b) =>
 ---
 
 <div class="search">
-  <form data-search data-base={basePath} action={localePath(locale, '/tatuoijat/')} method="get">
+  <form data-search data-cities-base={citiesBase} action={citiesBase} method="get">
     <div class="fields">
       <div class="field">
         <label for={`${idPrefix}-city`}>{t('search.city')}</label>
@@ -53,7 +56,7 @@ const citiesAlpha = [...cities].sort((a, b) =>
           <option value="" selected={selectedCity === ''}>{t('search.allCities')}</option>
           {
             citiesAlpha.map((city) => (
-              <option value={city.id} selected={city.id === selectedCity}>
+              <option value={citySlug(city, locale)} selected={city.id === selectedCity}>
                 {cityDisplayName(city, locale)}
               </option>
             ))
@@ -84,7 +87,7 @@ const citiesAlpha = [...cities].sort((a, b) =>
         {popularCities.map((city) => (
           <a
             class:list={['chip', { 'chip--active': city.id === activeCityChip }]}
-            href={localePath(locale, `/tatuoijat/${city.id}/`)}
+            href={localePath(locale, cityPath(city, locale))}
             aria-current={city.id === activeCityChip ? 'page' : undefined}
           >
             {cityDisplayName(city, locale)}
@@ -96,14 +99,16 @@ const citiesAlpha = [...cities].sort((a, b) =>
 </div>
 
 <script>
-  // Bygger URL:en /tatuoijat/{stad}/?tyyli={stil} av formulärvalen.
+  // Bygger URL:en {citiesBase}{stad}/?tyyli={stil} av formulärvalen —
+  // basen (/tatuoijat/ resp. /sv/tatuerare/) och stads-slugsen (option-
+  // values) är redan localiserade av servern.
   document.querySelectorAll<HTMLFormElement>('form[data-search]').forEach((form) => {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
-      const base = (form.dataset.base ?? '/').replace(/\/$/, '');
+      const base = form.dataset.citiesBase ?? '/tatuoijat/';
       const city = (form.elements.namedItem('kaupunki') as HTMLSelectElement).value;
       const style = (form.elements.namedItem('tyyli') as HTMLSelectElement).value;
-      let url = city ? `${base}/tatuoijat/${city}/` : `${base}/tatuoijat/`;
+      let url = city ? `${base}${city}/` : base;
       if (style) url += `?tyyli=${encodeURIComponent(style)}`;
       window.location.href = url;
     });

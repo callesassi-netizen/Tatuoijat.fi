@@ -9,6 +9,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getCitiesSorted, studioCountByCity, cityDisplayName } from '../../lib/content';
 import { jsonLdString, breadcrumbLd } from '../../lib/schema';
+import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -36,7 +37,7 @@ const alphabetical = [...cities].sort((a, b) =>
 
 const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
-  { name: t('nav.cities'), url: new URL(p('/tatuoijat/'), site).href },
+  { name: t('nav.cities'), url: new URL(p(citiesIndexPath(locale)), site).href },
 ]);
 ---
 
@@ -44,7 +45,8 @@ const breadcrumb = breadcrumbLd([
   title={title}
   description={t('site.description')}
   locale={locale}
-  path="/tatuoijat/"
+  path={citiesIndexPath(locale)}
+  altPath={citiesIndexPath(locale === 'fi' ? 'sv' : 'fi')}
   hasAlternate
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
@@ -64,7 +66,7 @@ const breadcrumb = breadcrumbLd([
             topCities.map((city) => {
               const count = counts.get(city.id) ?? 0;
               return (
-                <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>
+                <a class="city-card" href={p(cityPath(city, locale))}>
                   <span class="city-name">
                     {cityDisplayName(city, locale)}
                     <span class="city-arrow" aria-hidden="true">→</span>
@@ -97,7 +99,7 @@ const breadcrumb = breadcrumbLd([
                 <li>
                   <a
                     class:list={['city-link', { 'city-link--top': topIds.has(city.id) }]}
-                    href={p(`/tatuoijat/${city.id}/`)}
+                    href={p(cityPath(city, locale))}
                   >
                     <span class="city-link-name ink-link">{cityDisplayName(city, locale)}</span>
                     {count > 0 && <span class="city-link-count">{count}</span>}

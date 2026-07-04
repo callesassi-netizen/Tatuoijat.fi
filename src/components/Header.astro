@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { useTranslations, localePath, type Locale } from '../i18n/ui';
+import { citiesIndexPath } from '../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -14,8 +15,9 @@ const p = (path: string) => localePath(locale, path);
 const currentPath = Astro.url.pathname;
 const isActive = (prefix: string) => currentPath.startsWith(p(prefix));
 
+const citiesBase = citiesIndexPath(locale);
 const navLinks = [
-  { href: p('/tatuoijat/'), label: t('nav.cities'), active: isActive('/tatuoijat') },
+  { href: p(citiesBase), label: t('nav.cities'), active: isActive(citiesBase) },
   { href: p('/tyylit/'), label: t('nav.styles'), active: isActive('/tyylit') },
 ];
 const liityActive = isActive('/liity');

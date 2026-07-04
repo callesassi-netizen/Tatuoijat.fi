@@ -19,6 +19,7 @@ import {
   styleDisplayName,
 } from '../../lib/content';
 import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
+import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
   style: CollectionEntry<'styles'>;
@@ -126,7 +127,7 @@ const itemList = itemListLd(
           ) : (
             <p class="artists-empty">
               {t('style.artistsEmpty')}{' '}
-              <a class="ink-link empty-link" href={p('/tatuoijat/')}>{t('nav.cities')} →</a>
+              <a class="ink-link empty-link" href={p(citiesIndexPath(locale))}>{t('nav.cities')} →</a>
             </p>
           )
         }
@@ -141,7 +142,7 @@ const itemList = itemListLd(
             </h2>
             <p class="city-links">
               {citiesWithStyle.map((city) => (
-                <a class="chip" href={p(`/tatuoijat/${city.id}/`) + `?tyyli=${style.id}`}>
+                <a class="chip" href={p(cityPath(city, locale)) + `?tyyli=${style.id}`}>
                   {t('style.inCity', {
                     style: styleName,
                     city: cityDisplayName(city, locale),

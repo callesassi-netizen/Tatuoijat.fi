@@ -1,10 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 import CityPage from '../../../components/pages/CityPage.astro';
+import { citySlug } from '../../../lib/routes';
 
+// Svenska slugs: exonymen när nameSv finns (helsingfors, abo, tammerfors...),
+// annars samma slug som fi (handoff §4).
 export async function getStaticPaths() {
   const cities = await getCollection('cities');
-  return cities.map((city) => ({ params: { city: city.id }, props: { city } }));
+  return cities.map((city) => ({ params: { city: citySlug(city, 'sv') }, props: { city } }));
 }
 
 const { city } = Astro.props;

@@ -1,0 +1,25 @@
+# Gamla svenska URL:er (fi-slugs under /sv/tatuoijat/) -> nya /sv/tatuerare/
+# med svenska exonymer. Behovs bara om gamla sv-URL:er hunnit deployas,
+# men kostar inget: Netlify provar redirects forst nar filen saknas (404).
+# Genererad ur src/content/cities/ - exonymer forst, splat sist.
+/sv/tatuoijat/espoo/ /sv/tatuerare/esbo/ 301
+/sv/tatuoijat/hameenlinna/ /sv/tatuerare/tavastehus/ 301
+/sv/tatuoijat/helsinki/ /sv/tatuerare/helsingfors/ 301
+/sv/tatuoijat/hyvinkaa/ /sv/tatuerare/hyvinge/ 301
+/sv/tatuoijat/jarvenpaa/ /sv/tatuerare/traskanda/ 301
+/sv/tatuoijat/karkkila/ /sv/tatuerare/hogfors/ 301
+/sv/tatuoijat/kokkola/ /sv/tatuerare/karleby/ 301
+/sv/tatuoijat/lahti/ /sv/tatuerare/lahtis/ 301
+/sv/tatuoijat/lappeenranta/ /sv/tatuerare/villmanstrand/ 301
+/sv/tatuoijat/mikkeli/ /sv/tatuerare/st-michel/ 301
+/sv/tatuoijat/oulu/ /sv/tatuerare/uleaborg/ 301
+/sv/tatuoijat/pori/ /sv/tatuerare/bjorneborg/ 301
+/sv/tatuoijat/porvoo/ /sv/tatuerare/borga/ 301
+/sv/tatuoijat/rauma/ /sv/tatuerare/raumo/ 301
+/sv/tatuoijat/savonlinna/ /sv/tatuerare/nyslott/ 301
+/sv/tatuoijat/tampere/ /sv/tatuerare/tammerfors/ 301
+/sv/tatuoijat/turku/ /sv/tatuerare/abo/ 301
+/sv/tatuoijat/vaasa/ /sv/tatuerare/vasa/ 301
+/sv/tatuoijat/vantaa/ /sv/tatuerare/vanda/ 301
+/sv/tatuoijat/vihti/ /sv/tatuerare/vichtis/ 301
+/sv/tatuoijat/* /sv/tatuerare/:splat 301

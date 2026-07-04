@@ -20,6 +20,7 @@ import {
   styleDisplayName,
 } from '../../lib/content';
 import { jsonLdString, breadcrumbLd, tattooParlorLd } from '../../lib/schema';
+import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
   studio: CollectionEntry<'studios'>;
@@ -90,7 +91,7 @@ const breadcrumbItems = [{ name: t('breadcrumb.home'), url: new URL(p('/'), site
 if (city && h1City) {
   breadcrumbItems.push({
     name: t('city.h1', { city: h1City }),
-    url: new URL(p(`/tatuoijat/${city.id}/`), site).href,
+    url: new URL(p(cityPath(city, locale)), site).href,
   });
 }
 breadcrumbItems.push({ name: data.name, url: new URL(p(path), site).href });
@@ -107,11 +108,11 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
     <div class="container artist-hero-inner">
       {
         city && h1City ? (
-          <a class="back-link ink-link" href={p(`/tatuoijat/${city.id}/`)}>
+          <a class="back-link ink-link" href={p(cityPath(city, locale))}>
             ← {t('city.h1', { city: h1City })}
           </a>
         ) : (
-          <a class="back-link ink-link" href={p('/tatuoijat/')}>← {t('nav.cities')}</a>
+          <a class="back-link ink-link" href={p(citiesIndexPath(locale))}>← {t('nav.cities')}</a>
         )
       }
       {

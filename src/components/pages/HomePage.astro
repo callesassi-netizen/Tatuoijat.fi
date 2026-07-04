@@ -17,6 +17,7 @@ import {
   styleDisplayName,
 } from '../../lib/content';
 import { jsonLdString, webSiteLd } from '../../lib/schema';
+import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -130,7 +131,7 @@ const webSite = webSiteLd(
                 <p class="eyebrow">{t('home.featured.eyebrow')}</p>
                 <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
               </div>
-              <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
+              <a class="ink-link section-all" href={p(citiesIndexPath(locale))}>{t('home.all')} →</a>
             </div>
             <div class="featured-grid reveal-stagger">
               {featured.map((studio) => (
@@ -201,14 +202,14 @@ const webSite = webSiteLd(
             <p class="eyebrow">{t('home.cities.eyebrow')}</p>
             <h2 class="section-title" id="cities-title">{t('home.cities.title')}</h2>
           </div>
-          <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
+          <a class="ink-link section-all" href={p(citiesIndexPath(locale))}>{t('home.all')} →</a>
         </div>
         <div class="city-grid reveal-stagger">
           {
             topCities.map((city) => {
               const count = counts.get(city.id) ?? 0;
               return (
-                <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>
+                <a class="city-card" href={p(cityPath(city, locale))}>
                   <span class="city-info">
                     <span class="city-name">
                       {cityDisplayName(city, locale)}

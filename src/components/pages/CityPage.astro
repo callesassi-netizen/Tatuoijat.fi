@@ -20,6 +20,7 @@ import {
 } from '../../lib/content';
 import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
 import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
+import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
   city: CollectionEntry<'cities'>;
@@ -73,13 +74,14 @@ const filmstrip: [string, number, number][] = [
 // Sitemap-filtret i astro.config.mjs utesluter samma sidor.
 const noindex = studios.length < CITY_INDEX_MIN_STUDIOS;
 
-const path = `/tatuoijat/${city.id}/`;
+const path = cityPath(city, locale);
+const altPath = cityPath(city, locale === 'fi' ? 'sv' : 'fi');
 const title = t('city.metaTitle', { city: cityName, n: studios.length, site: t('site.name') });
 const description = t('city.metaDescription', { city: cityName, n: studios.length });
 
 const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
-  { name: t('nav.cities'), url: new URL(p('/tatuoijat/'), site).href },
+  { name: t('nav.cities'), url: new URL(p(citiesIndexPath(locale)), site).href },
   { name: cityName, url: new URL(p(path), site).href },
 ]);
 const itemList = itemListLd(
@@ -93,6 +95,7 @@ const itemList = itemListLd(
   description={description}
   locale={locale}
   path={path}
+  altPath={altPath}
   hasAlternate
   noindex={noindex}
 >

@@ -11,11 +11,18 @@ interface Props {
   description: string;
   locale?: Locale;
   /**
-   * Path utan locale-prefix (t.ex. "/tatuoijat/helsinki/"). Används för
-   * canonical + hreflang. Sätt hasAlternate=false för sidor som (ännu)
-   * saknar version på det andra språket — då skrivs ingen hreflang ut.
+   * Den AKTUELLA localens path utan locale-prefix (t.ex.
+   * "/tatuoijat/helsinki/" på fi, "/tatuerare/helsingfors/" på sv).
+   * Används för canonical + hreflang. Sätt hasAlternate=false för sidor
+   * som (ännu) saknar version på det andra språket — då skrivs ingen
+   * hreflang ut.
    */
   path: string;
+  /**
+   * Det ANDRA språkets path utan locale-prefix, när den skiljer sig från
+   * path (stadskatalogen har egna sv-slugs). Styr hreflang + språkväxlaren.
+   */
+  altPath?: string;
   hasAlternate?: boolean;
   /**
    * noindex,follow — tunna sidor (t.ex. städer under CITY_INDEX_MIN_STUDIOS)
@@ -32,6 +39,7 @@ const {
   description,
   locale = defaultLocale,
   path,
+  altPath = path,
   hasAlternate = false,
   noindex = false,
   bare = false,
@@ -40,8 +48,8 @@ const {
 const t = useTranslations(locale);
 const site = Astro.site!;
 const canonical = new URL(localePath(locale, path), site);
-const altFi = new URL(localePath('fi', path), site);
-const altSv = new URL(localePath('sv', path), site);
+const altFi = new URL(localePath('fi', locale === 'fi' ? path : altPath), site);
+const altSv = new URL(localePath('sv', locale === 'sv' ? path : altPath), site);
 
 // Sajtgemensam OG-bild (egen miljöbild, Bildpolicy §4) — JPEG för
 // bästa kompatibilitet med delnings-skrapor
@@ -106,6 +114,6 @@ const ogImageUrl = new URL(ogImage.src, site);
     <main id="main">
       <slot />
     </main>
-    {!bare && <Footer locale={locale} switchPath={path} />}
+    {!bare && <Footer locale={locale} switchPath={altPath} />}
   </body>
 </html>
