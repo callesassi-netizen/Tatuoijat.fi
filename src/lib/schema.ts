@@ -49,6 +49,24 @@ export function tattooParlorLd(
   };
 }
 
+/**
+ * WebSite + SearchAction — startsidan (handoff §4). Sökformuläret är
+ * select-baserat; stilfiltret (?tyyli=) är den fria parametern.
+ */
+export function webSiteLd(name: string, siteUrl: string, searchUrlTemplate: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name,
+    url: siteUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: searchUrlTemplate },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
 /** ItemList på stads-/stilsidor. */
 export function itemListLd(name: string, urls: string[]) {
   return {

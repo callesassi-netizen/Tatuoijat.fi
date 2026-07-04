@@ -16,6 +16,7 @@ import {
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
+import { jsonLdString, webSiteLd } from '../../lib/schema';
 
 interface Props {
   locale: Locale;
@@ -75,9 +76,18 @@ const styleGradients = [
 // Domän = brand: "Tatuoijat.fi — Suomen tatuoijat ja tatuointiliikkeet"
 // ger naturlig exakt träff på "tatuoijat"-sökningar (handoff §7).
 const title = `${t('site.name')} — ${t('home.metaSuffix')}`;
+
+// WebSite-entiteten pekar alltid på sajtroten, oavsett locale
+const site = Astro.site!;
+const webSite = webSiteLd(
+  t('site.name'),
+  site.href,
+  `${new URL('/tatuoijat/', site).href}?tyyli={search_term_string}`,
+);
 ---
 
 <BaseLayout title={title} description={t('home.metaDescription')} locale={locale} path="/" hasAlternate>
+  <script type="application/ld+json" set:html={jsonLdString(webSite)} slot="head" />
   <!-- ================= HERO: fullbredds-bild, sticky bakom arket ================= -->
   <section class="hero">
     <div class="hero-media" aria-hidden="true">
