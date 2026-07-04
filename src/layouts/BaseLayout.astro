@@ -17,6 +17,12 @@ interface Props {
    */
   path: string;
   hasAlternate?: boolean;
+  /**
+   * noindex,follow — tunna sidor (t.ex. städer under CITY_INDEX_MIN_STUDIOS)
+   * hålls utanför index men länkjuicen flödar vidare. Sitemap-filtret i
+   * astro.config.mjs måste utesluta samma sidor.
+   */
+  noindex?: boolean;
   /** Dölj header/footer (används ej normalt). */
   bare?: boolean;
 }
@@ -27,6 +33,7 @@ const {
   locale = defaultLocale,
   path,
   hasAlternate = false,
+  noindex = false,
   bare = false,
 } = Astro.props;
 
@@ -55,6 +62,7 @@ const ogImageUrl = new URL(ogImage.src, site);
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,follow" />}
     <link rel="canonical" href={canonical} />
     {
       hasAlternate && (

@@ -19,6 +19,7 @@ import {
   styleDisplayName,
 } from '../../lib/content';
 import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
+import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
 
 interface Props {
   city: CollectionEntry<'cities'>;
@@ -68,6 +69,10 @@ const filmstrip: [string, number, number][] = [
   [ink(190, '#211f2b', '#35282b'), 124, 48],
 ];
 
+// Thin-content-regeln (handoff §3.1): under tröskeln → noindex,follow.
+// Sitemap-filtret i astro.config.mjs utesluter samma sidor.
+const noindex = studios.length < CITY_INDEX_MIN_STUDIOS;
+
 const path = `/tatuoijat/${city.id}/`;
 const title = t('city.metaTitle', { city: cityName, n: studios.length, site: t('site.name') });
 const description = t('city.metaDescription', { city: cityName, n: studios.length });
@@ -83,7 +88,14 @@ const itemList = itemListLd(
 );
 ---
 
-<BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  path={path}
+  hasAlternate
+  noindex={noindex}
+>
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
   <script type="application/ld+json" set:html={jsonLdString(itemList)} slot="head" />
 
