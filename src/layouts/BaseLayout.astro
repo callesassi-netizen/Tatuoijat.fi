@@ -1,7 +1,9 @@
 ---
+import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { useTranslations, localePath, defaultLocale, type Locale } from '../i18n/ui';
+import ogSource from '../assets/bilder/hero-tatuoija.png';
 import '../styles/global.css';
 
 interface Props {
@@ -33,6 +35,17 @@ const site = Astro.site!;
 const canonical = new URL(localePath(locale, path), site);
 const altFi = new URL(localePath('fi', path), site);
 const altSv = new URL(localePath('sv', path), site);
+
+// Sajtgemensam OG-bild (egen miljöbild, Bildpolicy §4) — JPEG för
+// bästa kompatibilitet med delnings-skrapor
+const ogImage = await getImage({
+  src: ogSource,
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  format: 'jpeg',
+});
+const ogImageUrl = new URL(ogImage.src, site);
 ---
 
 <!doctype html>
@@ -72,10 +85,15 @@ const altSv = new URL(localePath('sv', path), site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="generator" content={Astro.generator} />
     <slot name="head" />
   </head>
   <body>
+    <a class="skip-link" href="#main">{t('a11y.skipToContent')}</a>
     {!bare && <Header locale={locale} />}
     <main id="main">
       <slot />

@@ -10,10 +10,15 @@ const { locale } = Astro.props;
 const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 
+// Markera aktiv sektion i navigationen
+const currentPath = Astro.url.pathname;
+const isActive = (prefix: string) => currentPath.startsWith(p(prefix));
+
 const navLinks = [
-  { href: p('/tatuoijat/'), label: t('nav.cities') },
-  { href: p('/tyylit/'), label: t('nav.styles') },
+  { href: p('/tatuoijat/'), label: t('nav.cities'), active: isActive('/tatuoijat') },
+  { href: p('/tyylit/'), label: t('nav.styles'), active: isActive('/tyylit') },
 ];
+const liityActive = isActive('/liity');
 ---
 
 <header class="site-header">
@@ -23,9 +28,19 @@ const navLinks = [
         <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
       </summary>
       <nav class="mobile-panel">
-        {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-        <a href={p('/hinnat/')}>{t('nav.prices')}</a>
-        <a href={p('/liity/')}>{t('nav.forStudios')}</a>
+        {
+          navLinks.map((link) => (
+            <a href={link.href} aria-current={link.active ? 'page' : undefined}>
+              {link.label}
+            </a>
+          ))
+        }
+        <a href={p('/hinnat/')} aria-current={isActive('/hinnat') ? 'page' : undefined}>
+          {t('nav.prices')}
+        </a>
+        <a href={p('/liity/')} aria-current={liityActive ? 'page' : undefined}>
+          {t('nav.forStudios')}
+        </a>
       </nav>
     </details>
 
@@ -42,10 +57,16 @@ const navLinks = [
     </a>
 
     <nav class="desktop-nav" aria-label={t('nav.menu')}>
-      {navLinks.map((link) => (
-        <a class="ink-link" href={link.href}>{link.label}</a>
-      ))}
-      <a class="pill" href={p('/liity/')}>{t('nav.forStudios')}</a>
+      {
+        navLinks.map((link) => (
+          <a class="ink-link" href={link.href} aria-current={link.active ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))
+      }
+      <a class="pill" href={p('/liity/')} aria-current={liityActive ? 'page' : undefined}>
+        {t('nav.forStudios')}
+      </a>
     </nav>
   </div>
 </header>
@@ -117,6 +138,10 @@ const navLinks = [
   .mobile-panel a:hover {
     background: rgba(237, 234, 226, 0.08);
   }
+  .mobile-panel a[aria-current='page'] {
+    background: rgba(237, 234, 226, 0.1);
+    font-weight: 700;
+  }
   .search-link {
     color: var(--text-light);
     padding: 6px;
@@ -159,6 +184,15 @@ const navLinks = [
     }
     .desktop-nav .pill:hover {
       background: var(--text-light);
+      color: var(--ink);
+    }
+    /* Aktiv sida: permanent bläck-underline; Liity = ljus fylld pill (wireframe 3f) */
+    .desktop-nav a[aria-current='page']:not(.pill)::after {
+      transform: scaleX(1);
+    }
+    .desktop-nav .pill[aria-current='page'] {
+      background: var(--text-light);
+      border-color: var(--text-light);
       color: var(--ink);
     }
   }

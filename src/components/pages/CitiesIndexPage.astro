@@ -1,5 +1,10 @@
 ---
-/** Städer-index (/tatuoijat/) — delad mellan fi och sv. */
+/**
+ * Städer-index (/tatuoijat/) — delad mellan fi och sv.
+ * Två nivåer: de största städerna som kort med stor siffra,
+ * därunder ALLA städer som kompakt alfabetisk katalog-lista
+ * (46 likadana kort i en ändlös grid skalade inte).
+ */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getCitiesSorted, artistCountByCity, cityDisplayName } from '../../lib/content';
@@ -16,6 +21,18 @@ const site = Astro.site!;
 const cities = await getCitiesSorted();
 const counts = await artistCountByCity();
 const title = `${t('nav.cities')} — ${t('site.tagline')} | ${t('site.name')}`;
+
+// Topp 9 efter antal (3×3-grid), resten i den kompakta listan
+const byCount = [...cities].sort(
+  (a, b) =>
+    (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0) ||
+    cityDisplayName(a, locale).localeCompare(cityDisplayName(b, locale), locale),
+);
+const topCities = byCount.slice(0, 9);
+const topIds = new Set(topCities.map((city) => city.id));
+const alphabetical = [...cities].sort((a, b) =>
+  cityDisplayName(a, locale).localeCompare(cityDisplayName(b, locale), locale),
+);
 
 const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
@@ -39,31 +56,58 @@ const breadcrumb = breadcrumbLd([
   </section>
   <div class="sheet grain">
     <div class="container sheet-inner">
-      <div class="city-grid">
-        {
-          cities.map((city) => {
-            const count = counts.get(city.id) ?? 0;
-            return (
-              <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>
-                <span class="city-name">
-                  {cityDisplayName(city, locale)}
-                  <span class="city-arrow" aria-hidden="true">→</span>
-                </span>
-                {count > 0 && (
-                  <span class="city-count">
-                    <span class="city-num" aria-hidden="true">{count}</span>
-                    <span class="visually-hidden">
-                      {count === 1
-                        ? t('home.artistCount.one')
-                        : t('home.artistCount.many', { n: count })}
-                    </span>
+      <!-- Nivå 1: de största städerna -->
+      <section aria-labelledby="top-cities-title">
+        <h2 class="tier-title" id="top-cities-title">{t('cities.top.title')}</h2>
+        <div class="city-grid">
+          {
+            topCities.map((city) => {
+              const count = counts.get(city.id) ?? 0;
+              return (
+                <a class="city-card" href={p(`/tatuoijat/${city.id}/`)}>
+                  <span class="city-name">
+                    {cityDisplayName(city, locale)}
+                    <span class="city-arrow" aria-hidden="true">→</span>
                   </span>
-                )}
-              </a>
-            );
-          })
-        }
-      </div>
+                  {count > 0 && (
+                    <span class="city-count">
+                      <span class="city-num" aria-hidden="true">{count}</span>
+                      <span class="visually-hidden">
+                        {count === 1
+                          ? t('home.artistCount.one')
+                          : t('home.artistCount.many', { n: count })}
+                      </span>
+                    </span>
+                  )}
+                </a>
+              );
+            })
+          }
+        </div>
+      </section>
+
+      <!-- Nivå 2: kompakt katalog A–Ö -->
+      <section class="all-cities" aria-labelledby="all-cities-title">
+        <h2 class="tier-title" id="all-cities-title">{t('cities.all.title')}</h2>
+        <ul class="city-list">
+          {
+            alphabetical.map((city) => {
+              const count = counts.get(city.id) ?? 0;
+              return (
+                <li>
+                  <a
+                    class:list={['city-link', { 'city-link--top': topIds.has(city.id) }]}
+                    href={p(`/tatuoijat/${city.id}/`)}
+                  >
+                    <span class="city-link-name ink-link">{cityDisplayName(city, locale)}</span>
+                    {count > 0 && <span class="city-link-count">{count}</span>}
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </section>
     </div>
   </div>
 </BaseLayout>
@@ -90,8 +134,14 @@ const breadcrumb = breadcrumbLd([
     margin-top: var(--sheet-overlap);
   }
   .sheet-inner {
-    padding: 24px var(--page-pad) 40px;
+    padding: 26px var(--page-pad) 44px;
   }
+  .tier-title {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
   .city-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -154,6 +204,7 @@ const breadcrumb = breadcrumbLd([
   }
   .city-num {
     font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
     font-size: 26px;
     color: var(--border-on-paper);
     transition: color var(--t-med) ease-out;
@@ -161,6 +212,47 @@ const breadcrumb = breadcrumbLd([
   .city-card:hover .city-num {
     color: var(--meta);
   }
+
+  /* Kompakt A–Ö-katalog */
+  .all-cities {
+    margin-top: 38px;
+  }
+  .city-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 28px;
+  }
+  .city-list li {
+    break-inside: avoid;
+  }
+  .city-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 0;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(16, 16, 20, 0.07);
+  }
+  .city-link-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .city-link--top .city-link-name {
+    font-weight: 700;
+  }
+  .city-link:hover .city-link-name::after {
+    transform: scaleX(1);
+  }
+  .city-link-count {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    color: var(--meta);
+  }
+
   @media (min-width: 1024px) {
     .index-hero-inner {
       padding: 44px var(--page-pad) 64px;
@@ -169,7 +261,11 @@ const breadcrumb = breadcrumbLd([
       font-size: 52px;
     }
     .sheet-inner {
-      padding: 40px var(--page-pad) 56px;
+      padding: 44px var(--page-pad) 64px;
+    }
+    .tier-title {
+      font-size: 24px;
+      margin-bottom: 18px;
     }
     .city-grid {
       grid-template-columns: repeat(3, 1fr);
@@ -183,6 +279,13 @@ const breadcrumb = breadcrumbLd([
     }
     .city-num {
       font-size: 34px;
+    }
+    .all-cities {
+      margin-top: 56px;
+    }
+    .city-list {
+      columns: 4;
+      column-gap: 40px;
     }
   }
 </style>

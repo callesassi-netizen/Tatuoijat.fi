@@ -382,7 +382,8 @@ const breadcrumb = breadcrumbLd([
   .form-field input,
   .form-field select {
     font-family: var(--font-body);
-    font-size: 14px;
+    /* 16px så iOS inte zoomar in vid fokus */
+    font-size: 16px;
     color: var(--text);
     background: var(--paper);
     border: var(--card-border-strong);
