@@ -1,11 +1,6 @@
 ---
 name: "Kristmarian"
-place: "Pohjois-Pohjanmaa"
-styles: []
-premium: false
-images: []
-verified: false
+studio: kristmarian
+instagram: "kristmarian"
 ftaaMember: true
-artists:
-  - "Kristmarian"
 ---

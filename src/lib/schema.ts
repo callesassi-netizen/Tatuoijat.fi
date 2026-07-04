@@ -14,21 +14,21 @@ export function breadcrumbLd(items: { name: string; url: string }[]) {
   };
 }
 
-/** TattooParlor per artist-/studioprofil. */
+/** TattooParlor per studioprofil. */
 export function tattooParlorLd(
-  artist: CollectionEntry<'artists'>,
+  studio: CollectionEntry<'studios'>,
   cityName: string,
   url: string,
 ) {
-  const { data } = artist;
+  const { data } = studio;
   const sameAs: string[] = [];
-  if (data.instagram) sameAs.push(`https://www.instagram.com/${data.instagram}/`);
+  if (data.instagram) sameAs.push(`https://instagram.com/${data.instagram}`);
   if (data.website) sameAs.push(data.website);
 
   return {
     '@context': 'https://schema.org',
     '@type': 'TattooParlor',
-    name: data.studio || data.name,
+    name: data.name,
     url,
     address: {
       '@type': 'PostalAddress',

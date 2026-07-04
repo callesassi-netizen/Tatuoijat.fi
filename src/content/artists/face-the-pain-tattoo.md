@@ -1,12 +1,6 @@
 ---
 name: "Face the pain tattoo"
-place: "Etelä-pohjanmaa"
-styles: []
-premium: false
-address: "Keskustie 16b"
-images: []
-verified: false
+studio: face-the-pain-tattoo
+instagram: "facethepaintattoo"
 ftaaMember: true
-artists:
-  - "Face the pain tattoo"
 ---

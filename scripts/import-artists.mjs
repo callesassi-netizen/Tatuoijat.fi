@@ -1,33 +1,61 @@
-// Import: docs/artists-seed.json (FTAA:s publika medlemslista) →
-// src/content/artists/{studio-slug}.md enligt content-modellen i CLAUDE.md.
+// Import: docs/artists-seed.json (FTAA) + docs/studios-nonftaa.json →
+//   src/content/studios/{slug}.md  (en fil per studio — äger profilsidan)
+//   src/content/artists/{slug}.md  (en fil per artist/person — renderas
+//                                   på studions profil, ingen egen sida)
 //
 // Kör:  node scripts/import-artists.mjs
 //
-// Regler (från seed-README + CLAUDE.md):
-// - En md-fil per studio (studios_grouped); artisterna listas i frontmatter
-//   `artists:` och visas på studions profil.
-// - `ftaa_member: true` → `ftaaMember: true` (badge i förtroende-sektionen).
-// - website/instagram skrivs ENDAST när de inte är null — gissa aldrig domäner.
-// - `styles: []` lämnas tomma (fylls via claim-flödet/kuratering).
-// - Stad utan stadssida i src/content/cities/ (inkl. city: null) →
-//   `city:` utelämnas och visningsplatsen läggs i `place:` — profilen
-//   hamnar utanför stadssidorna tills en riktig stadssida (unik intro) finns.
-// - Brödtexten lämnas tom: beskrivningar fabriceras inte, de fylls via claim.
+// Regler (docs/claude-code-handoff-data.md + CLAUDE.md):
+// - Dedupe på studionamn (case-insensitive) mellan filerna; FTAA vinner,
+//   non-FTAA kompletterar fält som saknas.
+// - Satu Tattoo (The Clinic) hör till FTAA-studion The Clinic (Lahti) —
+//   kopplas, ingen dubblettstudio skapas.
+// - ftaa_member: false → INGEN FTAA-badge.
+// - website/instagram skrivs ENDAST när de finns i seed — gissa aldrig.
+// - Studio utan egen IG men med exakt en artist med IG ärver artistens
+//   handle som kontaktväg (visas ändå som personens IG på profilen).
+// - notes-fältet är internt och skrivs ALDRIG till content.
+// - Stad utan stadssida i src/content/cities/ (inkl. null) → city utelämnas,
+//   visningsplats i `place:` — utanför stadssidorna tills fixat.
+// - styles från non-FTAA mappas konservativt till våra slugs; omappbara
+//   (black-and-grey, illustrative, dotwork ...) hoppas över och rapporteras.
 //
-// Scriptet är idempotent: det tömmer src/content/artists/ och genererar om.
+// Scriptet är idempotent: tömmer båda katalogerna och genererar om.
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const seedPath = join(root, 'docs', 'artists-seed.json');
+const seed = JSON.parse(readFileSync(join(root, 'docs', 'artists-seed.json'), 'utf8'));
+const nonFtaa = JSON.parse(readFileSync(join(root, 'docs', 'studios-nonftaa.json'), 'utf8'));
 const citiesDir = join(root, 'src', 'content', 'cities');
+const studiosDir = join(root, 'src', 'content', 'studios');
 const artistsDir = join(root, 'src', 'content', 'artists');
 
-const seed = JSON.parse(readFileSync(seedPath, 'utf8'));
+// Exempel-premium på startsidan tills riktiga premiumkunder finns.
+const PREMIUM_EXAMPLES = new Set(['flow-tattoo-helsinki', 'studio-rikuturso', 'la-familia-tattoo']);
 
-/** Slugify med finska/svenska tecken (ä→a, ö→o, å→a). */
+// Namnkorrigeringar — verifierade uppgifter ur handoff-underlaget
+// (FTAA-listans råa visningsnamn är inte alltid personnamn).
+const NAME_FIXES = new Map([
+  ['Satu The Clinic', 'Satu Virkkunen Carvalho'],
+  ['Riikka (Tattoo Clinic)', 'Riikka'],
+]);
+
+// Non-FTAA-stilar → våra stil-slugs. Endast säkra mappningar; resten skippas.
+const STYLE_MAP = new Map([
+  ['japanese', 'japanilainen'],
+  ['realism', 'realismi'],
+  ['blackwork', 'blackwork'],
+  ['fineline', 'fineline'],
+  ['traditional', 'traditional'],
+  ['geometric', 'geometrinen'],
+]);
+
+// "centrum" i seed är svenska — finska sajten visar Keskusta
+const DISTRICT_FIXES = new Map([['centrum', 'Keskusta']]);
+
 function slugify(text) {
   return text
     .toLowerCase()
@@ -38,108 +66,188 @@ function slugify(text) {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 }
+const yamlString = (value) =>
+  `"${String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
-/** YAML-säker citerad sträng. */
-function yamlString(value) {
-  return `"${String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
-}
-
-// Exempel-premium på startsidan tills riktiga premiumkunder finns —
-// valda för att de har verifierade webbplatser (CTA:n fungerar) och
-// ligger i olika städer. Byt/töm när claim-flödet ger riktiga kunder.
-const PREMIUM_EXAMPLES = new Set([
-  'flow-tattoo-helsinki',
-  'studio-rikuturso',
-  'la-familia-tattoo',
-]);
-
-// Städer med riktiga stadssidor (unika intro-texter) i content collections
 const knownCitySlugs = new Set(
   readdirSync(citiesDir)
     .filter((file) => file.endsWith('.md'))
     .map((file) => file.replace(/\.md$/, '')),
 );
 
-// Joina studio-info från artistposterna (studios_grouped saknar
-// address/instagram/region_raw)
+// ---------- 1. Bygg studio-poster ----------
+
 const artistsByStudio = new Map();
 for (const artist of seed.artists) {
-  const key = artist.studio ?? artist.artist;
+  const key = (artist.studio ?? artist.artist).toLowerCase();
   if (!artistsByStudio.has(key)) artistsByStudio.set(key, []);
   artistsByStudio.get(key).push(artist);
 }
 const firstNonNull = (records, field) =>
   records.map((record) => record[field]).find((value) => value != null && value !== '');
 
-// Töm katalogen (ersätter fejkdatan) och generera om
+/** Härled stad ur adressen när city saknas ("… , 00500 Helsinki"). */
+function cityFromAddress(address) {
+  if (!address) return null;
+  const match = address.match(/([A-ZÅÄÖ][a-zåäö-]+)\s*$/u);
+  return match && knownCitySlugs.has(slugify(match[1])) ? match[1] : null;
+}
+
+const studios = new Map(); // key: lowercase studionamn
+
+for (const group of seed.studios_grouped) {
+  const records = artistsByStudio.get(group.studio.toLowerCase()) ?? [];
+  studios.set(group.studio.toLowerCase(), {
+    name: group.studio,
+    cityRaw: group.city ?? cityFromAddress(firstNonNull(records, 'address')) ?? null,
+    district: null,
+    styles: [],
+    website: group.website ?? firstNonNull(records, 'website') ?? null,
+    instagram: null, // FTAA har inga studio-handles; ev. arv från ensam artist nedan
+    artistInstagrams: [],
+    address: firstNonNull(records, 'address') ?? null,
+    region: firstNonNull(records, 'region_raw') ?? null,
+    verified: false,
+    ftaaMember: records.some((record) => record.ftaa_member) || records.length === 0,
+  });
+}
+
+// Non-FTAA: dedupe mot FTAA (FTAA vinner, komplettera luckor)
+const SATU_ALIAS = 'satu tattoo (the clinic)'; // hör till The Clinic (Lahti)
+let mergedCount = 0;
+let skippedStyles = new Set();
+
+for (const entry of nonFtaa.studios) {
+  const key = entry.studio.toLowerCase() === SATU_ALIAS ? 'the clinic' : entry.studio.toLowerCase();
+  const mappedStyles = (entry.styles ?? [])
+    .map((style) => {
+      if (STYLE_MAP.has(style)) return STYLE_MAP.get(style);
+      skippedStyles.add(style);
+      return null;
+    })
+    .filter(Boolean);
+
+  const existing = studios.get(key);
+  if (existing) {
+    // Komplettera endast fält som saknas — FTAA-datan vinner
+    existing.district ??= entry.district
+      ? (DISTRICT_FIXES.get(entry.district) ?? entry.district)
+      : null;
+    existing.website ??= entry.website ?? null;
+    existing.instagram ??= entry.instagram ?? null;
+    existing.address ??= entry.address ?? null;
+    if (existing.styles.length === 0) existing.styles = mappedStyles;
+    existing.artistInstagrams.push(
+      ...(entry.artists_instagram ?? []).filter(
+        (handle) => !existing.artistInstagrams.includes(handle),
+      ),
+    );
+    mergedCount++;
+    continue;
+  }
+  studios.set(key, {
+    name: entry.studio,
+    cityRaw: entry.city ?? null,
+    district: entry.district ? (DISTRICT_FIXES.get(entry.district) ?? entry.district) : null,
+    styles: mappedStyles,
+    website: entry.website ?? null,
+    instagram: entry.instagram ?? null,
+    artistInstagrams: entry.artists_instagram ?? [],
+    address: entry.address ?? null,
+    region: null,
+    verified: entry.verified === true,
+    ftaaMember: false, // regel 3: ingen FTAA-badge för non-FTAA
+  });
+}
+
+// ---------- 2. Skriv studio-md ----------
+
+rmSync(studiosDir, { recursive: true, force: true });
+mkdirSync(studiosDir, { recursive: true });
 rmSync(artistsDir, { recursive: true, force: true });
 mkdirSync(artistsDir, { recursive: true });
 
-const usedSlugs = new Set();
-const stats = {
-  total: 0,
-  withCityPage: new Map(),
-  withoutCityPage: new Map(),
-  nullCity: 0,
-  withWebsite: 0,
-  withInstagram: 0,
-};
+const usedStudioSlugs = new Set();
+const studioSlugByKey = new Map();
+const stats = { studios: 0, artists: 0, withCity: 0, nullCity: 0, website: 0, instagram: 0 };
 
-for (const studio of seed.studios_grouped) {
-  const records = artistsByStudio.get(studio.studio) ?? [];
+for (const [key, studio] of studios) {
+  let base = slugify(studio.name) || 'studio';
+  let slug = base;
+  for (let i = 2; usedStudioSlugs.has(slug); i++) slug = `${base}-${i}`;
+  usedStudioSlugs.add(slug);
+  studioSlugByKey.set(key, slug);
 
-  let slug = slugify(studio.studio) || 'studio';
-  let unique = slug;
-  for (let i = 2; usedSlugs.has(unique); i++) unique = `${slug}-${i}`;
-  usedSlugs.add(unique);
+  const citySlug =
+    studio.cityRaw && knownCitySlugs.has(slugify(studio.cityRaw)) ? slugify(studio.cityRaw) : null;
+  const place = citySlug ? null : (studio.cityRaw ?? studio.region ?? null);
 
-  const cityRaw = studio.city ?? null;
-  const citySlug = cityRaw && knownCitySlugs.has(slugify(cityRaw)) ? slugify(cityRaw) : null;
-  // Visningsplats när stadssida saknas: rå stad, annars region ur seed
-  const place = citySlug ? null : (cityRaw ?? firstNonNull(records, 'region_raw') ?? null);
+  // Ensam artist med IG och studion saknar egen → ärv som kontaktväg
+  const persons = artistsByStudio.get(key) ?? [];
+  let instagram = studio.instagram;
+  if (!instagram) {
+    const withIg = persons.filter((person) => person.instagram);
+    if (withIg.length === 1) instagram = withIg[0].instagram;
+  }
 
-  const website = studio.website ?? firstNonNull(records, 'website') ?? null;
-  const instagram = firstNonNull(records, 'instagram') ?? null;
-  const address = firstNonNull(records, 'address') ?? null;
-  const ftaaMember = records.some((record) => record.ftaa_member) || records.length === 0;
-  const artistNames = studio.artists ?? [];
-
-  const lines = ['---', `name: ${yamlString(studio.studio)}`];
+  const lines = ['---', `name: ${yamlString(studio.name)}`];
   if (citySlug) lines.push(`city: ${citySlug}`);
   if (place) lines.push(`place: ${yamlString(place)}`);
-  lines.push('styles: []');
-  lines.push(`premium: ${PREMIUM_EXAMPLES.has(unique)}`);
-  if (website) lines.push(`website: ${yamlString(website)}`);
+  if (studio.district) lines.push(`district: ${yamlString(studio.district)}`);
+  lines.push(
+    studio.styles.length > 0
+      ? `styles: [${studio.styles.join(', ')}]`
+      : 'styles: []',
+  );
+  lines.push(`premium: ${PREMIUM_EXAMPLES.has(slug)}`);
+  if (studio.website) lines.push(`website: ${yamlString(studio.website)}`);
   if (instagram) lines.push(`instagram: ${yamlString(String(instagram).replace(/^@/, ''))}`);
-  if (address) lines.push(`address: ${yamlString(address)}`);
-  lines.push('images: []');
-  lines.push('verified: false');
-  if (ftaaMember) lines.push('ftaaMember: true');
-  if (artistNames.length > 0) {
-    lines.push('artists:');
-    for (const artistName of artistNames) lines.push(`  - ${yamlString(artistName)}`);
+  if (studio.artistInstagrams.length > 0) {
+    lines.push('artistInstagrams:');
+    for (const handle of studio.artistInstagrams)
+      lines.push(`  - ${yamlString(String(handle).replace(/^@/, ''))}`);
   }
+  if (studio.address) lines.push(`address: ${yamlString(studio.address)}`);
+  lines.push('images: []');
+  lines.push(`verified: ${studio.verified}`);
+  if (studio.ftaaMember) lines.push('ftaaMember: true');
   lines.push('---', '');
 
-  writeFileSync(join(artistsDir, `${unique}.md`), lines.join('\n'), 'utf8');
-
-  stats.total++;
-  if (citySlug) {
-    stats.withCityPage.set(citySlug, (stats.withCityPage.get(citySlug) ?? 0) + 1);
-  } else if (cityRaw) {
-    stats.withoutCityPage.set(cityRaw, (stats.withoutCityPage.get(cityRaw) ?? 0) + 1);
-  } else {
-    stats.nullCity++;
-  }
-  if (website) stats.withWebsite++;
-  if (instagram) stats.withInstagram++;
+  writeFileSync(join(studiosDir, `${slug}.md`), lines.join('\n'), 'utf8');
+  stats.studios++;
+  citySlug ? stats.withCity++ : stats.nullCity++;
+  if (studio.website) stats.website++;
+  if (instagram) stats.instagram++;
 }
 
-const sortDesc = (map) => [...map.entries()].sort((a, b) => b[1] - a[1]);
-console.log(`Genererade ${stats.total} studio-md-filer i src/content/artists/`);
-console.log(`  website: ${stats.withWebsite} st · instagram: ${stats.withInstagram} st`);
-console.log('\nPå stadssidor (stadssida finns):');
-for (const [city, count] of sortDesc(stats.withCityPage)) console.log(`  ${city}: ${count}`);
-console.log('\nUtanför stadssidor — stad utan stadssida (skriv intro + md-fil för att aktivera):');
-for (const [city, count] of sortDesc(stats.withoutCityPage)) console.log(`  ${city}: ${count}`);
-console.log(`\ncity: null (visas under region): ${stats.nullCity} st`);
+// ---------- 3. Skriv artist-md (personer) ----------
+
+const usedArtistSlugs = new Set();
+for (const record of seed.artists) {
+  const studioKey = (record.studio ?? record.artist).toLowerCase();
+  const studioSlug = studioSlugByKey.get(studioKey);
+  if (!studioSlug) continue;
+
+  const name = NAME_FIXES.get(record.artist) ?? record.artist;
+  let base = slugify(name) || 'artisti';
+  let slug = base;
+  for (let i = 2; usedArtistSlugs.has(slug); i++) slug = `${base}-${i}`;
+  usedArtistSlugs.add(slug);
+
+  const lines = ['---', `name: ${yamlString(name)}`, `studio: ${studioSlug}`];
+  if (record.instagram)
+    lines.push(`instagram: ${yamlString(String(record.instagram).replace(/^@/, ''))}`);
+  if (record.ftaa_member) lines.push('ftaaMember: true');
+  lines.push('---', '');
+
+  writeFileSync(join(artistsDir, `${slug}.md`), lines.join('\n'), 'utf8');
+  stats.artists++;
+}
+
+console.log(
+  `Studios: ${stats.studios} (${stats.withCity} på stadssidor, ${stats.nullCity} utanför) · sammanslagna dubbletter: ${mergedCount}`,
+);
+console.log(`Artister (personer): ${stats.artists}`);
+console.log(`Studio-kontakt: website ${stats.website} st · instagram ${stats.instagram} st`);
+if (skippedStyles.size > 0)
+  console.log(`Omappade stilar (skippade medvetet): ${[...skippedStyles].join(', ')}`);

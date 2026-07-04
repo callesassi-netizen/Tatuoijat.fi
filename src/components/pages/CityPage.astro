@@ -12,8 +12,8 @@ import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
   getStylesSorted,
-  getArtists,
-  sortArtists,
+  getStudios,
+  sortStudios,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -32,28 +32,25 @@ const site = Astro.site!;
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
-const allArtists = await getArtists();
+const allStudios = await getStudios();
 const styleById = new Map(styles.map((style) => [style.id, style]));
 
 const cityName = cityDisplayName(city, locale);
 const h1City = locale === 'fi' ? city.data.nameLocative : cityName;
-const artists = sortArtists(allArtists.filter((artist) => artist.data.city === city.id));
-const featured = artists.filter((artist) => artist.data.premium);
-const regular = artists.filter((artist) => !artist.data.premium);
+const studios = sortStudios(allStudios.filter((studio) => studio.data.city === city.id));
+const featured = studios.filter((studio) => studio.data.premium);
+const regular = studios.filter((studio) => !studio.data.premium);
 const intro = localizedBody(city.body, locale);
 const countSentence =
-  artists.length === 1
+  studios.length === 1
     ? t('city.introCount.one')
-    : t('city.introCount.many', { n: artists.length });
+    : t('city.introCount.many', { n: studios.length });
 
-function artistMeta(artist: (typeof artists)[number]): string {
-  const studio =
-    artist.data.studio && artist.data.studio !== artist.data.name ? artist.data.studio : '';
-  const parts = [artist.data.district, studio].filter(Boolean);
-  return parts.length > 0 ? parts.join(' · ') : cityName;
+function studioMeta(studio: (typeof studios)[number]): string {
+  return studio.data.district ?? cityName;
 }
-function artistStyleNames(artist: (typeof artists)[number]): string[] {
-  return artist.data.styles.map((slug) => {
+function studioStyleNames(studio: (typeof studios)[number]): string[] {
+  return studio.data.styles.map((slug) => {
     const style = styleById.get(slug);
     return style ? styleDisplayName(style, locale) : slug;
   });
@@ -82,7 +79,7 @@ const breadcrumb = breadcrumbLd([
 ]);
 const itemList = itemListLd(
   t('city.h1', { city: h1City }),
-  artists.map((artist) => new URL(p(`/artistit/${artist.id}/`), site).href),
+  studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
 );
 ---
 
@@ -144,24 +141,24 @@ const itemList = itemListLd(
         data-one={t('city.results.one')}
         data-many={t('city.results.many', { n: '{n}' })}
       >
-        {artists.length === 1 ? t('city.results.one') : t('city.results.many', { n: artists.length })}
+        {studios.length === 1 ? t('city.results.one') : t('city.results.many', { n: studios.length })}
       </p>
 
       <!-- Featured först -->
       {
         featured.length > 0 && (
           <div class="featured-list">
-            {featured.map((artist) => (
+            {featured.map((studio) => (
               <div
                 class="card-cell"
                 data-artist-card
-                data-styles={artist.data.styles.join(' ')}
+                data-styles={studio.data.styles.join(' ')}
               >
                 <ArtistCard
-                  slug={artist.id}
-                  name={artist.data.name}
-                  meta={artistMeta(artist)}
-                  styleNames={artistStyleNames(artist)}
+                  slug={studio.id}
+                  name={studio.data.name}
+                  meta={studioMeta(studio)}
+                  styleNames={studioStyleNames(studio)}
                   premium
                   size="featured"
                   locale={locale}
@@ -176,17 +173,17 @@ const itemList = itemListLd(
       {
         regular.length > 0 && (
           <div class="regular-grid">
-            {regular.map((artist) => (
+            {regular.map((studio) => (
               <div
                 class="card-cell"
                 data-artist-card
-                data-styles={artist.data.styles.join(' ')}
+                data-styles={studio.data.styles.join(' ')}
               >
                 <ArtistCard
-                  slug={artist.id}
-                  name={artist.data.name}
-                  meta={artistMeta(artist)}
-                  styleNames={artistStyleNames(artist)}
+                  slug={studio.id}
+                  name={studio.data.name}
+                  meta={studioMeta(studio)}
+                  styleNames={studioStyleNames(studio)}
                   size="compact"
                   locale={locale}
                 />

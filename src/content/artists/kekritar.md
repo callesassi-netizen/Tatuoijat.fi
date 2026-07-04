@@ -1,12 +1,6 @@
 ---
 name: "Kekritär"
-city: ilmajoki
-styles: []
-premium: false
-address: "Viitalantie 30"
-images: []
-verified: false
+studio: kekritar
+instagram: "kekritar"
 ftaaMember: true
-artists:
-  - "Kekritär"
 ---

@@ -1,12 +1,6 @@
 ---
 name: "Maria Viirros"
-place: "Uusimaa"
-styles: []
-premium: false
-address: "Kristianinkatu 17 A LT 4"
-images: []
-verified: false
+studio: maria-viirros
+instagram: "mariaviirros"
 ftaaMember: true
-artists:
-  - "Maria Viirros"
 ---

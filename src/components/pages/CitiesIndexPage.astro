@@ -7,7 +7,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
-import { getCitiesSorted, artistCountByCity, cityDisplayName } from '../../lib/content';
+import { getCitiesSorted, studioCountByCity, cityDisplayName } from '../../lib/content';
 import { breadcrumbLd } from '../../lib/schema';
 
 interface Props {
@@ -19,7 +19,7 @@ const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const cities = await getCitiesSorted();
-const counts = await artistCountByCity();
+const counts = await studioCountByCity();
 const title = `${t('nav.cities')} — ${t('site.tagline')} | ${t('site.name')}`;
 
 // Topp 9 efter antal (3×3-grid), resten i den kompakta listan

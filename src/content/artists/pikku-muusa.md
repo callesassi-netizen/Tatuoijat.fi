@@ -1,12 +1,6 @@
 ---
 name: "Pikku Muusa"
-city: jyvaskyla
-styles: []
-premium: false
-address: "Keskustie 18, Jyväskylä"
-images: []
-verified: false
+studio: pikku-muusa
+instagram: "pikkumuusa"
 ftaaMember: true
-artists:
-  - "Pikku Muusa"
 ---

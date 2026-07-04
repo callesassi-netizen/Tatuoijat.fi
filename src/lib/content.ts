@@ -25,26 +25,36 @@ export async function getStylesSorted(): Promise<CollectionEntry<'styles'>[]> {
   return styles.sort((a, b) => a.data.order - b.data.order);
 }
 
-export async function getArtists(): Promise<CollectionEntry<'artists'>[]> {
-  return getCollection('artists');
+export async function getStudios(): Promise<CollectionEntry<'studios'>[]> {
+  return getCollection('studios');
 }
 
 /** Premium först, därefter alfabetiskt — samma ordning i alla listor. */
-export function sortArtists(artists: CollectionEntry<'artists'>[]): CollectionEntry<'artists'>[] {
-  return [...artists].sort((a, b) => {
+export function sortStudios(
+  studios: CollectionEntry<'studios'>[],
+): CollectionEntry<'studios'>[] {
+  return [...studios].sort((a, b) => {
     if (a.data.premium !== b.data.premium) return a.data.premium ? -1 : 1;
     return a.data.name.localeCompare(b.data.name, 'fi');
   });
 }
 
-export async function artistCountByCity(): Promise<Map<string, number>> {
-  const artists = await getArtists();
+export async function studioCountByCity(): Promise<Map<string, number>> {
+  const studios = await getStudios();
   const counts = new Map<string, number>();
-  for (const artist of artists) {
-    if (!artist.data.city) continue; // utanför stadssidorna tills staden fixats
-    counts.set(artist.data.city, (counts.get(artist.data.city) ?? 0) + 1);
+  for (const studio of studios) {
+    if (!studio.data.city) continue; // utanför stadssidorna tills staden fixats
+    counts.set(studio.data.city, (counts.get(studio.data.city) ?? 0) + 1);
   }
   return counts;
+}
+
+/** Artisterna (personerna) på en studio, alfabetiskt. */
+export async function getStudioArtists(
+  studioId: string,
+): Promise<CollectionEntry<'artists'>[]> {
+  const artists = await getCollection('artists', (entry) => entry.data.studio === studioId);
+  return artists.sort((a, b) => a.data.name.localeCompare(b.data.name, 'fi'));
 }
 
 export function cityDisplayName(city: CollectionEntry<'cities'>, locale: Locale): string {

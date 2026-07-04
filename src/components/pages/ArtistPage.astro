@@ -1,8 +1,9 @@
 ---
 /**
- * Artist-/studioprofil (wireframe 3a mobil / 3e desktop): mörk identitets-
- * hero, flytande kontaktkort över skarven, portfolio som kärna, Tietoa och
- * Luotettavuus. Desktop: kontaktkort + info i höger sidopanel (340 px).
+ * Studioprofil (wireframe 3a mobil / 3e desktop): mörk identitets-hero,
+ * flytande kontaktkort över skarven, portfolio som kärna, artisterna på
+ * studion (med personliga IG-länkar), Tietoa och Luotettavuus.
+ * Desktop: kontaktkort + info i höger sidopanel (340 px).
  * Utan bilder (Bildpolicy §2): monogram-platta + tydlig Instagram-länk —
  * får aldrig se trasigt ut. Kortets bild morphar hit via View Transition.
  */
@@ -13,6 +14,7 @@ import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
   getStylesSorted,
+  getStudioArtists,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -20,15 +22,15 @@ import {
 import { breadcrumbLd, tattooParlorLd } from '../../lib/schema';
 
 interface Props {
-  artist: CollectionEntry<'artists'>;
+  studio: CollectionEntry<'studios'>;
   locale: Locale;
 }
 
-const { artist, locale } = Astro.props;
+const { studio, locale } = Astro.props;
 const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
-const { data } = artist;
+const { data } = studio;
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
@@ -43,25 +45,31 @@ const styleNames = data.styles.map((slug) => {
   return style ? styleDisplayName(style, locale) : slug;
 });
 
-const bio = localizedBody(artist.body, locale);
-const studioPart = data.studio && data.studio !== data.name ? data.studio : undefined;
-const placeLine = [studioPart, [data.district, displayPlace].filter(Boolean).join(', ')]
-  .filter(Boolean)
-  .join(' · ');
+const bio = localizedBody(studio.body, locale);
+const placeLine = [data.district, displayPlace].filter(Boolean).join(', ');
 
-// Artister på studion (ur FTAA-seeden) — visas som egen sektion om
-// listan säger mer än studions namn
-const studioArtists =
-  data.artists.length > 0 && !(data.artists.length === 1 && data.artists[0] === data.name)
-    ? data.artists
-    : [];
+// Artisterna (personerna) på studion. Ensam artist med samma namn som
+// studion döljs — hens IG är redan studions kontaktväg.
+const igUrl = (handle: string) => `https://instagram.com/${handle}`;
+const persons = (await getStudioArtists(studio.id)).filter(
+  (person) => person.data.name !== data.name,
+);
+// Handle-only-artister (non-FTAA) — visas som @-chips; dubbletter mot
+// personer och studions egen handle filtreras bort
+const personHandles = new Set(
+  persons.map((person) => person.data.instagram).filter(Boolean),
+);
+const extraHandles = data.artistInstagrams.filter(
+  (handle) => !personHandles.has(handle) && handle !== data.instagram,
+);
+const hasArtistsSection = persons.length > 0 || extraHandles.length > 0;
 
-const instagramUrl = data.instagram ? `https://www.instagram.com/${data.instagram}/` : undefined;
+const instagramUrl = data.instagram ? igUrl(data.instagram) : undefined;
 const bookingUrl = data.website ?? instagramUrl;
 const hasContact = Boolean(bookingUrl || instagramUrl);
 const worksCount = data.images.length;
 
-const path = `/artistit/${artist.id}/`;
+const path = `/artistit/${studio.id}/`;
 const title = t('artist.metaTitle', { name: data.name, city: displayPlace, site: t('site.name') });
 const description = bio
   ? bio.length > 155
@@ -78,7 +86,7 @@ if (city && h1City) {
 }
 breadcrumbItems.push({ name: data.name, url: new URL(p(path), site).href });
 const breadcrumb = breadcrumbLd(breadcrumbItems);
-const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href);
+const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href);
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
@@ -170,7 +178,7 @@ const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href)
             )
           }
           <div class="trust-studio">
-            <span class="trust-studio-name">{data.studio ?? data.name}</span>
+            <span class="trust-studio-name">{data.name}</span>
             <span class="trust-studio-address">
               {data.address ? data.address : displayPlace}
             </span>
@@ -199,7 +207,7 @@ const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href)
                 {data.images.map((image, index) => (
                   <div
                     class="portfolio-item"
-                    style={index === 0 ? `view-transition-name: artist-image-${artist.id};` : undefined}
+                    style={index === 0 ? `view-transition-name: artist-image-${studio.id};` : undefined}
                   >
                     <img src={image} alt={`${data.name} — ${index + 1}`} loading={index < 2 ? 'eager' : 'lazy'} />
                   </div>
@@ -207,7 +215,7 @@ const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href)
               </div>
             ) : (
               <div class="portfolio-empty">
-                <div class="portfolio-plate" style={`view-transition-name: artist-image-${artist.id};`}>
+                <div class="portfolio-plate" style={`view-transition-name: artist-image-${studio.id};`}>
                   <MonogramPlate name={data.name} featured={data.premium} />
                 </div>
                 <div class="portfolio-empty-info">
@@ -236,14 +244,27 @@ const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href)
           )
         }
 
-        <!-- Artistit på studion (FTAA-seed) -->
+        <!-- Artisterna på studion, med personliga IG-länkar -->
         {
-          studioArtists.length > 0 && (
+          hasArtistsSection && (
             <section class="about" aria-labelledby="artists-title">
               <h2 class="about-title" id="artists-title">{t('artist.artists')}</h2>
               <p class="studio-artists">
-                {studioArtists.map((artistName) => (
-                  <span class="chip">{artistName}</span>
+                {persons.map((person) =>
+                  person.data.instagram ? (
+                    <a class="chip" href={igUrl(person.data.instagram)} rel="noopener">
+                      {person.data.name}
+                      <span class="chip-ig" aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <span class="chip">{person.data.name}</span>
+                  ),
+                )}
+                {extraHandles.map((handle) => (
+                  <a class="chip" href={igUrl(handle)} rel="noopener">
+                    @{handle}
+                    <span class="chip-ig" aria-hidden="true">↗</span>
+                  </a>
                 ))}
               </p>
             </section>
@@ -423,6 +444,11 @@ const parlor = tattooParlorLd(artist, displayPlace, new URL(p(path), site).href)
     gap: 6px;
     flex-wrap: wrap;
     margin: 0;
+  }
+  .chip-ig {
+    font-size: 10px;
+    margin-left: 4px;
+    opacity: 0.6;
   }
   .trust-title {
     font-size: 15px;

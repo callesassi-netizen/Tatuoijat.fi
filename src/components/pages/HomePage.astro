@@ -10,9 +10,9 @@ import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
   getStylesSorted,
-  getArtists,
-  sortArtists,
-  artistCountByCity,
+  getStudios,
+  sortStudios,
+  studioCountByCity,
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
@@ -27,13 +27,13 @@ const p = (path: string) => localePath(locale, path);
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
-const artists = await getArtists();
-const counts = await artistCountByCity();
+const studios = await getStudios();
+const counts = await studioCountByCity();
 
 const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((style) => [style.id, style]));
 
-const featured = sortArtists(artists.filter((artist) => artist.data.premium)).slice(0, 3);
+const featured = sortStudios(studios.filter((studio) => studio.data.premium)).slice(0, 3);
 // Störst först — griden visar topp 6, resten nås via "Kaikki →"
 const citiesByCount = [...cities].sort(
   (a, b) =>
@@ -43,15 +43,13 @@ const citiesByCount = [...cities].sort(
 const topCities = citiesByCount.slice(0, 6);
 const popularCities = citiesByCount.slice(0, 3);
 
-function artistMeta(artist: (typeof artists)[number]): string {
-  const city = artist.data.city ? cityById.get(artist.data.city) : undefined;
-  const place = city ? cityDisplayName(city, locale) : (artist.data.place ?? '');
-  const studio =
-    artist.data.studio && artist.data.studio !== artist.data.name ? artist.data.studio : '';
-  return [place, studio].filter(Boolean).join(' · ');
+function studioMeta(studio: (typeof studios)[number]): string {
+  const city = studio.data.city ? cityById.get(studio.data.city) : undefined;
+  const place = city ? cityDisplayName(city, locale) : (studio.data.place ?? '');
+  return [studio.data.district, place].filter(Boolean).join(', ');
 }
-function artistStyleNames(artist: (typeof artists)[number]): string[] {
-  return artist.data.styles.map((slug) => {
+function studioStyleNames(studio: (typeof studios)[number]): string[] {
+  return studio.data.styles.map((slug) => {
     const style = styleById.get(slug);
     return style ? styleDisplayName(style, locale) : slug;
   });
@@ -123,13 +121,13 @@ const title = `${t('site.name')} — ${t('site.tagline')} | ${t('home.metaSuffix
               <a class="ink-link section-all" href={p('/tatuoijat/')}>{t('home.all')} →</a>
             </div>
             <div class="featured-grid reveal-stagger">
-              {featured.map((artist) => (
+              {featured.map((studio) => (
                 <ArtistCard
-                  slug={artist.id}
-                  name={artist.data.name}
-                  meta={artistMeta(artist)}
-                  styleNames={artistStyleNames(artist)}
-                  premium={artist.data.premium}
+                  slug={studio.id}
+                  name={studio.data.name}
+                  meta={studioMeta(studio)}
+                  styleNames={studioStyleNames(studio)}
+                  premium={studio.data.premium}
                   size="featured"
                   locale={locale}
                 />

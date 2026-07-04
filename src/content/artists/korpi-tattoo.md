@@ -1,12 +1,6 @@
 ---
 name: "Korpi Tattoo"
-city: pudasjarvi
-styles: []
-premium: false
-address: "Materonniementie 35 93390 Puhoskylä"
-images: []
-verified: false
+studio: korpi-tattoo
+instagram: "korpi_tattoo"
 ftaaMember: true
-artists:
-  - "Korpi Tattoo"
 ---

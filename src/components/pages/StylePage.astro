@@ -12,8 +12,8 @@ import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
   getStylesSorted,
-  getArtists,
-  sortArtists,
+  getStudios,
+  sortStudios,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -32,30 +32,28 @@ const site = Astro.site!;
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
-const allArtists = await getArtists();
+const allStudios = await getStudios();
 const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((entry) => [entry.id, entry]));
 
 const styleName = styleDisplayName(style, locale);
 const intro = localizedBody(style.body, locale);
-const artists = sortArtists(
-  allArtists.filter((artist) => artist.data.styles.includes(style.id)),
+const studios = sortStudios(
+  allStudios.filter((studio) => studio.data.styles.includes(style.id)),
 );
 
-// Korslänka bara städer som har artister med stilen
+// Korslänka bara städer som har studios med stilen
 const citiesWithStyle = cities.filter((city) =>
-  artists.some((artist) => artist.data.city === city.id),
+  studios.some((studio) => studio.data.city === city.id),
 );
 
-function artistMeta(artist: (typeof artists)[number]): string {
-  const city = artist.data.city ? cityById.get(artist.data.city) : undefined;
-  const place = city ? cityDisplayName(city, locale) : (artist.data.place ?? '');
-  const studio =
-    artist.data.studio && artist.data.studio !== artist.data.name ? artist.data.studio : '';
-  return [place, studio].filter(Boolean).join(' · ');
+function studioMeta(studio: (typeof studios)[number]): string {
+  const city = studio.data.city ? cityById.get(studio.data.city) : undefined;
+  const place = city ? cityDisplayName(city, locale) : (studio.data.place ?? '');
+  return [studio.data.district, place].filter(Boolean).join(', ');
 }
-function artistStyleNames(artist: (typeof artists)[number]): string[] {
-  return artist.data.styles.map((slug) => {
+function studioStyleNames(studio: (typeof studios)[number]): string[] {
+  return studio.data.styles.map((slug) => {
     const entry = styleById.get(slug);
     return entry ? styleDisplayName(entry, locale) : slug;
   });
@@ -72,7 +70,7 @@ const breadcrumb = breadcrumbLd([
 ]);
 const itemList = itemListLd(
   styleName,
-  artists.map((artist) => new URL(p(`/artistit/${artist.id}/`), site).href),
+  studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
 );
 ---
 
@@ -111,15 +109,15 @@ const itemList = itemListLd(
       <section class="section" aria-labelledby="style-artists-title">
         <h2 class="section-title" id="style-artists-title">{t('style.artistsTitle')}</h2>
         {
-          artists.length > 0 ? (
+          studios.length > 0 ? (
             <div class="artist-grid">
-              {artists.map((artist) => (
+              {studios.map((studio) => (
                 <ArtistCard
-                  slug={artist.id}
-                  name={artist.data.name}
-                  meta={artistMeta(artist)}
-                  styleNames={artistStyleNames(artist)}
-                  premium={artist.data.premium}
+                  slug={studio.id}
+                  name={studio.data.name}
+                  meta={studioMeta(studio)}
+                  styleNames={studioStyleNames(studio)}
+                  premium={studio.data.premium}
                   size="featured"
                   locale={locale}
                 />

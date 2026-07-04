@@ -1,12 +1,6 @@
 ---
 name: "Fera Obscura"
-city: helsinki
-styles: []
-premium: false
-address: "Pursimiehenkatu 17, Helsinki"
-images: []
-verified: false
+studio: fera-obscura
+instagram: "feraobscura"
 ftaaMember: true
-artists:
-  - "Fera Obscura"
 ---

@@ -1,12 +1,6 @@
 ---
 name: "JessInk Tattoos"
-city: keuruu
-styles: []
-premium: false
-address: "Keuruuntie 17"
-images: []
-verified: false
+studio: jessink-tattoos
+instagram: "jessink_tattoos"
 ftaaMember: true
-artists:
-  - "JessInk Tattoos"
 ---

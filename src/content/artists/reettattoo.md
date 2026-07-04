@@ -1,12 +1,6 @@
 ---
 name: "Reettattoo"
-city: kempele
-styles: []
-premium: false
-address: "Kempele"
-images: []
-verified: false
+studio: reettattoo
+instagram: "reettattoo"
 ftaaMember: true
-artists:
-  - "Reettattoo"
 ---
