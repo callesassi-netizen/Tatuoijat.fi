@@ -70,12 +70,21 @@ const hasContact = Boolean(bookingUrl || instagramUrl);
 const worksCount = data.images.length;
 
 const path = `/artistit/${studio.id}/`;
-const title = t('artist.metaTitle', { name: data.name, city: displayPlace, site: t('site.name') });
+// Studionamn upp till 40 tecken finns i datan — faller tillbaka på kort
+// mall så att titeln aldrig passerar 60 tecken (SERP-trunkering).
+const fullTitle = t('artist.metaTitle', { name: data.name, city: displayPlace, site: t('site.name') });
+const title = fullTitle.length <= 60
+  ? fullTitle
+  : t('artist.metaTitleShort', { name: data.name, site: t('site.name') });
 const description = bio
   ? bio.length > 155
     ? `${bio.slice(0, 152)}…`
     : bio
-  : t('artist.metaDescriptionFallback', { name: data.name, place: displayPlace });
+  : t('artist.metaDescriptionFallback', {
+      name: data.name,
+      place: displayPlace,
+      site: t('site.name'),
+    });
 
 const breadcrumbItems = [{ name: t('breadcrumb.home'), url: new URL(p('/'), site).href }];
 if (city && h1City) {

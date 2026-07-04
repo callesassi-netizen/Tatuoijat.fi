@@ -2,12 +2,12 @@ export const locales = ['fi', 'sv'] as const;
 export type Locale = (typeof locales)[number];
 export const defaultLocale: Locale = 'fi';
 
-// Sajtnamnet ligger här (och bara här bland strängarna) — namnbyte
-// vid domänval ska vara en 3-raders ändring: SITE_URL i astro.config.mjs,
-// site.name nedan (fi + sv) och logotyp-komponenten om den får egen grafik.
+// Sajtnamnet ligger här (och bara här bland strängarna). Publikt varumärke
+// = Tatuoijat.fi sedan 2026-07-04 (handoff §7) — MUSTE lever kvar enbart
+// som internt kodnamn. Domänen läses från SITE_URL i astro.config.mjs.
 export const ui = {
   fi: {
-    'site.name': 'MUSTE',
+    'site.name': 'Tatuoijat.fi',
     'site.tagline': 'Löydä tatuoijasi',
     'site.description':
       'Suomen tatuoijat ja studiot yhdessä paikassa. Selaa portfolioita, vertaile tyylejä ja löydä oma artistisi.',
@@ -32,7 +32,11 @@ export const ui = {
     'home.cities.title': 'Selaa kaupungin mukaan',
     'home.artistCount.one': '1 tatuoija',
     'home.artistCount.many': '{n} tatuoijaa',
-    'home.metaSuffix': 'Tatuoijat ja studiot Suomessa',
+    'home.metaSuffix': 'Suomen tatuoijat ja tatuointiliikkeet',
+    // Meta description för startsidan (140–155 tecken, antal-fritt + CTA).
+    // site.description är hero-copy och för kort som SERP-beskrivning.
+    'home.metaDescription':
+      'Tatuoijat.fi kokoaa Suomen tatuoijat ja tatuointiliikkeet yhteen paikkaan. Selaa portfolioita, vertaile tyylejä ja hintoja ja löydä oma tatuoijasi.',
     'home.premiumCta.title': 'Haluatko näkyä tässä?',
     'home.premiumCta.text':
       'Etusivun Premium-paikat ovat rajattuja ja täytetään varausjärjestyksessä. Nosta studiosi koko Suomen näkyville.',
@@ -57,9 +61,12 @@ export const ui = {
     'city.eyebrow': 'Kaupunki',
     'city.back': 'Etusivu',
     'city.h1': 'Tatuoijat {city}',
-    'city.metaTitle': 'Tatuoijat {city} — vertaile portfolioita | {site}',
+    // "tatuointi {stad}" är huvudtermen, "tatuointiliike" näst störst
+    // (handoff §2); antalet är CTR-differentieringen mot enskilda studios.
+    // "tatuoija {stad}" täcks av sluttaggen. Max 57 tecken med dagens data.
+    'city.metaTitle': 'Tatuointi {city} — {n} tatuointiliikettä | {site}',
     'city.metaDescription':
-      'Tatuoijat ja tatuointistudiot: {city}. Selaa portfolioita, suodata tyylin mukaan ja ota yhteyttä suoraan artistiin.',
+      'Tatuointi {city}: {n} tatuointiliikettä ja tatuoijaa portfolioineen. Vertaile tyylejä ja hintoja, katso kuvat ja ota yhteyttä suoraan artistiin.',
     'city.introCount.one': '1 tatuoija.',
     'city.introCount.many': '{n} tatuoijaa.',
     'city.switch': 'Vaihda:',
@@ -70,7 +77,9 @@ export const ui = {
     'city.empty.title': 'Ei tuloksia tällä tyylillä',
     'city.empty.text': 'Tästä kaupungista ei vielä löytynyt tatuoijia valitulla tyylillä.',
     'city.empty.reset': 'Näytä kaikki tyylit',
-    'artist.metaTitle': '{name} — tatuoija, {city} | {site}',
+    'artist.metaTitle': '{name} — tatuointiliike, {city} | {site}',
+    // Fallback när studionamnet gör fullmallen längre än 60 tecken
+    'artist.metaTitleShort': '{name} | {site}',
     'artist.book': 'Varaa aika',
     'artist.responds': 'Vastaa yleensä 1–2 arkipäivässä',
     'artist.portfolio': 'Portfolio',
@@ -87,12 +96,13 @@ export const ui = {
     'artist.website': 'Verkkosivut',
     'artist.artists': 'Artistit',
     'artist.metaDescriptionFallback':
-      '{name} — tatuointistudio ({place}). Profiili ja yhteystiedot MUSTE-katalogissa.',
+      '{name} — tatuointiliike ({place}). Katso tyylit ja yhteystiedot ja ota yhteyttä suoraan — {site} kokoaa Suomen tatuoijat.',
     'common.finland': 'Suomi',
     'style.eyebrow': 'Tyyli',
-    'style.metaTitle': '{style} — tatuoijat ja portfoliot | {site}',
+    // "{stil} tatuointi" är söktermen — inte stilnamnet ensamt (handoff §2)
+    'style.metaTitle': '{style}-tatuointi — tatuoijat Suomessa | {site}',
     'style.metaDescription':
-      '{style}: mitä tyyli tarkoittaa ja ketkä sitä tekevät Suomessa. Selaa portfolioita ja löydä oma tatuoijasi.',
+      '{style}-tatuointi: katso, ketkä tyyliä tekevät Suomessa. Selaa tatuoijien portfolioita kaupungeittain, vertaile töitä ja ota yhteyttä artistiin.',
     'style.artistsTitle': 'Tyylin tekijät',
     'style.artistsEmpty':
       'Tälle tyylille ei ole vielä listattuja artisteja. Katso kaikki tatuoijat kaupungeittain.',
@@ -103,7 +113,7 @@ export const ui = {
     'notFound.cta': 'Takaisin etusivulle',
   },
   sv: {
-    'site.name': 'MUSTE',
+    'site.name': 'Tatuoijat.fi',
     'site.tagline': 'Hitta din tatuerare',
     'site.description':
       'Finlands tatuerare och studios på ett ställe. Bläddra bland portfolios, jämför stilar och hitta din artist.',
@@ -128,7 +138,9 @@ export const ui = {
     'home.cities.title': 'Bläddra efter stad',
     'home.artistCount.one': '1 tatuerare',
     'home.artistCount.many': '{n} tatuerare',
-    'home.metaSuffix': 'Tatuerare och studios i Finland',
+    'home.metaSuffix': 'Finlands tatuerare och tatueringsstudior',
+    'home.metaDescription':
+      'Tatuoijat.fi samlar Finlands tatuerare och tatueringsstudior på ett ställe. Bläddra bland portfolios, jämför stilar och priser och hitta din artist.',
     'home.premiumCta.title': 'Vill du synas här?',
     'home.premiumCta.text':
       'Premium-platserna på startsidan är begränsade och fylls i bokningsordning. Lyft din studio inför hela Finland.',
@@ -153,9 +165,9 @@ export const ui = {
     'city.eyebrow': 'Stad',
     'city.back': 'Startsidan',
     'city.h1': 'Tatuerare i {city}',
-    'city.metaTitle': 'Tatuerare i {city} — jämför portfolios | {site}',
+    'city.metaTitle': 'Tatuerare i {city} — {n} studior | {site}',
     'city.metaDescription':
-      'Tatuerare och tatueringsstudios i {city}. Bläddra bland portfolios, filtrera på stil och kontakta artisten direkt.',
+      'Tatuerare och tatueringsstudior i {city}: {n} studior med portfolios. Jämför stilar och priser, se bilder och kontakta artisten direkt.',
     'city.introCount.one': '1 tatuerare.',
     'city.introCount.many': '{n} tatuerare.',
     'city.switch': 'Byt:',
@@ -166,7 +178,8 @@ export const ui = {
     'city.empty.title': 'Inga träffar för den stilen',
     'city.empty.text': 'Inga tatuerare med den valda stilen hittades i den här staden ännu.',
     'city.empty.reset': 'Visa alla stilar',
-    'artist.metaTitle': '{name} — tatuerare, {city} | {site}',
+    'artist.metaTitle': '{name} — tatueringsstudio, {city} | {site}',
+    'artist.metaTitleShort': '{name} | {site}',
     'artist.book': 'Boka tid',
     'artist.responds': 'Svarar oftast inom 1–2 vardagar',
     'artist.portfolio': 'Portfolio',
@@ -183,12 +196,12 @@ export const ui = {
     'artist.website': 'Webbplats',
     'artist.artists': 'Artister',
     'artist.metaDescriptionFallback':
-      '{name} — tatueringsstudio ({place}). Profil och kontaktuppgifter i MUSTE-katalogen.',
+      '{name} — tatueringsstudio ({place}). Se stilar och kontaktuppgifter och ta kontakt direkt — {site} samlar Finlands tatuerare.',
     'common.finland': 'Finland',
     'style.eyebrow': 'Stil',
-    'style.metaTitle': '{style} — tatuerare och portfolios | {site}',
+    'style.metaTitle': '{style}-tatuering — tatuerare i Finland | {site}',
     'style.metaDescription':
-      '{style}: vad stilen innebär och vilka som gör den i Finland. Bläddra bland portfolios och hitta din tatuerare.',
+      '{style}-tatuering: se vilka som gör stilen i Finland. Bläddra bland tatuerarnas portfolios per stad, jämför arbeten och kontakta artisten direkt.',
     'style.artistsTitle': 'Artister med stilen',
     'style.artistsEmpty':
       'Inga artister är listade för den här stilen ännu. Se alla tatuerare per stad.',

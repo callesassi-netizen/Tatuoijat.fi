@@ -79,7 +79,18 @@ Prioritetsordning — allt tjänar säljargumentet "vi rankar redan, din studio 
 - DNS: Netlify DNS (zon skapas i Netlify, namnservrar byts hos Hostingpalvelu). Netlify sköter HTTPS + www→apex-redirect.
 - Ej köpta (medvetet, omprövas när GSC visar rankning): tatuoija.fi (singular, redirect-kandidat), tatuointihaku.fi (defensiv).
 
-## 8. Vad som INTE ska göras
+## 8. Instagram-embeds (beslut 2026-07-04): bilder via facade-mönster, ingen cookiebanner
+
+Portfoliobilder visas som **Instagram-embeds av specifika inlägg** (lagligt utan artisttillstånd — innehållet serveras av Instagram, artisten behåller kontrollen; raderas inlägget försvinner embedden). Regler:
+
+1. **Facade/klicka-för-att-ladda, ALDRIG direktladdning.** Sidan renderas med en lätt platshållar-platta (brand-gradient + IG-glyf) per inlägg. Metas embed-JS laddas först när besökaren klickar — sajten förblir cookiefri och snabb, ingen cookiebanner behövs. Ingen förhandsbild från Instagrams CDN i platshållaren (det vore hotlinking) — plattan är ren brand-grafik.
+2. **Max 2 embeds per artist**, lazy även efter klick (en `blockquote.instagram-media` + `embed.js` per aktivering).
+3. **Microcopy på plattan (fi):** rubrik `Katso mestariteokset` + knapp `Näytä työt Instagramista` + finstilt `Sisältö ladataan Instagramista (Meta), joka voi asettaa evästeitä.` **(sv):** `Se mästerverken` / `Visa verken från Instagram` / `Innehållet laddas från Instagram (Meta) och kan använda cookies.`
+4. **Datamodell:** nytt fält i artist-frontmatter: `instagram_posts: []` (lista med inläggs-URL:er, 0–2 st). Morpheus levererar URL:erna batchvis (Helsinki + Tampere först); tomt fält = dagens läge (monogram + IG-knapp), designen får aldrig se trasig ut utan embeds.
+5. Fallback när embed inte laddar (privat konto / avstängd embedding / borttaget inlägg): visa monogram-plattan + IG-länken.
+6. Bildpolicyns §1 gäller fortfarande: aldrig kopiera/hotlinka själva bildfilerna. Embeds är enda undantaget eftersom innehållet aldrig lämnar Instagrams kontroll.
+
+## 9. Vad som INTE ska göras
 
 - Inga programmatiska "paras tatuoija {stad}"-sidor med rankningar vi inte kan belägga (förtroende + juridik). Termen fångas av stadssidans title/description och ev. sorterings-UI ("suosituimmat").
 - Inga AI-genererade massintros för 46 städer — 10 bra slår 46 dåliga; tunt boilerplate är största risken för en ny katalogdomän.

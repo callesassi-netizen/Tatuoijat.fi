@@ -26,7 +26,9 @@ export interface HinnatContent {
 
 export const hinnat: Record<Locale, HinnatContent> = {
   fi: {
-    metaTitle: 'Mitä tatuointi maksaa? Hinnat Suomessa 2026 | MUSTE',
+    // "tatuoinnin hinta" är primärtermen (handoff §2); "hintaesimerkit"
+    // täcker autocomplete-frasen "tatuointi hinta esimerkki". 53 tecken.
+    metaTitle: 'Tatuoinnin hinta 2026 — hintaesimerkit | Tatuoijat.fi',
     metaDescription:
       'Tatuoinnin hinta Suomessa: pienet työt 100–200 €, tuntiveloitus 100–180 €/h, hihat 1 500 €:sta ylöspäin. Katso hintataulukko ja mihin hinta perustuu.',
     eyebrow: 'Hintaopas',
@@ -107,7 +109,7 @@ export const hinnat: Record<Locale, HinnatContent> = {
     ctaLabel: 'Näytä tatuoijat',
   },
   sv: {
-    metaTitle: 'Vad kostar en tatuering? Priser i Finland 2026 | MUSTE',
+    metaTitle: 'Vad kostar en tatuering? Priser 2026 | Tatuoijat.fi',
     metaDescription:
       'Tatueringspriser i Finland: små motiv 100–200 €, timdebitering 100–180 €/h, sleeves från 1 500 €. Se pristabellen och vad som avgör priset.',
     eyebrow: 'Prisguide',

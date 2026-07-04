@@ -18,7 +18,7 @@ const year = new Date().getFullYear();
   <div class="container footer-inner">
     <div class="footer-brand">
       <a class="home-link" href={p('/')}><Logo locale={locale} size="footer" /></a>
-      <div class="footer-tagline">© {year} {t('site.name').charAt(0) + t('site.name').slice(1).toLowerCase()} — {t('footer.tagline')}</div>
+      <div class="footer-tagline">© {year} {t('site.name')} — {t('footer.tagline')}</div>
     </div>
     <div class="footer-links">
       <a class="ink-link" href={p('/tatuoijat/')}>{t('nav.cities')}</a>

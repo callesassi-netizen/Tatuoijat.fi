@@ -72,10 +72,12 @@ const styleGradients = [
   ink(190, '#211f2b', '#35282b'),
 ];
 
-const title = `${t('site.name')} — ${t('site.tagline')} | ${t('home.metaSuffix')}`;
+// Domän = brand: "Tatuoijat.fi — Suomen tatuoijat ja tatuointiliikkeet"
+// ger naturlig exakt träff på "tatuoijat"-sökningar (handoff §7).
+const title = `${t('site.name')} — ${t('home.metaSuffix')}`;
 ---
 
-<BaseLayout title={title} description={t('site.description')} locale={locale} path="/" hasAlternate>
+<BaseLayout title={title} description={t('home.metaDescription')} locale={locale} path="/" hasAlternate>
   <!-- ================= HERO: fullbredds-bild, sticky bakom arket ================= -->
   <section class="hero">
     <div class="hero-media" aria-hidden="true">

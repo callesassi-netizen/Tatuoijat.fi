@@ -28,7 +28,7 @@ export interface LiityContent {
 
 export const liity: Record<Locale, LiityContent> = {
   fi: {
-    metaTitle: 'Liity mukaan — studioille ja tatuoijille | MUSTE',
+    metaTitle: 'Liity mukaan — studioille ja tatuoijille | Tatuoijat.fi',
     metaDescription:
       'Listaa studiosi ilmaiseksi Suomen tatuoijien katalogiin. Premium (190–290 €/v) tuo featured-paikan, isomman gallerian ja kärkisijoituksen hauissa.',
     eyebrow: 'Studioille ja tatuoijille',
@@ -93,7 +93,7 @@ export const liity: Record<Locale, LiityContent> = {
     },
   },
   sv: {
-    metaTitle: 'Gå med — för studios och tatuerare | MUSTE',
+    metaTitle: 'Gå med — för studios och tatuerare | Tatuoijat.fi',
     metaDescription:
       'Lista din studio gratis i Finlands tatuerarkatalog. Premium (190–290 €/år) ger featured-plats, större galleri och topplacering i sökningarna.',
     eyebrow: 'För studios och tatuerare',

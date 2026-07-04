@@ -69,8 +69,8 @@ const filmstrip: [string, number, number][] = [
 ];
 
 const path = `/tatuoijat/${city.id}/`;
-const title = t('city.metaTitle', { city: cityName, site: t('site.name') });
-const description = t('city.metaDescription', { city: cityName });
+const title = t('city.metaTitle', { city: cityName, n: studios.length, site: t('site.name') });
+const description = t('city.metaDescription', { city: cityName, n: studios.length });
 
 const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
