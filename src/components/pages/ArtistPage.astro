@@ -1,4 +1,4 @@
----
+﻿---
 /**
  * Studioprofil (wireframe 3a mobil / 3e desktop): mörk identitets-hero,
  * flytande kontaktkort över skarven, portfolio som kärna, artisterna på
@@ -137,12 +137,12 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
           hasContact && (
             <div class="contact-card">
               {bookingUrl && (
-                <a class="btn-cta" href={bookingUrl} rel="noopener">
+                <a class="btn-cta" href={bookingUrl} target="_blank" rel="noopener noreferrer">
                   {t('artist.book')}
                 </a>
               )}
               {instagramUrl && (
-                <a class="btn-outline" href={instagramUrl} rel="noopener">
+                <a class="btn-outline" href={instagramUrl} target="_blank" rel="noopener noreferrer">
                   Instagram · @{data.instagram}
                 </a>
               )}
@@ -173,7 +173,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
             data.website && (
               <p class="trust-row">
                 <span class="trust-check" aria-hidden="true">✓</span>
-                <a class="ink-link" href={data.website} rel="noopener">{t('artist.website')}</a>
+                <a class="ink-link" href={data.website} target="_blank" rel="noopener noreferrer">{t('artist.website')}</a>
               </p>
             )
           }
@@ -223,7 +223,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
                   <p class="portfolio-empty-text">{t('artist.noImages.text')}</p>
                   {
                     instagramUrl && (
-                      <a class="btn-outline portfolio-empty-cta" href={instagramUrl} rel="noopener">
+                      <a class="btn-outline portfolio-empty-cta" href={instagramUrl} target="_blank" rel="noopener noreferrer">
                         {t('artist.igCta')}
                       </a>
                     )
@@ -252,7 +252,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
               <p class="studio-artists">
                 {persons.map((person) =>
                   person.data.instagram ? (
-                    <a class="chip" href={igUrl(person.data.instagram)} rel="noopener">
+                    <a class="chip" href={igUrl(person.data.instagram)} target="_blank" rel="noopener noreferrer">
                       {person.data.name}
                       <span class="chip-ig" aria-hidden="true">↗</span>
                     </a>
@@ -261,7 +261,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
                   ),
                 )}
                 {extraHandles.map((handle) => (
-                  <a class="chip" href={igUrl(handle)} rel="noopener">
+                  <a class="chip" href={igUrl(handle)} target="_blank" rel="noopener noreferrer">
                     @{handle}
                     <span class="chip-ig" aria-hidden="true">↗</span>
                   </a>
