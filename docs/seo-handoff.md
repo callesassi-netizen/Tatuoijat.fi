@@ -69,9 +69,15 @@ Prioritetsordning — allt tjänar säljargumentet "vi rankar redan, din studio 
 
 `styles: []` för alla FTAA-artister. Stilsidorna har inget inventory förrän detta fylls. Lösning i prioritetsordning: (1) fyll manuellt för featured-kandidater och de 16 nonftaa-studiorna (deras sajter anger ofta stilar — flera är redan ifyllda i studios-nonftaa.json), (2) låt claim-flödet fylla resten. Gissa ALDRIG stilar från studionamn.
 
-## 7. Domän
+## 7. Domän — BESLUTAD: tatuoijat.fi (köpt 2026-07-04)
 
-Head-termen är "tatuointi". Om Traficom-kollen visar att `tatuointi.fi`-varianter är tagna: **muste.fi som brand + keyword i title-mallarna räcker** — exact match-domän är en svag signal 2026, brand + CTR slår den. Viktigast: bestäm snabbt, för länkar som byggs före domänbytet tappas. SITE_URL-konstanten i astro.config.mjs är förberedd.
+`SITE_URL` i astro.config.mjs är redan uppdaterad till `https://tatuoijat.fi`. Konsekvenser för bygget:
+
+- **Publikt varumärke = "Tatuoijat.fi"** (MUSTE lever kvar enbart som internt kodnamn/reponamn). Uppdatera `site.name` i `src/i18n/ui.ts` (fi + sv) till `Tatuoijat.fi` och se över title-mallarna i §2 — sluttaggen blir `| Tatuoijat.fi`. Håll ≤60 tecken: förkorta mallarna vid behov (t.ex. `Tatuointi {Stad} — {n} liikettä ja tatuoijaa | Tatuoijat.fi`).
+- Logotyp-komponenten (`Logo.astro`) behöver ordbilden "Tatuoijat.fi" i stället för MUSTE — behåll brandfärgerna från design-briefen.
+- Startsidans title: `Tatuoijat.fi — Suomen tatuoijat ja tatuointiliikkeet` (domän = brand ger naturlig exakt träff på "tatuoijat"-sökningar).
+- DNS: Netlify DNS (zon skapas i Netlify, namnservrar byts hos Hostingpalvelu). Netlify sköter HTTPS + www→apex-redirect.
+- Ej köpta (medvetet, omprövas när GSC visar rankning): tatuoija.fi (singular, redirect-kandidat), tatuointihaku.fi (defensiv).
 
 ## 8. Vad som INTE ska göras
 
