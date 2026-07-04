@@ -1,5 +1,14 @@
 import type { CollectionEntry } from 'astro:content';
 
+/**
+ * Serialisering för JSON-LD i set:html. JSON.stringify escapar INTE `<`,
+ * så ett datavärde med `</script>` skulle annars kunna bryta script-taggen
+ * och injicera HTML. `<` är ekvivalent JSON och ofarligt i HTML.
+ */
+export function jsonLdString(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+}
+
 /** BreadcrumbList — används på alla undersidor (SEO-krav i CLAUDE.md). */
 export function breadcrumbLd(items: { name: string; url: string }[]) {
   return {

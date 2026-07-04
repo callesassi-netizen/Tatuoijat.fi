@@ -19,7 +19,7 @@ import {
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
-import { breadcrumbLd, tattooParlorLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, tattooParlorLd } from '../../lib/schema';
 
 interface Props {
   studio: CollectionEntry<'studios'>;
@@ -90,8 +90,8 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
-  <script type="application/ld+json" set:html={JSON.stringify(parlor)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(parlor)} slot="head" />
 
   <!-- Mörk identitets-hero -->
   <section class="artist-hero">

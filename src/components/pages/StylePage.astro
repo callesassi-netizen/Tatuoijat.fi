@@ -18,7 +18,7 @@ import {
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
-import { breadcrumbLd, itemListLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
 
 interface Props {
   style: CollectionEntry<'styles'>;
@@ -75,8 +75,8 @@ const itemList = itemListLd(
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
-  <script type="application/ld+json" set:html={JSON.stringify(itemList)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(itemList)} slot="head" />
 
   <!-- Mörk hero med stilbeskrivning -->
   <section class="style-hero">

@@ -8,7 +8,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getCitiesSorted, cityDisplayName } from '../../lib/content';
-import { breadcrumbLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd } from '../../lib/schema';
 import { liity } from '../../data/liity';
 import heroImage from '../../assets/bilder/tatuoija-studiossa.png';
 
@@ -37,7 +37,7 @@ const breadcrumb = breadcrumbLd([
   path={path}
   hasAlternate
 >
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
 
   <section class="liity-hero">
     <div class="container liity-hero-inner">

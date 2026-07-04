@@ -1,6 +1,10 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+// Handles interpoleras i https://instagram.com/{handle} och länkas som href —
+// tillåt bara tecken Instagram själva tillåter (stoppar ../, ?query, javascript: m.m.).
+const igHandle = z.string().regex(/^[A-Za-z0-9._-]+$/, 'Ogiltig Instagram-handle');
+
 // En md-fil per studio. Studion äger profilsidan (/artistit/{slug}/).
 // Kort beskrivning (fi) i brödtexten, sv under `## sv` — fylls via claim.
 const studios = defineCollection({
@@ -15,11 +19,14 @@ const studios = defineCollection({
     district: z.string().optional(), // stadsdel, t.ex. Punavuori
     styles: z.array(z.string()).default([]), // slugs, matchar src/content/styles/ (tomt = fylls via claim)
     premium: z.boolean().default(false), // true = featured-badge, topplacering, galleri
-    website: z.string().url().optional(), // ENDAST verifierad — gissa aldrig domäner
-    instagram: z.string().optional(), // studions egen handle utan @, ENDAST när känd
+    // ENDAST verifierad — gissa aldrig domäner. https-kravet stoppar
+    // javascript:-URL:er (z.url() släpper igenom alla scheman) — fältet
+    // renderas som href och fylls via claim.
+    website: z.string().url().startsWith('https://').optional(),
+    instagram: igHandle.optional(), // studions egen handle utan @, ENDAST när känd
     // Artisternas personliga IG-handles när namnen är okända (non-FTAA-
     // seed listar ibland bara handles) — visas som @-chips på profilen.
-    artistInstagrams: z.array(z.string()).default([]),
+    artistInstagrams: z.array(igHandle).default([]),
     address: z.string().default(''),
     images: z.array(z.string()).default([]), // fylls ENDAST efter tillstånd, se Bildpolicy
     verified: z.boolean().default(false), // true när studion bekräftat/claimat sin profil
@@ -34,7 +41,7 @@ const artists = defineCollection({
   schema: z.object({
     name: z.string(),
     studio: z.string(), // slug, matchar src/content/studios/
-    instagram: z.string().optional(), // personlig handle utan @
+    instagram: igHandle.optional(), // personlig handle utan @
     ftaaMember: z.boolean().default(false),
   }),
 });
