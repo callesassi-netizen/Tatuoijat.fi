@@ -19,3 +19,6 @@ Thumbs.db
 # editor
 .vscode/
 .idea/
+
+# Claude Code (lokala runtime-lås, ej delbart)
+.claude/
