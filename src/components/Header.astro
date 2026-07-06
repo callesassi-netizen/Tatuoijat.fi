@@ -19,6 +19,8 @@ const citiesBase = citiesIndexPath(locale);
 const navLinks = [
   { href: p(citiesBase), label: t('nav.cities'), active: isActive(citiesBase) },
   { href: p('/tyylit/'), label: t('nav.styles'), active: isActive('/tyylit') },
+  // Prisguiden /hinnat (konsument-SEO) — visas i BÅDE desktop- och mobilnav.
+  { href: p('/hinnat/'), label: t('nav.prices'), active: isActive('/hinnat') },
 ];
 // "Studioille"-navet pekar på säljsidan /hinnasto (ansökningsformen /liity
 // nås därifrån). Aktiv på båda B2B-sidorna.
@@ -39,9 +41,6 @@ const studioActive = isActive('/hinnasto') || isActive('/liity');
             </a>
           ))
         }
-        <a href={p('/hinnat/')} aria-current={isActive('/hinnat') ? 'page' : undefined}>
-          {t('nav.prices')}
-        </a>
         <a href={p('/hinnasto/')} aria-current={studioActive ? 'page' : undefined}>
           {t('nav.forStudios')}
         </a>
