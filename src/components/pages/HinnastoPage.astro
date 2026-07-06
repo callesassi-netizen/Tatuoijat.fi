@@ -148,7 +148,10 @@ const cellClass = (v: boolean | string): string =>
                     {(['perus', 'pro', 'premium'] as Tier[]).map((tier) => {
                       const v = row[tier];
                       return (
-                        <td class={cellClass(v)}>
+                        <td
+                          class:list={[cellClass(v), { 'cell-premium': tier === 'premium' }]}
+                          data-tier={c.tiers[tier].name}
+                        >
                           {v === true ? (
                             <>
                               <span aria-hidden="true">✓</span>
@@ -416,6 +419,77 @@ const cellClass = (v: boolean | string): string =>
   }
   .cell--text {
     color: var(--meta);
+  }
+
+  /* ── Mobil: stapla tabellen till kort (ingen horisontell scroll) ──
+     Varje funktionsrad blir ett kort: funktionsnamn som rubrik, därunder
+     de tre nivåerna som "Nivå — värde"-rader. data-tier ger nivånamnet. */
+  @media (max-width: 640px) {
+    .table-card {
+      overflow-x: visible;
+      background: transparent;
+      border: 0;
+    }
+    table {
+      min-width: 0;
+    }
+    thead {
+      /* kolumnrubrikerna ersätts av data-tier per cell */
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+    tbody,
+    tbody tr,
+    tbody th,
+    tbody td {
+      display: block;
+    }
+    tbody tr {
+      background: var(--surface);
+      border: var(--card-border);
+      border-radius: var(--r-card);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    tbody th {
+      padding: 0 0 10px;
+      border: 0;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    tbody td {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: auto;
+      text-align: right;
+      padding: 6px 0;
+      border: 0;
+      border-top: var(--card-border);
+      font-size: 13px;
+    }
+    tbody td::before {
+      content: attr(data-tier);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--meta);
+      text-align: left;
+    }
+    /* Premium-nivåns etikett i guld — matchar priskortet */
+    tbody td.cell-premium::before {
+      color: var(--gold);
+    }
+    /* ✓/— behåller sin färg; strängvärden blir mörk text för läsbarhet */
+    tbody td.cell--text {
+      color: var(--text);
+    }
   }
 
   /* ── FAQ ── */
