@@ -2,8 +2,11 @@
 dist/
 .astro/
 
-# källmaterial — bilderna som används ligger i src/assets/bilder/
-Bilder/
+# källmaterial (endast top-level Bilder/) — de bilder sajten importerar
+# ligger i src/assets/bilder/ och SKA versioneras. Rot-ankrat (/) + Windows
+# core.ignorecase=true gjorde tidigare att "Bilder/" även matchade
+# src/assets/bilder/, så bilderna committades aldrig → Netlify-bygget föll.
+/Bilder/
 
 # dependencies
 node_modules/
