@@ -1,38 +1,52 @@
 ---
-// Ordbilden "Tatuoijat.fi" (namnet läses från site.name i i18n/ui.ts).
-// Brandfärger enligt design-briefen: display-typografi i text-light,
-// ingen accentfärg (--flash är reserverad för CTA + aktiva val).
+// Ordbilden "Tatuoijat.fi" som bild (vit blackletter-typografi, transparent
+// bakgrund) — fungerar på alla mörka ytor (header, footer, hero). Ett enda
+// raster i tillräcklig upplösning för den största visningskontexten (hero
+// desktop); mindre kontexter skalas ner via CSS height, vilket alltid är
+// skarpt (nedskalning tappar aldrig kvalitet som uppskalning gör).
+import { Image } from 'astro:assets';
+import logoSrc from '../assets/bilder/tatuoijat-logo.png';
 import { useTranslations, type Locale } from '../i18n/ui';
 
 interface Props {
   locale: Locale;
-  size?: 'header' | 'footer';
+  size?: 'header' | 'footer' | 'hero';
 }
 
 const { locale, size = 'header' } = Astro.props;
 const t = useTranslations(locale);
 ---
 
-<span class:list={['logo', `logo--${size}`]}>{t('site.name')}</span>
+<Image
+  class:list={['logo', `logo--${size}`]}
+  src={logoSrc}
+  alt={t('site.name')}
+  width={900}
+  loading={size === 'hero' ? 'eager' : 'lazy'}
+  fetchpriority={size === 'hero' ? 'high' : undefined}
+/>
 
 <style>
   .logo {
-    font-family: var(--font-display);
-    letter-spacing: 0.06em;
-    color: var(--text-light);
-  }
-  .logo--header {
-    font-size: 17px;
+    display: block;
+    width: auto;
+    height: 20px;
   }
   .logo--footer {
-    font-size: 20px;
+    height: 24px;
+  }
+  .logo--hero {
+    height: 82px;
   }
   @media (min-width: 1024px) {
     .logo--header {
-      font-size: 20px;
+      height: 24px;
     }
     .logo--footer {
-      font-size: 22px;
+      height: 30px;
+    }
+    .logo--hero {
+      height: 190px;
     }
   }
 </style>

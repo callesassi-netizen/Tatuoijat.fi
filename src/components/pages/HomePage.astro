@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SearchForm from '../SearchForm.astro';
 import ArtistCard from '../ArtistCard.astro';
+import Logo from '../Logo.astro';
 import { styleImages } from '../../lib/styleImages';
 import heroTatuoija from '../../assets/bilder/hero-tatuoija.png';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
@@ -12,6 +13,7 @@ import {
   getStylesSorted,
   getStudios,
   sortStudios,
+  isFeatured,
   studioCountByCity,
   cityDisplayName,
   styleDisplayName,
@@ -35,7 +37,8 @@ const counts = await studioCountByCity();
 const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((style) => [style.id, style]));
 
-const featured = sortStudios(studios.filter((studio) => studio.data.premium)).slice(0, 3);
+// Endast Premium får hero-collage-platsen (matris: den enda knappa resursen)
+const featured = sortStudios(studios.filter(isFeatured)).slice(0, 3);
 // Störst först — griden visar topp 6, resten nås via "Kaikki →"
 const citiesByCount = [...cities].sort(
   (a, b) =>
@@ -103,8 +106,9 @@ const webSite = webSiteLd(
     </div>
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="container hero-inner">
-      <h1 class="hero-title">{t('site.name')}</h1>
+      <h1 class="hero-title"><Logo locale={locale} size="hero" /></h1>
       <p class="hero-tagline">{t('site.description')}</p>
+      <a class="btn-cta hero-cta" href={p('/hinnasto/')}>{t('home.premiumCta.title')}</a>
     </div>
   </section>
 
@@ -122,42 +126,55 @@ const webSite = webSiteLd(
         />
       </div>
 
-      <!-- Nostetut artistit — döljs tills premium-profiler finns -->
-      {
-        featured.length > 0 && (
-          <section class="section" aria-labelledby="featured-title">
-            <div class="section-head">
-              <div>
-                <p class="eyebrow">{t('home.featured.eyebrow')}</p>
-                <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
-              </div>
+      <!-- Nostetut artistit — utan riktiga premiumkunder visas 3 sälj-
+           platshållare istället för att låtsas att obetalande studios är
+           Featured. Sektionen visas alltid (till skillnad från tidigare)
+           eftersom den även är den viktigaste säljytan för Premium. -->
+      <section class="section" aria-labelledby="featured-title">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">{t('home.featured.eyebrow')}</p>
+            <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
+          </div>
+          {
+            featured.length > 0 && (
               <a class="ink-link section-all" href={p(citiesIndexPath(locale))}>{t('home.all')} →</a>
-            </div>
-            <div class="featured-grid reveal-stagger">
-              {featured.map((studio) => (
-                <ArtistCard
-                  slug={studio.id}
-                  name={studio.data.name}
-                  meta={studioMeta(studio)}
-                  styleNames={studioStyleNames(studio)}
-                  premium={studio.data.premium}
-                  size="featured"
-                  locale={locale}
-                />
-              ))}
-            </div>
-            <!-- Säljruta: nästa Premium-plats -->
-            <a class="premium-cta" href={p('/liity/')}>
-              <div class="premium-cta-copy">
-                <span class="badge-featured">★ {t('card.featured')}</span>
-                <h3 class="premium-cta-title">{t('home.premiumCta.title')}</h3>
-                <p class="premium-cta-text">{t('home.premiumCta.text')}</p>
-              </div>
-              <span class="btn-cta premium-cta-btn">{t('home.premiumCta.button')}</span>
-            </a>
-          </section>
-        )
-      }
+            )
+          }
+        </div>
+        <div class="featured-grid reveal-stagger">
+          {
+            featured.length > 0
+              ? featured.map((studio) => (
+                  <ArtistCard
+                    slug={studio.id}
+                    name={studio.data.name}
+                    meta={studioMeta(studio)}
+                    styleNames={studioStyleNames(studio)}
+                    premium={isFeatured(studio)}
+                    size="featured"
+                    locale={locale}
+                  />
+                ))
+              : Array.from({ length: 3 }).map(() => (
+                  <a class="premium-slot" href={p('/hinnasto/')}>
+                    <span class="premium-slot-icon" aria-hidden="true">+</span>
+                    <span class="premium-slot-title">{t('home.featured.slotTitle')}</span>
+                    <span class="premium-slot-cta">{t('home.featured.slotCta')} →</span>
+                  </a>
+                ))
+          }
+        </div>
+        <!-- Säljruta: pitchar Premium oavsett om platserna ovan är fyllda -->
+        <a class="premium-cta" href={p('/hinnasto/')}>
+          <div class="premium-cta-copy">
+            <span class="badge-featured">★ {t('card.featured')}</span>
+            <h3 class="premium-cta-title">{t('home.premiumCta.title')}</h3>
+            <p class="premium-cta-text">{t('home.premiumCta.text')}</p>
+          </div>
+          <span class="btn-cta premium-cta-btn">{t('home.premiumCta.button')}</span>
+        </a>
+      </section>
 
       <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
       <section class="section section--styles" aria-labelledby="styles-title">
@@ -322,40 +339,46 @@ const webSite = webSiteLd(
     position: relative;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     justify-content: flex-end;
     min-height: 470px;
-    padding: 0 var(--page-pad) 74px;
+    /* Extra bottompadding lyfter textblocket ovanför skarven mot arket
+       och ger CTA-knappen luft att andas under taglinen. */
+    padding: 0 var(--page-pad) 108px;
   }
-  /* Affisch-typo */
   .hero-title {
-    font-size: clamp(56px, 15vw, 72px);
-    line-height: 0.92;
-    letter-spacing: 0.01em;
-    color: var(--text-light);
+    margin: 0;
   }
   .hero-tagline {
-    margin: 10px 0 0;
+    margin: 16px 0 0;
     font-size: 14px;
     line-height: 1.5;
     color: var(--text-light);
     opacity: 0.8;
     max-width: 320px;
   }
+  .hero-cta {
+    display: inline-block;
+    width: auto;
+    margin-top: 22px;
+    padding: 13px 26px;
+  }
 
   @media (min-width: 1024px) {
     .hero-inner {
       min-height: 640px;
-      padding-bottom: 104px;
-    }
-    .hero-title {
-      font-size: clamp(96px, 9.5vw, 148px);
-      line-height: 0.9;
+      padding-bottom: 152px;
     }
     .hero-tagline {
-      margin: 22px 0 0;
+      margin: 26px 0 0;
       font-size: 17px;
       line-height: 1.55;
       max-width: 460px;
+    }
+    .hero-cta {
+      margin-top: 30px;
+      padding: 15px 32px;
+      font-size: 15px;
     }
   }
 
@@ -428,6 +451,57 @@ const webSite = webSiteLd(
     display: flex;
     flex-direction: column;
     gap: 14px;
+  }
+
+  /* Tomma Premium-platser — samma yttermått som ett artistkort (streckad
+     ram i stället för bild) tills en riktig premiumkund fyller platsen. */
+  .premium-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 260px;
+    background: var(--surface);
+    border: 2px dashed var(--border-on-paper);
+    border-radius: var(--r-card);
+    padding: 24px;
+    text-align: center;
+    text-decoration: none;
+    transition:
+      border-color var(--t-med) var(--ease-out),
+      background-color var(--t-med) var(--ease-out);
+  }
+  .premium-slot:hover {
+    border-color: var(--flash);
+    background: var(--paper);
+  }
+  .premium-slot-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border-on-paper);
+    color: var(--meta);
+    font-size: 18px;
+    line-height: 1;
+    transition: border-color var(--t-med) var(--ease-out);
+  }
+  .premium-slot:hover .premium-slot-icon {
+    border-color: var(--flash);
+    color: var(--flash);
+  }
+  .premium-slot-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text);
+  }
+  .premium-slot-cta {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--flash);
   }
 
   /* "Haluatko näkyä tässä?" — säljruta för nästa Premium-plats */
@@ -669,6 +743,13 @@ const webSite = webSiteLd(
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+    }
+    .premium-slot {
+      min-height: 305px;
+      border-radius: var(--r-card-lg);
+    }
+    .premium-slot-title {
+      font-size: 16px;
     }
     .premium-cta {
       flex-direction: row;

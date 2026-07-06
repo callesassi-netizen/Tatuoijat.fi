@@ -20,7 +20,9 @@ const navLinks = [
   { href: p(citiesBase), label: t('nav.cities'), active: isActive(citiesBase) },
   { href: p('/tyylit/'), label: t('nav.styles'), active: isActive('/tyylit') },
 ];
-const liityActive = isActive('/liity');
+// "Studioille"-navet pekar på säljsidan /hinnasto (ansökningsformen /liity
+// nås därifrån). Aktiv på båda B2B-sidorna.
+const studioActive = isActive('/hinnasto') || isActive('/liity');
 ---
 
 <header class="site-header">
@@ -40,7 +42,7 @@ const liityActive = isActive('/liity');
         <a href={p('/hinnat/')} aria-current={isActive('/hinnat') ? 'page' : undefined}>
           {t('nav.prices')}
         </a>
-        <a href={p('/liity/')} aria-current={liityActive ? 'page' : undefined}>
+        <a href={p('/hinnasto/')} aria-current={studioActive ? 'page' : undefined}>
           {t('nav.forStudios')}
         </a>
       </nav>
@@ -66,7 +68,7 @@ const liityActive = isActive('/liity');
           </a>
         ))
       }
-      <a class="pill" href={p('/liity/')} aria-current={liityActive ? 'page' : undefined}>
+      <a class="pill" href={p('/hinnasto/')} aria-current={studioActive ? 'page' : undefined}>
         {t('nav.forStudios')}
       </a>
     </nav>

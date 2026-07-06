@@ -1,8 +1,10 @@
 ---
 /**
- * Liity mukaan / För studios (wireframe 3b mobil / 3f desktop):
- * B2B-säljsida — prisjämförelse (Ilmainen vs Premium), FAQ, formulär.
- * Formuläret är byggt för Netlify Forms (deploy: GitHub → Netlify).
+ * Liity mukaan / För studios — BANTAD till ren ansökningssida. Kort intro,
+ * en kompakt nivå-teaser (läser namn/priser ur src/data/pricing.ts, delad
+ * källa med /hinnasto) som länkar till hela hinnastot, och Netlify-formen.
+ * Prisjämförelsen och FAQ:n flyttade till /hinnasto. Sidan är tunn →
+ * noindex,follow så /hinnasto är den som rankar (Calles beslut 2026-07-06).
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -10,6 +12,7 @@ import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getCitiesSorted, cityDisplayName } from '../../lib/content';
 import { jsonLdString, breadcrumbLd } from '../../lib/schema';
 import { liity } from '../../data/liity';
+import { pricing, priceLabel, TIER_ORDER, TIER_PRICE } from '../../data/pricing';
 import heroImage from '../../assets/bilder/tatuoija-studiossa.png';
 
 interface Props {
@@ -21,6 +24,7 @@ const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const c = liity[locale];
+const tiers = pricing[locale].tiers;
 const cities = await getCitiesSorted();
 
 const path = '/liity/';
@@ -36,6 +40,7 @@ const breadcrumb = breadcrumbLd([
   locale={locale}
   path={path}
   hasAlternate
+  noindex
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
 
@@ -60,114 +65,71 @@ const breadcrumb = breadcrumbLd([
 
   <div class="sheet grain">
     <div class="container sheet-inner">
-      <!-- Prisjämförelse -->
-      <div class="plans">
-        <div class="plan plan--free">
-          <h2 class="plan-name">{c.plans.free.name}</h2>
-          <p class="plan-price">
-            <span class="plan-amount">{c.plans.free.price}</span>
-            <span class="plan-period">{c.plans.free.period}</span>
-          </p>
-          <ul class="plan-features">
-            {
-              c.plans.free.features.map((feature) => (
-                <li>
-                  <span class="check" aria-hidden="true">✓</span>
-                  {feature}
-                </li>
-              ))
-            }
-          </ul>
-          <a class="btn-outline plan-cta" href="#ilmoittaudu">{c.plans.free.cta}</a>
+      <!-- Kompakt nivå-teaser → hela hinnastot (delad pricing-källa) -->
+      <a class="teaser" href={p('/hinnasto/')}>
+        <div class="teaser-copy">
+          <h2 class="teaser-title">{c.teaserTitle}</h2>
+          <p class="teaser-text">{c.teaserText}</p>
         </div>
-
-        <div class="plan plan--premium">
-          <p class="plan-badge"><span class="badge-featured">★ {t('card.featured')}</span></p>
-          <h2 class="plan-name">{c.plans.premium.name}</h2>
-          <p class="plan-price">
-            <span class="plan-amount">{c.plans.premium.price}</span>
-            <span class="plan-period">{c.plans.premium.period}</span>
-          </p>
-          <ul class="plan-features">
-            {
-              c.plans.premium.features.map((feature) => (
-                <li>
-                  <span class="check check--gold" aria-hidden="true">✓</span>
-                  {feature}
-                </li>
-              ))
-            }
-          </ul>
-          <a class="btn-cta plan-cta" href="#ilmoittaudu">{c.plans.premium.cta}</a>
+        <div class="teaser-tiers">
+          {
+            TIER_ORDER.map((tier) => (
+              <span class="teaser-tier">
+                <span class="teaser-tier-name">{tiers[tier].name}</span>
+                <span class="teaser-tier-price">
+                  {priceLabel(tier)}
+                  {TIER_PRICE[tier] > 0 && <span class="teaser-tier-period">{tiers[tier].period}</span>}
+                </span>
+              </span>
+            ))
+          }
         </div>
-      </div>
+        <span class="teaser-cta">{c.teaserCta} →</span>
+      </a>
 
-      <!-- FAQ + formulär (desktop sida vid sida) -->
-      <div class="bottom">
-        <section class="faq-col" aria-labelledby="liity-faq-title">
-          <h2 class="col-title" id="liity-faq-title">{c.faqTitle}</h2>
-          <div class="faq-list">
-            {
-              c.faq.map((item) => (
-                <details class="faq-item">
-                  <summary>
-                    <span class="faq-q">{item.q}</span>
-                    <span class="faq-icon" aria-hidden="true">+</span>
-                  </summary>
-                  <p class="faq-a">{item.a}</p>
-                </details>
-              ))
-            }
+      <!-- Ansökningsformulär (Netlify Forms + honeypot) -->
+      <section class="form-col" aria-labelledby="liity-form-title" id="ilmoittaudu">
+        <h2 class="col-title" id="liity-form-title">{c.formTitle}</h2>
+        <form
+          class="signup"
+          name="liity"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          action={p('/liity/')}
+        >
+          <input type="hidden" name="form-name" value="liity" />
+          <p class="hp" aria-hidden="true">
+            <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+          <div class="form-field">
+            <label for="liity-name">{c.form.name}</label>
+            <input id="liity-name" name="nimi" type="text" required autocomplete="organization" />
           </div>
-        </section>
-
-        <section class="form-col" aria-labelledby="liity-form-title" id="ilmoittaudu">
-          <h2 class="col-title" id="liity-form-title">{c.formTitle}</h2>
-          <form
-            class="signup"
-            name="liity"
-            method="POST"
-            data-netlify="true"
-            netlify-honeypot="bot-field"
-            action={p('/liity/')}
-          >
-            <input type="hidden" name="form-name" value="liity" />
-            <p class="hp" aria-hidden="true">
-              <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
-            </p>
-            <div class="form-field">
-              <label for="liity-name">{c.form.name}</label>
-              <input id="liity-name" name="nimi" type="text" required autocomplete="organization" />
+          <div class="form-field">
+            <label for="liity-city">{c.form.city}</label>
+            <div class="select-wrap">
+              <select id="liity-city" name="kaupunki" required>
+                <option value="" disabled selected>{c.form.cityPlaceholder}</option>
+                {cities.map((city) => <option value={city.id}>{cityDisplayName(city, locale)}</option>)}
+              </select>
+              <span class="caret" aria-hidden="true">▾</span>
             </div>
-            <div class="form-field">
-              <label for="liity-city">{c.form.city}</label>
-              <div class="select-wrap">
-                <select id="liity-city" name="kaupunki" required>
-                  <option value="" disabled selected>{c.form.cityPlaceholder}</option>
-                  {
-                    cities.map((city) => (
-                      <option value={city.id}>{cityDisplayName(city, locale)}</option>
-                    ))
-                  }
-                </select>
-                <span class="caret" aria-hidden="true">▾</span>
-              </div>
-            </div>
-            <div class="form-field">
-              <label for="liity-email">{c.form.email}</label>
-              <input id="liity-email" name="sahkoposti" type="email" required autocomplete="email" />
-            </div>
-            <div class="form-field">
-              <label for="liity-ig">
-                {c.form.instagram} <span class="optional">{c.form.instagramOptional}</span>
-              </label>
-              <input id="liity-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
-            </div>
-            <button class="btn-cta" type="submit">{c.form.submit}</button>
-            <p class="form-note">{c.form.note}</p>
-          </form>
-        </section>
-      </div>
+          </div>
+          <div class="form-field">
+            <label for="liity-email">{c.form.email}</label>
+            <input id="liity-email" name="sahkoposti" type="email" required autocomplete="email" />
+          </div>
+          <div class="form-field">
+            <label for="liity-ig">
+              {c.form.instagram} <span class="optional">{c.form.instagramOptional}</span>
+            </label>
+            <input id="liity-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
+          </div>
+          <button class="btn-cta" type="submit">{c.form.submit}</button>
+          <p class="form-note">{c.form.note}</p>
+        </form>
+      </section>
     </div>
   </div>
 </BaseLayout>
@@ -217,136 +179,84 @@ const breadcrumb = breadcrumbLd([
   }
   .sheet-inner {
     padding: 30px var(--page-pad) 48px;
-  }
-
-  /* Prisjämförelse */
-  .plans {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    max-width: 940px;
+    max-width: 760px;
     margin-inline: auto;
   }
-  .plan {
-    border-radius: var(--r-card-lg);
-    padding: 22px;
-  }
-  .plan--free {
-    background: var(--surface);
-    border: var(--card-border);
-  }
-  .plan--premium {
-    background: var(--ink);
-    color: var(--text-light);
-  }
-  .plan-badge {
-    margin: 0 0 12px;
-  }
-  .plan-name {
-    font-size: 22px;
-    color: inherit;
-  }
-  .plan-price {
-    margin: 8px 0 16px;
-  }
-  .plan-amount {
-    font-family: var(--font-display);
-    font-size: 30px;
-    color: inherit;
-  }
-  .plan-period {
-    font-size: 13px;
-    color: var(--meta);
-    margin-left: 4px;
-  }
-  .plan-features {
-    list-style: none;
-    margin: 0 0 20px;
-    padding: 0;
+
+  /* Nivå-teaser → /hinnasto */
+  .teaser {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
+    background: var(--ink);
+    border-radius: var(--r-card-lg);
+    padding: 22px;
+    text-decoration: none;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out);
   }
-  .plan-features li {
+  .teaser:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(16, 16, 20, 0.2);
+  }
+  .teaser-title {
+    font-size: 20px;
+    color: var(--text-light);
+    margin: 0;
+  }
+  .teaser-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--meta);
+    margin: 6px 0 0;
+  }
+  .teaser-tiers {
     display: flex;
-    gap: 9px;
-    align-items: baseline;
-    font-size: 13.5px;
-    line-height: 1.5;
+    gap: 10px;
+    flex-wrap: wrap;
   }
-  .plan--premium .plan-features li {
+  .teaser-tier {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 14px;
+    background: rgba(237, 234, 226, 0.06);
+    border-radius: var(--r-card);
+    min-width: 92px;
+  }
+  .teaser-tier-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .teaser-tier-price {
+    font-family: var(--font-display);
+    font-size: 17px;
     color: var(--text-light);
   }
-  .check {
-    font-weight: 700;
-    font-size: 12px;
+  .teaser-tier-period {
+    font-family: var(--font-body);
+    font-size: 11px;
+    color: var(--meta);
+    margin-left: 2px;
   }
-  .check--gold {
+  .teaser-cta {
+    font-size: 13px;
+    font-weight: 700;
     color: var(--gold);
   }
-  .plan-cta {
-    width: 100%;
-  }
-  .plan--premium :global(.btn-outline) {
-    color: var(--text-light);
-    border-color: rgba(237, 234, 226, 0.35);
-  }
 
-  /* FAQ + formulär */
-  .bottom {
-    margin-top: 44px;
+  /* Formulär */
+  .form-col {
+    margin-top: 36px;
   }
   .col-title {
     font-size: 22px;
     color: var(--text);
     margin-bottom: 16px;
-  }
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .faq-item {
-    background: var(--surface);
-    border: var(--card-border);
-    border-radius: var(--r-card);
-    padding: 0 16px;
-  }
-  .faq-item summary {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 15px 0;
-    cursor: pointer;
-  }
-  .faq-item summary::-webkit-details-marker {
-    display: none;
-  }
-  .faq-q {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .faq-icon {
-    font-size: 18px;
-    color: var(--meta);
-    transition: transform var(--t-fast) ease-out;
-  }
-  .faq-item[open] .faq-icon {
-    transform: rotate(45deg);
-  }
-  .faq-a {
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--text);
-    margin: 0;
-    padding: 0 0 16px;
-  }
-
-  .form-col {
-    margin-top: 40px;
   }
   .signup {
     background: var(--surface);
@@ -448,36 +358,18 @@ const breadcrumb = breadcrumbLd([
     .sheet-inner {
       padding: 48px var(--page-pad) 72px;
     }
-    .plans {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+    .teaser {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      padding: 28px 32px;
     }
-    .plan {
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-    }
-    .plan-features {
+    .teaser-copy {
       flex: 1;
     }
-    .plan-name {
-      font-size: 25px;
-    }
-    .plan-amount {
-      font-size: 38px;
-    }
-    .bottom {
-      margin-top: 72px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      max-width: 1100px;
-      margin-inline: auto;
-      align-items: start;
-    }
     .form-col {
-      margin-top: 0;
+      margin-top: 48px;
     }
     .col-title {
       font-size: 30px;

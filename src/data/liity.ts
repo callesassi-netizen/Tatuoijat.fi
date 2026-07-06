@@ -1,18 +1,21 @@
 import type { Locale } from '../i18n/ui';
 
-/** Säljsidan /liity (wireframe 3b/3f): gratis vs premium, FAQ, formulär. */
+/**
+ * Bantade /liity — ren ansöknings-/signup-sida (Netlify-formulär). Den
+ * fulla 3-nivå-jämförelsen och priserna bor numera ENBART på /hinnasto
+ * (och i src/data/pricing.ts). Här finns bara en kompakt teaser som läser
+ * nivånamn/priser ur samma pricing-källa och länkar vidare — de kan aldrig
+ * divergera. Sidan är tunn → noindex,follow (LiityPage), /hinnasto rankar.
+ */
 export interface LiityContent {
   metaTitle: string;
   metaDescription: string;
   eyebrow: string;
   h1: string;
   intro: string;
-  plans: {
-    free: { name: string; price: string; period: string; features: string[]; cta: string };
-    premium: { name: string; price: string; period: string; features: string[]; cta: string };
-  };
-  faqTitle: string;
-  faq: { q: string; a: string }[];
+  teaserTitle: string;
+  teaserText: string;
+  teaserCta: string;
   formTitle: string;
   form: {
     name: string;
@@ -28,58 +31,17 @@ export interface LiityContent {
 
 export const liity: Record<Locale, LiityContent> = {
   fi: {
-    metaTitle: 'Liity mukaan — studioille ja tatuoijille | Tatuoijat.fi',
+    metaTitle: 'Liity mukaan — luo ilmainen studioprofiili | Tatuoijat.fi',
     metaDescription:
-      'Listaa studiosi ilmaiseksi Suomen tatuoijien katalogiin. Premium (190–290 €/v) tuo featured-paikan, isomman gallerian ja kärkisijoituksen hauissa.',
+      'Ilmoita studiosi Suomen tatuoijakatalogiin. Luo ilmainen perusprofiili — voit nostaa sen Pro- tai Premium-tasolle milloin tahansa.',
     eyebrow: 'Studioille ja tatuoijille',
     h1: 'Liity mukaan.',
     intro:
-      'Asiakkaasi etsivät tekijää kaupungin ja tyylin mukaan. Ilmainen profiili tuo sinut mukaan hakuun — Premium nostaa sinut kärkeen.',
-    plans: {
-      free: {
-        name: 'Ilmainen',
-        price: '0 €',
-        period: '/vuosi',
-        features: [
-          'Profiili yhteystiedoilla ja tyylitageilla',
-          'Enintään 5 kuvaa portfoliossa',
-          'Näkyvyys kaupunki- ja tyylihauissa',
-          'Linkki Instagramiin ja verkkosivuille',
-        ],
-        cta: 'Luo ilmainen profiili',
-      },
-      premium: {
-        name: 'Premium',
-        price: '190–290 €',
-        period: '/vuosi',
-        features: [
-          'Featured-paikka etusivulla ja kaupunkisivun kärjessä',
-          'Enintään 24 kuvaa portfoliossa',
-          'Kärkisijoitus kaikissa hauissa',
-          'Kaikki ilmaisen profiilin ominaisuudet',
-        ],
-        cta: 'Aloita Premium',
-      },
-    },
-    faqTitle: 'Usein kysyttyä',
-    faq: [
-      {
-        q: 'Kuka voi liittyä?',
-        a: 'Suomessa toimivat ammattitatuoijat ja studiot. Edellytämme hygieniapassia ja omavalvontasuunnitelmaa — katalogin luotettavuus on kaikkien etu.',
-      },
-      {
-        q: 'Miten Featured-paikat jaetaan?',
-        a: 'Featured-paikkoja on rajattu määrä per kaupunki, ja ne täytetään varausjärjestyksessä. Näin nosto säilyttää arvonsa eikä etusivu täyty mainoksista.',
-      },
-      {
-        q: 'Voinko perua milloin vain?',
-        a: 'Kyllä. Premium on vuosisopimus ilman automaattista uusiutumista — saat muistutuksen ennen kauden päättymistä, ja ilmainen profiilisi säilyy vaikka et jatkaisi.',
-      },
-      {
-        q: 'Kenellä on oikeudet kuviin?',
-        a: 'Sinulla. Julkaisemme kuvia vain sinun luvallasi, ja voit pyytää niiden poistoa milloin tahansa. Emme koskaan kopioi kuvia Instagramista ilman lupaa.',
-      },
-    ],
+      'Asiakkaasi etsivät tekijää kaupungin ja tyylin mukaan. Luo ilmainen perusprofiili — voit nostaa sen Pro- tai Premium-tasolle koska tahansa.',
+    teaserTitle: 'Kolme tasoa',
+    teaserText:
+      'Perus on ilmainen ja tuo sinut hakuun. Pro ja Premium tuovat gallerian, yhteydenoton ja kärkisijoituksen.',
+    teaserCta: 'Katso hinnasto ja paketit',
     formTitle: 'Ilmoittaudu',
     form: {
       name: 'Nimi tai studio',
@@ -93,58 +55,17 @@ export const liity: Record<Locale, LiityContent> = {
     },
   },
   sv: {
-    metaTitle: 'Gå med — för studios och tatuerare | Tatuoijat.fi',
+    metaTitle: 'Gå med — skapa en gratis studioprofil | Tatuoijat.fi',
     metaDescription:
-      'Lista din studio gratis i Finlands tatuerarkatalog. Premium (190–290 €/år) ger featured-plats, större galleri och topplacering i sökningarna.',
+      'Anmäl din studio till Finlands tatuerarkatalog. Skapa en gratis basprofil — uppgradera till Pro eller Premium när som helst.',
     eyebrow: 'För studios och tatuerare',
     h1: 'Gå med.',
     intro:
-      'Dina kunder letar efter en artist per stad och stil. En gratis profil tar med dig i sökningen — Premium lyfter dig till toppen.',
-    plans: {
-      free: {
-        name: 'Gratis',
-        price: '0 €',
-        period: '/år',
-        features: [
-          'Profil med kontaktuppgifter och stiltaggar',
-          'Upp till 5 bilder i portfolion',
-          'Synlighet i stads- och stilsökningar',
-          'Länk till Instagram och webbplats',
-        ],
-        cta: 'Skapa gratis profil',
-      },
-      premium: {
-        name: 'Premium',
-        price: '190–290 €',
-        period: '/år',
-        features: [
-          'Featured-plats på startsidan och i toppen av stadssidan',
-          'Upp till 24 bilder i portfolion',
-          'Topplacering i alla sökningar',
-          'Allt som ingår i gratisprofilen',
-        ],
-        cta: 'Starta Premium',
-      },
-    },
-    faqTitle: 'Vanliga frågor',
-    faq: [
-      {
-        q: 'Vem kan gå med?',
-        a: 'Professionella tatuerare och studios verksamma i Finland. Vi förutsätter hygienpass och egenkontrollplan — katalogens trovärdighet gynnar alla.',
-      },
-      {
-        q: 'Hur fördelas Featured-platserna?',
-        a: 'Antalet Featured-platser per stad är begränsat och de fylls i bokningsordning. Så behåller lyftet sitt värde och startsidan fylls inte av annonser.',
-      },
-      {
-        q: 'Kan jag avsluta när som helst?',
-        a: 'Ja. Premium är ett årsavtal utan automatisk förnyelse — du får en påminnelse innan perioden löper ut, och din gratisprofil finns kvar även om du inte fortsätter.',
-      },
-      {
-        q: 'Vem äger rättigheterna till bilderna?',
-        a: 'Du. Vi publicerar bilder endast med ditt tillstånd och du kan begära att de tas bort när som helst. Vi kopierar aldrig bilder från Instagram utan lov.',
-      },
-    ],
+      'Dina kunder letar efter en artist per stad och stil. Skapa en gratis basprofil — du kan uppgradera till Pro eller Premium när som helst.',
+    teaserTitle: 'Tre nivåer',
+    teaserText:
+      'Gratis är gratis och tar med dig i sökningen. Pro och Premium ger galleri, kontaktknapp och topplacering.',
+    teaserCta: 'Se prislista och paket',
     formTitle: 'Anmäl dig',
     form: {
       name: 'Namn eller studio',

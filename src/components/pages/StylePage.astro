@@ -14,6 +14,7 @@ import {
   getStylesSorted,
   getStudios,
   sortStudios,
+  isFeatured,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -118,7 +119,7 @@ const itemList = itemListLd(
                   name={studio.data.name}
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
-                  premium={studio.data.premium}
+                  premium={isFeatured(studio)}
                   size="featured"
                   locale={locale}
                 />

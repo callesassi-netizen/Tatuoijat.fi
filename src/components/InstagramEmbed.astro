@@ -1,0 +1,201 @@
+---
+/**
+ * Instagram-embed, facade-mönster (SEO-handoff §8): en lätt platshållar-
+ * platta i ren brand-grafik — INGEN förhandsbild från Instagrams CDN
+ * (vore hotlinking). Metas embed.js laddas FÖRST vid klick, så sajten
+ * förblir cookiefri och snabb tills besökaren aktivt bett om innehållet.
+ * Renderas inte embedden inom någon rimlig tid (privat konto, avstängd
+ * embedding, borttaget inlägg) faller plattan tillbaka till samma
+ * monogram + IG-länk som "inga bilder ännu"-läget.
+ */
+import MonogramPlate from './MonogramPlate.astro';
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+  url: string;
+  name: string;
+  locale: Locale;
+}
+
+const { url, name, locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<div class="ig-embed" data-ig-embed data-ig-url={url}>
+  <button
+    type="button"
+    class="ig-facade"
+    data-ig-trigger
+    aria-label={`${t('artist.instagram.cta')} — ${name}`}
+  >
+    <svg class="ig-glyph" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5.5" stroke="currentColor" stroke-width="1.6" />
+      <circle cx="12" cy="12" r="4.6" stroke="currentColor" stroke-width="1.6" />
+      <circle cx="17.3" cy="6.7" r="1.1" fill="currentColor" />
+    </svg>
+    <span class="ig-facade-title">{t('artist.instagram.title')}</span>
+    <span class="btn-cta ig-facade-btn">{t('artist.instagram.cta')}</span>
+    <span class="ig-facade-fine">{t('artist.instagram.fineprint')}</span>
+  </button>
+  <a
+    class="ig-fallback"
+    data-ig-fallback
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label={name}
+    hidden
+  >
+    <span class="ig-fallback-plate"><MonogramPlate name={name} /></span>
+    <span class="ig-fallback-cta">{t('artist.instagram.fallbackCta')}</span>
+  </a>
+</div>
+
+<script>
+  declare global {
+    interface Window {
+      instgrm?: { Embeds: { process: () => void } };
+    }
+  }
+
+  function ensureInstagramScript(onReady: () => void) {
+    if (window.instgrm) {
+      onReady();
+      return;
+    }
+    let script = document.querySelector<HTMLScriptElement>('script[data-ig-embed-script]');
+    if (!script) {
+      script = document.createElement('script');
+      script.src = 'https://www.instagram.com/embed.js';
+      script.async = true;
+      script.dataset.igEmbedScript = 'true';
+      document.body.appendChild(script);
+    }
+    script.addEventListener('load', onReady, { once: true });
+  }
+
+  function activate(container: HTMLElement) {
+    const url = container.dataset.igUrl ?? '';
+    const facade = container.querySelector<HTMLElement>('[data-ig-trigger]');
+    const fallback = container.querySelector<HTMLElement>('[data-ig-fallback]');
+
+    const blockquote = document.createElement('blockquote');
+    blockquote.className = 'instagram-media';
+    blockquote.dataset.instgrmPermalink = url;
+    blockquote.dataset.instgrmVersion = '14';
+    blockquote.style.margin = '0';
+    blockquote.style.width = '100%';
+
+    container.classList.add('ig-embed--active');
+    facade?.replaceWith(blockquote);
+    ensureInstagramScript(() => window.instgrm?.Embeds.process());
+
+    // Instagram byter blockquoten mot en <iframe>, men den startar alltid på
+    // height="0" tills ett postMessage från instagram.com sätter rätt höjd
+    // (det är hur DERAS auto-resize funkar). Vid privat konto/borttaget
+    // inlägg/avstängd embedding skickas det meddelandet aldrig — höjden
+    // förblir 0 för evigt. Det är den enda pålitliga signalen vi har
+    // (iframen är cross-origin, vi kan inte läsa dess innehåll).
+    const deadline = Date.now() + 8000;
+    function poll() {
+      const iframe = container.querySelector<HTMLIFrameElement>('iframe.instagram-media');
+      if (iframe && iframe.height !== '0' && iframe.height !== '') return; // lyckades
+      if (Date.now() >= deadline) {
+        // Instagram kan ha lämnat kvar BÅDE en iframe och en intern
+        // "payload"-blockquote samtidigt (data-instgrm-payload-id-paret) —
+        // städa bort alla, inte bara den första träffen.
+        container.querySelectorAll('iframe, blockquote').forEach((el) => el.remove());
+        container.classList.remove('ig-embed--active');
+        if (fallback) fallback.hidden = false;
+        return;
+      }
+      window.setTimeout(poll, 500);
+    }
+    poll();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-ig-embed]').forEach((container) => {
+    const trigger = container.querySelector('[data-ig-trigger]');
+    trigger?.addEventListener('click', () => activate(container), { once: true });
+  });
+</script>
+
+<style>
+  .ig-embed {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    background: var(--ink);
+  }
+  .ig-embed--active {
+    aspect-ratio: auto;
+  }
+
+  .ig-facade {
+    all: unset;
+    box-sizing: border-box;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 22px;
+    text-align: center;
+    cursor: pointer;
+    background:
+      radial-gradient(120% 130% at 20% 0%, rgba(201, 162, 39, 0.14) 0%, rgba(16, 16, 20, 0) 55%),
+      linear-gradient(160deg, #201e27 0%, #3c2b2b 100%);
+    color: var(--text-light);
+  }
+  .ig-glyph {
+    width: 28px;
+    height: 28px;
+    color: var(--text-light);
+    opacity: 0.85;
+  }
+  .ig-facade-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+  }
+  .ig-facade-btn {
+    width: auto;
+    padding: 10px 18px;
+    font-size: 12.5px;
+  }
+  .ig-facade-fine {
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: var(--meta);
+    max-width: 220px;
+  }
+
+  .ig-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+  }
+  .ig-fallback[hidden] {
+    display: none;
+  }
+  .ig-fallback-plate {
+    flex: 1;
+    min-height: 0;
+  }
+  .ig-fallback-cta {
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-light);
+    background: var(--ink);
+  }
+
+  @media (min-width: 1024px) {
+    .ig-facade-title {
+      font-size: 17px;
+    }
+  }
+</style>

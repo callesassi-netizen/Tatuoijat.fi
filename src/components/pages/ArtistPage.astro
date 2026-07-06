@@ -10,15 +10,20 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import MonogramPlate from '../MonogramPlate.astro';
+import InstagramEmbed from '../InstagramEmbed.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
   getStylesSorted,
   getStudioArtists,
+  isFeatured,
+  isPaid,
+  isVerified,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
+import { pricing } from '../../data/pricing';
 import { jsonLdString, breadcrumbLd, tattooParlorLd } from '../../lib/schema';
 import { citiesIndexPath, cityPath } from '../../lib/routes';
 
@@ -50,11 +55,11 @@ const bio = localizedBody(studio.body, locale);
 const placeLine = [data.district, displayPlace].filter(Boolean).join(', ');
 
 // Artisterna (personerna) på studion. Ensam artist med samma namn som
-// studion döljs — hens IG är redan studions kontaktväg.
+// studion döljs i visningslistan — hens IG är redan studions kontaktväg —
+// men räknas ändå med i embed-aggregeringen nedan (allStudioArtists).
 const igUrl = (handle: string) => `https://instagram.com/${handle}`;
-const persons = (await getStudioArtists(studio.id)).filter(
-  (person) => person.data.name !== data.name,
-);
+const allStudioArtists = await getStudioArtists(studio.id);
+const persons = allStudioArtists.filter((person) => person.data.name !== data.name);
 // Handle-only-artister (non-FTAA) — visas som @-chips; dubbletter mot
 // personer och studions egen handle filtreras bort
 const personHandles = new Set(
@@ -65,10 +70,31 @@ const extraHandles = data.artistInstagrams.filter(
 );
 const hasArtistsSection = persons.length > 0 || extraHandles.length > 0;
 
+// Nivåhärledning (matris): featured = premium, betald = pro|premium.
+const paid = isPaid(studio);
+const featured = isFeatured(studio);
+const verified = isVerified(studio);
+const claim = pricing[locale].claim;
+
 const instagramUrl = data.instagram ? igUrl(data.instagram) : undefined;
-const bookingUrl = data.website ?? instagramUrl;
-const hasContact = Boolean(bookingUrl || instagramUrl);
+// Boka-tid-knapp ENDAST för betald nivå (matris: minimal kontakt på perus).
+// Extern bokning först, annars studions hemsida.
+const bookingHref = paid ? (data.bookingUrl ?? data.website ?? undefined) : undefined;
+const phoneHref = paid && data.phone ? `tel:${data.phone.replace(/\s+/g, '')}` : undefined;
+// Kontaktkortet visas när det finns något att visa (boka/tel/IG) eller när
+// betald nivå får det cookiefria Netlify-kontaktformuläret.
+const hasContact = Boolean(bookingHref || phoneHref || instagramUrl || paid);
 const worksCount = data.images.length;
+// Riktiga bilder vinner (Bildpolicy §2-tillstånd); annars max 2
+// Instagram-embeds (handoff §8) — studions egna poster först, sedan
+// artisternas (många multi-artist-studios saknar egen instagram-handle
+// och har bara poster via sina artister); annars dagens monogram+IG-knapp.
+const allEmbedPosts = [
+  ...data.instagram_posts,
+  ...allStudioArtists.flatMap((person) => person.data.instagram_posts),
+];
+const embedPosts = data.images.length === 0 ? allEmbedPosts.slice(0, 2) : [];
+const displayWorksCount = data.images.length > 0 ? data.images.length : embedPosts.length;
 
 const path = `/artistit/${studio.id}/`;
 // Studionamn upp till 40 tecken finns i datan — faller tillbaka på kort
@@ -116,7 +142,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
         )
       }
       {
-        data.premium && (
+        featured && (
           <p class="badge-row">
             <span class="badge-featured">★ {t('card.featured')}</span>
           </p>
@@ -146,9 +172,14 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
              över skarven i stället. */
           hasContact && (
             <div class="contact-card">
-              {bookingUrl && (
-                <a class="btn-cta" href={bookingUrl} target="_blank" rel="noopener noreferrer">
+              {bookingHref && (
+                <a class="btn-cta" href={bookingHref} target="_blank" rel="noopener noreferrer">
                   {t('artist.book')}
+                </a>
+              )}
+              {phoneHref && (
+                <a class="btn-outline contact-phone" href={phoneHref}>
+                  {t('artist.call')} · {data.phone}
                 </a>
               )}
               {instagramUrl && (
@@ -156,6 +187,45 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
                   Instagram · @{data.instagram}
                 </a>
               )}
+              {paid && data.hours && (
+                <p class="contact-hours">
+                  <span class="contact-hours-label">{t('artist.hours')}</span>
+                  {data.hours}
+                </p>
+              )}
+              {
+                /* Cookiefri Netlify-kontaktknapp (matris: Pro/Premium). Formuläret
+                   detekteras vid build via data-netlify; honeypot mot spam, ingen
+                   reCAPTCHA/cookie. Fältet `studio` skiljer inläggen åt. */
+                paid && (
+                  <details class="contact-form-toggle">
+                    <summary class="btn-outline contact-form-summary">
+                      {t('artist.contact.cta')}
+                    </summary>
+                    <form
+                      class="contact-form"
+                      name="yhteydenotto"
+                      method="POST"
+                      data-netlify="true"
+                      netlify-honeypot="bot-field"
+                      action={p(path)}
+                    >
+                      <input type="hidden" name="form-name" value="yhteydenotto" />
+                      <input type="hidden" name="studio" value={data.name} />
+                      <p class="hp" aria-hidden="true">
+                        <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+                      </p>
+                      <label class="cf-label" for="cf-name">{t('artist.contact.name')}</label>
+                      <input id="cf-name" name="nimi" type="text" required autocomplete="name" />
+                      <label class="cf-label" for="cf-email">{t('artist.contact.email')}</label>
+                      <input id="cf-email" name="sahkoposti" type="email" required autocomplete="email" />
+                      <label class="cf-label" for="cf-msg">{t('artist.contact.message')}</label>
+                      <textarea id="cf-msg" name="viesti" rows="3" required />
+                      <button class="btn-cta cf-submit" type="submit">{t('artist.contact.submit')}</button>
+                    </form>
+                  </details>
+                )
+              }
               <p class="contact-note">{t('artist.responds')}</p>
             </div>
           )
@@ -164,7 +234,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
         <div class:list={['trust-card', { 'trust-card--float': !hasContact }]}>
           <h2 class="trust-title">{t('artist.trust')}</h2>
           {
-            data.verified && (
+            verified && (
               <p class="trust-row">
                 <span class="trust-check" aria-hidden="true">✓</span>
                 {t('artist.verified')}
@@ -194,6 +264,16 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
             </span>
           </div>
         </div>
+
+        {
+          /* Diskret claim-loop på gratisprofiler (matris): leder till /hinnasto. */
+          !paid && (
+            <a class="claim-cta" href={p('/hinnasto/')}>
+              <span class="claim-q">{claim.question}</span>
+              <span class="claim-link">{claim.cta} →</span>
+            </a>
+          )
+        }
       </aside>
 
       <div class="main-col">
@@ -202,11 +282,11 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
           <div class="portfolio-head">
             <h2 class="portfolio-title" id="portfolio-title">{t('artist.portfolio')}</h2>
             {
-              worksCount > 0 && (
+              displayWorksCount > 0 && (
                 <span class="portfolio-count">
-                  {worksCount === 1
+                  {displayWorksCount === 1
                     ? t('artist.works.one')
-                    : t('artist.works.many', { n: worksCount })}
+                    : t('artist.works.many', { n: displayWorksCount })}
                 </span>
               )
             }
@@ -223,10 +303,21 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
                   </div>
                 ))}
               </div>
+            ) : embedPosts.length > 0 ? (
+              <div class="portfolio-grid">
+                {embedPosts.map((url, index) => (
+                  <div
+                    class="portfolio-item"
+                    style={index === 0 ? `view-transition-name: artist-image-${studio.id};` : undefined}
+                  >
+                    <InstagramEmbed url={url} name={data.name} locale={locale} />
+                  </div>
+                ))}
+              </div>
             ) : (
               <div class="portfolio-empty">
                 <div class="portfolio-plate" style={`view-transition-name: artist-image-${studio.id};`}>
-                  <MonogramPlate name={data.name} featured={data.premium} />
+                  <MonogramPlate name={data.name} featured={featured} />
                 </div>
                 <div class="portfolio-empty-info">
                   <h3 class="portfolio-empty-title">{t('artist.noImages.title')}</h3>
@@ -351,6 +442,106 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
     color: var(--meta);
     text-align: center;
     margin: 0;
+  }
+  .contact-hours {
+    font-size: 12px;
+    color: var(--text);
+    margin: 2px 0;
+    text-align: center;
+  }
+  .contact-hours-label {
+    display: block;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin-bottom: 2px;
+  }
+
+  /* Netlify-kontaktformulär (Pro/Premium) — vikt bakom en knapp så kortet
+     är kompakt tills besökaren väljer att ta kontakt. */
+  .contact-form-toggle {
+    margin: 0;
+  }
+  .contact-form-summary {
+    list-style: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  .contact-form-summary::-webkit-details-marker {
+    display: none;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+  }
+  .cf-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin-top: 4px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-family: var(--font-body);
+    /* 16px så iOS inte zoomar in vid fokus */
+    font-size: 16px;
+    color: var(--text);
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 10px 12px;
+    width: 100%;
+    resize: vertical;
+  }
+  .contact-form input:focus-visible,
+  .contact-form textarea:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 1px;
+  }
+  .cf-submit {
+    margin-top: 8px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    margin: 0;
+  }
+
+  /* Diskret claim-CTA på gratisprofiler → /hinnasto (konverteringsslingan) */
+  .claim-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 14px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px dashed var(--border-on-paper);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    transition:
+      border-color var(--t-med) var(--ease-out),
+      background-color var(--t-med) var(--ease-out);
+  }
+  .claim-cta:hover {
+    border-color: var(--flash);
+    background: var(--paper);
+  }
+  .claim-q {
+    font-size: 12.5px;
+    color: var(--text);
+  }
+  .claim-link {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--flash);
   }
 
   .portfolio {

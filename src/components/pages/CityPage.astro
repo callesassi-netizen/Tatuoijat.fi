@@ -14,6 +14,7 @@ import {
   getStylesSorted,
   getStudios,
   sortStudios,
+  isFeatured,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -40,8 +41,10 @@ const styleById = new Map(styles.map((style) => [style.id, style]));
 const cityName = cityDisplayName(city, locale);
 const h1City = locale === 'fi' ? city.data.nameLocative : cityName;
 const studios = sortStudios(allStudios.filter((studio) => studio.data.city === city.id));
-const featured = studios.filter((studio) => studio.data.premium);
-const regular = studios.filter((studio) => !studio.data.premium);
+// Endast Premium pinnas överst med badge; Pro sorteras redan ovanför
+// Perus via sortStudios men visas i samma grid som gratislistningarna.
+const featured = studios.filter(isFeatured);
+const regular = studios.filter((studio) => !isFeatured(studio));
 const intro = localizedBody(city.body, locale);
 const countSentence =
   studios.length === 1

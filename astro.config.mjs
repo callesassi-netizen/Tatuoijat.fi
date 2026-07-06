@@ -43,6 +43,11 @@ for (const file of readdirSync('./src/content/cities')) {
   noindexedCityPaths.add(`/sv/tatuerare/${nameSv ? svCitySlug(nameSv) : id}/`);
 }
 
+// /liity är den bantade ansökningssidan med noindex,follow (LiityPage) —
+// håll den ur sitemap. /hinnasto är B2B-sidan som ska indexeras.
+noindexedCityPaths.add('/liity/');
+noindexedCityPaths.add('/sv/liity/');
+
 export default defineConfig({
   site: SITE_URL,
   output: 'static',
