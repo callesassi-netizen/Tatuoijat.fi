@@ -1,5 +1,34 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n/ui';
+import type { Tier } from '../data/pricing';
+
+type Studio = CollectionEntry<'studios'>;
+
+// Rank för tier-sortering: premium först, sedan pro, sedan perus.
+const TIER_RANK: Record<Tier, number> = { premium: 0, pro: 1, perus: 2 };
+
+/**
+ * Studions effektiva nivå. `tier` är sanningskällan; en kvarvarande
+ * legacy `premium: true` tolkas som premium (bakåtkompat — härledningen
+ * som ersätter den gamla booleska flaggan). Se content.config.ts.
+ */
+export function studioTier(studio: Studio): Tier {
+  if (studio.data.tier === 'premium' || studio.data.premium) return 'premium';
+  return studio.data.tier;
+}
+
+/** Premium = guld Featured-badge, hero-collage, kärki/pinnad placering. */
+export const isFeatured = (studio: Studio): boolean => studioTier(studio) === 'premium';
+
+/** Betald nivå (pro|premium) = verifierad badge, boka-/kontaktknapp, full kontakt. */
+export const isPaid = (studio: Studio): boolean => studioTier(studio) !== 'perus';
+
+/**
+ * Verifierad badge (matris: Pro + Premium). Behåller dessutom befintliga
+ * `verified: true`-studios (data verifierad mot studions egen webbplats)
+ * så inget regredierar — betald nivå räknas alltid som verifierad.
+ */
+export const isVerified = (studio: Studio): boolean => studio.data.verified || isPaid(studio);
 
 /**
  * Innehållskonvention: fi-text överst i brödtexten, sv-översättning
@@ -29,12 +58,13 @@ export async function getStudios(): Promise<CollectionEntry<'studios'>[]> {
   return getCollection('studios');
 }
 
-/** Premium först, därefter alfabetiskt — samma ordning i alla listor. */
+/** Premium → Pro → Perus, därefter alfabetiskt — samma ordning i alla listor. */
 export function sortStudios(
   studios: CollectionEntry<'studios'>[],
 ): CollectionEntry<'studios'>[] {
   return [...studios].sort((a, b) => {
-    if (a.data.premium !== b.data.premium) return a.data.premium ? -1 : 1;
+    const rank = TIER_RANK[studioTier(a)] - TIER_RANK[studioTier(b)];
+    if (rank !== 0) return rank;
     return a.data.name.localeCompare(b.data.name, 'fi');
   });
 }
