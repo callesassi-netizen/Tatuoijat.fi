@@ -33,8 +33,11 @@ const citiesDir = join(root, 'src', 'content', 'cities');
 const studiosDir = join(root, 'src', 'content', 'studios');
 const artistsDir = join(root, 'src', 'content', 'artists');
 
-// Exempel-premium på startsidan tills riktiga premiumkunder finns.
-const PREMIUM_EXAMPLES = new Set(['flow-tattoo-helsinki', 'studio-rikuturso', 'la-familia-tattoo']);
+// Riktiga premiumkunder — TOM tills en studio faktiskt betalat. Ingen
+// "exempel-premium" längre: att visa obetalande studios som Featured på
+// startsidan är missvisande. Tom lista → Hem visar sälj-platshållarna
+// istället (se HomePage.astro).
+const PREMIUM_EXAMPLES = new Set();
 
 // Namnkorrigeringar — verifierade uppgifter ur handoff-underlaget
 // (FTAA-listans råa visningsnamn är inte alltid personnamn).

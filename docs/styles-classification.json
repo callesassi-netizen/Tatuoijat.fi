@@ -1,0 +1,2390 @@
+{
+ "aistivisuals.tattoo": {
+  "artist": "Julia Haaranen",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "kasvitieteellinen fineline, herkkä viivatyö"
+ },
+ "apilatattoo": {
+  "artist": "Apila Pepita Tattoo",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "värikäs illustratiivinen/pop-kulttuuri, cover up -erikoisuus"
+ },
+ "lintulaaksoofficial": {
+  "artist": "Aliina Lintulaakso",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional",
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "isoja selkätöitä: mytologinen black&grey + art nouveau -kukkia värissä"
+ },
+ "bluepunktattoo": {
+  "artist": "BluePunk",
+  "styles": [],
+  "suggested_new": [
+   "akvarelli"
+  ],
+  "confidence": "hög",
+  "note": "selkeä akvarellistudio (galaksi/vesiväri)"
+ },
+ "jennaeerikatattoo": {
+  "artist": "Jenna Eerika",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "linework/ignorant + värikästä neotradia"
+ },
+ "gen.tattoo.finland": {
+  "artist": "Jeve / Dead Rose Garden",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "colour realism + black&grey realismi"
+ },
+ "feraobscura": {
+  "artist": "Fera Obscura",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "tumma illustratiivinen blackwork, eläin/luontoaiheet"
+ },
+ "kirvestattoo": {
+  "artist": "Jonna Kirves",
+  "styles": [
+   "fineline",
+   "geometrinen"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "bio: fineline/neotraditional/symmetry; grid: kukka-fineline + symmetriset ornamentit"
+ },
+ "marianne_tattooart": {
+  "artist": "Marianne Tattoo&Art",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "sekatyyli: b&g-muotokuvat, väriruusut, pienet fineline-työt"
+ },
+ "tattoosbytomi": {
+  "artist": "Tomi (Golden Art)",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "black&grey illustratiivinen, herkkä viivatyö"
+ },
+ "hannalehikoinen": {
+  "artist": "Hanna Lehikoinen",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "puhdas american traditional"
+ },
+ "jussivento": {
+  "artist": "Jussi Vento",
+  "styles": [
+   "blackwork",
+   "geometrinen"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "kansanperinne/ornamentti-blackwork (kalevala-henkinen)"
+ },
+ "antti_kuurne": {
+  "artist": "Antti Kuurne",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "handpoke",
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "balttilainen/kansanperinne handpoke, etniset kuviot"
+ },
+ "jussikokkarinen": {
+  "artist": "Jussi Kokkarinen (Impact Tattoo)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "väri-traditional, hieman japanivaikutteita"
+ },
+ "outivihlman": {
+  "artist": "Outi Vihlman (Impact Tattoo)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "trad-pantteri + lohikäärme/pioni neotrad"
+ },
+ "kivun_kauneus": {
+  "artist": "Jenni / Kivun Kauneus",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "låg",
+  "note": "sarjakuvamainen väri-illustraatio + scarification; vähän tatuointikuvia gridissä"
+ },
+ "jannevartio": {
+  "artist": "Janne Vartio",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "puhdas american traditional"
+ },
+ "ilejarvinen": {
+  "artist": "Ilkka Järvinen (Legacy Tattoo)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "trad, mm. iso kotka/käärme-selkä"
+ },
+ "ellenariana.tattoo": {
+  "artist": "Ellen Ariana (Leima)",
+  "styles": [],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "hög",
+  "note": "Pokémon/anime-väritatuoinnit"
+ },
+ "jole.tattoo": {
+  "artist": "Jole",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "tumma illustratiivinen b&g/blackwork, linnut/luonto"
+ },
+ "liisapihlakastattoo": {
+  "artist": "Liisa Pihlakas",
+  "styles": [
+   "realismi",
+   "geometrinen"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g-palkittu, mandala-hiha, sekoittaa tyylejä"
+ },
+ "tiiaktattoos": {
+  "artist": "Tiia (Nurja Tattoo)",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "bio: illustrative traditional blackwork; grid-kuvat eivät latautuneet"
+ },
+ "sointuink": {
+  "artist": "Sointu Ink (Nurja Tattoo)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bio: blackwork; herkkä kasvi/lintu-viivatyö"
+ },
+ "jessikaelo_tattoo": {
+  "artist": "Jessika Elo (Old 7 Tattoo)",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g-realismi (metsä/maisema) + lettering-juttuja"
+ },
+ "lunakreativa": {
+  "artist": "Tuukka Ahonen (One Eye Tattoo)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "flash-vetoinen: trad-flashia + mandaloita"
+ },
+ "oneeyepete": {
+  "artist": "Pete Voutilainen (One Eye Tattoo)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realismi, muotokuvat/eläimet"
+ },
+ "reetta.tattoo": {
+  "artist": "Reetta (Paradise Tattoos?)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "illustratiivinen folk-blackwork punaisin aksentein"
+ },
+ "tattoosaana": {
+  "artist": "TattooSaana (Permana Ink)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "pienet fineline-työt: kukat, linnut, käärme"
+ },
+ "petri_paronen_tattoos": {
+  "artist": "Petri Paronen (Pete's Tattoo)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bio: Black&Grey | Realism; muotokuvat, eläimet, kellot"
+ },
+ "abstrac.tua": {
+  "artist": "Tua Musakka (Pine Tattoo)",
+  "styles": [],
+  "suggested_new": [
+   "akvarelli"
+  ],
+  "confidence": "hög",
+  "note": "abstrakti akvarelli/roiske-tyyli"
+ },
+ "markoberyl": {
+  "artist": "Marko Beryl",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "monipuolinen illustratiivinen b&g (mucha-hihat, eläimet, huumori)"
+ },
+ "sonjakaski": {
+  "artist": "Sonja Kaski",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "kansantaide-henkinen väri-trad, eläinaiheet"
+ },
+ "jesse.silk": {
+  "artist": "Jesse (Silk Ink)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realismi: rakennukset, eläimet, patsaat"
+ },
+ "sashakretova.tattoo": {
+  "artist": "Sasha Kretova",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "herkät pienet fineline/väri-kasviaiheet"
+ },
+ "vihtoorink": {
+  "artist": "Vihtoori",
+  "styles": [],
+  "suggested_new": [
+   "ignorant"
+  ],
+  "confidence": "medel",
+  "note": "leikkisä cartoon/ignorant-tyyli, Muumi-aiheita"
+ },
+ "talvi.kuu.ttt": {
+  "artist": "Talvikuu (Tattooed Soul?)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "trad/neotrad-mix, myös blackwork-rintapala"
+ },
+ "supitattoo": {
+  "artist": "Supi (Tatskatytöt)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "handpoke"
+  ],
+  "confidence": "hög",
+  "note": "bio: HANDPOKE TATS; söpö fineline-flash"
+ },
+ "arikatora": {
+  "artist": "Noora / Arikatora (Liz Art, Tampere)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "bio: Illustrative Blackwork; myös red/black-neotrad"
+ },
+ "vegahagglundtattoos": {
+  "artist": "Vega Hägglund",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental",
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "ornamentti-selkätöitä + neotrad-kukkia/eläimiä"
+ },
+ "laurahmerta": {
+  "artist": "Laura H. Merta",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "kansanornamentiikkaa + neotrad-pioneja + finelinea"
+ },
+ "emmayc": {
+  "artist": "Emma Ceau (Tatuata)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "etsaus/gravyyri-henkinen illustratiivinen tyyli"
+ },
+ "gustavpdc": {
+  "artist": "Gustav (Ground Classic Tattoo)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "klassinen trad: merenneito, Jeesus, ruusut"
+ },
+ "jarnokantanen": {
+  "artist": "Jarno Kantanen",
+  "styles": [
+   "japanilainen"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "puhdas japanilainen: bodysuitit, lohikäärmeet"
+ },
+ "tuppu_ritola": {
+  "artist": "Tuppu Ritola (Flät 14)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bold trad, paljon mustaa; tiikeri-selkä"
+ },
+ "elzytattoo": {
+  "artist": "Elzy Green",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "bio: bold color/illustrative; red&black-illustraatio"
+ },
+ "vortextattoo": {
+  "artist": "Vortex Tattoo",
+  "styles": [
+   "japanilainen",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "sekastudio: japani-hihat, b&g-kallot, neotrad"
+ },
+ "dmitri_shestakov": {
+  "artist": "Dmitri Shestakov",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realismi: muotokuvat, metsämaisemat; myös japani-hiha"
+ },
+ "sorrymomtattoostudio": {
+  "artist": "Sorry Mom Tattoo Studio",
+  "styles": [
+   "fineline",
+   "traditional"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "sekastudio: fineline-kasvit, ornamental-dotwork, trad-väri"
+ },
+ "kvart.studios": {
+  "artist": "KVART Studios",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "herkkä illustratiivinen fineline (studio-tili)"
+ },
+ "m5tattoostudio": {
+  "artist": "Martino Fraschini (M5 Studio)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "vain yksi tatuointikuva gridissä (b&g-rintapala); paljon reiki/studio-sisältöä"
+ },
+ "koivu.ink": {
+  "artist": "Milla / Koivu Ink (Artsoul, Tampere)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "nature/botanical fineline, kevyt väri"
+ },
+ "lennilauha.art": {
+  "artist": "Lenni Lauha",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "puupiirros/etsaus-henkinen illustratiivinen blackwork, eläimet"
+ },
+ "kerberys": {
+  "artist": "Kerberys",
+  "styles": [],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "låg",
+  "note": "grid enimmäkseen kauhu-digitaidetta/merchiä, ei tatuointikuvia — vaikea arvioida"
+ },
+ "tittafreebird": {
+  "artist": "Titta Freebird",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "grid täynnä valmennus/yrittäjyyssisältöä, ei tatuointikuvia — kunde ej bedömas"
+ },
+ "edeninked": {
+  "artist": "Eden Inked (Tampere/Seinäjoki)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "herkkä fineline: kukat, perhoset, kissat"
+ },
+ "blaksnak.art": {
+  "artist": "Heta / Bläksnäk (Fomi Studio, Tampere)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "medel",
+  "note": "blackwork + anime-linework"
+ },
+ "handpokebyjaate": {
+  "artist": "Jaate (Tampere)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "handpoke",
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "handpoke: botanical fineline + ornamentti-dotwork"
+ },
+ "sowina.ink": {
+  "artist": "Sofia Stenberg (Tampere)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "hög",
+  "note": "bio: minimalistic linework & texttattoos"
+ },
+ "kiperatattoo": {
+  "artist": "Kiperä Tattoo (Art & Soul)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "illustratiivinen blackwork/linework, folk-henkeä"
+ },
+ "siu.ink": {
+  "artist": "Siu Ink",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "dotwork"
+  ],
+  "confidence": "medel",
+  "note": "herkkä dotwork/fineline, surrealistiset ja söpöt aiheet"
+ },
+ "ruupetattoo": {
+  "artist": "Ruupe Ukkonen (Pata Tattoo, Tampere)",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "oma ilmoitus: 'my main style is traditional'"
+ },
+ "sannamarjukkatattoo": {
+  "artist": "Sanna Marjukka",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "sekatyyli: tumma illustraatio + väri-cartoon"
+ },
+ "suvitattoo": {
+  "artist": "Suvi",
+  "styles": [
+   "fineline",
+   "geometrinen"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "medel",
+  "note": "sekatyyli: b&g-eläimet, mandala-jalka, iso kaunokirjoitus"
+ },
+ "tuomaskoivurinne": {
+  "artist": "Tuomas Koivurinne",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realismi: muotokuvat, kallot, sudet"
+ },
+ "kipuisa_tattoo": {
+  "artist": "Kipuisa Tattoo",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "botanical/art nouveau fineline, kevyt väri"
+ },
+ "treboritattoo": {
+  "artist": "Trebori (Studio Riku Turso)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "medel",
+  "note": "cyber-oni/robotti-designit, sarjakuva-flash"
+ },
+ "lauratatuoi": {
+  "artist": "Laura Rebecca (Tampere)",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g: kallo+kukat, muotokuvat, käärme; highlight 'realismi'"
+ },
+ "tattooclinic.fi": {
+  "artist": "Riikka Sares (Tattoo Clinic, Tampere)",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g-realismi (koirat, ornate kallo) + fineline-teksti"
+ },
+ "tatumika": {
+  "artist": "Tatu Mika",
+  "styles": [
+   "traditional",
+   "japanilainen"
+  ],
+  "suggested_new": [
+   "tribal"
+  ],
+  "confidence": "medel",
+  "note": "laaja skaala: trad, japani, tribal, folk-mytologia"
+ },
+ "teargardenttt": {
+  "artist": "Teargarden",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "tiheä kukka-blackwork, blackout-hiha, botanical linework"
+ },
+ "mariaviirros": {
+  "artist": "Maria Viirros (Tampere)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "blackout/blackwork-hihat + illustratiivinen linework; myös realismi-highlight"
+ },
+ "kristmarian": {
+  "artist": "Krista Tyni (Neo Ink, Oulu)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "medel",
+  "note": "illustratiivinen linework, anime-henkiset eläimet"
+ },
+ "artelysior": {
+  "artist": "Arte Lysior (CraftINK)",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "dotwork"
+  ],
+  "confidence": "medel",
+  "note": "b&g-realismi + dotwork-kukat, tummat hihat"
+ },
+ "arttattoorepo": {
+  "artist": "Art&TattooRepo (Joensuu)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "botanical fineline: kissat, kukat, tassut"
+ },
+ "annikakka": {
+  "artist": "Annika Kakka",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "maalauksellinen neotrad, linnut/unikot, tikari&sydän"
+ },
+ "tattoojoonas": {
+  "artist": "Joonas (Bar&Bone, Pori)",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "new school/väri-cartoon (Aku Ankka, aivot-sydän) + b&g-enkelit"
+ },
+ "janipiipputattoo": {
+  "artist": "Jani Piippu (Järvenpää)",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional",
+   "anime-manga"
+  ],
+  "confidence": "hög",
+  "note": "bio: Neotraditional; Arcane/anime-hihat, kirkkaat värit"
+ },
+ "badeggstattoo": {
+  "artist": "Elina Lauermaa-Jäntti (Bad Eggs, Jyväskylä)",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "sekatyyli: b&g-lohikäärme, MLP-akvarelli, dotwork-jumalatar"
+ },
+ "blacklilycustomtattoo": {
+  "artist": "Nina Silavuori (Black Lily, Hämeenlinna)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "botanical fineline + pehmeät värikukat/perhoset"
+ },
+ "blackwings_tattooart": {
+  "artist": "Emma Bayras (Black Wings, Ylöjärvi)",
+  "styles": [
+   "fineline",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g fineline-realismi: ilves, leijona, perhoset; vegaaniset tatuoinnit"
+ },
+ "blackzoneart_nina": {
+  "artist": "Nina Ojala (Black Zone Art, Kauhajoki)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g horror/realismi: demonit, kallot, muotokuvat"
+ },
+ "blackwellbodyart": {
+  "artist": "Blackwell Bodyart (Rovaniemi)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realismi: pöllö, sudet, kello+ruusut"
+ },
+ "blooming.roosa": {
+  "artist": "Roosa (Studio Blooming, Forssa)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g illustraatio: leopardi, ruttotohtori, botanical"
+ },
+ "bodyctrl": {
+  "artist": "Body CTRL (Jyväskylä/Konnevesi)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "ignorant"
+  ],
+  "confidence": "medel",
+  "note": "leikkisä linework: Muumi, luuranko-jestari, dotwork-eläimet"
+ },
+ "seriffisaara": {
+  "artist": "Saara Niininen (Body CTRL, Jyväskylä)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "dotwork"
+  ],
+  "confidence": "medel",
+  "note": "dotwork/blackwork-flash: skorpioni, kallo+perhonen"
+ },
+ "cabbittattoo": {
+  "artist": "Cabbit Tattoo",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "väri-cartoon/neotrad: pesukarhu, kettu, korppi+ruusut"
+ },
+ "lauradeviltattoo": {
+  "artist": "Laura Devil",
+  "styles": [
+   "fineline",
+   "geometrinen"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "ornamental/mandala + pitsi-rintakoru, käärme-selkä linework"
+ },
+ "deerlytattoo": {
+  "artist": "Hanna Peura (Deerly, Karkkila)",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "medel",
+  "note": "illustratiivinen linework + anime (MHA), akvarellivärejä"
+ },
+ "tero_devilsridge": {
+  "artist": "Tero (Devil's Ridge, Harjavalta)",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "hög",
+  "note": "bio: Lettering; goottikalligrafia, biomech b&g, tumma illustraatio"
+ },
+ "dexteradeitattoo": {
+  "artist": "Dextera Dei Tattoo",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "walk-in-henkiset pienet sekatyöt: Muumi-värit, perhoset, tekstit"
+ },
+ "katja.dut": {
+  "artist": "Katja Tsykarev",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "illustratiivinen hienoviiva: kasviaiheet, lohikäärme, Muumi; mustaharmaa"
+ },
+ "sonja.dut": {
+  "artist": "Sonja Tuomainen",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional",
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "neotrad-kukat ja eläimet (väri+mustaharmaa), mandala/ornamentti"
+ },
+ "essitattooart": {
+  "artist": "Essi",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "illustratiivinen luontoaihe (siili, kissa, kasvit), mustaharmaa hienoviiva; bio: mustaharmaa + väritatuoinnit"
+ },
+ "facethepaintattoo": {
+  "artist": "Face the pain tattoo",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "tumma mustaharmaa realismi: kallot, eläinkallot, moottoriaiheet"
+ },
+ "antti.rossi": {
+  "artist": "Antti Rossi",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "hög",
+  "note": "mustaharmaa realismi (sotilas, viikinki, Jeesus) + skriptitekstit"
+ },
+ "soilejohannatattoo": {
+  "artist": "Soile Johanna Tattoo",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bio: Realism & blackwork; grid vahvistaa (mustaharmaa realismi, horror, lemmikkimuotokuvat)"
+ },
+ "nokturnotattoo": {
+  "artist": "Erika",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mustaharmaa realismi + väriaksentit (pöllö, koira, unikot); Rovaniemi"
+ },
+ "tukus.tattoo": {
+  "artist": "Tuku's Tattoo",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "illustratiivinen mustaharmaa: eläinmuotokuvat, kaiverrustyylinen kallo-selkätyö, koru/ornamentti; myös väripop"
+ },
+ "annakaisa_havenink": {
+  "artist": "Anna-Kaisa Lajunen",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "kukka-fineline, illustratiiviset eläimet, ornamentti-jalkatyö; gridissä paljon info-postauksia"
+ },
+ "hennasink": {
+  "artist": "Henna",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "custom-linework: kukka-fineline + geometrisia elementtejä, tiikeri-linework"
+ },
+ "rieputattoo": {
+  "artist": "Rieputattoo",
+  "styles": [],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "selkeä värikäs neotrad: mäyrä, magnolia, mansikat, linnut, pässi, tursas"
+ },
+ "rainyink_tattoo": {
+  "artist": "RainyInk",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "monipuolinen: mustaharmaa realismi (joutsen, kallo) + kukka-fineline + pienet custom-työt"
+ },
+ "suvink_tattoo": {
+  "artist": "SuvInk",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mustaharmaa realismi: patsas, pöllö, kala, kurki-selkätyö"
+ },
+ "eetu_nurmi": {
+  "artist": "Eetu Nurmi",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "korkeatasoinen mustaharmaa realismi (muotokuvat, Ramones-selkätyö) + yksi psykedeelinen värihiha"
+ },
+ "anskiarts": {
+  "artist": "Anski Arts",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "mustaharmaa illustratiivinen: naismuotokuvat, perhonen, kukka-fineline, koiramuotokuva, dotwork-kuoriainen"
+ },
+ "hukkatattoo": {
+  "artist": "Sawoink",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "studiotili (Kuopio, mm. @sawoink @anskiarts @tatuoijaheidi): perhonen mustaharmaa, kurki-fineline"
+ },
+ "ainoholopainen": {
+  "artist": "Aino Holopainen",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "kasvitieteellinen kukka-fineline, hento värjäys; I Know a Place -studio (Rovaniemi)"
+ },
+ "lasse_individual_ink": {
+  "artist": "Lasse",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mustaharmaa realismi: muotokuvat, ilves, uskonnolliset aiheet (Lasse Sjöroos, Turku)"
+ },
+ "inkfinite": {
+  "artist": "Lauri Artto",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bio: Realism & abstract; mustaharmaa realismi (ruusut, muotokuvat) + abstrakti blackwork (Oulu)"
+ },
+ "ellab.tattoo": {
+  "artist": "Ella Bogdanoff",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "eläinrealismi väri+mustaharmaa: koirat, kettu, hirvi, kukat"
+ },
+ "inkromantix": {
+  "artist": "Tommi Ketonen",
+  "styles": [
+   "fineline",
+   "realismi"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "medel",
+  "note": "studiotili (Espoo): kukka-fineline, skriptiteksti, mustaharmaa realismi, japanilaisvaikutteita"
+ },
+ "into.tattoo": {
+  "artist": "Inna Kukkaslahti",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "hento fineline: auringonkukka, ornamentti-käsityö, skripti, kukka-selkätyö (Hukka Tattoo, Kuopio)"
+ },
+ "jennipennynentattoo": {
+  "artist": "Jenni Pennynen",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "monipuolinen custom/freehand: kukkia, illustratiivista, kolibri-fineline; coverupit erikoisuus (Riihimäki)"
+ },
+ "jessink_tattoos": {
+  "artist": "JessInk Tattoos",
+  "styles": [
+   "blackwork",
+   "fineline",
+   "geometrinen"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "monipuolinen mustaharmaa: tiikeri, Arcane-hahmo, teatterimaskit, ornamentti/flower of life -jalka"
+ },
+ "jani_666tattoo": {
+  "artist": "Sippo",
+  "styles": [
+   "realismi",
+   "blackwork",
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "generalisti: mustaharmaa maisema/kalarealismi, pentagrammi-blackwork, trad-mansikat, hannya-käsi, Disney"
+ },
+ "janita_mikaela": {
+  "artist": "Janita Mikaela",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "kasvitieteellinen fineline: kukkakimput, jumalatar, ilves kukilla, käärme"
+ },
+ "kaisatattoo": {
+  "artist": "Kaisatattoo",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "sketsimäinen kukka/kasvi-fineline: auringonkukka, magnolia, liljat"
+ },
+ "juhokakolatattoo": {
+  "artist": "Juho Laaksonen",
+  "styles": [
+   "realismi",
+   "blackwork",
+   "geometrinen"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mustaharmaa realismi (kotka, karhu, pöllö, muotokuvat) + mandala/ornamentiikka"
+ },
+ "kaurisaho_tattoo": {
+  "artist": "Kaurisaho Tattoo",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "illustratiivinen fineline: art nouveau -kukat, tikari, katedraali-dotwork; myös väripop"
+ },
+ "kekritar": {
+  "artist": "Kekritär",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "tumma eteerinen illustratiivinen: savumainen kissa, lilja-fineline, mystiset naishahmot (Kemi); gridissä paljon reelsejä"
+ },
+ "kerosin_ink": {
+  "artist": "Inka /Kerosin Ink",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "selkeä old school/trad: sydämet, sugar skull, ruusut, banneritekstit, hevos-selkätyö"
+ },
+ "korpi_tattoo": {
+  "artist": "Korpi Tattoo",
+  "styles": [
+   "blackwork",
+   "fineline",
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "generalisti: trad-pukki ruusuilla, geisha, mandala, kettu-fineline, karhu mustaharmaa, muistotatuoinnit"
+ },
+ "joniensio": {
+  "artist": "Joni Ensio",
+  "styles": [
+   "blackwork",
+   "traditional",
+   "geometrinen"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "bio: Old School & Ornaments; mandala/ornamentti-selkätyöt, patternwork, trad-kotka ja tikari (Kouvola)"
+ },
+ "miumautattoo": {
+  "artist": "Mia Leinonen",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "kasvitieteellinen fineline: kukkakedot, hyönteiset, peura; hentoa väriä"
+ },
+ "inkkutattoo": {
+  "artist": "Inkku Escobar",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "värirealismi (kasvot, medusa) + mustaharmaa susi + neotrad-kukkaselkätyö (La Familia Tattoo)"
+ },
+ "jp.tat2": {
+  "artist": "JP Tattoo",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "puhdas old school/trad: tiimalasi+kallo, lady headit, pantteri, susi, tikarit (La Familia Tattoo)"
+ },
+ "mustalaukka.tattoo": {
+  "artist": "Mustalaukka Tattoo",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "tussimainen/abstrakti blackwork-kukat, fineline (luurankokädet, laakeriseppele), riimukuviot"
+ },
+ "tattoo.tasma": {
+  "artist": "Tasma",
+  "styles": [
+   "realismi",
+   "japanilainen"
+  ],
+  "suggested_new": [
+   "anime-manga",
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "värikkäät anime/peli-hahmot (Digimon, Ginga), japanilainen käärme+sakura, corgi-neotrad, Zeus mustaharmaa"
+ },
+ "pinjatatskaa": {
+  "artist": "Pinja Holopainen",
+  "styles": [
+   "fineline",
+   "realismi"
+  ],
+  "suggested_new": [
+   "akvarelli"
+  ],
+  "confidence": "hög",
+  "note": "kasvitieteellinen lintu/luontoillustraatio pehmeällä värillä, saniais-fineline, koiramuotokuva (La Familia, Kuopio)"
+ },
+ "kimmoangervaniva": {
+  "artist": "Kimmo Angervaniva",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mustaharmaa realismi: pöllö, ruttotohtori, medusa, Kummisetä, kissat, leijona"
+ },
+ "laiska.tattoo": {
+  "artist": "Jenni Kelokaski",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "tumma-söpö illustratiivinen: koi(perhonen), demonityttö, peurankallo + retrolelu/pop-aiheet värillä (Savonlinna)"
+ },
+ "latotattoo": {
+  "artist": "Joonas J",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "puhdas old school/trad: bold väri, vintage ladyt, pantteri, kewpie, kettu"
+ },
+ "cat.rivers.tattoo": {
+  "artist": "Cat Rivers",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "hög",
+  "note": "peli/pop-kulttuuri illustratiivinen mustaharmaa: Pokémon, Mario, Zelda, dinot"
+ },
+ "lindartetattoo": {
+  "artist": "Lindarte Tattoo",
+  "styles": [
+   "fineline",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "fine art -henkinen mustaharmaa: naishahmo-selkätyöt, kukat, muotokuvat; myös väriä (unikko, tiikeri)"
+ },
+ "loitsuart": {
+  "artist": "LoitsuArt",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "kettu+pioni-fineline, ornamentti-vatsatyö, kukkaköynnökset, leijonahiha mustaharmaa (Minna)"
+ },
+ "tatuointistudioluova": {
+  "artist": "Ottilia Mäkinen",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "kukka-fineline, linnut, puut; ornamentti+skripti-käsivarsityö"
+ },
+ "magalacrima": {
+  "artist": "MagaLacrima",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "handpoke"
+  ],
+  "confidence": "låg",
+  "note": "grid enimmäkseen pakana/keskiaikatapahtumia; tatuoinneista näkyy kasvi-fineline (lupiinit) + pioni-blackwork; tekee 'perinnetatuointeja' tapahtumissa"
+ },
+ "tuija_magentatattoo": {
+  "artist": "Tuija Magenta Tattoo",
+  "styles": [
+   "traditional",
+   "japanilainen"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "trad: tiikeri, kanit, Nosferatu, hauki; feeniks-selkätyö japanilaisvaikutteella (Tuija Jyrkiö, Turku)"
+ },
+ "susa_ink": {
+  "artist": "Susa_ink",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "pienet fineline-työt: skriptit, kukat, tassunjäljet, perhonen; muutto Tampereelle 1.5."
+ },
+ "baker_willie": {
+  "artist": "Ville Paakkari",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "tumma mustaharmaa: demonikallot, fauni, lemmikkimuotokuvat, korppi (Manala Tattoo)"
+ },
+ "hennaktattoo": {
+  "artist": "Henna K Tattoo",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "mustaharmaa illustratiivinen: GNR-risti, peurankallo, liljat, metsälinnut, palmu (Manala Tattoo)"
+ },
+ "manaviivi": {
+  "artist": "Viivi",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "leikkisä-tumma illustratiivinen: pesukarhu, lepakko, kanit, sitruunat, käärme-käsityö (Soulskin Tattoo, Turku/JKL)"
+ },
+ "mariannastattoo": {
+  "artist": "Marianna",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "medel",
+  "note": "mustaharmaa generalisti: viikinkikompassi, ruusut, skriptit, perhoset, muistoaiheet"
+ },
+ "susannamadelenbdt": {
+  "artist": "Susanna Madelen",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG privat/tom; webbsida (black-diamond-tattoo.com, Tampere/Oulu) saknar portfolio-galleri"
+ },
+ "anuhallatattoo": {
+  "artist": "Anu HallaTattoo",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "dotwork"
+  ],
+  "confidence": "medel",
+  "note": "IG tom/privat; hallatattoo.com/anu: 'traditionaalinen tyyli ja graafisemmat kuvat esim. dotwork' (Halla Tattoo, Rovaniemi) — textbaserad bedömning"
+ },
+ "kultainenvitsa": {
+  "artist": "Kultainen Vitsa",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG utan poster; lafamiliatattoo.fi listar artister men Kultainen Vitsa ej identifierbar där"
+ },
+ "matthaios.ttt": {
+  "artist": "Matias Ruohomäki",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG privat/tom, ingen webbsida"
+ },
+ "marras1901": {
+  "artist": "Jenni Pietikäinen",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG privat/tom, ingen webbsida"
+ },
+ "kirill_artlife": {
+  "artist": "ArtWork Tattoo (artist)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "black&grey-realism dominerar, viss färgrealism"
+ },
+ "ajanvaraus.ink": {
+  "artist": "ajanvaraus.ink",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "ignorant"
+  ],
+  "confidence": "medel",
+  "note": "mycket art dumps/flash i rutnätet"
+ },
+ "michaelaaltotattoo": {
+  "artist": "Michael Aalto",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": null
+ },
+ "sillanpaa.minna": {
+  "artist": "Minna Sillanpää",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "botanisk linework + mandala/lotus, viss realism"
+ },
+ "needlepoint_tattoo": {
+  "artist": "Jukka Joensuu",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "b&g-porträtt + färg-neotrad"
+ },
+ "tattoosbyjuha": {
+  "artist": "Juha Jousinen",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "New Era Tattoo Mikkeli"
+ },
+ "octopusytattoos": {
+  "artist": "Zsofia",
+  "styles": [
+   "geometrinen",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "mehndi/sacred geometry, även färg-ornamental"
+ },
+ "koottaree": {
+  "artist": "Reetta Huotari",
+  "styles": [],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "låg",
+  "note": "söt illustrativ pastell/cartoon-stil (My Little Pony m.m.), passar ingen befintlig kategori väl"
+ },
+ "originalsinnersunicornfactory": {
+  "artist": "Sinner",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "vildblommor/botanisk fineline, små motiv"
+ },
+ "ottleetattoo": {
+  "artist": "Otto Paananen",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-porträtt (husdjur, kändisar)"
+ },
+ "haapalanmatti": {
+  "artist": "Matti Haapala",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": null
+ },
+ "drakainatattoo": {
+  "artist": "Lotta Jarva",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mörk fantasy/skelett-blackwork (Elden Ring m.m.)"
+ },
+ "permana.ink": {
+  "artist": "Abenk Tattooer",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "studio Helsinki/Karjaa; fineline florals"
+ },
+ "pihlajatattoo": {
+  "artist": "Pihlaja tattoo",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "botanisk/natur-linework, fåglar"
+ },
+ "pikkumuusa": {
+  "artist": "Pikku Muusa",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "botanisk/whimsical linework, Jyväskylä"
+ },
+ "pinkyinkyfi": {
+  "artist": "Pinky (Hanna Paakkari)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "låg",
+  "note": "generalist: rosor, tribal, new school-färg; mest infoposter i rutnätet"
+ },
+ "mossepitbull": {
+  "artist": "Mosse",
+  "styles": [
+   "japanilainen",
+   "realismi"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "hannya/samuraj b&g + färg-neotrad"
+ },
+ "petterikorpi": {
+  "artist": "Petteri Korpi",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "PK Tattoo Turku"
+ },
+ "polkaink": {
+  "artist": "Katri (Polka Ink)",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g trad-motiv (svalor, pinuper), nördmotiv"
+ },
+ "suskiarts": {
+  "artist": "Suski",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "One Eye Tattoo; mörk b&g + sketchy"
+ },
+ "ramotattoo": {
+  "artist": "Ramo (Rami Rosvall)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bio: cover-ups + realistiska tatueringar, Rauma"
+ },
+ "adadoesart": {
+  "artist": "adadoesart (Ada)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "Tavis tattoo Pori fr.o.m. 1.7.2026"
+ },
+ "rauha.tattoo": {
+  "artist": "Rauha Tattoo (Erika)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "bio: neotraditional + blackwork, Pyhäjoki"
+ },
+ "reettattoo": {
+  "artist": "Reettattoo",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": null
+ },
+ "freyja.and.fauna": {
+  "artist": "Freyja Pihlajamäki",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "cover-up-specialist, natur/djur; Revon Tattoo Klaukkala"
+ },
+ "jaara.tattoo": {
+  "artist": "Jäärä.Tattoo",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "egen beskrivning: traditional/ornamental/thick black lines"
+ },
+ "juspenurminen": {
+  "artist": "Juspe",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "mest reels/convention-inlägg; enstaka b&g-realism synlig; Riverbank Tattoo Rauma"
+ },
+ "katitattoo.s": {
+  "artist": "Katja",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "illustrativa djur (katt, kanin, panda), Rauma"
+ },
+ "rosaleima": {
+  "artist": "Jonna Rosa",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "akvarelli"
+  ],
+  "confidence": "medel",
+  "note": "blandat: hannya, dotwork, akvarell-solros, cartoon-katt; Studio Kokko Kokkola"
+ },
+ "sannal_tattoo": {
+  "artist": "Sanna L",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "florals, mandala, illustrativt"
+ },
+ "savolanmuste": {
+  "artist": "Savolan Muste (Toni & Tomi)",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "kollektiv Savonlinna; chicano b&g, sketchy blackwork"
+ },
+ "ssonyachristinatattoo": {
+  "artist": "Sonya Christina",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental",
+   "lettering"
+  ],
+  "confidence": "medel",
+  "note": "b&g: mandala-rygg, script, änglar, florals"
+ },
+ "virve_hellcattattoo": {
+  "artist": "Virve (Hellcat Tattoo)",
+  "styles": [
+   "traditional",
+   "fineline"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "söt färg-trad/neotrad + illustrativa djur"
+ },
+ "alttivetelainen": {
+  "artist": "Altti Vetelainen (Shaman Arts Tattoo Oulu)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g-djurrealism; delvis bandbilder i rutnätet"
+ },
+ "simplytattoo_ian": {
+  "artist": "Ian (Simply Tattoo Jyväskylä)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [
+   "akvarelli",
+   "anime-manga"
+  ],
+  "confidence": "låg",
+  "note": "studiokonto: blandat (illustrativ blackwork, akvarell, new school-färg, cartoon)"
+ },
+ "mailanderminea": {
+  "artist": "Minea Mailander",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "hög",
+  "note": "tydlig traditional: varg/får, påfågel, gypsy heads + script"
+ },
+ "studioblackcat13": {
+  "artist": "Susanne LA (Studio Black Cat 13)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "skönhetsstudio (fransar/naglar) + fineline-tatueringar"
+ },
+ "sointutattoo": {
+  "artist": "Meri Sointu",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "medel",
+  "note": "anime-linework + one-line florals; bio nämner anime"
+ },
+ "veskutat": {
+  "artist": "Vesku (Studio Kaunis Alma Jyväskylä)",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "ornamental/floral ryggverk, b&g fineline"
+ },
+ "jonnaemiliart": {
+  "artist": "Jonna Kivijärvi (Studio Kokko Kokkola)",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "korpar, kompasser, hannya, liljor i b&g"
+ },
+ "bohemink_": {
+  "artist": "Bohemink",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "whimsical fineline: jordgubbar, tvättbjörnar, popkultur (Animal Crossing)"
+ },
+ "innakokko_tattoo": {
+  "artist": "Inna Kokko (Studio Kokko Kokkola)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "låg",
+  "note": "script-rygg + bold spiral-blackwork synliga; sidan gick ej att scrolla mer"
+ },
+ "idis.inks": {
+  "artist": "Iida Vilén (Studio LK Pori)",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "anime-manga",
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "anime-motiv, dino-neotrad, botanisk fineline"
+ },
+ "iinapiinatattoo": {
+  "artist": "iinapiina (Vaasa)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "illustrativ blackwork: djur i kläder, folkmönster-rygg"
+ },
+ "bearlytattoo": {
+  "artist": "Bearly Tattoo (Mira, Jyväskylä)",
+  "styles": [
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "bio: Illustrative Blackwork | Pet Portraits; rutnätet mest digital konst/Procreate"
+ },
+ "studiowalhalla": {
+  "artist": "Nanna Paananen (Studio Walhalla)",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "rutnätet domineras av hårflätning/salong; tatueringar bara i highlights — kunde ej bedömas"
+ },
+ "joha_nnart": {
+  "artist": "JohannArt",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "djurporträtt i färg + b&g, även botaniskt; blandat konst/privat"
+ },
+ "tatskamaikki": {
+  "artist": "Maikki (Joensuu)",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g florals, skalle+fjäril, tiger"
+ },
+ "art.a.la.anna": {
+  "artist": "Art à la Anna",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "generalist: serietidningsfärg (Hulk), botanik, catrina b&g"
+ },
+ "tattoosampo": {
+  "artist": "Jamppa Sampo (Tattoo Sampo)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-porträtt, Silent Hill, Frihetsgudinnan"
+ },
+ "jennitattoosampo": {
+  "artist": "Jenni Sampo",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "akvarelli",
+   "ornamental"
+  ],
+  "confidence": "medel",
+  "note": "färgglada florals, smyckesornamentik, dotwork-mandalor"
+ },
+ "tattoosbyroosa": {
+  "artist": "Roosa Aho",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "rutnätet mest reels/studio-vlogg och måleri; tatueringsstil ej bedömbar via IG"
+ },
+ "tattooeki": {
+  "artist": "Tattooeki (MS-Studio Lahti)",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG privat/tomt, hemsidan (ms-studio.fi) saknar galleri/stilinfo"
+ },
+ "j.o.nieminen": {
+  "artist": "Jondomi",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG utan poster, ingen hemsida i seed"
+ },
+ "latkaspineless": {
+  "artist": "Lätkä",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG utan poster, ingen hemsida i seed"
+ },
+ "dontommi.dots": {
+  "artist": "DonTommiDots (Tattoo Cartel Oulu)",
+  "styles": [],
+  "suggested_new": [
+   "dotwork"
+  ],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG utan poster, tattoocartel.fi svarar inte; handle antyder dotwork"
+ },
+ "teristattoo": {
+  "artist": "teris (Teris Tattoo Vantaa)",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG utan poster, hemsidan saknar stilinfo"
+ },
+ "tino-tervo-tattoo": {
+  "artist": "Tino (Tino's Tattoo Kuopio)",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: ogiltigt IG-handle i seed; tinostattoo.fi är studiosida med flera artister utan stilinfo"
+ },
+ "zen.studio.finland": {
+  "artist": "Hessu (Zen Ink & Art Studio Seinäjoki)",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas: IG utan poster; hemsidan generell, ingen stilinfo"
+ },
+ "tikkanora_tattoo": {
+  "artist": "Tikka Nora",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "botanisk fineline/dotwork, svart linjearbete"
+ },
+ "teea_tattoo_piercing": {
+  "artist": "Teea",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "b&g-realism + färgade illustrativa blommor, blandat"
+ },
+ "satu.theclinic": {
+  "artist": "Satu The Clinic",
+  "styles": [
+   "traditional"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "färgrik illustrativ botanik, tiger, naive-inslag"
+ },
+ "thunderdogtattoo": {
+  "artist": "Thunderdogtattoo",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "b&g-husdjursporträtt + neotrad färg; mycket promo i griden"
+ },
+ "tittastattoo": {
+  "artist": "Titta",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realism (lejon, örn, chicano-inslag) + florala blackwork"
+ },
+ "terhi_torkytaide": {
+  "artist": "Terhi Jussila",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "hög",
+  "note": "egen beskrivning: maalauksellinen realismi + neo traditional, färgrika växt/djurmotiv"
+ },
+ "miamarintattoo": {
+  "artist": "Mia Marin Tattoo",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "svart botanisk linework, svärd, kobra"
+ },
+ "turestattoo": {
+  "artist": "Ture's Tattoo (studio)",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "studiokonto 4 artister, blandat; b&g-realism + linework synligt"
+ },
+ "tutaturkutattooparlour": {
+  "artist": "Tuta",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g-realismporträtt; grid delvis konst/promo, renderer-frys begränsade genomgången"
+ },
+ "sammytattooz": {
+  "artist": "Sammy",
+  "styles": [
+   "realismi",
+   "traditional"
+  ],
+  "suggested_new": [
+   "anime-manga"
+  ],
+  "confidence": "medel",
+  "note": "generalist: R2-D2, ros, Totoro, b&g + färg"
+ },
+ "varkaudentatuointiliike": {
+  "artist": "Sara Ingervo",
+  "styles": [
+   "fineline",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "illustrativ botanik/fåglar, mjuk färg + svart linework"
+ },
+ "verigreippink": {
+  "artist": "Johanna, Verigreippink",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ignorant"
+  ],
+  "confidence": "medel",
+  "note": "sketchy linework, humoristiska/naiva motiv, husdjursporträtt"
+ },
+ "vieskanmuste": {
+  "artist": "Petri Uusitalo",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "b&g-realism (backpieces) + gravyr-stil linework"
+ },
+ "vorssaink": {
+  "artist": "Kata @vorssaink",
+  "styles": [],
+  "suggested_new": [],
+  "confidence": "låg",
+  "note": "kunde ej bedömas – kontot är numera örhängesbutik, inga tatueringar i griden"
+ },
+ "yessirtats": {
+  "artist": "Elena Sirotkaite",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "lettering",
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "fin skript, tunna blommor, ornamentala kompositioner"
+ },
+ "niskanen.kaisa": {
+  "artist": "Kaisa Niskanen",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "målerisk färgrealism, natur/djur/botanik"
+ },
+ "noctum_tattoo": {
+  "artist": "Noctum Tattoo Studio",
+  "styles": [
+   "realismi",
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "studiokonto Esbo: mörk realism, organisk blackwork, fineline"
+ },
+ "kittycat_tattoo_": {
+  "artist": "Laura Peltonen",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "dotwork/blackwork-djur, skräckpop, skript, blommor"
+ },
+ "sacredtattooespoo": {
+  "artist": "Sacred Tattoo & Bodypiercing",
+  "styles": [
+   "japanilainen",
+   "traditional"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "japanska backpieces (tiger/drake, koi) + traditional swallow"
+ },
+ "nellixxs": {
+  "artist": "New Moon Ink",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [
+   "ornamental"
+  ],
+  "confidence": "hög",
+  "note": "fineline b&g: rosor, fjärilar, mandala-hand, småtatueringar"
+ },
+ "headbang_tattoo": {
+  "artist": "Headbang Tattoo",
+  "styles": [
+   "realismi",
+   "blackwork",
+   "japanilainen"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "b&g-realism (svan, liemannen, geisha) + japanska motiv i västerländsk b&g"
+ },
+ "juhamustonen": {
+  "artist": "Custom X Tattoo",
+  "styles": [
+   "realismi",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "mörk b&g-realism: skallar, vikinga/nordiska motiv, runor"
+ },
+ "deadartists.tattoo": {
+  "artist": "Dead Artists Tattoo",
+  "styles": [
+   "blackwork",
+   "realismi"
+  ],
+  "suggested_new": [
+   "lettering"
+  ],
+  "confidence": "medel",
+  "note": "blackwork-flash, stora skriptstycken, staty-realism b&g"
+ },
+ "aavatattoo": {
+  "artist": "Aava Tattoo",
+  "styles": [
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "tunn botanisk fineline, sketchy single-needle, privat studio Åbo"
+ },
+ "sanni_ink": {
+  "artist": "Soulskin Tattoo Studio (artist)",
+  "styles": [
+   "realismi"
+  ],
+  "suggested_new": [
+   "trash-polka"
+  ],
+  "confidence": "medel",
+  "note": "naturalistisk färgillustration (ödla, groda, sparv) + grafiska röd/svarta fågelstycken; även PMU"
+ },
+ "goldeneyetattoo": {
+  "artist": "Golden Eye Tattoo & Gallerie",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [
+   "neotraditional"
+  ],
+  "confidence": "medel",
+  "note": "studiokonto Åbo: traditional-skepp, kitsune neotrad, ornamental linework"
+ },
+ "ilanolasse": {
+  "artist": "Golden Eye Tattoo & Gallerie (artist)",
+  "styles": [
+   "traditional",
+   "blackwork"
+  ],
+  "suggested_new": [],
+  "confidence": "hög",
+  "note": "traditional: örn, skepp, western-skalle, Haddock"
+ },
+ "maria.hakala": {
+  "artist": "Golden Eye Tattoo & Gallerie (artist)",
+  "styles": [
+   "blackwork",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "illustrativ b&g-linework (kerub/floral), fina fingertatueringar; även illustratör"
+ },
+ "turku_tattoo_art_beauty": {
+  "artist": "Turku Tattoo Art & Beauty",
+  "styles": [
+   "realismi",
+   "fineline"
+  ],
+  "suggested_new": [],
+  "confidence": "medel",
+  "note": "generalist ('kaikki tyylit'): b&g-porträtt/ängel + floral linework; även skönhetstjänster"
+ }
+}
