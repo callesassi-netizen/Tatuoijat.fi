@@ -1,7 +1,7 @@
 ---
 name: "Studio Laura Koski"
 city: pori
-styles: []
+styles: [fineline, anime-manga, neotraditional, blackwork]
 premium: false
 website: "https://www.studiolaurakoski.net"
 address: "Kirkkotienpää 1"

@@ -1,7 +1,7 @@
 ---
 name: "Hukka Tattoo"
 city: kuopio
-styles: []
+styles: [blackwork, fineline]
 premium: false
 address: "Haapaniementie 17, Kuopio"
 images: []

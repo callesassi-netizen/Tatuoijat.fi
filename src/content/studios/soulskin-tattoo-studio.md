@@ -2,7 +2,7 @@
 name: "Soulskin Tattoo Studio"
 city: turku
 district: "Keskusta"
-styles: []
+styles: [realismi]
 premium: false
 website: "https://www.soulskintattoo.com/"
 artistInstagrams:

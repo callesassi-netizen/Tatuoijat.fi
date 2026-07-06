@@ -1,7 +1,7 @@
 ---
 name: "Turku Tattoo Parlour"
 city: turku
-styles: []
+styles: [realismi, traditional, anime-manga]
 premium: false
 website: "https://www.turkutattooparlour.com"
 address: "Yliopistonkatu 9a 20100 Turku"

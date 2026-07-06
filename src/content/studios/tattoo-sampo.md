@@ -1,7 +1,7 @@
 ---
 name: "Tattoo Sampo"
 place: "pirkanmaa"
-styles: []
+styles: [realismi, fineline, ornamental]
 premium: false
 address: "Talvitie 19"
 images: []

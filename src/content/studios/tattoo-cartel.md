@@ -9,4 +9,5 @@ address: "Rautatienkatu 1 B51"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts: []
 ---

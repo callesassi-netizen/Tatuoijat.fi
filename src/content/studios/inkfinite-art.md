@@ -1,7 +1,7 @@
 ---
 name: "Inkfinite Art"
 city: oulu
-styles: []
+styles: [realismi, blackwork]
 premium: false
 website: "https://www.ellabogdanoff.com"
 address: "Pakkahuoneenkatu 12 a 4. Krs"

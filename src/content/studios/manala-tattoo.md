@@ -1,7 +1,7 @@
 ---
 name: "Manala Tattoo"
 city: oulu
-styles: []
+styles: [fineline, blackwork, realismi]
 premium: false
 address: "Ratakatu 8, Oulu"
 images: []

@@ -9,4 +9,7 @@ address: "Keskustie 19, Jyväskylä"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts:
+  - "https://www.instagram.com/p/DLsMEK6MhkH/"
+  - "https://www.instagram.com/p/DDpGYintHfS/"
 ---

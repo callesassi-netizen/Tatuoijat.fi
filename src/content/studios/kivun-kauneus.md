@@ -9,4 +9,7 @@ address: "helsinginkatu 14, helsinki"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts:
+  - "https://www.instagram.com/p/DZ-MaZRDLv5/"
+  - "https://www.instagram.com/p/DZ4hvjhDP5P/"
 ---

@@ -8,4 +8,5 @@ address: "Laukaantie 12 b, 40340 Laukaa"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts: []
 ---

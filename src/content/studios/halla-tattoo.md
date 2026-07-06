@@ -1,7 +1,7 @@
 ---
 name: "Halla Tattoo"
 city: rovaniemi
-styles: []
+styles: [realismi, traditional, blackwork]
 premium: false
 website: "https://www.hallatattoo.com"
 address: "Pekankatu 3, Rovaniemi"

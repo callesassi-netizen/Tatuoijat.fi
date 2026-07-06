@@ -1,7 +1,7 @@
 ---
 name: "Nurja Tattoo"
 city: helsinki
-styles: []
+styles: [traditional, blackwork, fineline]
 premium: false
 address: "Kinaporinkatu 2A 00500 Helsinki"
 images: []

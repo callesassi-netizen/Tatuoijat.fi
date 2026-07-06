@@ -9,4 +9,7 @@ address: "Teuvo Pakkalan tie 8 N, 00400 Helsinki"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts:
+  - "https://www.instagram.com/p/DLuvBlMsZ-V/"
+  - "https://www.instagram.com/p/DaTGb24jHwv/"
 ---

@@ -8,4 +8,5 @@ address: "Juhannuskatu 10"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts: []
 ---

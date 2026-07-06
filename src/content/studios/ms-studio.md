@@ -1,7 +1,7 @@
 ---
 name: "Ms-studio"
 city: lahti
-styles: []
+styles: [fineline, blackwork, ornamental]
 premium: false
 website: "https://ms-studio.fi/"
 address: "Karjalankatu 25"

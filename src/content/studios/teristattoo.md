@@ -9,4 +9,5 @@ address: "Primavera 3 a lt1"
 images: []
 verified: false
 ftaaMember: true
+instagram_posts: []
 ---

@@ -1,7 +1,7 @@
 ---
 name: "Studio Kokko"
 city: kokkola
-styles: []
+styles: [realismi, blackwork, fineline]
 premium: false
 address: "Tehtaankatu 18"
 images: []

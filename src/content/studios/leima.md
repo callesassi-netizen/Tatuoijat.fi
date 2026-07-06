@@ -1,7 +1,7 @@
 ---
 name: "Leima"
 city: helsinki
-styles: []
+styles: [anime-manga, blackwork]
 premium: false
 website: "https://leimahelsinki.fi/"
 address: "Suolakivenkatu 20 B, Helsinki"
