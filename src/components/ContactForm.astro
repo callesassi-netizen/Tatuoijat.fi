@@ -1,0 +1,184 @@
+---
+/**
+ * Delat sajt-formulär (Netlify Forms, name="liity" + honeypot). Renderas
+ * IDENTISKT på /liity och /yhteys → ett enda formulär i Netlify. Fälten är
+ * gemensamma; "Aihe/Ämne" skiljer studio-anmälan från kontakt/rättelse/
+ * borttagning. Nivån från /hinnasto-korten fylls i dolt taso-fält via ?taso=.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { type Locale } from '../i18n/ui';
+import { contactForm } from '../data/contactForm';
+import { cityDisplayName } from '../lib/content';
+
+interface Props {
+  locale: Locale;
+  cities: CollectionEntry<'cities'>[];
+  /** Path (med locale-prefix) formuläret postar till. */
+  action: string;
+  /** Förvald aihe-slug (t.ex. 'liity' på /liity, 'kysymys' på /yhteys). */
+  defaultReason?: string;
+}
+
+const { locale, cities, action, defaultReason = 'kysymys' } = Astro.props;
+const f = contactForm[locale];
+---
+
+<form
+  class="signup"
+  name="liity"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action={action}
+>
+  <input type="hidden" name="form-name" value="liity" />
+  <input type="hidden" name="taso" id="cf-taso" value="" />
+  <p class="hp" aria-hidden="true">
+    <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="form-field">
+    <label for="cf-reason">{f.reason}</label>
+    <div class="select-wrap">
+      <select id="cf-reason" name="aihe" required>
+        {
+          f.reasons.map((r) => (
+            <option value={r.value} selected={r.value === defaultReason}>
+              {r.label}
+            </option>
+          ))
+        }
+      </select>
+      <span class="caret" aria-hidden="true">▾</span>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="cf-name">{f.name}</label>
+    <input id="cf-name" name="nimi" type="text" required autocomplete="organization" />
+  </div>
+
+  <div class="form-field">
+    <label for="cf-email">{f.email}</label>
+    <input id="cf-email" name="sahkoposti" type="email" required autocomplete="email" />
+  </div>
+
+  <div class="form-field">
+    <label for="cf-city">
+      {f.city} <span class="optional">{f.optional}</span>
+    </label>
+    <div class="select-wrap">
+      <select id="cf-city" name="kaupunki">
+        <option value="" selected>{f.cityNone}</option>
+        {cities.map((city) => <option value={city.id}>{cityDisplayName(city, locale)}</option>)}
+      </select>
+      <span class="caret" aria-hidden="true">▾</span>
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label for="cf-ig">
+      {f.instagram} <span class="optional">{f.optional}</span>
+    </label>
+    <input id="cf-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
+  </div>
+
+  <div class="form-field">
+    <label for="cf-message">
+      {f.message} <span class="optional">{f.optional}</span>
+    </label>
+    <textarea id="cf-message" name="viesti" rows="4"></textarea>
+  </div>
+
+  <button class="btn-cta" type="submit">{f.submit}</button>
+  <p class="form-note">{f.note}</p>
+</form>
+
+<script>
+  // Fyll det dolda taso-fältet från ?taso= (hinnasto-korten länkar hit med
+  // vald nivå). Progressiv förbättring — utan JS skickas fältet tomt.
+  const taso = new URLSearchParams(window.location.search).get('taso');
+  const el = document.getElementById('cf-taso');
+  if (taso && el instanceof HTMLInputElement) el.value = taso;
+</script>
+
+<style>
+  .signup {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    margin: 0;
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .form-field label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .optional {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    font-family: var(--font-body);
+    /* 16px så iOS inte zoomar in vid fokus */
+    font-size: 16px;
+    color: var(--text);
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 11px 14px;
+    width: 100%;
+  }
+  .form-field textarea {
+    resize: vertical;
+    min-height: 96px;
+    line-height: 1.5;
+  }
+  .form-field input:focus-visible,
+  .form-field select:focus-visible,
+  .form-field textarea:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 1px;
+  }
+  .select-wrap {
+    position: relative;
+  }
+  .select-wrap select {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .caret {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--meta);
+    font-size: 12px;
+    pointer-events: none;
+  }
+  .form-note {
+    font-size: 11.5px;
+    color: var(--meta);
+    text-align: center;
+    margin: 0;
+  }
+</style>

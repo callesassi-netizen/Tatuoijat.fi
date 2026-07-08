@@ -29,6 +29,15 @@ export const STRIPE_LINKS: Record<PaidTier, string> = {
   premium: 'https://buy.stripe.com/PLACEHOLDER_PREMIUM',
 };
 
+/**
+ * Betalning är MANUELL i MVP (faktura/Payment Link — CLAUDE.md). Tills Calle
+ * har riktiga Stripe-länkar leder ALLA nivåer till ansökningsformuläret
+ * (/liity), så inga döda buy.stripe.com-länkar syns i produktion. När Stripe
+ * är skarpt: byt STRIPE_LINKS ovan och sätt denna till true — då går de
+ * betalda korten direkt till Stripe. Inget annat behöver röras.
+ */
+export const PAYMENTS_LIVE = false;
+
 /** Formaterat pris, t.ex. "0 €" / "129 €". Samma format fi/sv. */
 export function priceLabel(tier: Tier): string {
   return `${TIER_PRICE[tier]} €`;

@@ -16,6 +16,7 @@ import {
   TIER_ORDER,
   TIER_PRICE,
   STRIPE_LINKS,
+  PAYMENTS_LIVE,
   type Tier,
 } from '../../data/pricing';
 import { jsonLdString, breadcrumbLd, faqLd } from '../../lib/schema';
@@ -38,10 +39,11 @@ const breadcrumb = breadcrumbLd([
 ]);
 const faq = faqLd(c.faq);
 
-// Gratisnivån startar en ansökan (/liity); betald nivå går till Stripe.
+// Alla nivåer startar en ansökan (/liity, vald nivå via ?taso=) så länge
+// betalning är manuell. När PAYMENTS_LIVE=true går betalda kort till Stripe.
 const ctaHref = (tier: Tier): string =>
-  tier === 'perus' ? p('/liity/') : STRIPE_LINKS[tier];
-const ctaExternal = (tier: Tier): boolean => tier !== 'perus';
+  tier !== 'perus' && PAYMENTS_LIVE ? STRIPE_LINKS[tier] : p(`/liity/?taso=${tier}#ilmoittaudu`);
+const ctaExternal = (tier: Tier): boolean => tier !== 'perus' && PAYMENTS_LIVE;
 
 const cellClass = (v: boolean | string): string =>
   v === true ? 'cell cell--yes' : v === false ? 'cell cell--no' : 'cell cell--text';

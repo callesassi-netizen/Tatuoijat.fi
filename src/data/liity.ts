@@ -17,16 +17,6 @@ export interface LiityContent {
   teaserText: string;
   teaserCta: string;
   formTitle: string;
-  form: {
-    name: string;
-    city: string;
-    cityPlaceholder: string;
-    email: string;
-    instagram: string;
-    instagramOptional: string;
-    submit: string;
-    note: string;
-  };
 }
 
 export const liity: Record<Locale, LiityContent> = {
@@ -43,16 +33,6 @@ export const liity: Record<Locale, LiityContent> = {
       'Perus on ilmainen ja tuo sinut hakuun. Pro ja Premium tuovat gallerian, yhteydenoton ja kärkisijoituksen.',
     teaserCta: 'Katso hinnasto ja paketit',
     formTitle: 'Ilmoittaudu',
-    form: {
-      name: 'Nimi tai studio',
-      city: 'Kaupunki',
-      cityPlaceholder: 'Valitse kaupunki',
-      email: 'Sähköposti',
-      instagram: 'Instagram',
-      instagramOptional: '(valinnainen)',
-      submit: 'Lähetä hakemus',
-      note: 'Vastaamme kahden arkipäivän sisällä.',
-    },
   },
   sv: {
     metaTitle: 'Gå med — skapa en gratis studioprofil | Tatuoijat.fi',
@@ -67,15 +47,5 @@ export const liity: Record<Locale, LiityContent> = {
       'Gratis är gratis och tar med dig i sökningen. Pro och Premium ger galleri, kontaktknapp och topplacering.',
     teaserCta: 'Se prislista och paket',
     formTitle: 'Anmäl dig',
-    form: {
-      name: 'Namn eller studio',
-      city: 'Stad',
-      cityPlaceholder: 'Välj stad',
-      email: 'E-post',
-      instagram: 'Instagram',
-      instagramOptional: '(valfritt)',
-      submit: 'Skicka ansökan',
-      note: 'Vi svarar inom två vardagar.',
-    },
   },
 };

@@ -9,8 +9,9 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
-import { getCitiesSorted, cityDisplayName } from '../../lib/content';
+import { getCitiesSorted } from '../../lib/content';
 import { jsonLdString, breadcrumbLd } from '../../lib/schema';
+import ContactForm from '../ContactForm.astro';
 import { liity } from '../../data/liity';
 import { pricing, priceLabel, TIER_ORDER, TIER_PRICE } from '../../data/pricing';
 import heroImage from '../../assets/bilder/tatuoija-studiossa.png';
@@ -87,48 +88,10 @@ const breadcrumb = breadcrumbLd([
         <span class="teaser-cta">{c.teaserCta} →</span>
       </a>
 
-      <!-- Ansökningsformulär (Netlify Forms + honeypot) -->
+      <!-- Delat sajt-formulär (Netlify name="liity"), aihe förvalt "liity" -->
       <section class="form-col" aria-labelledby="liity-form-title" id="ilmoittaudu">
         <h2 class="col-title" id="liity-form-title">{c.formTitle}</h2>
-        <form
-          class="signup"
-          name="liity"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-          action={p('/liity/')}
-        >
-          <input type="hidden" name="form-name" value="liity" />
-          <p class="hp" aria-hidden="true">
-            <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
-          </p>
-          <div class="form-field">
-            <label for="liity-name">{c.form.name}</label>
-            <input id="liity-name" name="nimi" type="text" required autocomplete="organization" />
-          </div>
-          <div class="form-field">
-            <label for="liity-city">{c.form.city}</label>
-            <div class="select-wrap">
-              <select id="liity-city" name="kaupunki" required>
-                <option value="" disabled selected>{c.form.cityPlaceholder}</option>
-                {cities.map((city) => <option value={city.id}>{cityDisplayName(city, locale)}</option>)}
-              </select>
-              <span class="caret" aria-hidden="true">▾</span>
-            </div>
-          </div>
-          <div class="form-field">
-            <label for="liity-email">{c.form.email}</label>
-            <input id="liity-email" name="sahkoposti" type="email" required autocomplete="email" />
-          </div>
-          <div class="form-field">
-            <label for="liity-ig">
-              {c.form.instagram} <span class="optional">{c.form.instagramOptional}</span>
-            </label>
-            <input id="liity-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
-          </div>
-          <button class="btn-cta" type="submit">{c.form.submit}</button>
-          <p class="form-note">{c.form.note}</p>
-        </form>
+        <ContactForm locale={locale} cities={cities} action={p('/liity/')} defaultReason="liity" />
       </section>
     </div>
   </div>
@@ -249,7 +212,7 @@ const breadcrumb = breadcrumbLd([
     color: var(--gold);
   }
 
-  /* Formulär */
+  /* Formulär (fälten stylas i ContactForm.astro) */
   .form-col {
     margin-top: 36px;
   }
@@ -257,77 +220,6 @@ const breadcrumb = breadcrumbLd([
     font-size: 22px;
     color: var(--text);
     margin-bottom: 16px;
-  }
-  .signup {
-    background: var(--surface);
-    border: var(--card-border);
-    border-radius: var(--r-card-lg);
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .hp {
-    position: absolute;
-    left: -9999px;
-    margin: 0;
-  }
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .form-field label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--meta);
-  }
-  .optional {
-    text-transform: none;
-    letter-spacing: 0;
-    font-weight: 500;
-  }
-  .form-field input,
-  .form-field select {
-    font-family: var(--font-body);
-    /* 16px så iOS inte zoomar in vid fokus */
-    font-size: 16px;
-    color: var(--text);
-    background: var(--paper);
-    border: var(--card-border-strong);
-    border-radius: var(--r-btn);
-    padding: 11px 14px;
-    width: 100%;
-  }
-  .form-field input:focus-visible,
-  .form-field select:focus-visible {
-    outline: 2px solid var(--flash);
-    outline-offset: 1px;
-  }
-  .select-wrap {
-    position: relative;
-  }
-  .select-wrap select {
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-  }
-  .caret {
-    position: absolute;
-    right: 14px;
-    top: 50%;
-    translate: 0 -50%;
-    color: var(--meta);
-    font-size: 12px;
-    pointer-events: none;
-  }
-  .form-note {
-    font-size: 11.5px;
-    color: var(--meta);
-    text-align: center;
-    margin: 0;
   }
 
   @media (min-width: 1024px) {
@@ -374,9 +266,6 @@ const breadcrumb = breadcrumbLd([
     .col-title {
       font-size: 30px;
       margin-bottom: 20px;
-    }
-    .signup {
-      padding: 24px;
     }
   }
 </style>
