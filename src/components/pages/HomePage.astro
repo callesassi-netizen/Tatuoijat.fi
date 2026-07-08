@@ -509,6 +509,10 @@ const webSite = webSiteLd(
     background: var(--paper);
     border-radius: var(--r-sheet) var(--r-sheet) 0 0;
     margin-top: var(--sheet-overlap);
+    /* Tillåter stilsektionens full-bleed-utbrott utan horisontell scroll.
+       clip (till skillnad från hidden) lämnar y-axeln synlig → bryter inte
+       sticky-heron ovanför. */
+    overflow-x: clip;
   }
   .sheet-inner {
     padding: 0 16px 32px;
@@ -946,6 +950,15 @@ const webSite = webSiteLd(
     .section--styles {
       margin-top: 88px;
       margin-bottom: 88px;
+      /* Bryter ut ur den centrerade 1440-containern till full bredd — stilarna
+         får ett brett galleri-band (behöver inte linjera med övriga sektioner).
+         Kanonisk full-bleed: fungerar oavsett containerns padding så länge den
+         är centrerad. overflow-x: clip på .sheet fångar 100vw-scrollen. */
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      /* Full-bleed på normala skärmar; på ultrawide (>~2016px) hålls
+         kort-bredden i schack genom att capa innehållet till ~1920px. */
+      padding-inline: max(var(--page-pad), calc(50vw - 960px));
     }
     .section-head {
       margin-bottom: 22px;
@@ -992,7 +1005,7 @@ const webSite = webSiteLd(
     }
     .style-strip {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
       overflow: visible;
       margin-right: 0;
