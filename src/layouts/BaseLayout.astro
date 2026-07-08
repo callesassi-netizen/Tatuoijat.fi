@@ -3,7 +3,9 @@ import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { useTranslations, localePath, defaultLocale, type Locale } from '../i18n/ui';
-import ogSource from '../assets/bilder/hero-tatuoija.png';
+// Delnings-/OG-banner med Tatuoijat.fi-ordbild + guld-accent (genereras av
+// scripts/generate-og.mjs ur egna brand-tillgångar, Bildpolicy §4).
+import ogSource from '../assets/bilder/og-banner.png';
 import '../styles/global.css';
 
 interface Props {
@@ -51,7 +53,7 @@ const canonical = new URL(localePath(locale, path), site);
 const altFi = new URL(localePath('fi', locale === 'fi' ? path : altPath), site);
 const altSv = new URL(localePath('sv', locale === 'sv' ? path : altPath), site);
 
-// Sajtgemensam OG-bild (egen miljöbild, Bildpolicy §4) — JPEG för
+// Sajtgemensam OG-banner (ordbild + guld-accent, Bildpolicy §4) — JPEG för
 // bästa kompatibilitet med delnings-skrapor
 const ogImage = await getImage({
   src: ogSource,
