@@ -48,8 +48,12 @@ export const ui = {
     'home.metaDescription':
       'Tatuoijat.fi kokoaa Suomen tatuoijat ja tatuointiliikkeet yhteen paikkaan. Selaa portfolioita, vertaile tyylejä ja hintoja ja löydä oma tatuoijasi.',
     'home.premiumCta.title': 'Haluatko näkyä tässä?',
-    // Rubrik för den fristående premium-bannern (0 premium): pitchar toppplatsen
-    'home.premiumCta.soloTitle': 'Näy etusivun kärjessä',
+    // Premium-exempelkort (0 premium): visar hur en Premium-listning ser ut.
+    // Tydligt märkta "Esimerkki" med placeholder-copy — inga fejkade studios.
+    'home.premiumExample.heading': 'Näin studiosi näkyy etusivulla',
+    'home.premiumExample.tag': 'Esimerkki',
+    'home.premiumExample.name': 'Studiosi tässä',
+    'home.premiumExample.place': 'Kaupunkisi',
     'home.premiumCta.text':
       'Etusivun Premium-paikat ovat rajattuja ja täytetään varausjärjestyksessä. Nosta studiosi koko Suomen näkyville.',
     'home.premiumCta.button': 'Aloita Premium',
@@ -190,7 +194,10 @@ export const ui = {
     'home.metaDescription':
       'Tatuoijat.fi samlar Finlands tatuerare och tatueringsstudior på ett ställe. Bläddra bland portfolios, jämför stilar och priser och hitta din artist.',
     'home.premiumCta.title': 'Vill du synas här?',
-    'home.premiumCta.soloTitle': 'Synas överst på startsidan',
+    'home.premiumExample.heading': 'Så här syns din studio på startsidan',
+    'home.premiumExample.tag': 'Exempel',
+    'home.premiumExample.name': 'Din studio här',
+    'home.premiumExample.place': 'Din stad',
     'home.premiumCta.text':
       'Premium-platserna på startsidan är begränsade och fylls i bokningsordning. Lyft din studio inför hela Finland.',
     'home.premiumCta.button': 'Starta Premium',

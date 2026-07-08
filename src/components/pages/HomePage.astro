@@ -7,6 +7,11 @@ import ArtistCard from '../ArtistCard.astro';
 import Logo from '../Logo.astro';
 import { styleImages } from '../../lib/styleImages';
 import heroTatuoija from '../../assets/bilder/hero-tatuoija.png';
+// Egna/licensierade brand-/miljöbilder för Premium-exempelkorten (Bildpolicy
+// §4 — studiomiljö/porträtt, aldrig en listad artists verk).
+import studioVaalea from '../../assets/bilder/studio-vaalea.png';
+import tatuoijaStudiossa from '../../assets/bilder/tatuoija-studiossa.png';
+import tatuoijaMuotokuva from '../../assets/bilder/tatuoija-muotokuva.png';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
@@ -48,6 +53,19 @@ const featuredSlots = Array.from({ length: 3 }, (_, i) => featured[i] ?? null);
 // urval, ingen låtsas-popularitet, aldrig implicerad premium). Tom = sektionen
 // döljs. isVerified = verified-flaggan (+ ev. betald nivå senare).
 const popular = sortStudios(studios.filter(isVerified)).slice(0, 6);
+// Premium-exempelkort (visas när 0 betalande premium finns): demonstrerar
+// för B2B hur en Premium-listning ser ut på etusivun. TYDLIGT märkta
+// "Esimerkki" med placeholder-innehåll ("Studiosi tässä") — inga fejkade
+// riktiga studios, ingen profil/schema, länkar till /hinnasto. Bilderna är
+// våra egna brand-/miljöbilder (Bildpolicy §4).
+const premiumExamples = [
+  { image: studioVaalea, style: 'realismi' },
+  { image: tatuoijaStudiossa, style: 'fineline' },
+  { image: tatuoijaMuotokuva, style: 'blackwork' },
+].map(({ image, style }) => {
+  const s = styleById.get(style);
+  return { image, styleName: s ? styleDisplayName(s, locale) : style };
+});
 // Störst först — griden visar topp 6, resten nås via "Kaikki →"
 const citiesByCount = [...cities].sort(
   (a, b) =>
@@ -174,11 +192,42 @@ const webSite = webSiteLd(
             </div>
           </section>
         ) : (
-          <section class="section" aria-labelledby="premium-solo-title">
-            <a class="premium-cta premium-cta--solo" href={p('/hinnasto/')}>
+          <section class="section" aria-labelledby="premium-demo-title">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">{t('home.featured.eyebrow')}</p>
+                <h2 class="section-title" id="premium-demo-title">{t('home.premiumExample.heading')}</h2>
+              </div>
+            </div>
+            <div class="featured-grid reveal-stagger">
+              {premiumExamples.map((ex) => (
+                <a class="premium-example" href={p('/hinnasto/')}>
+                  <div class="pe-media">
+                    <Image
+                      src={ex.image}
+                      alt=""
+                      widths={[400, 800]}
+                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      loading="lazy"
+                    />
+                    <span class="badge-featured pe-badge">★ {t('card.featured')}</span>
+                    <span class="pe-tag">{t('home.premiumExample.tag')}</span>
+                  </div>
+                  <div class="pe-body">
+                    <span class="pe-name">{t('home.premiumExample.name')}</span>
+                    <span class="pe-meta">{t('home.premiumExample.place')}</span>
+                    <span class="pe-chips">
+                      <span class="pe-chip">{ex.styleName}</span>
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+            <!-- Säljbanner under exemplen: knapphet + tydlig CTA -->
+            <a class="premium-cta" href={p('/hinnasto/')}>
               <div class="premium-cta-copy">
-                <span class="badge-featured">★ {t('home.featured.eyebrow')}</span>
-                <h2 class="premium-cta-title" id="premium-solo-title">{t('home.premiumCta.soloTitle')}</h2>
+                <span class="badge-featured">★ {t('card.featured')}</span>
+                <h3 class="premium-cta-title">{t('home.premiumCta.title')}</h3>
                 <p class="premium-cta-text">{t('home.premiumCta.text')}</p>
               </div>
               <span class="btn-cta premium-cta-btn">{t('home.premiumCta.button')}</span>
@@ -612,13 +661,99 @@ const webSite = webSiteLd(
     padding: 13px 26px;
   }
 
-  /* Fristående premium-banner (0 premium) — förstablocket efter sökningen.
-     Något större rubrik så den bär toppositionen; ingen grid-marginal. */
-  .premium-cta--solo {
-    margin-top: 0;
+  /* Premium-exempelkort (0 premium) — demonstrerar Premium-listningens
+     utseende. Guldram + guld-badge sticker ut; "Esimerkki"-taggen håller
+     det ärligt (ingen fejkad riktig studio). Samma anatomi som ArtistCard. */
+  .premium-example {
+    display: block;
+    position: relative;
+    background: var(--ink);
+    border: 1px solid rgba(201, 162, 39, 0.35);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    text-decoration: none;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out),
+      border-color var(--t-med) var(--ease-out);
   }
-  .premium-cta--solo .premium-cta-title {
-    font-size: 26px;
+  .premium-example:hover {
+    transform: translateY(-4px);
+    border-color: rgba(201, 162, 39, 0.6);
+    box-shadow: 0 16px 32px rgba(16, 16, 20, 0.22);
+  }
+  .pe-media {
+    position: relative;
+    height: 190px;
+    overflow: hidden;
+  }
+  .pe-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85) brightness(0.82);
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .premium-example:hover .pe-media :global(img) {
+    transform: scale(1.03);
+  }
+  .pe-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+  }
+  .pe-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    background: rgba(16, 16, 20, 0.7);
+    border: 1px solid rgba(237, 234, 226, 0.3);
+    padding: 4px 9px;
+    border-radius: var(--r-chip);
+    backdrop-filter: blur(2px);
+  }
+  .pe-body {
+    padding: 14px 16px 16px;
+  }
+  .pe-name {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--text-light);
+  }
+  .pe-meta {
+    display: block;
+    font-size: 12.5px;
+    color: var(--meta);
+    margin: 3px 0 10px;
+  }
+  .pe-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .pe-chip {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-light);
+    border: 1px solid rgba(237, 234, 226, 0.25);
+    border-radius: var(--r-chip);
+    padding: 4px 10px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .premium-example:hover {
+      transform: none;
+    }
+    .premium-example:hover .pe-media :global(img) {
+      transform: none;
+    }
   }
 
   /* Stilgalleriet: bläck-gradientplattor, horisontell scroll-snap med peek */
@@ -849,11 +984,11 @@ const webSite = webSiteLd(
     .premium-cta-title {
       font-size: 30px;
     }
-    .premium-cta--solo .premium-cta-title {
-      font-size: 38px;
-    }
     .premium-cta-btn {
       flex: none;
+    }
+    .pe-media {
+      height: 230px;
     }
     .style-strip {
       display: grid;
