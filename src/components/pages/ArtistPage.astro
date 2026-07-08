@@ -77,6 +77,11 @@ const verified = isVerified(studio);
 const claim = pricing[locale].claim;
 
 const instagramUrl = data.instagram ? igUrl(data.instagram) : undefined;
+// Cookiefri kartlänk (ingen embed/JS/cookies → noll CWV-kostnad): öppnar
+// adressen i användarens kart-app. Endast när adress finns (annars dölj).
+const mapHref = data.address
+  ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(data.address)}`
+  : undefined;
 // Boka-tid-knapp ENDAST för betald nivå (matris: minimal kontakt på perus).
 // Extern bokning först, annars studions hemsida.
 const bookingHref = paid ? (data.bookingUrl ?? data.website ?? undefined) : undefined;
@@ -270,6 +275,19 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
             <span class="trust-studio-address">
               {data.address ? data.address : displayPlace}
             </span>
+            {
+              mapHref && (
+                <a
+                  class="trust-map ink-link"
+                  href={mapHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="trust-map-pin" aria-hidden="true">◈</span>
+                  {t('artist.map')}
+                </a>
+              )
+            }
           </div>
         </div>
 
@@ -333,7 +351,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
                   {
                     instagramUrl && (
                       <a class="btn-outline portfolio-empty-cta" href={instagramUrl} target="_blank" rel="noopener noreferrer">
-                        {t('artist.igCta')}
+                        {t('artist.igCtaStudio', { name: data.name })}
                       </a>
                     )
                   }
@@ -706,6 +724,19 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
     font-size: 12.5px;
     color: var(--meta);
     margin-top: 2px;
+  }
+  .trust-map {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .trust-map-pin {
+    color: var(--flash);
+    font-size: 11px;
   }
 
   @media (min-width: 1024px) {

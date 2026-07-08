@@ -14,6 +14,8 @@ import {
   getStudios,
   sortStudios,
   isFeatured,
+  isVerified,
+  isWalkIn,
   studioCountByCity,
   cityDisplayName,
   styleDisplayName,
@@ -37,8 +39,15 @@ const counts = await studioCountByCity();
 const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((style) => [style.id, style]));
 
-// Endast Premium får hero-collage-platsen (matris: den enda knappa resursen)
+// Endast Premium får hero-collage-platsen (matris: den enda knappa resursen).
+// Tre platser: riktiga premiumstudios fyller framifrån, resten blir "ledig
+// plats"-säljkort. Degraderar för 0/1/2/3 premium (aldrig trasiga tomrutor).
 const featured = sortStudios(studios.filter(isFeatured)).slice(0, 3);
+const featuredSlots = Array.from({ length: 3 }, (_, i) => featured[i] ?? null);
+// Riktiga, klickbara studiokort högst upp — verifierade studios (ärligt
+// urval, ingen låtsas-popularitet, aldrig implicerad premium). Tom = sektionen
+// döljs. isVerified = verified-flaggan (+ ev. betald nivå senare).
+const popular = sortStudios(studios.filter(isVerified)).slice(0, 6);
 // Störst först — griden visar topp 6, resten nås via "Kaikki →"
 const citiesByCount = [...cities].sort(
   (a, b) =>
@@ -126,10 +135,40 @@ const webSite = webSiteLd(
         />
       </div>
 
-      <!-- Nostetut artistit — utan riktiga premiumkunder visas 3 sälj-
-           platshållare istället för att låtsas att obetalande studios är
-           Featured. Sektionen visas alltid (till skillnad från tidigare)
-           eftersom den även är den viktigaste säljytan för Premium. -->
+      <!-- Tutustu studioihin — riktiga, klickbara studiokort direkt under
+           sökningen så en förstagångsbesökare har äkta innehåll (verifierade
+           studios, ärligt urval). Premium-showcasen är alltså inte det enda
+           mellan hero och stil-/stadssektionerna. Döljs om inga verifierade. -->
+      {
+        popular.length > 0 && (
+          <section class="section" aria-labelledby="popular-title">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">{t('home.popular.eyebrow')}</p>
+                <h2 class="section-title" id="popular-title">{t('home.popular.title')}</h2>
+              </div>
+              <a class="ink-link section-all" href={p(citiesIndexPath(locale))}>{t('home.all')} →</a>
+            </div>
+            <div class="popular-grid reveal-stagger">
+              {popular.map((studio) => (
+                <ArtistCard
+                  slug={studio.id}
+                  name={studio.data.name}
+                  meta={studioMeta(studio)}
+                  styleNames={studioStyleNames(studio)}
+                  walkIn={isWalkIn(studio)}
+                  size="compact"
+                  locale={locale}
+                />
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <!-- Nostetut artistit — de tre Premium-platserna. Riktiga premiumstudios
+           fyller framifrån; resterande platser blir avsiktliga "ledig plats"-
+           säljkort (mörkt brand-kort + guld), aldrig trasiga tomrutor. -->
       <section class="section" aria-labelledby="featured-title">
         <div class="section-head">
           <div>
@@ -144,25 +183,26 @@ const webSite = webSiteLd(
         </div>
         <div class="featured-grid reveal-stagger">
           {
-            featured.length > 0
-              ? featured.map((studio) => (
-                  <ArtistCard
-                    slug={studio.id}
-                    name={studio.data.name}
-                    meta={studioMeta(studio)}
-                    styleNames={studioStyleNames(studio)}
-                    premium={isFeatured(studio)}
-                    size="featured"
-                    locale={locale}
-                  />
-                ))
-              : Array.from({ length: 3 }).map(() => (
-                  <a class="premium-slot" href={p('/hinnasto/')}>
-                    <span class="premium-slot-icon" aria-hidden="true">+</span>
-                    <span class="premium-slot-title">{t('home.featured.slotTitle')}</span>
-                    <span class="premium-slot-cta">{t('home.featured.slotCta')} →</span>
-                  </a>
-                ))
+            featuredSlots.map((studio) =>
+              studio ? (
+                <ArtistCard
+                  slug={studio.id}
+                  name={studio.data.name}
+                  meta={studioMeta(studio)}
+                  styleNames={studioStyleNames(studio)}
+                  premium={isFeatured(studio)}
+                  size="featured"
+                  locale={locale}
+                />
+              ) : (
+                <a class="premium-slot" href={p('/hinnasto/')}>
+                  <span class="premium-slot-badge">{t('home.featured.slotBadge')}</span>
+                  <span class="premium-slot-title">{t('home.featured.slotTitle')}</span>
+                  <span class="premium-slot-text">{t('home.featured.slotText')}</span>
+                  <span class="premium-slot-cta">{t('home.featured.slotCta')} →</span>
+                </a>
+              ),
+            )
           }
         </div>
         <!-- Säljruta: pitchar Premium oavsett om platserna ovan är fyllda -->
@@ -447,61 +487,89 @@ const webSite = webSiteLd(
     color: var(--text);
   }
 
+  /* Riktiga studiokort direkt under sökningen */
+  .popular-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
   .featured-grid {
     display: flex;
     flex-direction: column;
     gap: 14px;
   }
 
-  /* Tomma Premium-platser — samma yttermått som ett artistkort (streckad
-     ram i stället för bild) tills en riktig premiumkund fyller platsen. */
+  /* "Ledig plats"-kort — en avsiktlig, premiumkänd annonsyta (mörkt brand-
+     kort + guld-accent), INTE en trasig tom ruta. Samma yttermått som ett
+     artistkort så griden håller formen oavsett hur många premium som finns. */
   .premium-slot {
+    position: relative;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 8px;
     min-height: 260px;
-    background: var(--surface);
-    border: 2px dashed var(--border-on-paper);
+    background:
+      radial-gradient(130% 120% at 85% 0%, rgba(201, 162, 39, 0.16) 0%, rgba(16, 16, 20, 0) 55%),
+      var(--ink);
+    border: 1px solid rgba(201, 162, 39, 0.28);
     border-radius: var(--r-card);
-    padding: 24px;
-    text-align: center;
+    padding: 20px;
     text-decoration: none;
+    overflow: hidden;
     transition:
-      border-color var(--t-med) var(--ease-out),
-      background-color var(--t-med) var(--ease-out);
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out),
+      border-color var(--t-med) var(--ease-out);
   }
   .premium-slot:hover {
-    border-color: var(--flash);
-    background: var(--paper);
+    transform: translateY(-4px);
+    border-color: rgba(201, 162, 39, 0.55);
+    box-shadow: 0 16px 32px rgba(16, 16, 20, 0.22);
   }
-  .premium-slot-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 1.5px solid var(--border-on-paper);
-    color: var(--meta);
-    font-size: 18px;
-    line-height: 1;
-    transition: border-color var(--t-med) var(--ease-out);
-  }
-  .premium-slot:hover .premium-slot-icon {
-    border-color: var(--flash);
-    color: var(--flash);
+  .premium-slot-badge {
+    align-self: flex-start;
+    margin-bottom: auto;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(201, 162, 39, 0.5);
+    border-radius: var(--r-chip);
+    padding: 5px 10px;
   }
   .premium-slot-title {
     font-family: var(--font-display);
-    font-size: 15px;
-    color: var(--text);
+    font-size: 20px;
+    line-height: 1.1;
+    color: var(--text-light);
+  }
+  .premium-slot-text {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--meta);
+    max-width: 22ch;
   }
   .premium-slot-cta {
-    font-size: 12px;
+    margin-top: 4px;
+    font-size: 12.5px;
     font-weight: 700;
-    color: var(--flash);
+    color: var(--gold);
+    transition: transform var(--t-med) var(--ease-out);
+  }
+  .premium-slot:hover .premium-slot-cta {
+    transform: translateX(3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .premium-slot:hover {
+      transform: none;
+    }
+    .premium-slot:hover .premium-slot-cta {
+      transform: none;
+    }
   }
 
   /* "Haluatko näkyä tässä?" — säljruta för nästa Premium-plats */
@@ -739,6 +807,10 @@ const webSite = webSiteLd(
     .section-all {
       font-size: 13px;
     }
+    .popular-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
     .featured-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -747,9 +819,13 @@ const webSite = webSiteLd(
     .premium-slot {
       min-height: 305px;
       border-radius: var(--r-card-lg);
+      padding: 24px;
     }
     .premium-slot-title {
-      font-size: 16px;
+      font-size: 24px;
+    }
+    .premium-slot-text {
+      font-size: 13px;
     }
     .premium-cta {
       flex-direction: row;

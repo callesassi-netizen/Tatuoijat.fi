@@ -26,9 +26,15 @@ export const ui = {
     'search.popular': 'Suosittua:',
     'home.featured.eyebrow': 'Premium',
     'home.featured.title': 'Nostetut artistit',
-    // Platshållarkort tills en riktig premiumkund finns (ingen låtsas-featured)
-    'home.featured.slotTitle': 'Vapaa Premium-paikka',
-    'home.featured.slotCta': 'Hae mukaan',
+    // "Ledig plats"-kort tills en riktig premiumkund finns — säljyta, aldrig
+    // låtsas-featured. Designas som en avsiktlig annonsplats (mörkt + guld).
+    'home.featured.slotBadge': 'Premium',
+    'home.featured.slotTitle': 'Näy tässä',
+    'home.featured.slotText': 'Nosta studiosi etusivulle koko Suomessa.',
+    'home.featured.slotCta': 'Aloita Premium',
+    // Riktiga studiokort högst upp — verifierade studios (ärligt urval)
+    'home.popular.eyebrow': 'Studiot',
+    'home.popular.title': 'Tutustu studioihin',
     'home.all': 'Kaikki',
     'home.styles.eyebrow': 'Tyylit',
     'home.styles.title': 'Selaa tyylin mukaan',
@@ -100,6 +106,8 @@ export const ui = {
     'artist.noImages.text':
       'Kuvat lisätään artistin omalla luvalla. Uusimmat työt löydät Instagramista.',
     'artist.igCta': 'Katso työt Instagramissa',
+    'artist.igCtaStudio': 'Katso {name} Instagramissa',
+    'artist.map': 'Näytä kartalla',
     // Instagram-embed facade (handoff §8.3) — Metan embed.js laddas ENDAST vid klick
     'artist.instagram.title': 'Katso mestariteokset',
     'artist.instagram.cta': 'Näytä työt Instagramista',
@@ -163,8 +171,12 @@ export const ui = {
     'search.popular': 'Populärt:',
     'home.featured.eyebrow': 'Premium',
     'home.featured.title': 'Utvalda artister',
-    'home.featured.slotTitle': 'Ledig Premium-plats',
-    'home.featured.slotCta': 'Ansök nu',
+    'home.featured.slotBadge': 'Premium',
+    'home.featured.slotTitle': 'Synas här',
+    'home.featured.slotText': 'Lyft din studio till startsidan i hela Finland.',
+    'home.featured.slotCta': 'Starta Premium',
+    'home.popular.eyebrow': 'Studior',
+    'home.popular.title': 'Utforska studior',
     'home.all': 'Alla',
     'home.styles.eyebrow': 'Stilar',
     'home.styles.title': 'Bläddra efter stil',
@@ -230,6 +242,8 @@ export const ui = {
     'artist.noImages.text':
       'Bilder läggs till med artistens eget tillstånd. De senaste arbetena hittar du på Instagram.',
     'artist.igCta': 'Se arbeten på Instagram',
+    'artist.igCtaStudio': 'Se {name} på Instagram',
+    'artist.map': 'Visa på karta',
     'artist.instagram.title': 'Se mästerverken',
     'artist.instagram.cta': 'Visa verken från Instagram',
     'artist.instagram.fineprint':
