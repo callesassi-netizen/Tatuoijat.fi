@@ -60,6 +60,24 @@ interface TierCard {
   ctaNote?: string; // liten rad under CTA (t.ex. gratisnivåns "ingen betalning")
 }
 
+/**
+ * Ett benefit-/teaser-kort under priskorten ("Näin studiosi erottuu").
+ * `tier` kopplar diskret nyttan till rätt nivå (galleria/hinta/varaus = Pro,
+ * kärki/etusivu/raportti = Premium); utelämnas för nyttor som gäller alla
+ * nivåer (t.ex. walk-in-merkki, som är gratis datafält oavsett nivå — får
+ * ALDRIG taggas Pro/Premium, det vore osant).
+ *
+ * OBS (kommande schema-uppgift): teasern "hinta-alue / alkaen-hinta"
+ * förutsätter ett FRAMTIDA studios-fält (t.ex. priceFrom/priceRange) som
+ * INTE finns ännu. Detta är enbart sälj-copy mot studios — bygg fältet
+ * separat senare (liten content.config.ts-utökning + rendering på profilen).
+ */
+interface BenefitCard {
+  title: string; // slagkraftig nytto-rubrik (aldrig obelagt superlativ)
+  text: string; // en mening som konkretiserar
+  tier?: PaidTier; // diskret nivåkoppling; utelämnas = gäller alla
+}
+
 export interface PricingContent {
   metaTitle: string;
   metaDescription: string;
@@ -73,10 +91,13 @@ export interface PricingContent {
   yes: string; // a11y-text för ✓
   no: string; // a11y-text för —
   matrix: MatrixRow[];
+  // Benefit-/teaser-sektion under priskorten (säljande mot studios).
+  benefits: { title: string; items: BenefitCard[] };
   faqTitle: string;
   faq: { q: string; a: string }[];
-  // Diskret claim-CTA som visas på GRATISprofiler och leder till /hinnasto.
-  claim: { question: string; cta: string };
+  // Diskret claim-CTA på GRATISprofiler → /hinnasto. `unlock` listar vad
+  // man låser upp; `locks` = ett par gråtonade 🔒-etiketter på profilen.
+  claim: { question: string; unlock: string; cta: string; locks: string[] };
 }
 
 export const pricing: Record<Locale, PricingContent> = {
@@ -190,6 +211,40 @@ export const pricing: Record<Locale, PricingContent> = {
       { label: 'Toimituksellinen spotlight (lisä-SEO-sivu)', perus: false, pro: false, premium: 'Valinnainen' },
       { label: 'Priorisoitu tuki', perus: false, pro: false, premium: true },
     ],
+    benefits: {
+      title: 'Näin studiosi erottuu',
+      items: [
+        {
+          title: 'Näytä työsi, älä vain nimeäsi.',
+          text: 'Ilmainen näyttää monogrammin; Pro tuo galleriasi esiin.',
+          tier: 'pro',
+        },
+        {
+          title: 'Kerro hintasi ennen kuin asiakas ehtii kysyä.',
+          text: 'Lisää hinta-alue tai alkaen-hinta profiiliisi.',
+          tier: 'pro',
+        },
+        {
+          title: 'Näy ensimmäisenä kaupungissasi.',
+          text: 'Premium nostaa sinut kärkeen ja etusivulle.',
+          tier: 'premium',
+        },
+        {
+          title: 'Ota walk-in-asiakkaat kiinni.',
+          text: 'Walk-in-merkki ja näkyvyys walk-in-haussa.',
+        },
+        {
+          title: 'Anna asiakkaan varata suoraan.',
+          text: 'Ajanvaraus- ja yhteydenottonappi profiilissasi.',
+          tier: 'pro',
+        },
+        {
+          title: 'Näe kuinka moni löysi sinut.',
+          text: 'Kuukausiraportti profiilisi näyttökerroista.',
+          tier: 'premium',
+        },
+      ],
+    },
     faqTitle: 'Usein kysyttyä',
     faq: [
       {
@@ -215,7 +270,9 @@ export const pricing: Record<Locale, PricingContent> = {
     ],
     claim: {
       question: 'Onko tämä sinun studiosi?',
+      unlock: 'Lisää galleria, hinta-alue, walk-in ja ajanvarausnappi.',
       cta: 'Ota profiili haltuun',
+      locks: ['Hinta-alue', 'Galleria'],
     },
   },
   sv: {
@@ -328,6 +385,40 @@ export const pricing: Record<Locale, PricingContent> = {
       { label: 'Redaktionellt spotlight (extra SEO-sida)', perus: false, pro: false, premium: 'Tillval' },
       { label: 'Prioriterad support', perus: false, pro: false, premium: true },
     ],
+    benefits: {
+      title: 'Så sticker din studio ut',
+      items: [
+        {
+          title: 'Visa dina verk, inte bara ditt namn.',
+          text: 'Gratis visar ett monogram; Pro lyfter fram ditt galleri.',
+          tier: 'pro',
+        },
+        {
+          title: 'Berätta ditt pris innan kunden hinner fråga.',
+          text: 'Lägg till ett prisintervall eller från-pris i din profil.',
+          tier: 'pro',
+        },
+        {
+          title: 'Synas först i din stad.',
+          text: 'Premium lyfter dig till toppen och startsidan.',
+          tier: 'premium',
+        },
+        {
+          title: 'Fånga upp walk-in-kunderna.',
+          text: 'Walk-in-märke och synlighet i walk-in-sökningen.',
+        },
+        {
+          title: 'Låt kunden boka direkt.',
+          text: 'Boknings- och kontaktknapp på din profil.',
+          tier: 'pro',
+        },
+        {
+          title: 'Se hur många som hittade dig.',
+          text: 'Månadsrapport över visningar av din profil.',
+          tier: 'premium',
+        },
+      ],
+    },
     faqTitle: 'Vanliga frågor',
     faq: [
       {
@@ -353,7 +444,9 @@ export const pricing: Record<Locale, PricingContent> = {
     ],
     claim: {
       question: 'Är det här din studio?',
+      unlock: 'Lägg till galleri, prisintervall, walk-in och bokningsknapp.',
       cta: 'Ta över profilen',
+      locks: ['Prisintervall', 'Galleri'],
     },
   },
 };

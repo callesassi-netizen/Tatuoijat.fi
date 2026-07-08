@@ -127,6 +127,27 @@ const cellClass = (v: boolean | string): string =>
         }
       </div>
 
+      <!-- Benefit-/teaser-sektion: konkreta nyttor, diskret kopplade till
+           rätt nivå. Sanningsenligt — inga obelagda superlativ. -->
+      <section class="benefits" aria-labelledby="benefits-title">
+        <h2 class="compare-title" id="benefits-title">{c.benefits.title}</h2>
+        <div class="benefit-grid">
+          {
+            c.benefits.items.map((benefit) => (
+              <div class="benefit-card">
+                {benefit.tier && (
+                  <span class:list={['benefit-tier', `benefit-tier--${benefit.tier}`]}>
+                    {c.tiers[benefit.tier].name}
+                  </span>
+                )}
+                <h3 class="benefit-title">{benefit.title}</h3>
+                <p class="benefit-text">{benefit.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
       <!-- Full jämförelsetabell -->
       <section class="compare" aria-labelledby="compare-title">
         <h2 class="compare-title" id="compare-title">{c.matrixTitle}</h2>
@@ -357,6 +378,53 @@ const cellClass = (v: boolean | string): string =>
     color: var(--meta);
     text-align: center;
     margin: 10px 0 0;
+  }
+
+  /* ── Benefit-/teaser-sektion ── */
+  .benefits {
+    margin-top: 48px;
+  }
+  .benefit-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .benefit-card {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 20px;
+  }
+  .benefit-tier {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border-radius: var(--r-chip);
+    margin-bottom: 11px;
+  }
+  .benefit-tier--pro {
+    color: var(--flash);
+    border: 1px solid var(--flash);
+  }
+  .benefit-tier--premium {
+    color: var(--gold);
+    border: 1px solid rgba(201, 162, 39, 0.5);
+  }
+  .benefit-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    line-height: 1.28;
+    color: var(--text);
+    margin: 0;
+  }
+  .benefit-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--meta);
+    margin: 7px 0 0;
   }
 
   /* ── Jämförelsetabell ── */
@@ -635,6 +703,16 @@ const cellClass = (v: boolean | string): string =>
     }
     .plan-amount {
       font-size: 40px;
+    }
+    .benefits {
+      margin-top: 72px;
+    }
+    .benefit-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .benefit-card {
+      padding: 24px;
     }
     .compare {
       margin-top: 72px;

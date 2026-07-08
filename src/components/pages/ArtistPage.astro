@@ -296,6 +296,17 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
           !paid && (
             <a class="claim-cta" href={p('/hinnasto/')}>
               <span class="claim-q">{claim.question}</span>
+              <span class="claim-unlock">{claim.unlock}</span>
+              {/* Subtila gråtonade "låsta" platser — diskret upsell, stör
+                  inte kundvyn. Hinta-alue väntar på kommande schema-fält. */}
+              <span class="claim-locks">
+                {claim.locks.map((lock) => (
+                  <span class="claim-lock">
+                    <span class="claim-lock-icon" aria-hidden="true">🔒</span>
+                    {lock}
+                  </span>
+                ))}
+              </span>
               <span class="claim-link">{claim.cta} →</span>
             </a>
           )
@@ -545,7 +556,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
   .claim-cta {
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 7px;
     margin-top: 14px;
     padding: 14px 16px;
     background: var(--surface);
@@ -562,12 +573,43 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
   }
   .claim-q {
     font-size: 12.5px;
+    font-weight: 600;
     color: var(--text);
+  }
+  .claim-unlock {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--meta);
+  }
+  /* Gråtonade "låsta" platser — diskreta, dämpade så kundvyn inte störs */
+  .claim-locks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .claim-lock {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--meta);
+    background: rgba(16, 16, 20, 0.03);
+    border: 1px dashed var(--border-on-paper);
+    border-radius: var(--r-chip);
+    padding: 3px 8px;
+    opacity: 0.75;
+  }
+  .claim-lock-icon {
+    font-size: 9px;
+    filter: grayscale(1);
+    opacity: 0.7;
   }
   .claim-link {
     font-size: 12.5px;
     font-weight: 700;
     color: var(--flash);
+    margin-top: 1px;
   }
 
   .portfolio {
