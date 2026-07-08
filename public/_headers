@@ -2,8 +2,14 @@
 # CSP-notis: Astro inlinar små skript (sökformuläret) och vissa styles,
 # därför 'unsafe-inline'. Kan skärpas till hashar med Astros
 # experimental.csp när sajten stabiliserats.
+# Instagram-embeds (handoff §8): facaden laddar www.instagram.com/embed.js
+# FÖRST vid klick och ramar in www.instagram.com/p/{id}/embed/. Därför
+# whitelistas www.instagram.com i script-src + frame-src — inget annat.
+# Iframens eget innehåll (scontent/cdninstagram) ligger på IG-origin och
+# styrs av Metas CSP, inte vår. Utan detta blockeras embedden tyst och
+# faller tillbaka till monogram-plattan.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.instagram.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.instagram.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
