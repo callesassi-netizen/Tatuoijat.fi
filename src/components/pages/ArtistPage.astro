@@ -312,7 +312,7 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
                 ))}
               </div>
             ) : embedPosts.length > 0 ? (
-              <div class="portfolio-grid">
+              <div class="portfolio-embeds">
                 {embedPosts.map((url, index) => (
                   <div
                     class="portfolio-item"
@@ -579,6 +579,20 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
     border-radius: 10px;
     overflow: hidden;
     background: var(--ink);
+  }
+
+  /* Instagram-embeds får INTE ligga i multikolumn: Meta tvingar min-width
+     326px på sin iframe, så smala columns-spalter (~162px på mobil) klipper
+     embedden på mitten. Grid med minmax(min(326px,100%),1fr) ger en full
+     spalt på mobil (≥326px, ingen klippning) och 1–2 spalter på desktop —
+     aldrig smalare än IG kräver. */
+  .portfolio-embeds {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(326px, 100%), 1fr));
+    gap: 12px;
+  }
+  .portfolio-embeds .portfolio-item {
+    margin-bottom: 0;
   }
   .portfolio-item img {
     width: 100%;
