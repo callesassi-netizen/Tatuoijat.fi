@@ -48,6 +48,8 @@ export const ui = {
     'home.metaDescription':
       'Tatuoijat.fi kokoaa Suomen tatuoijat ja tatuointiliikkeet yhteen paikkaan. Selaa portfolioita, vertaile tyylejä ja hintoja ja löydä oma tatuoijasi.',
     'home.premiumCta.title': 'Haluatko näkyä tässä?',
+    // Rubrik för den fristående premium-bannern (0 premium): pitchar toppplatsen
+    'home.premiumCta.soloTitle': 'Näy etusivun kärjessä',
     'home.premiumCta.text':
       'Etusivun Premium-paikat ovat rajattuja ja täytetään varausjärjestyksessä. Nosta studiosi koko Suomen näkyville.',
     'home.premiumCta.button': 'Aloita Premium',
@@ -188,6 +190,7 @@ export const ui = {
     'home.metaDescription':
       'Tatuoijat.fi samlar Finlands tatuerare och tatueringsstudior på ett ställe. Bläddra bland portfolios, jämför stilar och priser och hitta din artist.',
     'home.premiumCta.title': 'Vill du synas här?',
+    'home.premiumCta.soloTitle': 'Synas överst på startsidan',
     'home.premiumCta.text':
       'Premium-platserna på startsidan är begränsade och fylls i bokningsordning. Lyft din studio inför hela Finland.',
     'home.premiumCta.button': 'Starta Premium',

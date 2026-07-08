@@ -135,10 +135,62 @@ const webSite = webSiteLd(
         />
       </div>
 
+      <!-- PREMIUMPLATSEN — alltid först efter sökningen. Premiumets hela
+           värde ÄR topplaceringen: när betalande premium finns fyller de
+           guld-raden här (+ knapphet i lediga slots); annars visas EN ärlig
+           säljbanner som lovar toppplatsen — aldrig tomma fejkkort. Så syns
+           premium alltid först utan att platsen fejkas dag 1. -->
+      {
+        featured.length > 0 ? (
+          <section class="section" aria-labelledby="featured-title">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">{t('home.featured.eyebrow')}</p>
+                <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
+              </div>
+              <a class="ink-link section-all" href={p(citiesIndexPath(locale))}>{t('home.all')} →</a>
+            </div>
+            <div class="featured-grid reveal-stagger">
+              {featuredSlots.map((studio) =>
+                studio ? (
+                  <ArtistCard
+                    slug={studio.id}
+                    name={studio.data.name}
+                    meta={studioMeta(studio)}
+                    styleNames={studioStyleNames(studio)}
+                    premium={isFeatured(studio)}
+                    size="featured"
+                    locale={locale}
+                  />
+                ) : (
+                  <a class="premium-slot" href={p('/hinnasto/')}>
+                    <span class="premium-slot-badge">{t('home.featured.slotBadge')}</span>
+                    <span class="premium-slot-title">{t('home.featured.slotTitle')}</span>
+                    <span class="premium-slot-text">{t('home.featured.slotText')}</span>
+                    <span class="premium-slot-cta">{t('home.featured.slotCta')} →</span>
+                  </a>
+                ),
+              )}
+            </div>
+          </section>
+        ) : (
+          <section class="section" aria-labelledby="premium-solo-title">
+            <a class="premium-cta premium-cta--solo" href={p('/hinnasto/')}>
+              <div class="premium-cta-copy">
+                <span class="badge-featured">★ {t('home.featured.eyebrow')}</span>
+                <h2 class="premium-cta-title" id="premium-solo-title">{t('home.premiumCta.soloTitle')}</h2>
+                <p class="premium-cta-text">{t('home.premiumCta.text')}</p>
+              </div>
+              <span class="btn-cta premium-cta-btn">{t('home.premiumCta.button')}</span>
+            </a>
+          </section>
+        )
+      }
+
       <!-- Tutustu studioihin — riktiga, klickbara studiokort direkt under
-           sökningen så en förstagångsbesökare har äkta innehåll (verifierade
-           studios, ärligt urval). Premium-showcasen är alltså inte det enda
-           mellan hero och stil-/stadssektionerna. Döljs om inga verifierade. -->
+           premiumplatsen så förstagångsbesökaren genast har äkta innehåll
+           (verifierade studios, ärligt urval). B2C-motorn på sidan. Döljs
+           om inga verifierade finns. -->
       {
         popular.length > 0 && (
           <section class="section" aria-labelledby="popular-title">
@@ -165,56 +217,6 @@ const webSite = webSiteLd(
           </section>
         )
       }
-
-      <!-- Nostetut artistit — de tre Premium-platserna. Riktiga premiumstudios
-           fyller framifrån; resterande platser blir avsiktliga "ledig plats"-
-           säljkort (mörkt brand-kort + guld), aldrig trasiga tomrutor. -->
-      <section class="section" aria-labelledby="featured-title">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">{t('home.featured.eyebrow')}</p>
-            <h2 class="section-title" id="featured-title">{t('home.featured.title')}</h2>
-          </div>
-          {
-            featured.length > 0 && (
-              <a class="ink-link section-all" href={p(citiesIndexPath(locale))}>{t('home.all')} →</a>
-            )
-          }
-        </div>
-        <div class="featured-grid reveal-stagger">
-          {
-            featuredSlots.map((studio) =>
-              studio ? (
-                <ArtistCard
-                  slug={studio.id}
-                  name={studio.data.name}
-                  meta={studioMeta(studio)}
-                  styleNames={studioStyleNames(studio)}
-                  premium={isFeatured(studio)}
-                  size="featured"
-                  locale={locale}
-                />
-              ) : (
-                <a class="premium-slot" href={p('/hinnasto/')}>
-                  <span class="premium-slot-badge">{t('home.featured.slotBadge')}</span>
-                  <span class="premium-slot-title">{t('home.featured.slotTitle')}</span>
-                  <span class="premium-slot-text">{t('home.featured.slotText')}</span>
-                  <span class="premium-slot-cta">{t('home.featured.slotCta')} →</span>
-                </a>
-              ),
-            )
-          }
-        </div>
-        <!-- Säljruta: pitchar Premium oavsett om platserna ovan är fyllda -->
-        <a class="premium-cta" href={p('/hinnasto/')}>
-          <div class="premium-cta-copy">
-            <span class="badge-featured">★ {t('card.featured')}</span>
-            <h3 class="premium-cta-title">{t('home.premiumCta.title')}</h3>
-            <p class="premium-cta-text">{t('home.premiumCta.text')}</p>
-          </div>
-          <span class="btn-cta premium-cta-btn">{t('home.premiumCta.button')}</span>
-        </a>
-      </section>
 
       <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
       <section class="section section--styles" aria-labelledby="styles-title">
@@ -610,6 +612,15 @@ const webSite = webSiteLd(
     padding: 13px 26px;
   }
 
+  /* Fristående premium-banner (0 premium) — förstablocket efter sökningen.
+     Något större rubrik så den bär toppositionen; ingen grid-marginal. */
+  .premium-cta--solo {
+    margin-top: 0;
+  }
+  .premium-cta--solo .premium-cta-title {
+    font-size: 26px;
+  }
+
   /* Stilgalleriet: bläck-gradientplattor, horisontell scroll-snap med peek */
   .style-strip {
     display: flex;
@@ -837,6 +848,9 @@ const webSite = webSiteLd(
     }
     .premium-cta-title {
       font-size: 30px;
+    }
+    .premium-cta--solo .premium-cta-title {
+      font-size: 38px;
     }
     .premium-cta-btn {
       flex: none;
