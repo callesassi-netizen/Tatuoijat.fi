@@ -15,6 +15,7 @@ import {
   getStudios,
   sortStudios,
   isFeatured,
+  isWalkIn,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -45,6 +46,10 @@ const studios = sortStudios(allStudios.filter((studio) => studio.data.city === c
 // Perus via sortStudios men visas i samma grid som gratislistningarna.
 const featured = studios.filter(isFeatured);
 const regular = studios.filter((studio) => !isFeatured(studio));
+// Walk-in-sektion (handoff §3.4): stadens walk-in-studios, redan tier-sorterade.
+// Renderas som kompakt länklista (INTE ArtistCard) — korten sätter unika
+// view-transition-name per slug och skulle krocka med huvudgriden. Bara ≥1.
+const walkInStudios = studios.filter(isWalkIn);
 const intro = localizedBody(city.body, locale);
 const countSentence =
   studios.length === 1
@@ -178,6 +183,7 @@ const itemList = itemListLd(
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
                   premium
+                  walkIn={isWalkIn(studio)}
                   size="featured"
                   locale={locale}
                 />
@@ -202,6 +208,7 @@ const itemList = itemListLd(
                   name={studio.data.name}
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
+                  walkIn={isWalkIn(studio)}
                   size="compact"
                   locale={locale}
                 />
@@ -219,6 +226,28 @@ const itemList = itemListLd(
           {t('city.empty.reset')}
         </button>
       </div>
+
+      <!-- Walk-in-sektion (handoff §3.4): bara om staden har ≥1 walk-in-studio.
+           Kompakt länklista → ingen VT-name-krock med huvudgriden ovan. -->
+      {
+        walkInStudios.length > 0 && (
+          <section class="walkin-section" aria-labelledby="walkin-title">
+            <h2 class="walkin-title" id="walkin-title">
+              {t('city.walkin.title', { city: h1City })}
+            </h2>
+            <ul class="walkin-list">
+              {walkInStudios.map((studio) => (
+                <li>
+                  <a class="walkin-link" href={p(`/artistit/${studio.id}/`)}>
+                    <span class="walkin-name ink-link">{studio.data.name}</span>
+                    <span class="walkin-meta">{studioMeta(studio)}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
     </div>
   </div>
 </BaseLayout>
@@ -389,6 +418,43 @@ const itemList = itemListLd(
     width: auto;
     display: inline-block;
     padding: 12px 22px;
+  }
+
+  /* Walk-in-sektion: kompakt SEO-länklista, samma bläck-underline som övrigt */
+  .walkin-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: var(--card-border);
+  }
+  .walkin-title {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .walkin-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .walkin-list li + li {
+    border-top: 1px solid rgba(16, 16, 20, 0.07);
+  }
+  .walkin-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    text-decoration: none;
+  }
+  .walkin-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .walkin-meta {
+    font-size: 12px;
+    color: var(--meta);
   }
 
   @media (min-width: 1024px) {

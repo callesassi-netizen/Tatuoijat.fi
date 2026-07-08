@@ -1,0 +1,219 @@
+---
+/**
+ * Walk-in-samlingssida (/walk-in/, sv /sv/walk-in/) — handoff §1.3/§3.4.
+ * Listar studios med walkIn === true, grupperade per stad (stadsordning),
+ * tier-sorterade inom varje stad. Datan fylls av Morpheus via berikning;
+ * tills den passerar tröskeln (CITY_INDEX_MIN_STUDIOS) är sidan noindex,
+ * follow och utesluts ur sitemap (astro.config.mjs) — samma doorway-skydd
+ * som tunna stadssidor (§3.1). Med tom data renderas hero + tomt-läge.
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArtistCard from '../ArtistCard.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  getStudios,
+  sortStudios,
+  isFeatured,
+  isWalkIn,
+  cityDisplayName,
+  styleDisplayName,
+} from '../../lib/content';
+import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
+import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const allStudios = await getStudios();
+const styleById = new Map(styles.map((style) => [style.id, style]));
+
+// Grupper per stad i stadsordning; bara städer med minst en walk-in-studio.
+const walkInStudios = allStudios.filter(isWalkIn);
+const groups = cities
+  .map((city) => ({
+    city,
+    studios: sortStudios(walkInStudios.filter((studio) => studio.data.city === city.id)),
+  }))
+  .filter((group) => group.studios.length > 0);
+const total = groups.reduce((sum, group) => sum + group.studios.length, 0);
+
+function studioMeta(studio: CollectionEntry<'studios'>, cityName: string): string {
+  return studio.data.district ?? cityName;
+}
+function studioStyleNames(studio: CollectionEntry<'studios'>): string[] {
+  return studio.data.styles.map((slug) => {
+    const style = styleById.get(slug);
+    return style ? styleDisplayName(style, locale) : slug;
+  });
+}
+
+// Thin-content-skydd (§3.1): under tröskeln → noindex,follow + ur sitemap
+// (astro.config.mjs speglar samma villkor). Tom data dag 1 = noindex.
+const noindex = total < CITY_INDEX_MIN_STUDIOS;
+
+const path = '/walk-in/';
+const title = t('walkin.metaTitle', { site: t('site.name') });
+const description = t('walkin.metaDescription');
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('walkin.h1'), url: new URL(p(path), site).href },
+]);
+const itemList =
+  total > 0
+    ? itemListLd(
+        t('walkin.h1'),
+        groups.flatMap((group) =>
+          group.studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
+        ),
+      )
+    : null;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  path={path}
+  hasAlternate
+  noindex={noindex}
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+  {itemList && <script type="application/ld+json" set:html={jsonLdString(itemList)} slot="head" />}
+
+  <section class="index-hero">
+    <div class="container index-hero-inner">
+      <p class="eyebrow">{t('walkin.eyebrow')}</p>
+      <h1 class="index-title">{t('walkin.h1')}</h1>
+      <p class="index-intro">{t('walkin.intro')}</p>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      {
+        groups.length > 0 ? (
+          groups.map((group) => {
+            const cityName = cityDisplayName(group.city, locale);
+            return (
+              <section class="city-section" aria-label={cityName}>
+                <h2 class="city-heading">{cityName}</h2>
+                <div class="artist-grid">
+                  {group.studios.map((studio) => (
+                    <ArtistCard
+                      slug={studio.id}
+                      name={studio.data.name}
+                      meta={studioMeta(studio, cityName)}
+                      styleNames={studioStyleNames(studio)}
+                      premium={isFeatured(studio)}
+                      size="featured"
+                      locale={locale}
+                    />
+                  ))}
+                </div>
+              </section>
+            );
+          })
+        ) : (
+          <p class="walkin-empty">{t('walkin.empty')}</p>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-hero {
+    position: relative;
+    z-index: 0;
+    background:
+      radial-gradient(110% 100% at 80% 0%, rgba(77, 50, 48, 0.2) 0%, rgba(16, 16, 20, 0) 55%),
+      var(--ink);
+  }
+  .index-hero-inner {
+    padding: 28px var(--page-pad) 46px;
+  }
+  .index-title {
+    font-size: 34px;
+    line-height: 1.06;
+    color: var(--text-light);
+  }
+  .index-intro {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 460px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: var(--sheet-overlap);
+  }
+  .sheet-inner {
+    padding: 28px var(--page-pad) 44px;
+  }
+
+  .city-section + .city-section {
+    margin-top: 40px;
+  }
+  .city-heading {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+  .artist-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .walkin-empty {
+    font-size: 14px;
+    color: var(--meta);
+    margin: 0;
+    padding: 8px 0 40px;
+  }
+
+  @media (min-width: 1024px) {
+    .index-hero-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .index-title {
+      font-size: 52px;
+    }
+    .index-intro {
+      font-size: 16px;
+      max-width: 560px;
+    }
+    .sheet-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .city-section + .city-section {
+      margin-top: 60px;
+    }
+    .city-heading {
+      font-size: 24px;
+      margin-bottom: 18px;
+    }
+    .artist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+</style>

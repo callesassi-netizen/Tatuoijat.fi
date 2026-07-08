@@ -125,6 +125,20 @@ export const ui = {
       'Tälle tyylille ei ole vielä listattuja artisteja. Katso kaikki tatuoijat kaupungeittain.',
     'style.citiesTitle': 'Selaa kaupungeittain',
     'style.inCity': '{style} · {city}',
+    // Walk-in (handoff §1.3/§3.4) — samlingssida + stadssektion + badge
+    'walkin.metaTitle': 'Walk-in-tatuointi — liikkeet kaupungeittain | {site}',
+    'walkin.metaDescription':
+      'Walk-in-tatuointi ilman ajanvarausta: katso mitkä tatuointiliikkeet ottavat walk-in-asiakkaita eri kaupungeissa Suomessa. Vertaile ja ota yhteyttä.',
+    'walkin.eyebrow': 'Walk-in',
+    'walkin.h1': 'Walk-in-tatuoinnit',
+    // PLATSHÅLLARE — Calle/Morpheus levererar slutlig copy senare.
+    'walkin.intro':
+      'Osa tatuointiliikkeistä ottaa walk-in-asiakkaita ilman ajanvarausta. Tähän kootaan liikkeet kaupungeittain sitä mukaa kun tiedot täydentyvät.',
+    'walkin.empty':
+      'Walk-in-liikkeitä ei ole vielä listattu. Täydennämme tietoja jatkuvasti.',
+    'city.walkin.title': 'Walk-in-tatuoinnit {city}',
+    'card.walkin': 'Walk-in',
+    'artist.walkin': 'Walk-in mahdollista',
     'notFound.title': 'Sivua ei löytynyt',
     'notFound.text': 'Etsimääsi sivua ei ole olemassa tai se on siirretty.',
     'notFound.cta': 'Takaisin etusivulle',
@@ -239,6 +253,20 @@ export const ui = {
       'Inga artister är listade för den här stilen ännu. Se alla tatuerare per stad.',
     'style.citiesTitle': 'Bläddra per stad',
     'style.inCity': '{style} · {city}',
+    // Walk-in (handoff §1.3/§3.4) — samlingssida + stadssektion + badge
+    'walkin.metaTitle': 'Walk-in-tatuering — studior per stad | {site}',
+    'walkin.metaDescription':
+      'Walk-in-tatuering utan tidsbokning: se vilka tatueringsstudior som tar emot walk-in-kunder i olika städer i Finland. Jämför och ta kontakt.',
+    'walkin.eyebrow': 'Walk-in',
+    'walkin.h1': 'Walk-in-tatueringar',
+    // PLATSHÅLLARE — Calle/Morpheus levererar slutlig copy senare.
+    'walkin.intro':
+      'Vissa tatueringsstudior tar emot walk-in-kunder utan tidsbokning. Här samlas studiorna per stad efterhand som informationen fylls på.',
+    'walkin.empty':
+      'Inga walk-in-studior är listade ännu. Vi fyller på informationen löpande.',
+    'city.walkin.title': 'Walk-in-tatuering i {city}',
+    'card.walkin': 'Walk-in',
+    'artist.walkin': 'Walk-in möjligt',
     'notFound.title': 'Sidan hittades inte',
     'notFound.text': 'Sidan du letar efter finns inte eller har flyttats.',
     'notFound.cta': 'Tillbaka till startsidan',

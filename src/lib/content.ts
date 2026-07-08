@@ -24,6 +24,12 @@ export const isFeatured = (studio: Studio): boolean => studioTier(studio) === 'p
 export const isPaid = (studio: Studio): boolean => studioTier(studio) !== 'perus';
 
 /**
+ * Walk-in (handoff §3.4). Bara `true` är meningsfullt: undefined = okänt och
+ * false sätts aldrig automatiskt — därför renderas ENDAST true i UI:t.
+ */
+export const isWalkIn = (studio: Studio): boolean => studio.data.walkIn === true;
+
+/**
  * Verifierad badge (matris: Pro + Premium). Behåller dessutom befintliga
  * `verified: true`-studios (data verifierad mot studions egen webbplats)
  * så inget regredierar — betald nivå räknas alltid som verifierad.

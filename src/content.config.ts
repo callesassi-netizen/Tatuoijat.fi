@@ -50,6 +50,12 @@ const studios = defineCollection({
     bookingUrl: z.string().url().startsWith('https://').optional(),
     phone: z.string().optional(), // renderas som tel: på Pro/Premium (matris: Full kontakt)
     hours: z.string().optional(), // öppettider, fritext ("Ma–Pe 11–18, La 12–16"); Pro/Premium
+    // Walk-in: erbjuder studion drop-in-tatuering utan tidsbokning? Stor
+    // sökintention ("tatuointi walk in {stad}", handoff §1.3/§3.4). INGEN
+    // default — undefined = okänt, true = erbjuder walk-in. Sätts ALDRIG
+    // false automatiskt (det vore en osann uppgift); bara true renderas i UI.
+    // Fylls av Morpheus via berikningskörning, inte manuellt vid seed.
+    walkIn: z.boolean().optional(),
     instagram: igHandle.optional(), // studions egen handle utan @, ENDAST när känd
     // Artisternas personliga IG-handles när namnen är okända (non-FTAA-
     // seed listar ibland bara handles) — visas som @-chips på profilen.

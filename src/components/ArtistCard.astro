@@ -16,12 +16,14 @@ interface Props {
   /** Visningsnamn för stilarna. */
   styleNames: string[];
   premium?: boolean;
+  /** Walk-in-indikator (handoff §3.4) — visas bara när true. */
+  walkIn?: boolean;
   /** featured = stort kort (190/230 px bild), compact = grid-kort (140 px). */
   size?: 'featured' | 'compact';
   locale: Locale;
 }
 
-const { slug, name, meta, styleNames, premium = false, size = 'featured', locale } = Astro.props;
+const { slug, name, meta, styleNames, premium = false, walkIn = false, size = 'featured', locale } = Astro.props;
 const t = useTranslations(locale);
 const href = localePath(locale, `/artistit/${slug}/`);
 ---
@@ -30,6 +32,7 @@ const href = localePath(locale, `/artistit/${slug}/`);
   <div class="card-media" style={`view-transition-name: artist-image-${slug};`}>
     <MonogramPlate name={name} featured={premium} />
     {premium && <span class="badge-featured card-badge">★ {t('card.featured')}</span>}
+    {walkIn && <span class="card-badge-walkin">{t('card.walkin')}</span>}
   </div>
   <div class="card-body">
     <span class="card-name">{name}</span>
@@ -79,6 +82,23 @@ const href = localePath(locale, `/artistit/${slug}/`);
     position: absolute;
     top: 12px;
     left: 12px;
+  }
+  /* Walk-in-indikator (top-höger så den aldrig krockar med Featured-badgen).
+     Ljust bläck-chip, aldrig guld (guld = enbart Featured, global.css). */
+  .card-badge-walkin {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-block;
+    background: rgba(16, 16, 20, 0.72);
+    color: var(--paper);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: var(--r-chip);
+    backdrop-filter: blur(2px);
   }
 
   .card-body {

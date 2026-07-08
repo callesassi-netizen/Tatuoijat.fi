@@ -15,6 +15,7 @@ import {
   getStudios,
   sortStudios,
   isFeatured,
+  isWalkIn,
   localizedBody,
   cityDisplayName,
   styleDisplayName,
@@ -120,6 +121,7 @@ const itemList = itemListLd(
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
                   premium={isFeatured(studio)}
+                  walkIn={isWalkIn(studio)}
                   size="featured"
                   locale={locale}
                 />

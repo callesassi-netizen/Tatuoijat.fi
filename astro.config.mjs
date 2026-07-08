@@ -48,6 +48,20 @@ for (const file of readdirSync('./src/content/cities')) {
 noindexedCityPaths.add('/liity/');
 noindexedCityPaths.add('/sv/liity/');
 
+// /walk-in samlingssida (handoff §3.4): datan fylls senare av Morpheus.
+// Tills antalet walk-in-studios når CITY_INDEX_MIN_STUDIOS är sidan
+// noindex,follow (WalkInPage) och hålls ur sitemap — samma tröskel och
+// doorway-skydd som tunna stadssidor (§3.1). Räkna direkt ur frontmatter.
+let walkInCount = 0;
+for (const file of readdirSync('./src/content/studios')) {
+  if (!file.endsWith('.md')) continue;
+  if (frontmatterField(`./src/content/studios/${file}`, 'walkIn') === 'true') walkInCount++;
+}
+if (walkInCount < CITY_INDEX_MIN_STUDIOS) {
+  noindexedCityPaths.add('/walk-in/');
+  noindexedCityPaths.add('/sv/walk-in/');
+}
+
 export default defineConfig({
   site: SITE_URL,
   output: 'static',

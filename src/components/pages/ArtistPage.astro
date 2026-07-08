@@ -250,6 +250,14 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
             )
           }
           {
+            data.walkIn && (
+              <p class="trust-row">
+                <span class="trust-check" aria-hidden="true">✓</span>
+                {t('artist.walkin')}
+              </p>
+            )
+          }
+          {
             data.website && (
               <p class="trust-row">
                 <span class="trust-check" aria-hidden="true">✓</span>
