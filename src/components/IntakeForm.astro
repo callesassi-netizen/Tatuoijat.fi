@@ -1,9 +1,13 @@
 ---
 /**
  * Strukturerat intag-formulär på tack-sidorna (Netlify Forms,
- * name="aloitus" + honeypot). Fälten matchar exakt studio-frontmatterns
- * profilfält (betalflode-och-kiitos.md) — gör Calles/Morpheus klipp-och-
- * klistra-jobb minimalt. Bilder tas ALDRIG här, bara via mejl (Bildpolicy).
+ * name="aloitus" + honeypot, multipart/form-data för bilduppladdningen).
+ * Fälten matchar exakt studio-frontmatterns profilfält (betalflode-och-
+ * kiitos.md) — gör Calles/Morpheus klipp-och-klistra-jobb minimalt.
+ * Bilderna laddas upp direkt här och når Calle via samma Netlify-
+ * formulärnotis som sajtens övriga formulär redan skickar till mejlen —
+ * granskning (bildtillstånd/kvalitet) sker fortfarande innan de läggs i
+ * galleriet (Bildpolicy).
  */
 import type { Locale } from '../i18n/ui';
 import type { PaidTier } from '../data/pricing';
@@ -26,6 +30,7 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
   class="intake"
   name="aloitus"
   method="POST"
+  enctype="multipart/form-data"
   data-netlify="true"
   netlify-honeypot="bot-field"
   action={action}
@@ -112,6 +117,12 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
       </fieldset>
     )
   }
+
+  <div class="form-field">
+    <label for="if-photos">{f.photos}</label>
+    <p class="field-hint">{f.photosHint[tier]}</p>
+    <input id="if-photos" name="kuvat" type="file" accept="image/*,video/*" multiple />
+  </div>
 
   <label class="checkbox-item permission">
     <input type="checkbox" name="kuvat_lupa" value="kylla" required />

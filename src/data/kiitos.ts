@@ -6,13 +6,9 @@ import type { PaidTier } from './pricing';
  * per nivå (delar KiitosPage.astro) så checklistan blir skräddarsydd:
  * /kiitos-pro, /kiitos-premium (fi) — /tack-pro, /tack-premium (sv).
  * Statiska, noindex — ingen betalningsdata/PII i URL:er eller innehåll.
+ * Bilder laddas upp direkt i formuläret nedan (IntakeForm.astro) och når
+ * Calle via samma Netlify-formulärnotis som sajtens övriga formulär.
  */
-
-// PLATSHÅLLARE — Calle: byt till en riktig, övervakad inbox på tatuoijat.fi
-// (samma mönster som STRIPE_LINKS hade innan riktiga länkar kom). Bilder
-// tas via mejl, inte formulär (Bildpolicy — tillstånd krävs innan publicering).
-export const PHOTO_SUBMISSION_EMAIL = 'kuvat@tatuoijat.fi';
-
 export interface KiitosContent {
   metaTitle: Record<PaidTier, string>;
   metaDescription: string;
@@ -22,8 +18,6 @@ export interface KiitosContent {
   checklistIntro: Record<PaidTier, string>;
   checklist: Record<PaidTier, string[]>;
   formTitle: string;
-  photoNotePrefix: string;
-  photoNoteSuffix: string;
   lateNoteText: string;
   lateNoteCta: string;
   backHome: string;
@@ -60,8 +54,6 @@ export const kiitos: Record<Locale, KiitosContent> = {
       ],
     },
     formTitle: 'Täytä tiedot alla',
-    photoNotePrefix: 'Lähetä yllä mainitut kuvat sähköpostitse osoitteeseen',
-    photoNoteSuffix: '— lisäämme ne profiiliisi heti saatuamme luvan julkaista ne.',
     lateNoteText: 'Jos maksu ei näy meillä 48 tunnin sisällä,',
     lateNoteCta: 'ota yhteyttä',
     backHome: 'Takaisin etusivulle',
@@ -96,8 +88,6 @@ export const kiitos: Record<Locale, KiitosContent> = {
       ],
     },
     formTitle: 'Fyll i uppgifterna nedan',
-    photoNotePrefix: 'Skicka bilderna ovan via e-post till',
-    photoNoteSuffix: '— vi lägger till dem på din profil så snart vi har fått tillstånd att publicera dem.',
     lateNoteText: 'Om betalningen inte syns hos oss inom 48 timmar,',
     lateNoteCta: 'kontakta oss',
     backHome: 'Tillbaka till startsidan',

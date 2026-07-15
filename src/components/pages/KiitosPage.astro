@@ -11,7 +11,7 @@ import IntakeForm from '../IntakeForm.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getStylesSorted, styleDisplayName } from '../../lib/content';
 import { jsonLdString, breadcrumbLd } from '../../lib/schema';
-import { kiitos, PHOTO_SUBMISSION_EMAIL } from '../../data/kiitos';
+import { kiitos } from '../../data/kiitos';
 import type { PaidTier } from '../../data/pricing';
 
 interface Props {
@@ -68,11 +68,6 @@ const breadcrumb = breadcrumbLd([
         <ul class="checklist">
           {c.checklist[tier].map((item) => <li>{item}</li>)}
         </ul>
-        <p class="photo-note">
-          {c.photoNotePrefix}{' '}
-          <a class="ink-link" href={`mailto:${PHOTO_SUBMISSION_EMAIL}`}>{PHOTO_SUBMISSION_EMAIL}</a>
-          {' '}{c.photoNoteSuffix}
-        </p>
       </section>
 
       <section class="form-section" aria-labelledby="form-title">
@@ -148,16 +143,6 @@ const breadcrumb = breadcrumbLd([
     font-size: 13.5px;
     line-height: 1.5;
     color: var(--text);
-  }
-  .photo-note {
-    font-size: 13px;
-    line-height: 1.55;
-    color: var(--meta);
-    background: var(--surface);
-    border: var(--card-border);
-    border-radius: var(--r-card);
-    padding: 12px 14px;
-    margin: 0;
   }
 
   .form-section {

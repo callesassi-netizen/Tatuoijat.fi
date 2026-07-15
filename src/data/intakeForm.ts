@@ -2,11 +2,11 @@ import type { Locale } from '../i18n/ui';
 
 /**
  * Strukturerat intag-formulär på tack-sidorna (betalflode-och-kiitos.md,
- * "Intag-formulär"). Netlify Forms (name="aloitus"), samma mönster som
- * ContactForm.astro. Fälten matchar exakt det som ska in i studions
- * frontmatter — gör Calles/Morpheus klipp-och-klistra-jobb minimalt.
- * Bilder tas ALDRIG via detta formulär (Bildpolicy — tillstånd krävs
- * innan publicering), bara en textinstruktion om att mejla dem.
+ * "Intag-formulär"). Netlify Forms (name="aloitus", multipart/form-data),
+ * samma fungerande grundprincip som ContactForm.astro — bilderna laddas
+ * upp direkt i formuläret (filfält) och når Calle via samma Netlify-
+ * formulärnotis till mejlen. Granskning (bildtillstånd/kvalitet) sker
+ * fortfarande innan de läggs i studions galleri (Bildpolicy).
  */
 export interface IntakeFormContent {
   studioName: string;
@@ -23,6 +23,8 @@ export interface IntakeFormContent {
   extraArtistsHint: string;
   artistName: string;
   artistInstagram: string;
+  photos: string;
+  photosHint: Record<'pro' | 'premium', string>;
   photoPermission: string;
   optional: string;
   submit: string;
@@ -45,8 +47,12 @@ export const intakeForm: Record<Locale, IntakeFormContent> = {
     extraArtistsHint: 'Nimi ja Instagram jokaiselle artistille — Premium saa oman artistiprofiilin kullekin.',
     artistName: 'Artistin nimi',
     artistInstagram: 'Instagram (ilman @)',
-    photoPermission:
-      'Annan luvan julkaista kuvat, jotka lähetän Tatuoijat.fi-profiilissani.',
+    photos: 'Kuvat',
+    photosHint: {
+      pro: '3–5 parasta työtäsi (jpg/png).',
+      premium: 'Laajempi valikoima töistäsi — halutessasi mukaan myös video.',
+    },
+    photoPermission: 'Annan luvan julkaista tässä lähettämäni kuvat Tatuoijat.fi-profiilissani.',
     optional: '(valinnainen)',
     submit: 'Lähetä tiedot',
     note: 'Käsittelemme tiedot kahden arkipäivän sisällä.',
@@ -66,7 +72,12 @@ export const intakeForm: Record<Locale, IntakeFormContent> = {
     extraArtistsHint: 'Namn och Instagram för varje artist — Premium får en egen artistprofil per person.',
     artistName: 'Artistens namn',
     artistInstagram: 'Instagram (utan @)',
-    photoPermission: 'Jag ger tillstånd att publicera de bilder jag skickar på min Tatuoijat.fi-profil.',
+    photos: 'Bilder',
+    photosHint: {
+      pro: '3–5 av dina bästa arbeten (jpg/png).',
+      premium: 'Ett bredare urval av dina arbeten — gärna även video.',
+    },
+    photoPermission: 'Jag ger tillstånd att publicera bilderna jag skickar här på min Tatuoijat.fi-profil.',
     optional: '(valfritt)',
     submit: 'Skicka uppgifterna',
     note: 'Vi behandlar uppgifterna inom två vardagar.',
