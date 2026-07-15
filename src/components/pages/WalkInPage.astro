@@ -21,7 +21,7 @@ import {
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
-import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, collectionPageLd } from '../../lib/schema';
 import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
 
 interface Props {
@@ -70,10 +70,11 @@ const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
   { name: t('walkin.h1'), url: new URL(p(path), site).href },
 ]);
-const itemList =
+const collectionPage =
   total > 0
-    ? itemListLd(
+    ? collectionPageLd(
         t('walkin.h1'),
+        new URL(p(path), site).href,
         groups.flatMap((group) =>
           group.studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
         ),
@@ -90,7 +91,7 @@ const itemList =
   noindex={noindex}
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
-  {itemList && <script type="application/ld+json" set:html={jsonLdString(itemList)} slot="head" />}
+  {collectionPage && <script type="application/ld+json" set:html={jsonLdString(collectionPage)} slot="head" />}
 
   <section class="index-hero">
     <div class="container index-hero-inner">

@@ -20,7 +20,7 @@ import {
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
-import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, collectionPageLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
 import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
@@ -40,6 +40,10 @@ const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((entry) => [entry.id, entry]));
 
 const styleName = styleDisplayName(style, locale);
+// Tyylinamnet är ett vanligt substantiv (ei erisnimi) — gemener mitt i en
+// mening är korrekt finska/svenska ("...eniten fineline-tekijöitä", inte
+// "...Fineline-tekijöitä"). styleName (versal) används endast satsinitialt.
+const styleNameLower = styleName.toLowerCase();
 const intro = localizedBody(style.body, locale);
 const studios = sortStudios(
   allStudios.filter((studio) => studio.data.styles.includes(style.id)),
@@ -49,6 +53,36 @@ const studios = sortStudios(
 const citiesWithStyle = cities.filter((city) =>
   studios.some((studio) => studio.data.city === city.id),
 );
+
+// GEO.md §1 (svara-först) — riktiga toppstäder för stilen, räknat ur datan.
+// "Namn (antal)"-formatet undviker finskans kasusböjning helt (ingen risk
+// för fel sijamuoto när städernas grundform bara listas efter en rubrik).
+const cityCounts = new Map<string, number>();
+for (const studio of studios) {
+  if (studio.data.city) cityCounts.set(studio.data.city, (cityCounts.get(studio.data.city) ?? 0) + 1);
+}
+const topCities = [...cityCounts.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 3)
+  .map(([id, count]) => {
+    const city = cityById.get(id);
+    return city ? `${cityDisplayName(city, locale)} (${count})` : null;
+  })
+  .filter((s): s is string => Boolean(s));
+const answerSentence =
+  (studios.length === 1
+    ? t('style.answer.count.one', { style: styleName })
+    : t('style.answer.count.many', { style: styleName, n: studios.length })) +
+  (topCities.length > 0 ? ` ${t('style.answer.topCities', { cities: topCities.join(', ') })}` : '');
+
+// GEO.md §2/§3 — mini-FAQ + FAQPage-schema (samma mönster som stadssidan)
+const faqItems: { q: string; a: string; href?: string }[] = [
+  ...(topCities.length > 0
+    ? [{ q: t('style.qa.cities.q', { style: styleNameLower }), a: t('style.answer.topCities', { cities: topCities.join(', ') }) }]
+    : []),
+  { q: t('style.qa.price.q', { style: styleNameLower }), a: t('city.qa.price.a'), href: p('/hinnat/') },
+];
+const faq = faqLd(faqItems.map(({ q, a }) => ({ q, a })));
 
 function studioMeta(studio: (typeof studios)[number]): string {
   const city = studio.data.city ? cityById.get(studio.data.city) : undefined;
@@ -71,15 +105,17 @@ const breadcrumb = breadcrumbLd([
   { name: t('nav.styles'), url: new URL(p('/tyylit/'), site).href },
   { name: styleName, url: new URL(p(path), site).href },
 ]);
-const itemList = itemListLd(
+const collectionPage = collectionPageLd(
   styleName,
+  new URL(p(path), site).href,
   studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
 );
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
-  <script type="application/ld+json" set:html={jsonLdString(itemList)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(collectionPage)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
 
   <!-- Mörk hero med stilbeskrivning -->
   <section class="style-hero">
@@ -88,7 +124,7 @@ const itemList = itemListLd(
         <a class="back-link ink-link" href={p('/tyylit/')}>← {t('nav.styles')}</a>
         <p class="eyebrow">{t('style.eyebrow')}</p>
         <h1 class="style-title">{styleName}</h1>
-        <p class="style-intro">{intro}</p>
+        <p class="style-intro">{answerSentence} {intro}</p>
       </div>
       {
         styleImages[style.id] && (
@@ -110,7 +146,7 @@ const itemList = itemListLd(
     <div class="container sheet-inner">
       <!-- Artister som gör stilen -->
       <section class="section" aria-labelledby="style-artists-title">
-        <h2 class="section-title" id="style-artists-title">{t('style.artistsTitle')}</h2>
+        <h2 class="section-title" id="style-artists-title">{t('style.artistsTitle', { style: styleNameLower })}</h2>
         {
           studios.length > 0 ? (
             <div class="artist-grid">
@@ -156,6 +192,32 @@ const itemList = itemListLd(
           </section>
         )
       }
+
+      <!-- Mini-FAQ (GEO.md §1–3): riktiga, ärligt besvarbara frågor + FAQPage-schema ovan -->
+      <section class="section" aria-labelledby="faq-title">
+        <h2 class="section-title section-title--small" id="faq-title">{t('style.faqTitle')}</h2>
+        <div class="faq-list">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary>
+                <span class="faq-q">{item.q}</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-a">
+                {item.a}
+                {item.href && (
+                  <>
+                    {' '}
+                    <a class="ink-link" href={item.href}>{t('common.priceGuideLink')}</a>
+                  </>
+                )}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
     </div>
   </div>
 </BaseLayout>
@@ -244,6 +306,57 @@ const itemList = itemListLd(
     gap: 8px;
     flex-wrap: wrap;
     margin: 0;
+  }
+
+  /* Mini-FAQ (samma mönster som /hinnat och /hinnasto) */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 0 16px;
+  }
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 0;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .faq-icon {
+    font-size: 18px;
+    color: var(--meta);
+    transition: transform var(--t-fast) ease-out;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    padding: 0 0 16px;
+  }
+
+  .freshness {
+    margin: 28px 0 0;
+    font-size: 11.5px;
+    color: var(--meta);
   }
 
   @media (min-width: 1024px) {

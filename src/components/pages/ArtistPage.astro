@@ -24,7 +24,7 @@ import {
   styleDisplayName,
 } from '../../lib/content';
 import { pricing } from '../../data/pricing';
-import { jsonLdString, breadcrumbLd, tattooParlorLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, tattooParlorLd, personLd, CONTENT_UPDATED } from '../../lib/schema';
 import { citiesIndexPath, cityPath } from '../../lib/routes';
 
 interface Props {
@@ -128,11 +128,20 @@ if (city && h1City) {
 breadcrumbItems.push({ name: data.name, url: new URL(p(path), site).href });
 const breadcrumb = breadcrumbLd(breadcrumbItems);
 const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href);
+// GEO.md §3 — Person per namngiven artist på studion (ingen egen sida ännu,
+// se innehållsmodellen; mainEntityOfPage pekar tillbaka hit).
+const pageUrl = new URL(p(path), site).href;
+const personEntries = persons.map((person) =>
+  personLd(person.data.name, data.name, pageUrl, person.data.instagram),
+);
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
   <script type="application/ld+json" set:html={jsonLdString(parlor)} slot="head" />
+  {personEntries.map((person) => (
+    <script type="application/ld+json" set:html={jsonLdString(person)} slot="head" />
+  ))}
 
   <!-- Mörk identitets-hero -->
   <section class="artist-hero">
@@ -311,6 +320,8 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
             </a>
           )
         }
+
+        <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
       </aside>
 
       <div class="main-col">
@@ -610,6 +621,12 @@ const parlor = tattooParlorLd(studio, displayPlace, new URL(p(path), site).href)
     font-weight: 700;
     color: var(--flash);
     margin-top: 1px;
+  }
+
+  .freshness {
+    margin: 14px 0 0;
+    font-size: 11px;
+    color: var(--meta);
   }
 
   .portfolio {

@@ -20,7 +20,7 @@ import {
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
-import { jsonLdString, breadcrumbLd, itemListLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, collectionPageLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
 import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
 import { citiesIndexPath, cityPath } from '../../lib/routes';
 
@@ -55,6 +55,46 @@ const countSentence =
   studios.length === 1
     ? t('city.introCount.one')
     : t('city.introCount.many', { n: studios.length });
+
+// GEO.md §1 (svara-först) — de vanligaste tyylejä bland stadens studios,
+// riktig data (ingen påhittad "topplista"). Toppmax 4 för läsbar mening.
+const styleFreq = new Map<string, number>();
+for (const studio of studios) {
+  for (const slug of studio.data.styles) styleFreq.set(slug, (styleFreq.get(slug) ?? 0) + 1);
+}
+const topStyles = [...styleFreq.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 4)
+  .map(([slug]) => styleById.get(slug))
+  .filter((s): s is NonNullable<typeof s> => Boolean(s));
+const topStyleNames = topStyles.map((s) => styleDisplayName(s, locale));
+const answerSentence =
+  countSentence +
+  (topStyleNames.length > 0
+    ? ` ${t('city.answer.styles', { styles: topStyleNames.join(', ') })}`
+    : '');
+
+// GEO.md §2/§3 — riktig, ärligt besvarbar mini-FAQ (ingen "paras"-krona åt
+// någon enskild studio) + FAQPage-schema. Walk-in-frågan visas bara när
+// staden faktiskt har ≥1 walk-in-studio. `href` = intern länk till /hinnat
+// (§9 topical cluster) — bara på priset-frågan, ren text i schemat.
+const faqItems: { q: string; a: string; href?: string }[] = [
+  { q: t('city.qa.find.q', { city: h1City }), a: t('city.qa.find.a', { n: studios.length }) },
+  { q: t('city.qa.count.q', { city: h1City }), a: countSentence },
+  ...(topStyleNames.length > 0
+    ? [
+        {
+          q: t('city.qa.styles.q', { city: h1City }),
+          a: t('city.answer.styles', { styles: topStyleNames.join(', ') }),
+        },
+      ]
+    : []),
+  ...(walkInStudios.length > 0
+    ? [{ q: t('city.qa.walkin.q', { city: h1City }), a: t('city.qa.walkin.a', { n: walkInStudios.length, city: h1City }) }]
+    : []),
+  { q: t('city.qa.price.q', { city: h1City }), a: t('city.qa.price.a'), href: p('/hinnat/') },
+];
+const faq = faqLd(faqItems.map(({ q, a }) => ({ q, a })));
 
 function studioMeta(studio: (typeof studios)[number]): string {
   return studio.data.district ?? cityName;
@@ -92,8 +132,9 @@ const breadcrumb = breadcrumbLd([
   { name: t('nav.cities'), url: new URL(p(citiesIndexPath(locale)), site).href },
   { name: cityName, url: new URL(p(path), site).href },
 ]);
-const itemList = itemListLd(
+const collectionPage = collectionPageLd(
   t('city.h1', { city: h1City }),
+  new URL(p(path), site).href,
   studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
 );
 ---
@@ -108,7 +149,8 @@ const itemList = itemListLd(
   noindex={noindex}
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
-  <script type="application/ld+json" set:html={jsonLdString(itemList)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(collectionPage)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
 
   <!-- Kompakt mörk hero -->
   <section class="city-hero">
@@ -116,7 +158,7 @@ const itemList = itemListLd(
       <a class="back-link ink-link" href={p('/')}>← {t('city.back')}</a>
       <p class="eyebrow">{t('city.eyebrow')}</p>
       <h1 class="city-title">{t('city.h1', { city: h1City })}</h1>
-      <p class="city-intro">{countSentence} {intro}</p>
+      <p class="city-intro">{answerSentence} {intro}</p>
       <div class="filmstrip" aria-hidden="true">
         {
           filmstrip.map(([gradient, width, height]) => (
@@ -145,6 +187,10 @@ const itemList = itemListLd(
           activeCityChip={city.id}
         />
       </div>
+
+      <!-- GEO.md §2: riktig sökfråga som H2 (ingen "paras"-krona åt någon
+           enskild studio — svaret är att jämföra listan nedan). -->
+      <h2 class="visually-hidden">{t('city.qa.find.q', { city: h1City })}</h2>
 
       <!-- Stil-filterchips: filtrering utan sidladdning -->
       <div class="filter-bar" data-filter-bar role="group" aria-label={t('city.filterLabel')}>
@@ -248,6 +294,49 @@ const itemList = itemListLd(
           </section>
         )
       }
+
+      <!-- GEO.md §9 (topical cluster): korslänk till stilsidorna som faktiskt
+           finns i denna stad — riktiga hrefs, inte bara JS-filtret ovan. -->
+      {
+        topStyles.length > 0 && (
+          <section class="crosslink-section" aria-labelledby="crosslink-title">
+            <h2 class="crosslink-title" id="crosslink-title">{t('city.stylesLinks.title')}</h2>
+            <p class="crosslink-list">
+              {topStyles.map((style) => (
+                <a class="chip" href={p(`/tyylit/${style.id}/`)}>
+                  {t('style.inCity', { style: styleDisplayName(style, locale), city: cityName })}
+                </a>
+              ))}
+            </p>
+          </section>
+        )
+      }
+
+      <!-- Mini-FAQ (GEO.md §1–3): riktiga, ärligt besvarbara frågor + FAQPage-schema ovan -->
+      <section class="faq-section" aria-labelledby="faq-title">
+        <h2 class="faq-title" id="faq-title">{t('city.faqTitle')}</h2>
+        <div class="faq-list">
+          {faqItems.map((item) => (
+            <details class="faq-item">
+              <summary>
+                <span class="faq-q">{item.q}</span>
+                <span class="faq-icon" aria-hidden="true">+</span>
+              </summary>
+              <p class="faq-a">
+                {item.a}
+                {item.href && (
+                  <>
+                    {' '}
+                    <a class="ink-link" href={item.href}>{t('common.priceGuideLink')}</a>
+                  </>
+                )}
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
     </div>
   </div>
 </BaseLayout>
@@ -454,6 +543,85 @@ const itemList = itemListLd(
   }
   .walkin-meta {
     font-size: 12px;
+    color: var(--meta);
+  }
+
+  /* Korslänk till stilsidorna (GEO.md §9) */
+  .crosslink-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: var(--card-border);
+  }
+  .crosslink-title {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .crosslink-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  /* Mini-FAQ (samma mönster som /hinnat och /hinnasto) */
+  .faq-section {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: var(--card-border);
+  }
+  .faq-title {
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 0 16px;
+  }
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 0;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .faq-icon {
+    font-size: 18px;
+    color: var(--meta);
+    transition: transform var(--t-fast) ease-out;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    padding: 0 0 16px;
+  }
+
+  .freshness {
+    margin: 28px 0 0;
+    font-size: 11.5px;
     color: var(--meta);
   }
 

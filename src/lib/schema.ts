@@ -1,6 +1,15 @@
 import type { CollectionEntry } from 'astro:content';
 
 /**
+ * GEO.md §5 (färskhet) — sanningsenlig som "innehållet granskat {datum}",
+ * INTE per-post redigeringsdatum (det kan vi inte spåra utan tung git-log-
+ * tooling per fil). Höj detta datum manuellt vid större innehålls-/data-
+ * genomgångar (t.ex. berikningsbatcher som walkIn-importen). Används både
+ * som synlig text och som `dateModified` i schema.org.
+ */
+export const CONTENT_UPDATED = '2026-07-15';
+
+/**
  * Serialisering för JSON-LD i set:html. JSON.stringify escapar INTE `<`,
  * så ett datavärde med `</script>` skulle annars kunna bryta script-taggen
  * och injicera HTML. `<` är ekvivalent JSON och ofarligt i HTML.
@@ -23,7 +32,7 @@ export function breadcrumbLd(items: { name: string; url: string }[]) {
   };
 }
 
-/** TattooParlor per studioprofil. */
+/** TattooParlor per studioprofil. `dateModified` = GEO.md §3/§5 (färskhet). */
 export function tattooParlorLd(
   studio: CollectionEntry<'studios'>,
   cityName: string,
@@ -39,6 +48,7 @@ export function tattooParlorLd(
     '@type': 'TattooParlor',
     name: data.name,
     url,
+    dateModified: CONTENT_UPDATED,
     address: {
       '@type': 'PostalAddress',
       ...(data.address ? { streetAddress: data.address } : {}),
@@ -46,6 +56,28 @@ export function tattooParlorLd(
       addressCountry: 'FI',
     },
     ...(sameAs.length > 0 ? { sameAs } : {}),
+  };
+}
+
+/**
+ * Person per namngiven artist på en studio (GEO.md §3). Ingen egen publik
+ * artistsida ännu (CLAUDE.md/innehållsmodell) — renderas som ett extra
+ * JSON-LD-block på studioprofilen, `mainEntityOfPage` pekar dit.
+ */
+export function personLd(
+  name: string,
+  studioName: string,
+  pageUrl: string,
+  instagramHandle?: string,
+) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name,
+    jobTitle: 'tatuoija',
+    worksFor: { '@type': 'TattooParlor', name: studioName },
+    mainEntityOfPage: pageUrl,
+    ...(instagramHandle ? { sameAs: [`https://instagram.com/${instagramHandle}`] } : {}),
   };
 }
 
@@ -67,18 +99,27 @@ export function webSiteLd(name: string, siteUrl: string, searchUrlTemplate: stri
   };
 }
 
-/** ItemList på stads-/stilsidor. */
-export function itemListLd(name: string, urls: string[]) {
+/**
+ * CollectionPage + ItemList (GEO.md §3) — stads-, stil- och walk-in-sidorna.
+ * Märker sidan som en kurerad lista, inte en godtycklig sida, vilket är
+ * signalen AI-sök (och Google) läser för "tatuoijat {stad}"-källa.
+ */
+export function collectionPageLd(name: string, url: string, itemUrls: string[]) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'ItemList',
+    '@type': 'CollectionPage',
     name,
-    numberOfItems: urls.length,
-    itemListElement: urls.map((url, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      url,
-    })),
+    url,
+    dateModified: CONTENT_UPDATED,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: itemUrls.length,
+      itemListElement: itemUrls.map((itemUrl, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: itemUrl,
+      })),
+    },
   };
 }
 

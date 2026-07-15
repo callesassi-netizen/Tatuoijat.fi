@@ -1,0 +1,16 @@
+# Tatuoijat.fi
+
+> Kurerattu hakemisto Suomen tatuoijista ja tatuointiliikkeistä (fi/sv). Artistit kaupungeittain ja tyyleittäin, portfoliot, hintaopas.
+> Curated catalog of tattoo artists and studios in Finland (fi/sv). Artists by city and style, portfolios, price guide.
+
+## Nyckelsidor / Key pages
+
+- /hinnat/: Tatuoinnin hinta — hintaopas ja UKK (price guide + FAQ)
+- /tatuoijat/: Kaikki kaupungit (all cities)
+- /tatuoijat/helsinki/: Tatuoijat Helsingissä
+- /tyylit/: Kaikki tyylit (all styles)
+- /tyylit/fineline/: Fineline-tatuointi Suomessa
+- /walk-in/: Walk-in-tatuoinnit kaupungeittain
+- /hinnasto/: Studioille — liity mukaan (for studios: join)
+
+Ruotsinkieliset sivut / Swedish pages under /sv/.

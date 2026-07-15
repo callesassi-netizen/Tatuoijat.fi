@@ -93,6 +93,22 @@ export const ui = {
     'city.empty.title': 'Ei tuloksia tällä tyylillä',
     'city.empty.text': 'Tästä kaupungista ei vielä löytynyt tatuoijia valitulla tyylillä.',
     'city.empty.reset': 'Näytä kaikki tyylit',
+    // GEO.md §1 (svara-först) — riktig data, ei fabrikoitu "paras"-väite
+    'city.answer.styles': 'Suosituimmat tyylit: {styles}.',
+    // GEO.md §2/§3 — riktiga sökfrågor som H2 + mini-FAQ/FAQPage. Ingen
+    // fråga kröner en enskild studio "paras" — svaret är jämförelsen.
+    'city.qa.find.q': 'Miten löytää sopiva tatuoija {city}?',
+    'city.qa.find.a':
+      'Vertaile {n} tatuointiliikkeen portfolioita ja tyylejä alla, ja ota yhteyttä suoraan sinua kiinnostavaan artistiin.',
+    'city.qa.count.q': 'Kuinka monta tatuointiliikettä {city} on?',
+    'city.qa.styles.q': 'Mitä tatuointityylejä {city} tehdään?',
+    'city.qa.walkin.q': 'Onko {city} walk-in-tatuointia?',
+    'city.qa.walkin.a':
+      '{city} on {n} tatuointiliikettä, jotka ottavat walk-in-asiakkaita ilman ajanvarausta.',
+    'city.qa.price.q': 'Paljonko tatuointi maksaa {city}?',
+    'city.qa.price.a': 'Hinta riippuu koosta, tyylistä ja artistista. Katso koko hintaopas ja esimerkkihinnat.',
+    'city.faqTitle': 'Usein kysyttyä',
+    'city.stylesLinks.title': 'Selaa tyylin mukaan',
     'artist.metaTitle': '{name} — tatuointiliike, {city} | {site}',
     // Fallback när studionamnet gör fullmallen längre än 60 tecken
     'artist.metaTitleShort': '{name} | {site}',
@@ -129,16 +145,29 @@ export const ui = {
     'artist.metaDescriptionFallback':
       '{name} — tatuointiliike ({place}). Katso tyylit ja yhteystiedot ja ota yhteyttä suoraan — {site} kokoaa Suomen tatuoijat.',
     'common.finland': 'Suomi',
+    // GEO.md §5 (färskhet) — "tarkistettu", ei "päivitetty": rehellinen väite
+    // koko katalogin läpikäynnistä, ei väitä että juuri tämä rivi muuttui.
+    'common.updated': 'Tiedot tarkistettu {date}',
+    'common.priceGuideLink': 'Hintaoppaaseen →',
     'style.eyebrow': 'Tyyli',
     // "{stil} tatuointi" är söktermen — inte stilnamnet ensamt (handoff §2)
     'style.metaTitle': '{style}-tatuointi — tatuoijat Suomessa | {site}',
     'style.metaDescription':
       '{style}-tatuointi: katso, ketkä tyyliä tekevät Suomessa. Selaa tatuoijien portfolioita kaupungeittain, vertaile töitä ja ota yhteyttä artistiin.',
-    'style.artistsTitle': 'Tyylin tekijät',
+    // Riktig sökfråga som H2 (GEO.md §2) — ersätter det tidigare neutrala labeln
+    'style.artistsTitle': 'Ketkä tekevät {style}-tatuointia Suomessa?',
     'style.artistsEmpty':
       'Tälle tyylille ei ole vielä listattuja artisteja. Katso kaikki tatuoijat kaupungeittain.',
     'style.citiesTitle': 'Selaa kaupungeittain',
     'style.inCity': '{style} · {city}',
+    // GEO.md §1 (svara-först) + §2/§3 (mini-FAQ). "Nimi (antal)"-listan
+    // kiertää suomen sijamuodot kokonaan (ei tarvetta taivuttaa kaupunkeja).
+    'style.answer.count.one': '{style}-tatuointia tekee Suomessa 1 tatuointiliike.',
+    'style.answer.count.many': '{style}-tatuointia tekee Suomessa {n} tatuointiliikettä.',
+    'style.answer.topCities': 'Eniten tekijöitä: {cities}.',
+    'style.qa.cities.q': 'Missä kaupungeissa on eniten {style}-tekijöitä?',
+    'style.qa.price.q': 'Paljonko {style}-tatuointi maksaa?',
+    'style.faqTitle': 'Usein kysyttyä',
     // Walk-in (handoff §1.3/§3.4) — samlingssida + stadssektion + badge
     'walkin.metaTitle': 'Walk-in-tatuointi — liikkeet kaupungeittain | {site}',
     'walkin.metaDescription':
@@ -234,6 +263,19 @@ export const ui = {
     'city.empty.title': 'Inga träffar för den stilen',
     'city.empty.text': 'Inga tatuerare med den valda stilen hittades i den här staden ännu.',
     'city.empty.reset': 'Visa alla stilar',
+    'city.answer.styles': 'Populäraste stilarna: {styles}.',
+    'city.qa.find.q': 'Hur hittar man en tatuerare i {city}?',
+    'city.qa.find.a':
+      'Jämför {n} tatueringsstudiors portfolios och stilar nedan, och kontakta direkt den artist som intresserar dig.',
+    'city.qa.count.q': 'Hur många tatueringsstudior finns det i {city}?',
+    'city.qa.styles.q': 'Vilka tatueringsstilar görs i {city}?',
+    'city.qa.walkin.q': 'Finns det walk-in-tatuering i {city}?',
+    'city.qa.walkin.a':
+      'I {city} finns {n} tatueringsstudior som tar emot walk-in-kunder utan tidsbokning.',
+    'city.qa.price.q': 'Vad kostar en tatuering i {city}?',
+    'city.qa.price.a': 'Priset beror på storlek, stil och artist. Se hela prisguiden och exempelpriser.',
+    'city.faqTitle': 'Vanliga frågor',
+    'city.stylesLinks.title': 'Bläddra efter stil',
     'artist.metaTitle': '{name} — tatueringsstudio, {city} | {site}',
     'artist.metaTitleShort': '{name} | {site}',
     'artist.book': 'Boka tid',
@@ -268,15 +310,23 @@ export const ui = {
     'artist.metaDescriptionFallback':
       '{name} — tatueringsstudio ({place}). Se stilar och kontaktuppgifter och ta kontakt direkt — {site} samlar Finlands tatuerare.',
     'common.finland': 'Finland',
+    'common.updated': 'Uppgifterna kontrollerade {date}',
+    'common.priceGuideLink': 'Till prisguiden →',
     'style.eyebrow': 'Stil',
     'style.metaTitle': '{style}-tatuering — tatuerare i Finland | {site}',
     'style.metaDescription':
       '{style}-tatuering: se vilka som gör stilen i Finland. Bläddra bland tatuerarnas portfolios per stad, jämför arbeten och kontakta artisten direkt.',
-    'style.artistsTitle': 'Artister med stilen',
+    'style.artistsTitle': 'Vilka gör {style}-tatuering i Finland?',
     'style.artistsEmpty':
       'Inga artister är listade för den här stilen ännu. Se alla tatuerare per stad.',
     'style.citiesTitle': 'Bläddra per stad',
     'style.inCity': '{style} · {city}',
+    'style.answer.count.one': '{style}-tatuering görs i Finland av 1 tatueringsstudio.',
+    'style.answer.count.many': '{style}-tatuering görs i Finland av {n} tatueringsstudior.',
+    'style.answer.topCities': 'Flest utövare: {cities}.',
+    'style.qa.cities.q': 'I vilka städer finns flest {style}-utövare?',
+    'style.qa.price.q': 'Vad kostar en {style}-tatuering?',
+    'style.faqTitle': 'Vanliga frågor',
     // Walk-in (handoff §1.3/§3.4) — samlingssida + stadssektion + badge
     'walkin.metaTitle': 'Walk-in-tatuering — studior per stad | {site}',
     'walkin.metaDescription':

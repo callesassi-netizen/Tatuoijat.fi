@@ -7,7 +7,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { hinnat } from '../../data/hinnat';
-import { jsonLdString, breadcrumbLd, faqLd } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
 import { citiesIndexPath } from '../../lib/routes';
 import heroImage from '../../assets/bilder/jalkihoito.png';
 
@@ -60,6 +60,7 @@ const faq = faqLd(c.faq);
   <div class="sheet grain">
     <div class="container sheet-inner">
       <div class="prose-col">
+        <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
         {c.intro.map((paragraph) => <p class="lead">{paragraph}</p>)}
 
         <!-- Hintataulukko -->
@@ -181,6 +182,12 @@ const faq = faqLd(c.faq);
     line-height: 1.65;
     color: var(--text);
     margin: 0 0 14px;
+  }
+
+  .freshness {
+    margin: 0 0 16px;
+    font-size: 11.5px;
+    color: var(--meta);
   }
 
   .block {
