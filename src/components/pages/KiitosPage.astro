@@ -1,0 +1,211 @@
+---
+/**
+ * Tack-sida efter Stripe-betalning (betalflode-och-kiitos.md). En sida per
+ * nivå — /kiitos-pro, /kiitos-premium (fi), /tack-pro, /tack-premium (sv) —
+ * så checklistan blir skräddarsydd. Statisk, noindex, ingen betalningsdata/
+ * PII i URL:en. Länkar Stripe-redirecten till en fungerande sida; själva
+ * redirect-inställningen görs av Calle i Stripe-dashboarden.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IntakeForm from '../IntakeForm.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import { getStylesSorted, styleDisplayName } from '../../lib/content';
+import { jsonLdString, breadcrumbLd } from '../../lib/schema';
+import { kiitos, PHOTO_SUBMISSION_EMAIL } from '../../data/kiitos';
+import type { PaidTier } from '../../data/pricing';
+
+interface Props {
+  locale: Locale;
+  tier: PaidTier;
+}
+
+const { locale, tier } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+const c = kiitos[locale];
+
+// Tack-sidorna har olika slug per nivå OCH per språk (fi: kiitos-, sv: tack-).
+const KIITOS_PATHS: Record<Locale, Record<PaidTier, string>> = {
+  fi: { pro: '/kiitos-pro/', premium: '/kiitos-premium/' },
+  sv: { pro: '/tack-pro/', premium: '/tack-premium/' },
+};
+const path = KIITOS_PATHS[locale][tier];
+const altPath = KIITOS_PATHS[locale === 'fi' ? 'sv' : 'fi'][tier];
+
+const styles = await getStylesSorted();
+const styleOptions = styles.map((style) => ({ id: style.id, name: styleDisplayName(style, locale) }));
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: c.h1, url: new URL(p(path), site).href },
+]);
+---
+
+<BaseLayout
+  title={c.metaTitle[tier]}
+  description={c.metaDescription}
+  locale={locale}
+  path={path}
+  altPath={altPath}
+  hasAlternate
+  noindex
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+
+  <section class="kiitos-hero">
+    <div class="container kiitos-hero-inner">
+      <h1 class="kiitos-title">{c.h1}</h1>
+      <p class="kiitos-intro">{c.intro}</p>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <section class="next-step" aria-labelledby="next-step-title">
+        <h2 class="next-step-title" id="next-step-title">{c.nextStepTitle}</h2>
+        <p class="checklist-intro">{c.checklistIntro[tier]}</p>
+        <ul class="checklist">
+          {c.checklist[tier].map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="photo-note">
+          {c.photoNotePrefix}{' '}
+          <a class="ink-link" href={`mailto:${PHOTO_SUBMISSION_EMAIL}`}>{PHOTO_SUBMISSION_EMAIL}</a>
+          {' '}{c.photoNoteSuffix}
+        </p>
+      </section>
+
+      <section class="form-section" aria-labelledby="form-title">
+        <h2 class="form-title" id="form-title">{c.formTitle}</h2>
+        <IntakeForm locale={locale} tier={tier} styles={styleOptions} action={path} />
+      </section>
+
+      <p class="late-note">
+        {c.lateNoteText}{' '}
+        <a class="ink-link" href={p('/yhteys/')}>{c.lateNoteCta}</a>.
+      </p>
+
+      <a class="ink-link back-home" href={p('/')}>← {c.backHome}</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .kiitos-hero {
+    position: relative;
+    z-index: 0;
+    background:
+      radial-gradient(110% 100% at 80% 0%, rgba(77, 50, 48, 0.2) 0%, rgba(16, 16, 20, 0) 55%),
+      var(--ink);
+  }
+  .kiitos-hero-inner {
+    padding: 28px var(--page-pad) 52px;
+  }
+  .kiitos-title {
+    font-size: 38px;
+    line-height: 1.04;
+    color: var(--text-light);
+  }
+  .kiitos-intro {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 460px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 30px var(--page-pad) 48px;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .next-step-title {
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .checklist-intro {
+    font-size: 14px;
+    color: var(--text);
+    margin: 0 0 12px;
+  }
+  .checklist {
+    margin: 0 0 18px;
+    padding: 0 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .checklist li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .photo-note {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--meta);
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 12px 14px;
+    margin: 0;
+  }
+
+  .form-section {
+    margin-top: 36px;
+  }
+  .form-title {
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 14px;
+  }
+
+  .late-note {
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--meta);
+    text-align: center;
+  }
+  .back-home {
+    display: block;
+    margin-top: 18px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .kiitos-hero-inner {
+      padding: 44px var(--page-pad) 68px;
+      text-align: center;
+    }
+    .kiitos-intro {
+      margin-inline: auto;
+    }
+    .kiitos-title {
+      font-size: 56px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .sheet-inner {
+      padding: 48px var(--page-pad) 72px;
+    }
+    .next-step-title {
+      font-size: 28px;
+    }
+    .form-section {
+      margin-top: 48px;
+    }
+  }
+</style>

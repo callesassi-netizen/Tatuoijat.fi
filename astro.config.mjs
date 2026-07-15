@@ -48,6 +48,13 @@ for (const file of readdirSync('./src/content/cities')) {
 noindexedCityPaths.add('/liity/');
 noindexedCityPaths.add('/sv/liity/');
 
+// Tack-sidorna efter Stripe-betalning (betalflode-och-kiitos.md) — statiska,
+// noindex,follow (KiitosPage), ingen anledning att ligga i sitemap.
+noindexedCityPaths.add('/kiitos-pro/');
+noindexedCityPaths.add('/kiitos-premium/');
+noindexedCityPaths.add('/sv/tack-pro/');
+noindexedCityPaths.add('/sv/tack-premium/');
+
 // /walk-in samlingssida (handoff §3.4): datan fylls senare av Morpheus.
 // Tills antalet walk-in-studios når CITY_INDEX_MIN_STUDIOS är sidan
 // noindex,follow (WalkInPage) och hålls ur sitemap — samma tröskel och

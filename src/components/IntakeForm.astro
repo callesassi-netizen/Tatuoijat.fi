@@ -1,0 +1,240 @@
+---
+/**
+ * Strukturerat intag-formulär på tack-sidorna (Netlify Forms,
+ * name="aloitus" + honeypot). Fälten matchar exakt studio-frontmatterns
+ * profilfält (betalflode-och-kiitos.md) — gör Calles/Morpheus klipp-och-
+ * klistra-jobb minimalt. Bilder tas ALDRIG här, bara via mejl (Bildpolicy).
+ */
+import type { Locale } from '../i18n/ui';
+import type { PaidTier } from '../data/pricing';
+import { intakeForm } from '../data/intakeForm';
+
+interface Props {
+  locale: Locale;
+  tier: PaidTier;
+  styles: { id: string; name: string }[];
+  /** Path (med locale-prefix) formuläret postar till. */
+  action: string;
+}
+
+const { locale, tier, styles, action } = Astro.props;
+const f = intakeForm[locale];
+const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
+---
+
+<form
+  class="intake"
+  name="aloitus"
+  method="POST"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  action={action}
+>
+  <input type="hidden" name="form-name" value="aloitus" />
+  <input type="hidden" name="taso" value={tier} />
+  <p class="hp" aria-hidden="true">
+    <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+
+  <div class="form-field">
+    <label for="if-studio">{f.studioName}</label>
+    <input id="if-studio" name="studion_nimi" type="text" required autocomplete="organization" />
+  </div>
+
+  <div class="form-field">
+    <label for="if-url">{f.profileUrl}</label>
+    <input id="if-url" name="profiilin_url" type="text" required autocomplete="off" />
+  </div>
+
+  <div class="form-field">
+    <label for="if-email">{f.email}</label>
+    <input id="if-email" name="sahkoposti" type="email" required autocomplete="email" />
+  </div>
+
+  <div class="form-field">
+    <label for="if-desc-fi">{f.descriptionFi}</label>
+    <textarea id="if-desc-fi" name="kuvaus_fi" rows="3" required></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="if-desc-sv">
+      {f.descriptionSv} <span class="optional">{f.optional}</span>
+    </label>
+    <textarea id="if-desc-sv" name="kuvaus_sv" rows="3"></textarea>
+  </div>
+
+  <div class="form-field">
+    <label for="if-phone">
+      {f.phone} <span class="optional">{f.optional}</span>
+    </label>
+    <input id="if-phone" name="puhelin" type="tel" autocomplete="tel" />
+  </div>
+
+  <div class="form-field">
+    <label for="if-hours">
+      {f.hours} <span class="optional">{f.optional}</span>
+    </label>
+    <input id="if-hours" name="aukioloajat" type="text" placeholder={f.hoursPlaceholder} />
+  </div>
+
+  <div class="form-field">
+    <label for="if-booking">
+      {f.bookingUrl} <span class="optional">{f.optional}</span>
+    </label>
+    <input id="if-booking" name="booking_url" type="text" autocomplete="url" />
+  </div>
+
+  <fieldset class="form-field">
+    <legend>{f.styles}</legend>
+    <div class="checkbox-grid">
+      {
+        styles.map((style) => (
+          <label class="checkbox-item">
+            <input type="checkbox" name="tyylit" value={style.id} />
+            {style.name}
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  {
+    artistSlots.length > 0 && (
+      <fieldset class="form-field">
+        <legend>{f.extraArtistsTitle}</legend>
+        <p class="field-hint">{f.extraArtistsHint}</p>
+        {artistSlots.map((n) => (
+          <div class="artist-row">
+            <input name={`lisaartisti${n}_nimi`} type="text" placeholder={f.artistName} autocomplete="off" />
+            <input name={`lisaartisti${n}_ig`} type="text" placeholder={f.artistInstagram} autocomplete="off" />
+          </div>
+        ))}
+      </fieldset>
+    )
+  }
+
+  <label class="checkbox-item permission">
+    <input type="checkbox" name="kuvat_lupa" value="kylla" required />
+    {f.photoPermission}
+  </label>
+
+  <button class="btn-cta" type="submit">{f.submit}</button>
+  <p class="form-note">{f.note}</p>
+</form>
+
+<style>
+  .intake {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card-lg);
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    margin: 0;
+  }
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+  .form-field label,
+  .form-field legend {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+    padding: 0;
+  }
+  .optional {
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+  }
+  .form-field input,
+  .form-field textarea {
+    font-family: var(--font-body);
+    /* 16px så iOS inte zoomar in vid fokus */
+    font-size: 16px;
+    color: var(--text);
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 11px 14px;
+    width: 100%;
+  }
+  .form-field textarea {
+    resize: vertical;
+    min-height: 76px;
+    line-height: 1.5;
+  }
+  .form-field input:focus-visible,
+  .form-field textarea:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 1px;
+  }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 12px;
+    margin-top: 4px;
+  }
+  .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .checkbox-item input {
+    width: auto;
+    accent-color: var(--flash);
+  }
+  .permission {
+    line-height: 1.4;
+  }
+
+  .field-hint {
+    font-size: 12px;
+    color: var(--meta);
+    margin: 2px 0 4px;
+  }
+  .artist-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .artist-row:first-of-type {
+    margin-top: 0;
+  }
+
+  .form-note {
+    font-size: 11.5px;
+    color: var(--meta);
+    text-align: center;
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .artist-row {
+      flex-direction: row;
+    }
+    .artist-row input {
+      flex: 1;
+    }
+  }
+</style>

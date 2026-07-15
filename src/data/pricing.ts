@@ -21,22 +21,24 @@ export const TIER_ORDER: readonly Tier[] = ['perus', 'pro', 'premium'] as const;
 // Årsvis, recurring. Pro blir "det rimliga valet", Premium ankrar uppåt.
 export const TIER_PRICE: Record<Tier, number> = { perus: 0, pro: 199, premium: 499 };
 
-// En Stripe Payment Link per betald nivå. Byt platshållarna mot Calles
-// riktiga länkar när de kommer — inget annat behöver röras. Nivån sätts
-// manuellt i studions frontmatter (`tier:`) efter betalning.
+// En Stripe Payment Link per betald nivå (LIVE — Calle skapade 2026-07-15).
+// Nivån sätts manuellt i studions frontmatter (`tier:`) efter betalning
+// (se betalflode-och-kiitos.md). Redirect efter betalning konfigureras på
+// respektive länk i Stripe-dashboarden (Calles jobb, inte kod): Pro →
+// /kiitos-pro, Premium → /kiitos-premium (sv: /tack-pro, /tack-premium).
 export const STRIPE_LINKS: Record<PaidTier, string> = {
-  pro: 'https://buy.stripe.com/PLACEHOLDER_PRO',
-  premium: 'https://buy.stripe.com/PLACEHOLDER_PREMIUM',
+  pro: 'https://buy.stripe.com/8x2dR94sPgtOea3a6c6sw00',
+  premium: 'https://buy.stripe.com/7sY4gz8J52CY0jd4LS6sw01',
 };
 
 /**
- * Betalning är MANUELL i MVP (faktura/Payment Link — CLAUDE.md). Tills Calle
- * har riktiga Stripe-länkar leder ALLA nivåer till ansökningsformuläret
- * (/liity), så inga döda buy.stripe.com-länkar syns i produktion. När Stripe
- * är skarpt: byt STRIPE_LINKS ovan och sätt denna till true — då går de
- * betalda korten direkt till Stripe. Inget annat behöver röras.
+ * Betalning är MANUELL i MVP (faktura/Payment Link — CLAUDE.md). Med
+ * STRIPE_LINKS ifyllda går de betalda korten direkt till Stripe. Om
+ * länkarna någonsin behöver stängas av (t.ex. paus i försäljningen): sätt
+ * denna till false — då leder alla nivåer till ansökningsformuläret
+ * (/liity) igen i stället, inget annat behöver röras.
  */
-export const PAYMENTS_LIVE = false;
+export const PAYMENTS_LIVE = true;
 
 /** Formaterat pris, t.ex. "0 €" / "199 €". Samma format fi/sv. */
 export function priceLabel(tier: Tier): string {
@@ -58,6 +60,13 @@ interface TierCard {
   features: string[]; // kortlista på priskortet
   cta: string; // knapptext
   ctaNote?: string; // liten rad under CTA (t.ex. gratisnivåns "ingen betalning")
+  /**
+   * Aloitustarjous-badge (betalflode-och-kiitos.md) — endast Pro/Premium.
+   * VIKTIGT: måste motsvaras av en riktig free trial på Stripe Payment
+   * Link-abonnemanget (Calles jobb, inte kod) — annars lovar badgen något
+   * kassan inte ger. Diskret pill, inte rea-skrik.
+   */
+  campaignBadge?: string;
 }
 
 /**
@@ -85,6 +94,7 @@ export interface PricingContent {
   h1: string;
   intro: string;
   popularLabel: string; // "Suosituin" ovanpå Pro-kortet
+  campaignEyebrow: string; // liten etikett ovanför kampanjbadgen ("Aloitustarjous")
   tiers: Record<Tier, TierCard>;
   matrixTitle: string;
   matrixFeatureHead: string; // kolumnrubrik för feature-kolumnen
@@ -110,6 +120,7 @@ export const pricing: Record<Locale, PricingContent> = {
     intro:
       'Perusprofiili on ilmainen ja tuo sinut mukaan kaupunki- ja tyylihakuun. Pro tekee profiilistasi täyden ja tavoitettavan. Premium nostaa sinut kärkeen ja etusivulle.',
     popularLabel: 'Suosituin',
+    campaignEyebrow: 'Aloitustarjous',
     tiers: {
       perus: {
         name: 'Ilmainen',
@@ -137,6 +148,7 @@ export const pricing: Record<Locale, PricingContent> = {
           'Sijoitus ilmaislistausten yläpuolella',
         ],
         cta: 'Valitse Pro',
+        campaignBadge: 'Saat 10 päivää ilmaiseksi',
       },
       premium: {
         name: 'Premium',
@@ -151,6 +163,7 @@ export const pricing: Record<Locale, PricingContent> = {
           'Suositukset naapurisivuilla + kuukausiraportti',
         ],
         cta: 'Valitse Premium',
+        campaignBadge: 'Saat 30 päivää ilmaiseksi',
       },
     },
     matrixTitle: 'Vertaile tasoja',
@@ -284,6 +297,7 @@ export const pricing: Record<Locale, PricingContent> = {
     intro:
       'Basprofilen är gratis och tar med dig i stads- och stilsökningen. Pro gör din profil komplett och nåbar. Premium lyfter dig till toppen och till startsidan.',
     popularLabel: 'Populärast',
+    campaignEyebrow: 'Introduktionserbjudande',
     tiers: {
       perus: {
         name: 'Gratis',
@@ -311,6 +325,7 @@ export const pricing: Record<Locale, PricingContent> = {
           'Placering ovanför gratislistningar',
         ],
         cta: 'Välj Pro',
+        campaignBadge: 'Få 10 dagar gratis',
       },
       premium: {
         name: 'Premium',
@@ -325,6 +340,7 @@ export const pricing: Record<Locale, PricingContent> = {
           'Rekommendationer på närliggande sidor + månadsrapport',
         ],
         cta: 'Välj Premium',
+        campaignBadge: 'Få 30 dagar gratis',
       },
     },
     matrixTitle: 'Jämför nivåerna',

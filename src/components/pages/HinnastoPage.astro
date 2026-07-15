@@ -100,6 +100,14 @@ const cellClass = (v: boolean | string): string =>
                   <span class="plan-amount">{priceLabel(tier)}</span>
                   {TIER_PRICE[tier] > 0 && <span class="plan-period">{plan.period}</span>}
                 </p>
+                {
+                  plan.campaignBadge && (
+                    <p class="plan-campaign">
+                      <span class="plan-campaign-eyebrow">{c.campaignEyebrow}</span>
+                      <span class="plan-campaign-badge">{plan.campaignBadge}</span>
+                    </p>
+                  )
+                }
                 <ul class="plan-features">
                   {plan.features.map((feature) => (
                     <li>
@@ -339,6 +347,40 @@ const cellClass = (v: boolean | string): string =>
     color: var(--meta);
     margin-left: 4px;
   }
+
+  /* Aloitustarjous-badge (betalflode-och-kiitos.md) — diskret, matchar
+     kortens befintliga accentfärg (Pro = flash, Premium = guld — guld
+     reserverat för Premium enligt brand-tokens, samma regel som checkarna). */
+  .plan-campaign {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 16px;
+  }
+  .plan-campaign-eyebrow {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .plan--premium .plan-campaign-eyebrow {
+    color: rgba(237, 234, 226, 0.55);
+  }
+  .plan-campaign-badge {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--flash);
+    border: 1px solid var(--flash);
+    border-radius: var(--r-chip);
+    padding: 4px 10px;
+  }
+  .plan--premium .plan-campaign-badge {
+    color: var(--gold);
+    border-color: rgba(201, 162, 39, 0.55);
+  }
+
   .plan-features {
     list-style: none;
     margin: 0 0 22px;
