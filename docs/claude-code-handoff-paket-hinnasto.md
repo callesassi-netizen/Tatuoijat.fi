@@ -12,15 +12,15 @@ Varje nivå gör ett tydligt eget jobb — annars blir Pro bara "Premium light":
 
 **Två regler att vakta i implementationen:** (1) topplacering + startsidesfeature ska vara EXKLUSIVT Premium — den enda knappa resursen. (2) Galleriet (egna bilder) är moroten som gör claim värt att betala för → Pro får galleri, inte bara Premium.
 
-## Namn & pris (rekommenderat, Calle justerar)
+## Namn & pris (Calles beslut 2026-07-15)
 
-| Nivå | FI-namn | SV-namn | Pris (rek.) |
+| Nivå | FI-namn | SV-namn | Pris |
 |------|---------|---------|-------------|
 | Gratis | **Perus** | Bas | 0 € |
-| Mellan | **Pro** | Pro | ~129 €/vuosi |
-| Stor | **Premium** | Premium | ~279 €/vuosi |
+| Mellan | **Pro** | Pro | 199 €/vuosi |
+| Stor | **Premium** | Premium | 499 €/vuosi |
 
-Priset sätts årsvis (recurring, direkt betalning). Tre nivåer gör att Pro blir "det rimliga valet" och Premium ankrar värdet uppåt. Varje betald nivå = egen Stripe Payment Link; nivån sätts manuellt i frontmatter efter betalning.
+Priset sätts årsvis (recurring, direkt betalning). Tre nivåer gör att Pro blir "det rimliga valet" och Premium ankrar värdet uppåt. Varje betald nivå = egen Stripe Payment Link; nivån sätts manuellt i frontmatter efter betalning. Höjt från ursprungliga ~129/~279 € inför lansering — inga betalande kunder ännu, så ingen prishöjning på befintliga studios. Calle planerar kampanjer (t.ex. founding-rabatt) separat.
 
 ## Feature-matris
 

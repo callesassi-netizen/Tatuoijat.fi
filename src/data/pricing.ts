@@ -17,9 +17,9 @@ export type PaidTier = 'pro' | 'premium';
 /** Visnings-/sorteringsordning: gratis → betald → topp. */
 export const TIER_ORDER: readonly Tier[] = ['perus', 'pro', 'premium'] as const;
 
-// ── PRISER: PLATSHÅLLARE (Calle justerar). Ändra HÄR — enda stället. ──
+// ── PRISER (Calles beslut 2026-07-15). Ändra HÄR — enda stället. ──
 // Årsvis, recurring. Pro blir "det rimliga valet", Premium ankrar uppåt.
-export const TIER_PRICE: Record<Tier, number> = { perus: 0, pro: 129, premium: 279 };
+export const TIER_PRICE: Record<Tier, number> = { perus: 0, pro: 199, premium: 499 };
 
 // En Stripe Payment Link per betald nivå. Byt platshållarna mot Calles
 // riktiga länkar när de kommer — inget annat behöver röras. Nivån sätts
@@ -38,7 +38,7 @@ export const STRIPE_LINKS: Record<PaidTier, string> = {
  */
 export const PAYMENTS_LIVE = false;
 
-/** Formaterat pris, t.ex. "0 €" / "129 €". Samma format fi/sv. */
+/** Formaterat pris, t.ex. "0 €" / "199 €". Samma format fi/sv. */
 export function priceLabel(tier: Tier): string {
   return `${TIER_PRICE[tier]} €`;
 }
@@ -104,7 +104,7 @@ export const pricing: Record<Locale, PricingContent> = {
   fi: {
     metaTitle: 'Hinnasto studioille — Perus, Pro ja Premium | Tatuoijat.fi',
     metaDescription:
-      'Listaa studiosi Suomen tatuoijakatalogiin. Ilmainen perusprofiili, Pro (129 €/v) galleria ja yhteydenotto, Premium (279 €/v) kärkisijoitus ja etusivunäkyvyys.',
+      'Listaa studiosi Suomen tatuoijakatalogiin. Ilmainen perusprofiili, Pro (199 €/v) galleria ja yhteydenotto, Premium (499 €/v) kärkisijoitus ja etusivunäkyvyys.',
     eyebrow: 'Studioille ja tatuoijille',
     h1: 'Valitse tasosi.',
     intro:
@@ -278,7 +278,7 @@ export const pricing: Record<Locale, PricingContent> = {
   sv: {
     metaTitle: 'Prislista för studios — Gratis, Pro och Premium | Tatuoijat.fi',
     metaDescription:
-      'Lista din studio i Finlands tatuerarkatalog. Gratis basprofil, Pro (129 €/år) med galleri och kontaktknapp, Premium (279 €/år) med topplacering och startsidesplats.',
+      'Lista din studio i Finlands tatuerarkatalog. Gratis basprofil, Pro (199 €/år) med galleri och kontaktknapp, Premium (499 €/år) med topplacering och startsidesplats.',
     eyebrow: 'För studios och tatuerare',
     h1: 'Välj din nivå.',
     intro:
