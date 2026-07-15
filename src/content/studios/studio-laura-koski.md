@@ -1,5 +1,6 @@
 ---
 name: "Studio Laura Koski"
+walkIn: true
 city: pori
 styles: [fineline, anime-manga, neotraditional, blackwork]
 premium: false

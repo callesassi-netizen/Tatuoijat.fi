@@ -1,5 +1,6 @@
 ---
 name: "One Eye Tattoi"
+walkIn: true
 city: helsinki
 styles: [traditional, ornamental]
 premium: false

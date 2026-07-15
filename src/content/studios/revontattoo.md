@@ -1,11 +1,13 @@
 ---
 name: "Revontattoo"
+walkIn: true
 city: nurmijarvi
-styles: [fineline, blackwork]
+styles: [fineline, blackwork, traditional, ornamental]
 premium: false
 website: "https://www.revontattoo.com"
 instagram: "freyja.and.fauna"
-address: "kuonomäentie 1"
+artistInstagrams: ["jaara.tattoo"]
+address: "Kuonomäentie 1, 01800"
 images: []
 verified: false
 ftaaMember: true

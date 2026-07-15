@@ -1,5 +1,6 @@
 ---
 name: "Soulskin Tattoo Studio"
+walkIn: true
 city: turku
 district: "Keskusta"
 styles: [realismi]

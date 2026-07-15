@@ -1,5 +1,6 @@
 ---
 name: "Silk ink"
+walkIn: true
 city: helsinki
 styles: [realismi]
 premium: false

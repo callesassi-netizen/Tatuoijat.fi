@@ -1,5 +1,6 @@
 ---
 name: "TC-ink"
+walkIn: true
 city: vantaa
 styles: [realismi, fineline, neotraditional]
 premium: false

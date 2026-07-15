@@ -4,6 +4,7 @@ city: helsinki
 styles: [fineline, geometrinen, neotraditional]
 premium: false
 website: "https://flowtattoo.fi/"
+walkIn: true
 instagram: "kirvestattoo"
 address: "Ilmarinkatu 10, Helsinki"
 images: []

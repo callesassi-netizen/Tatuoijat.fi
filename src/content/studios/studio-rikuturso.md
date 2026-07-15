@@ -1,5 +1,6 @@
 ---
 name: "Studio Rikuturso"
+walkIn: true
 city: tampere
 styles: [realismi, fineline, blackwork, anime-manga]
 premium: false

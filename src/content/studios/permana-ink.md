@@ -1,5 +1,6 @@
 ---
 name: "Permana Ink"
+walkIn: true
 city: helsinki
 styles: [fineline, blackwork]
 premium: false

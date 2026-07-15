@@ -1,5 +1,6 @@
 ---
 name: "Polaris Tattoo"
+walkIn: true
 city: helsinki
 styles: [traditional]
 premium: false

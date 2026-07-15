@@ -1,5 +1,6 @@
 ---
 name: "Old 7 Tattoo"
+walkIn: true
 city: helsinki
 styles: [realismi, blackwork]
 premium: false

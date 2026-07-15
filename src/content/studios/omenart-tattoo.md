@@ -1,5 +1,6 @@
 ---
 name: "omenArt Tattoo"
+walkIn: true
 city: riihimaki
 styles: []
 premium: false

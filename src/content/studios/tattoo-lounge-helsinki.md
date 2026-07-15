@@ -1,5 +1,6 @@
 ---
 name: "Tattoo Lounge Helsinki"
+walkIn: true
 city: helsinki
 styles: [blackwork, neotraditional]
 premium: false

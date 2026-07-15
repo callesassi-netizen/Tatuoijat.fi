@@ -1,5 +1,6 @@
 ---
 name: "Tatuata"
+walkIn: true
 city: helsinki
 styles: [blackwork, fineline, ornamental, traditional, japanilainen]
 premium: false

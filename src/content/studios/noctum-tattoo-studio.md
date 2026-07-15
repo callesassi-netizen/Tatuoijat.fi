@@ -1,5 +1,6 @@
 ---
 name: "Noctum Tattoo Studio"
+walkIn: true
 city: espoo
 district: "Matinkylä"
 styles: [blackwork, realismi, fineline]
