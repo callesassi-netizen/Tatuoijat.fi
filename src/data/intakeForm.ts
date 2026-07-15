@@ -2,11 +2,12 @@ import type { Locale } from '../i18n/ui';
 
 /**
  * Strukturerat intag-formulär på tack-sidorna (betalflode-och-kiitos.md,
- * "Intag-formulär"). Netlify Forms (name="aloitus", multipart/form-data),
- * samma fungerande grundprincip som ContactForm.astro — bilderna laddas
- * upp direkt i formuläret (filfält) och når Calle via samma Netlify-
- * formulärnotis till mejlen. Granskning (bildtillstånd/kvalitet) sker
- * fortfarande innan de läggs i studions galleri (Bildpolicy).
+ * "Intag-formulär"). Delar Netlify-formuläret "liity" med ContactForm.astro
+ * (samma name=, redan konfigurerad och bekräftat fungerande e-postnotis i
+ * Netlify-dashboarden — se IntakeForm.astro för varför). Bilderna laddas
+ * upp direkt i formuläret (filfält) och når Calle via samma notis.
+ * Granskning (bildtillstånd/kvalitet) sker fortfarande innan de läggs i
+ * studions galleri (Bildpolicy).
  */
 export interface IntakeFormContent {
   studioName: string;

@@ -1,13 +1,17 @@
 ---
 /**
- * Strukturerat intag-formulär på tack-sidorna (Netlify Forms,
- * name="aloitus" + honeypot, multipart/form-data för bilduppladdningen).
- * Fälten matchar exakt studio-frontmatterns profilfält (betalflode-och-
- * kiitos.md) — gör Calles/Morpheus klipp-och-klistra-jobb minimalt.
- * Bilderna laddas upp direkt här och når Calle via samma Netlify-
- * formulärnotis som sajtens övriga formulär redan skickar till mejlen —
- * granskning (bildtillstånd/kvalitet) sker fortfarande innan de läggs i
- * galleriet (Bildpolicy).
+ * Strukturerat intag-formulär på tack-sidorna. ÅTERANVÄNDER medvetet
+ * Netlify-formuläret "liity" (samma name= som ContactForm.astro/liity+
+ * yhteys) i stället för ett nytt formulärnamn — Netlify Forms e-post-
+ * notiser är kopplade PER FORMULÄRNAMN i dashboarden, och "liity" är
+ * redan konfigurerat och bekräftat fungerande. Ett nytt namn (t.ex.
+ * "aloitus") hade krävt en helt ny, oskapad notis-inställning — det var
+ * bakgrunden till att inget mejl kom fram första gången (2026-07-15).
+ * Dolt `aihe`-fält ("aloitus-pro"/"aloitus-premium") skiljer ut dessa
+ * inskick i samma Netlify-formulär. multipart/form-data för bilduppladdn-
+ * ingen. Fälten matchar exakt studio-frontmatterns profilfält (betalflode-
+ * och-kiitos.md). Granskning (bildtillstånd/kvalitet) sker fortfarande
+ * innan bilderna läggs i galleriet (Bildpolicy).
  */
 import type { Locale } from '../i18n/ui';
 import type { PaidTier } from '../data/pricing';
@@ -28,14 +32,15 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
 
 <form
   class="intake"
-  name="aloitus"
+  name="liity"
   method="POST"
   enctype="multipart/form-data"
   data-netlify="true"
   netlify-honeypot="bot-field"
   action={action}
 >
-  <input type="hidden" name="form-name" value="aloitus" />
+  <input type="hidden" name="form-name" value="liity" />
+  <input type="hidden" name="aihe" value={`aloitus-${tier}`} />
   <input type="hidden" name="taso" value={tier} />
   <p class="hp" aria-hidden="true">
     <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
