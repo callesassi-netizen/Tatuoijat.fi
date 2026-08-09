@@ -1,6 +1,9 @@
 ---
 name: "Fineline"
 order: 2
+fiAttr: "fineline-"
+fiPart: "fineline-"
+svAttr: "fineline-"
 ---
 Fineline-tatuoinnit tehdään ohuilla neuloilla ja kevyellä kädellä: hentoja viivoja, pieniä symboleita ja kasviaiheita. Tyyli sopii ensimmäiseen tatuointiin ja paikkoihin, joissa halutaan hillittyä jälkeä.
 

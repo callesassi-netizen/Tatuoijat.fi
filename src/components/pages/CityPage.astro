@@ -19,10 +19,11 @@ import {
   localizedBody,
   cityDisplayName,
   styleDisplayName,
+  styleCityPairSet,
 } from '../../lib/content';
 import { jsonLdString, breadcrumbLd, collectionPageLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
 import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
-import { citiesIndexPath, cityPath } from '../../lib/routes';
+import { citiesIndexPath, cityPath, styleCityPath } from '../../lib/routes';
 
 interface Props {
   city: CollectionEntry<'cities'>;
@@ -95,6 +96,15 @@ const faqItems: { q: string; a: string; href?: string }[] = [
   { q: t('city.qa.price.q', { city: h1City }), a: t('city.qa.price.a'), href: p('/hinnat/') },
 ];
 const faq = faqLd(faqItems.map(({ q, a }) => ({ q, a })));
+
+// Korslänkarna nedanför griden pekar på stil x stad-sidan när den finns
+// (>= CITY_INDEX_MIN_STUDIOS), annars på den generella stilsidan.
+const pairs = await styleCityPairSet();
+function styleChipHref(styleId: string): string {
+  return pairs.has(`${styleId}|${city.id}`)
+    ? p(styleCityPath(styleId, city, locale))
+    : p(`/tyylit/${styleId}/`);
+}
 
 function studioMeta(studio: (typeof studios)[number]): string {
   return studio.data.district ?? cityName;
@@ -303,7 +313,7 @@ const collectionPage = collectionPageLd(
             <h2 class="crosslink-title" id="crosslink-title">{t('city.stylesLinks.title')}</h2>
             <p class="crosslink-list">
               {topStyles.map((style) => (
-                <a class="chip" href={p(`/tyylit/${style.id}/`)}>
+                <a class="chip" href={styleChipHref(style.id)}>
                   {t('style.inCity', { style: styleDisplayName(style, locale), city: cityName })}
                 </a>
               ))}

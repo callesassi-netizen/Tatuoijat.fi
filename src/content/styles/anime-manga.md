@@ -1,6 +1,9 @@
 ---
 name: "Anime & manga"
 order: 9
+fiAttr: "anime- ja manga"
+fiPart: "anime- ja manga"
+svAttr: "anime- och manga"
 ---
 Anime- ja mangatatuoinnit tuovat iholle rakastetut hahmot ja kohtaukset: puhtaita viivoja, dynaamista liikettä ja väriä sarjakuvan hengessä. Fanikulttuurin suosikki, joka vaatii tekijältä tarkkaa linjatyötä ja hyvää värisilmää.
 

@@ -1,0 +1,472 @@
+---
+/**
+ * Stil × stad (/tyylit/{stil}/{stad}/).
+ *
+ * VARFÖR sidtypen finns (GSC-analysen 2026-08-09, docs/seo-analys-2026-08-09.md):
+ * stilsidorna har sajtens högsta CTR (9,0 % mot 3,0 % i snitt) och den enskilt
+ * bäst konverterande sökningen i hela datan var "fine line tattoo turku"
+ * (21 % CTR, position 7,2) — en fras som inte hade någon egen sida. Samma
+ * mönster syns på "fine line tattoo tampere", "blackwork tattoo helsinki" och
+ * "realistinen tatuointi helsinki".
+ *
+ * DOORWAY-SKYDDET: sidorna genereras BARA för kombinationer med minst
+ * CITY_INDEX_MIN_STUDIOS studios (getStyleCityPairs) — 29 sidor i stället för
+ * 190. Under tröskeln finns ingen URL alls, så inget behöver noindexas och
+ * sitemap-filtret i astro.config.mjs behöver inte kompletteras.
+ *
+ * UNIKT INNEHÅLL: varje sida får sin egen studiolista, sina egna stadsdelar,
+ * sina egna korslänkar och en svara-först-mening räknad ur riktig data. Den
+ * delade stiltexten trunkeras medvetet till EN mening (styleLead) så att tio
+ * stadssidor för samma stil inte blir tio kopior av samma stycke.
+ */
+import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArtistCard from '../ArtistCard.astro';
+import { styleImages } from '../../lib/styleImages';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  getStudios,
+  sortStudios,
+  isFeatured,
+  isWalkIn,
+  localizedBody,
+  cityDisplayName,
+  styleDisplayName,
+  styleCityPairSet,
+  styleAttr,
+  stylePart,
+  capitalize,
+} from '../../lib/content';
+import {
+  jsonLdString,
+  breadcrumbLd,
+  collectionPageLd,
+  faqLd,
+  CONTENT_UPDATED,
+} from '../../lib/schema';
+import { citiesIndexPath, cityPath, styleCityPath } from '../../lib/routes';
+
+interface Props {
+  style: CollectionEntry<'styles'>;
+  city: CollectionEntry<'cities'>;
+  locale: Locale;
+}
+
+const { style, city, locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const allStudios = await getStudios();
+const pairs = await styleCityPairSet();
+const styleById = new Map(styles.map((entry) => [entry.id, entry]));
+
+const styleName = styleDisplayName(style, locale);
+// Tyylinamnet är ett vanligt substantiv — gemener mitt i en mening är korrekt
+// (samma regel som StylePage). Versalen används bara satsinitialt/i rubriker.
+const styleNameLower = styleName.toLowerCase();
+// Grammatiska prefix (se content.config.ts): "blackwork-" vs "japanilainen ".
+const attr = styleAttr(style, locale);
+const attrCap = capitalize(attr);
+const part = locale === 'fi' ? stylePart(style) : attr;
+const cityName = cityDisplayName(city, locale);
+// Finska böjer ortnamnet (Helsingissä/Tampereella), svenskan gör det inte.
+const cityLoc = locale === 'fi' ? city.data.nameLocative : cityName;
+
+const studios = sortStudios(
+  allStudios.filter(
+    (studio) => studio.data.city === city.id && studio.data.styles.includes(style.id),
+  ),
+);
+
+// Svara-först (GEO.md §1) — allt räknat ur riktig data, inget påhittat.
+const answerCount =
+  studios.length === 1
+    ? t('styleCity.answer.one', { cityLoc, part, attr })
+    : t('styleCity.answer.many', { cityLoc, n: studios.length, part, attr });
+
+const districts = [...new Set(studios.map((studio) => studio.data.district).filter(Boolean))];
+const districtSentence =
+  districts.length > 0 ? t('styleCity.answer.districts', { districts: districts.join(', ') }) : '';
+
+// Bara FÖRSTA meningen ur den delade stiltexten — se filhuvudet. Regexen
+// klipper vid punkt+mellanslag och faller tillbaka på hela texten om stil-
+// introt skulle sakna punkt.
+const styleBody = localizedBody(style.body, locale);
+const styleLead = (styleBody.match(/^[^.]*\./)?.[0] ?? styleBody).trim();
+
+// Korslänkar — bara till sidor som FAKTISKT genereras (samma tröskel-set).
+const otherStylesHere = styles.filter(
+  (entry) => entry.id !== style.id && pairs.has(`${entry.id}|${city.id}`),
+);
+const otherCitiesForStyle = cities.filter(
+  (entry) => entry.id !== city.id && pairs.has(`${style.id}|${entry.id}`),
+);
+
+const faqItems: { q: string; a: string; href?: string }[] = [
+  { q: t('styleCity.qa.count.q', { part, attr, cityLoc }), a: answerCount },
+  {
+    q: t('styleCity.qa.choose.q', { cityLoc }),
+    a: t('styleCity.qa.choose.a'),
+  },
+  {
+    q: t('styleCity.qa.price.q', { attr, cityLoc }),
+    a: t('city.qa.price.a'),
+    href: p('/hinnat/'),
+  },
+];
+const faq = faqLd(faqItems.map(({ q, a }) => ({ q, a })));
+
+function studioMeta(studio: (typeof studios)[number]): string {
+  return studio.data.district ?? cityName;
+}
+function studioStyleNames(studio: (typeof studios)[number]): string[] {
+  return studio.data.styles.map((slug) => {
+    const entry = styleById.get(slug);
+    return entry ? styleDisplayName(entry, locale) : slug;
+  });
+}
+
+const path = styleCityPath(style.id, city, locale);
+const altPath = styleCityPath(style.id, city, locale === 'fi' ? 'sv' : 'fi');
+// Nominativ i title/H1 — matchar sökfrasen ("fine line tattoo turku").
+const title = t('styleCity.metaTitle', {
+  attrCap,
+  city: cityName,
+  n: studios.length,
+  site: t('site.name'),
+});
+const description = t('styleCity.metaDescription', {
+  style: styleName,
+  cityLoc,
+  city: cityName,
+  n: studios.length,
+});
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('nav.styles'), url: new URL(p('/tyylit/'), site).href },
+  { name: styleName, url: new URL(p(`/tyylit/${style.id}/`), site).href },
+  { name: cityName, url: new URL(p(path), site).href },
+]);
+const collectionPage = collectionPageLd(
+  t('styleCity.h1', { attrCap, city: cityName }),
+  new URL(p(path), site).href,
+  studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
+);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  path={path}
+  altPath={altPath}
+  hasAlternate
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(collectionPage)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
+
+  <section class="sc-hero">
+    <div class="container sc-hero-inner">
+      <div class="sc-hero-copy">
+        <a class="back-link ink-link" href={p(`/tyylit/${style.id}/`)}>
+          {t('styleCity.backToStyle', { style: styleName })}
+        </a>
+        <p class="eyebrow">{t('styleCity.eyebrow')}</p>
+        <h1 class="sc-title">{t('styleCity.h1', { attrCap, city: cityName })}</h1>
+        <p class="sc-answer">{answerCount} {districtSentence}</p>
+        <p class="sc-lead">{styleLead}</p>
+      </div>
+      {
+        styleImages[style.id] && (
+          <div class="sc-hero-media" aria-hidden="true">
+            <Image
+              src={styleImages[style.id]!}
+              alt=""
+              widths={[500, 900]}
+              sizes="(min-width: 1024px) 38vw, 100vw"
+              loading="eager"
+            />
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <section class="section" aria-labelledby="sc-studios-title">
+        <h2 class="section-title" id="sc-studios-title">
+          {t('styleCity.studiosTitle', { style: styleName, cityLoc })}
+        </h2>
+        <div class="artist-grid">
+          {
+            studios.map((studio) => (
+              <ArtistCard
+                slug={studio.id}
+                name={studio.data.name}
+                meta={studioMeta(studio)}
+                styleNames={studioStyleNames(studio)}
+                premium={isFeatured(studio)}
+                walkIn={isWalkIn(studio)}
+                locale={locale}
+              />
+            ))
+          }
+        </div>
+        <p class="sc-allcity">
+          <a class="ink-link" href={p(cityPath(city, locale))}>
+            {t('styleCity.allInCity', { cityLoc })} →
+          </a>
+        </p>
+      </section>
+
+      {
+        otherStylesHere.length > 0 && (
+          <section class="crosslink" aria-labelledby="sc-otherstyles">
+            <h2 class="crosslink-title" id="sc-otherstyles">
+              {t('styleCity.otherStyles', { cityLoc })}
+            </h2>
+            <p class="crosslink-list">
+              {otherStylesHere.map((entry) => (
+                <a class="chip" href={p(styleCityPath(entry.id, city, locale))}>
+                  {t('style.inCity', { style: styleDisplayName(entry, locale), city: cityName })}
+                </a>
+              ))}
+            </p>
+          </section>
+        )
+      }
+
+      {
+        otherCitiesForStyle.length > 0 && (
+          <section class="crosslink" aria-labelledby="sc-othercities">
+            <h2 class="crosslink-title" id="sc-othercities">
+              {t('styleCity.otherCities', { style: styleName })}
+            </h2>
+            <p class="crosslink-list">
+              {otherCitiesForStyle.map((entry) => (
+                <a class="chip" href={p(styleCityPath(style.id, entry, locale))}>
+                  {t('style.inCity', { style: styleName, city: cityDisplayName(entry, locale) })}
+                </a>
+              ))}
+            </p>
+          </section>
+        )
+      }
+
+      <section class="faq-section" aria-labelledby="sc-faq-title">
+        <h2 class="faq-title" id="sc-faq-title">{t('styleCity.faqTitle')}</h2>
+        <div class="faq-list">
+          {
+            faqItems.map((item) => (
+              <details class="faq-item">
+                <summary class="faq-q">{item.q}</summary>
+                <p class="faq-a">
+                  {item.a}
+                  {item.href && (
+                    <>
+                      {' '}
+                      <a class="ink-link" href={item.href}>
+                        {t('common.priceGuideLink')}
+                      </a>
+                    </>
+                  )}
+                </p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
+
+      <p class="sc-back">
+        <a class="ink-link" href={p(citiesIndexPath(locale))}>{t('nav.cities')}</a>
+        <span aria-hidden="true"> · </span>
+        <a class="ink-link" href={p('/tyylit/')}>{t('nav.styles')}</a>
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .sc-hero {
+    position: relative;
+    z-index: 0;
+    background:
+      radial-gradient(110% 100% at 78% 0%, rgba(77, 50, 48, 0.22) 0%, rgba(16, 16, 20, 0) 58%),
+      var(--ink);
+  }
+  .sc-hero-inner {
+    padding: 24px var(--page-pad) 56px;
+  }
+  .back-link {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--meta);
+    margin-bottom: 14px;
+  }
+  .sc-title {
+    font-size: 36px;
+    line-height: 1.04;
+    color: var(--text-light);
+    margin: 0;
+  }
+  .sc-answer {
+    margin: 14px 0 0;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--text-light);
+    max-width: 52ch;
+  }
+  .sc-lead {
+    margin: 10px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--meta);
+    max-width: 56ch;
+  }
+  .sc-hero-media {
+    margin-top: 22px;
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .sc-hero-media :global(img) {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.92);
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 30px var(--page-pad) 52px;
+  }
+  .section {
+    margin-bottom: 36px;
+  }
+  .section-title {
+    font-size: 22px;
+    color: var(--text);
+    margin: 0 0 16px;
+  }
+  .artist-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .sc-allcity {
+    margin: 18px 0 0;
+    font-size: 14px;
+  }
+
+  .crosslink {
+    margin-bottom: 32px;
+    padding-top: 24px;
+    border-top: var(--card-border);
+  }
+  .crosslink-title {
+    font-size: 16px;
+    color: var(--text);
+    margin: 0 0 12px;
+  }
+  .crosslink-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .faq-section {
+    padding-top: 24px;
+    border-top: var(--card-border);
+  }
+  .faq-title {
+    font-size: 20px;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 12px 14px;
+  }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+  }
+  .faq-a {
+    margin: 8px 0 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--meta);
+  }
+  .freshness {
+    margin: 24px 0 0;
+    font-size: 12px;
+    color: var(--meta);
+  }
+  .sc-back {
+    margin: 28px 0 0;
+    font-size: 13px;
+    color: var(--meta);
+  }
+
+  @media (min-width: 768px) {
+    .artist-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1024px) {
+    .sc-hero-inner {
+      padding: 40px var(--page-pad) 76px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .sc-title {
+      font-size: 56px;
+    }
+    .sc-hero-media {
+      margin-top: 0;
+      border-radius: var(--r-card-lg);
+    }
+    .sc-hero-media :global(img) {
+      height: 300px;
+    }
+    .sheet-inner {
+      padding: 44px var(--page-pad) 72px;
+    }
+    .artist-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .section-title {
+      font-size: 28px;
+    }
+  }
+</style>

@@ -19,9 +19,12 @@ import {
   localizedBody,
   cityDisplayName,
   styleDisplayName,
+  styleCityPairSet,
+  styleAttr,
+  capitalize,
 } from '../../lib/content';
 import { jsonLdString, breadcrumbLd, collectionPageLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
-import { citiesIndexPath, cityPath } from '../../lib/routes';
+import { citiesIndexPath, cityPath, styleCityPath } from '../../lib/routes';
 
 interface Props {
   style: CollectionEntry<'styles'>;
@@ -44,6 +47,9 @@ const styleName = styleDisplayName(style, locale);
 // mening är korrekt finska/svenska ("...eniten fineline-tekijöitä", inte
 // "...Fineline-tekijöitä"). styleName (versal) används endast satsinitialt.
 const styleNameLower = styleName.toLowerCase();
+// Se content.config.ts: adjektivstilar ("japanilainen tatuointi") får inte
+// bindestreck. Rättar även den befintliga titeln "Japanilainen-tatuointi".
+const attrCap = capitalize(styleAttr(style, locale));
 const intro = localizedBody(style.body, locale);
 const studios = sortStudios(
   allStudios.filter((studio) => studio.data.styles.includes(style.id)),
@@ -53,6 +59,15 @@ const studios = sortStudios(
 const citiesWithStyle = cities.filter((city) =>
   studios.some((studio) => studio.data.city === city.id),
 );
+// Har kombinationen en EGEN sida (>= CITY_INDEX_MIN_STUDIOS studios) pekar
+// chipset dit i stället för på stadssidan med ?tyyli=-filtret. Det är den
+// interna länken som får de nya stil x stad-sidorna upptäckta och rankade.
+const pairs = await styleCityPairSet();
+function cityChipHref(city: (typeof cities)[number]): string {
+  return pairs.has(`${style.id}|${city.id}`)
+    ? p(styleCityPath(style.id, city, locale))
+    : p(cityPath(city, locale)) + `?tyyli=${style.id}`;
+}
 
 // GEO.md §1 (svara-först) — riktiga toppstäder för stilen, räknat ur datan.
 // "Namn (antal)"-formatet undviker finskans kasusböjning helt (ingen risk
@@ -97,7 +112,7 @@ function studioStyleNames(studio: (typeof studios)[number]): string[] {
 }
 
 const path = `/tyylit/${style.id}/`;
-const title = t('style.metaTitle', { style: styleName, site: t('site.name') });
+const title = t('style.metaTitle', { attrCap, site: t('site.name') });
 const description = t('style.metaDescription', { style: styleName });
 
 const breadcrumb = breadcrumbLd([
@@ -181,7 +196,7 @@ const collectionPage = collectionPageLd(
             </h2>
             <p class="city-links">
               {citiesWithStyle.map((city) => (
-                <a class="chip" href={p(cityPath(city, locale)) + `?tyyli=${style.id}`}>
+                <a class="chip" href={cityChipHref(city)}>
                   {t('style.inCity', {
                     style: styleName,
                     city: cityDisplayName(city, locale),

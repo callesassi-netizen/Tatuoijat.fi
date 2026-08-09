@@ -1,6 +1,9 @@
 ---
 name: "Ornamental"
 order: 8
+fiAttr: "ornamental-"
+fiPart: "ornamental-"
+svAttr: "ornamental-"
 ---
 Ornamentaalinen tatuointi ammentaa koruista, mandaloista ja arkkitehtuurista: symmetriaa, hienoa pisteytystä ja kuvioita, jotka myötäilevät kehon linjoja. Tyyli korostaa muotoa itsessään — koru, joka ei lähde pois.
 

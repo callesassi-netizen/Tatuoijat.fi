@@ -1,6 +1,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n/ui';
 import type { Tier } from '../data/pricing';
+import { CITY_INDEX_MIN_STUDIOS } from './indexing.mjs';
 
 type Studio = CollectionEntry<'studios'>;
 
@@ -99,4 +100,67 @@ export function cityDisplayName(city: CollectionEntry<'cities'>, locale: Locale)
 
 export function styleDisplayName(style: CollectionEntry<'styles'>, locale: Locale): string {
   return locale === 'sv' ? (style.data.nameSv ?? style.data.name) : style.data.name;
+}
+
+/**
+ * Stil × stad-kombinationer som förtjänar en egen sida.
+ *
+ * Tröskeln är SAMMA som för tunna stadssidor (CITY_INDEX_MIN_STUDIOS):
+ * under den genereras ingen sida alls — inte ens noindexad. 10 stilar ×
+ * 19 städer vore 190 URL:er varav de flesta med 0–2 studios, dvs. precis
+ * den doorway-matta seo-handoff §3.1 varnar för. Med tröskeln blir det
+ * ~29 sidor som var och en listar minst tre riktiga studios.
+ *
+ * Att sidan inte finns är också varför korslänkarna (StylePage/CityPage)
+ * måste slå upp i detta set innan de länkar hit.
+ */
+export async function getStyleCityPairs(): Promise<
+  { styleId: string; cityId: string; count: number }[]
+> {
+  const studios = await getStudios();
+  const counts = new Map<string, number>();
+  for (const studio of studios) {
+    if (!studio.data.city) continue;
+    for (const styleId of studio.data.styles) {
+      const key = `${styleId}|${studio.data.city}`;
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+  }
+  return [...counts.entries()]
+    .filter(([, count]) => count >= CITY_INDEX_MIN_STUDIOS)
+    .map(([key, count]) => {
+      const [styleId, cityId] = key.split('|');
+      return { styleId: styleId!, cityId: cityId!, count };
+    })
+    .sort((a, b) => b.count - a.count);
+}
+
+/** Snabb uppslagning: finns sidan /tyylit/{stil}/{stad}/? */
+export async function styleCityPairSet(): Promise<Set<string>> {
+  const pairs = await getStyleCityPairs();
+  return new Set(pairs.map((pair) => `${pair.styleId}|${pair.cityId}`));
+}
+
+/**
+ * Prefix som sätts direkt före ett substantiv ("…tatuointi"/"…tatuering").
+ * Se kommentaren vid styles-collectionen i content.config.ts: adjektivstilar
+ * (japanilainen, geometrinen) är egna ord, övriga bildar yhdyssana med
+ * bindestreck. Utan fältet faller vi tillbaka på gemener + bindestreck,
+ * vilket är rätt för alla substantiv-/lånordsstilar.
+ */
+export function styleAttr(style: CollectionEntry<'styles'>, locale: Locale): string {
+  if (locale === 'sv') {
+    return style.data.svAttr ?? `${styleDisplayName(style, 'sv').toLowerCase()}-`;
+  }
+  return style.data.fiAttr ?? `${style.data.name.toLowerCase()}-`;
+}
+
+/** Som styleAttr men för partitiv plural ("…tatuointeja"). Endast finska. */
+export function stylePart(style: CollectionEntry<'styles'>): string {
+  return style.data.fiPart ?? style.data.fiAttr ?? `${style.data.name.toLowerCase()}-`;
+}
+
+/** Versaliserar prefixet för satsinitial användning (H1, title). */
+export function capitalize(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }

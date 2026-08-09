@@ -1,6 +1,9 @@
 ---
 name: "Blackwork"
 order: 3
+fiAttr: "blackwork-"
+fiPart: "blackwork-"
+svAttr: "blackwork-"
 ---
 Blackwork rakentuu puhtaasti mustasta musteesta: vahvoja pintoja, ornamentiikkaa ja graafisia kuvioita. Tyyli ikääntyy kauniisti ja erottuu kauas — rohkea valinta, joka ei kaipaa värejä.
 

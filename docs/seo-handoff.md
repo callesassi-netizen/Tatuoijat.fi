@@ -96,3 +96,72 @@ Portfoliobilder visas som **Instagram-embeds av specifika inlägg** (lagligt uta
 - Inga AI-genererade massintros för 46 städer — 10 bra slår 46 dåliga; tunt boilerplate är största risken för en ny katalogdomän.
 - Ingen aftercare-content i fas 1 (hård konkurrens, fel intention).
 - Rör inte artist-sidorna (beslutet från datamodell-frågan står: studios har sidorna tills claim-flödet ger innehåll).
+
+## 10. Re-validering 2026-07-08 (TILLÄGG — inget ovan ändrat)
+
+Morpheus drog live Google.fi-autocomplete på nytt 8/7 (4 dagar efter §1). **Signalerna i §1 är stabila** — samma mönster (tatuointi {stad} som huvudterm, pris/walk-in/parhaat arviot/fine line/stadsdelar). Strategin ovan behöver inga ändringar; den är nu validerad två gånger.
+
+En signal som INTE fanns i §1 och som är värd att notera additivt:
+
+- **"tatuointimessut 2026"** dök upp direkt under "tatuointi …" → convention-/mässsök finns som egen intention. Detta ligger nära §5.4 (conventions som länkbyggnads-kanal) och kan på sikt bli en lätt event-yta ("Tatuointimessut Suomessa 2026") — men EJ fas 1, och bara om det kan hållas aktuellt (föråldrat evenemangsinnehåll är sämre än inget). Passar också in i en framtida "events/recently added"-riktning (se projektets intelligenslager-fas).
+
+## 11. Stil × stad-sidor (TILLÄGG 2026-08-09 — inget ovan ändrat)
+
+Efter första GSC-månaden (full analys i `docs/seo-analys-2026-08-09.md`) byggdes
+en ny sidtyp: **`/tyylit/{stil}/{stad}/`** (sv `/sv/tyylit/{stil}/{stad}/`).
+
+**Belägget.** Stilsidorna har sajtens högsta CTR — 9,0 % mot 3,0 % i snitt — och
+den bäst konverterande enskilda sökningen i hela datan var `fine line tattoo
+turku`: 21 % CTR på position 7,2, utan att någon sida matchade frasen. Samma
+mönster på `fine line tattoo tampere`, `blackwork tattoo helsinki`,
+`fineline tatuointi tampere` och `realistinen tatuointi helsinki`.
+
+**Doorway-skyddet (§3.1 gäller fullt ut).** Sidorna genereras BARA för
+kombinationer med minst `CITY_INDEX_MIN_STUDIOS` studios — se
+`getStyleCityPairs()` i `src/lib/content.ts`. Det ger **29 sidor i stället för
+190**; under tröskeln finns ingen URL alls, så inget behöver noindexas och
+sitemap-filtret i `astro.config.mjs` behövde inte kompletteras. Växer katalogen
+tillkommer sidor automatiskt när en kombination passerar tre studios.
+
+**Unikt innehåll per sida:** egen studiolista, egna stadsdelar, egna korslänkar
+och en svara-först-mening räknad ur riktig data. Den delade stiltexten klipps
+medvetet till EN mening så att tio stadssidor för samma stil inte blir tio
+kopior av samma stycke.
+
+**Internlänkning:** stadssidans stil-chips och stilsidans stads-chips pekar nu
+på stil × stad-sidan när den finns, annars som förut. Ingen föräldralös sida.
+
+### 11.1 Grammatiska attributformer på stilar
+
+Nya frontmatter-fält på `styles`: `fiAttr`, `fiPart`, `svAttr`. Finskan skiljer
+på substantiv-/lånordsstilar som bildar yhdyssana med bindestreck
+(`blackwork-tatuointi`) och adjektivstilar som är egna ord och böjs
+(`japanilainen tatuointi`, `japanilaisia tatuointeja`). Utan fälten blev det
+`Japanilainen-tatuointi` och `tekee japanilainen-tatuointeja` — omedelbart fel
+för en finsk läsare. **Detta rättade också den befintliga stilsidans title**,
+som haft samma fel sedan lanseringen. Fälten är rena prefix som konkateneras
+direkt mot substantivet, så de bär sitt eget bindestreck eller mellanslag.
+
+### 11.2 Profiltitlar (P2a)
+
+`artist.metaTitle` bytt från `{name} — tatuointiliike, {city}` till
+`{name} — tyylit ja yhteystiedot | {city}`, och beskrivningen skriver ut
+stilar + artistantal när studion saknar bio. Anledning: 4 600 visningar/mån låg
+på position 6–9 med **0,6 % CTR** eftersom vår träff lovade exakt samma sak som
+studions egen, från en okänd domän. Katalogens enda äkta försprång är
+överblicken. Mät om vid nästa avstämning — detta är ett CTR-experiment, inte
+en garanti.
+
+### 11.3 Kvar att göra (ur analysen)
+
+- **P3** priser mot stad och kroppsdel (`turku tatuointi hinnat` pos 13,9,
+  `koko selän tatuointi hinta` pos 9,2 — huvudtermen `tatuointi hinnat` ligger
+  26,5). Keyword-researchen 9/8 bekräftade modifierarna: käsivarsi, pieni,
+  puoli hiha, koko selkä, teksti, sormi, alaselkä, iso, walk-in, fine line.
+- **P4** de åtta småstäderna på position 9–15 → topp 5.
+- **P5 lävistys** är större än väntat: egen anatomivokabulär (helix, conch,
+  daith, tragus, septum, industrial, rook, smiley, microdermal) plus
+  `lävistysliike {stad}`. Kräver ett `piercing`-fält och en berikningskörning
+  — datan finns inte i katalogen i dag.
+- **12 studios saknar `city`** och hamnar därför utanför både stads- och
+  stil × stad-sidorna. Enkel datafix med direkt SEO-effekt.

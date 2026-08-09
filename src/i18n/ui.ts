@@ -109,9 +109,13 @@ export const ui = {
     'city.qa.price.a': 'Hinta riippuu koosta, tyylistä ja artistista. Katso koko hintaopas ja esimerkkihinnat.',
     'city.faqTitle': 'Usein kysyttyä',
     'city.stylesLinks.title': 'Selaa tyylin mukaan',
-    'artist.metaTitle': '{name} — tatuointiliike, {city} | {site}',
+    // P2a (GSC-analys 2026-08-09): den gamla titeln "{name} — tatuointiliike,
+    // {city}" lovade EXAKT samma sak som studions egen träff, från en okänd
+    // domän — 4 600 visningar/mån på position 6–9 gav 0,6 % CTR. Katalogens
+    // enda äkta försprång är överblicken: tyylit + yhteystiedot på ett ställe.
+    'artist.metaTitle': '{name} — tyylit ja yhteystiedot | {city}',
     // Fallback när studionamnet gör fullmallen längre än 60 tecken
-    'artist.metaTitleShort': '{name} | {site}',
+    'artist.metaTitleShort': '{name} — tyylit ja yhteystiedot',
     'artist.book': 'Varaa aika',
     'artist.call': 'Soita',
     'artist.hours': 'Aukioloajat',
@@ -144,6 +148,12 @@ export const ui = {
     'artist.artists': 'Artistit',
     'artist.metaDescriptionFallback':
       '{name} — tatuointiliike ({place}). Katso tyylit ja yhteystiedot ja ota yhteyttä suoraan — {site} kokoaa Suomen tatuoijat.',
+    // Datadriven variant: kertoo tyylit ja artistimäärän jo SERPissä. Tämä on
+    // se tieto, jota studion omalla sivulla ei ole tiivistettynä.
+    'artist.metaDescriptionData':
+      '{name} ({place}) — tyylit: {styles}. {artists} Katso portfolio, tyylit ja yhteystiedot yhdellä sivulla.',
+    'artist.artistCount.one': 'Yksi tatuoija.',
+    'artist.artistCount.many': '{n} tatuoijaa.',
     'common.finland': 'Suomi',
     // GEO.md §5 (färskhet) — "tarkistettu", ei "päivitetty": rehellinen väite
     // koko katalogin läpikäynnistä, ei väitä että juuri tämä rivi muuttui.
@@ -151,7 +161,31 @@ export const ui = {
     'common.priceGuideLink': 'Hintaoppaaseen →',
     'style.eyebrow': 'Tyyli',
     // "{stil} tatuointi" är söktermen — inte stilnamnet ensamt (handoff §2)
-    'style.metaTitle': '{style}-tatuointi — tatuoijat Suomessa | {site}',
+    // --- Stil x stad (/tyylit/{stil}/{stad}/) — sidtyp tillagd 2026-08-09 ---
+    // {city} får ALLTID nameLocative på finska (Helsingissä/Tampereella) —
+    // aldrig grundformen mitt i en mening. Undantag: metaTitle/H1-raden och
+    // korslänk-chipsen, där nominativ matchar hur folk faktiskt söker
+    // ("fine line tattoo turku") och där ingen omgivande sats kräver kasus.
+    'styleCity.eyebrow': 'Tyyli ja kaupunki',
+    'styleCity.metaTitle': '{attrCap}tatuointi {city} — {n} tatuoijaa | {site}',
+    'styleCity.metaDescription':
+      '{style}: {n} tekijää {cityLoc}. Katso portfoliot, tyylit ja yhteystiedot — ja ota yhteyttä suoraan studioon.',
+    'styleCity.h1': '{attrCap}tatuointi {city}',
+    'styleCity.answer.one': '{cityLoc} on hakemistossamme yksi studio, joka tekee {part}tatuointeja.',
+    'styleCity.answer.many': '{cityLoc} on hakemistossamme {n} studiota, jotka tekevät {part}tatuointeja.',
+    'styleCity.answer.districts': 'Kaupunginosat: {districts}.',
+    'styleCity.studiosTitle': '{style} — kaikki tekijät {cityLoc}',
+    'styleCity.otherStyles': 'Muut tyylit {cityLoc}',
+    'styleCity.otherCities': '{style} muissa kaupungeissa',
+    'styleCity.allInCity': 'Kaikki tatuoijat {cityLoc}',
+    'styleCity.backToStyle': '← {style} koko Suomessa',
+    'styleCity.faqTitle': 'Usein kysyttyä',
+    'styleCity.qa.count.q': 'Kuinka moni tatuointiliike {cityLoc} tekee {part}tatuointeja?',
+    'styleCity.qa.choose.q': 'Miten valitsen tekijän {cityLoc}?',
+    'styleCity.qa.choose.a':
+      'Vertaa portfolioita keskenään: tyyli elää yksityiskohdissa, joten katso miten viivat ja varjostus istuvat omaan ideaasi. Ota sitten yhteyttä suoraan studioon.',
+    'styleCity.qa.price.q': 'Paljonko {attr}tatuointi maksaa {cityLoc}?',
+    'style.metaTitle': '{attrCap}tatuointi — tatuoijat Suomessa | {site}',
     'style.metaDescription':
       '{style}-tatuointi: katso, ketkä tyyliä tekevät Suomessa. Selaa tatuoijien portfolioita kaupungeittain, vertaile töitä ja ota yhteyttä artistiin.',
     // Riktig sökfråga som H2 (GEO.md §2) — ersätter det tidigare neutrala labeln
@@ -276,8 +310,9 @@ export const ui = {
     'city.qa.price.a': 'Priset beror på storlek, stil och artist. Se hela prisguiden och exempelpriser.',
     'city.faqTitle': 'Vanliga frågor',
     'city.stylesLinks.title': 'Bläddra efter stil',
-    'artist.metaTitle': '{name} — tatueringsstudio, {city} | {site}',
-    'artist.metaTitleShort': '{name} | {site}',
+    // P2a — se fi-kommentaren ovan.
+    'artist.metaTitle': '{name} — stilar och kontaktuppgifter | {city}',
+    'artist.metaTitleShort': '{name} — stilar och kontaktuppgifter',
     'artist.book': 'Boka tid',
     'artist.call': 'Ring',
     'artist.hours': 'Öppettider',
@@ -309,11 +344,36 @@ export const ui = {
     'artist.artists': 'Artister',
     'artist.metaDescriptionFallback':
       '{name} — tatueringsstudio ({place}). Se stilar och kontaktuppgifter och ta kontakt direkt — {site} samlar Finlands tatuerare.',
+    'artist.metaDescriptionData':
+      '{name} ({place}) — stilar: {styles}. {artists} Se portfolio, stilar och kontaktuppgifter på ett ställe.',
+    'artist.artistCount.one': 'En tatuerare.',
+    'artist.artistCount.many': '{n} tatuerare.',
     'common.finland': 'Finland',
     'common.updated': 'Uppgifterna kontrollerade {date}',
     'common.priceGuideLink': 'Till prisguiden →',
     'style.eyebrow': 'Stil',
-    'style.metaTitle': '{style}-tatuering — tatuerare i Finland | {site}',
+    // --- Stil x stad (/sv/tyylit/{stil}/{stad}/) — se fi-kommentaren ovan.
+    // Svenskan böjer inte ortnamnet, så "i {city}" räcker överallt.
+    'styleCity.eyebrow': 'Stil och stad',
+    'styleCity.metaTitle': '{attrCap}tatuering i {city} — {n} tatuerare | {site}',
+    'styleCity.metaDescription':
+      '{style}: {n} studior i {city}. Se portfolios, stilar och kontaktuppgifter — och hör av dig direkt till studion.',
+    'styleCity.h1': '{attrCap}tatuering i {city}',
+    'styleCity.answer.one': 'I {cityLoc} finns en studio i katalogen som gör {attr}tatueringar.',
+    'styleCity.answer.many': 'I {cityLoc} finns {n} studior i katalogen som gör {attr}tatueringar.',
+    'styleCity.answer.districts': 'Stadsdelar: {districts}.',
+    'styleCity.studiosTitle': '{style} — alla tatuerare i {cityLoc}',
+    'styleCity.otherStyles': 'Andra stilar i {cityLoc}',
+    'styleCity.otherCities': '{style} i andra städer',
+    'styleCity.allInCity': 'Alla tatuerare i {cityLoc}',
+    'styleCity.backToStyle': '← {style} i hela Finland',
+    'styleCity.faqTitle': 'Vanliga frågor',
+    'styleCity.qa.count.q': 'Hur många studior gör {attr}tatueringar i {cityLoc}?',
+    'styleCity.qa.choose.q': 'Hur väljer jag tatuerare i {cityLoc}?',
+    'styleCity.qa.choose.a':
+      'Jämför artisternas portfolios: stilen avgörs i detaljerna, så titta på hur linjer och skuggning möter din egen idé. Hör sedan av dig direkt till studion.',
+    'styleCity.qa.price.q': 'Vad kostar en {attr}tatuering i {cityLoc}?',
+    'style.metaTitle': '{attrCap}tatuering — tatuerare i Finland | {site}',
     'style.metaDescription':
       '{style}-tatuering: se vilka som gör stilen i Finland. Bläddra bland tatuerarnas portfolios per stad, jämför arbeten och kontakta artisten direkt.',
     'style.artistsTitle': 'Vilka gör {style}-tatuering i Finland?',

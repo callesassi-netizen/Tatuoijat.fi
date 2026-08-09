@@ -1,6 +1,9 @@
 ---
 name: "Lettering"
 order: 10
+fiAttr: "lettering-"
+fiPart: "lettering-"
+svAttr: "lettering-"
 ---
 Lettering on tekstin taidetta: nimiä, lauseita ja päivämääriä kalligrafiasta rosoiseen katutyyliin. Fontin valinta ja asettelu ratkaisevat — hyvä lettering on selkeää luettavaa vielä vuosikymmenten päästä.
 

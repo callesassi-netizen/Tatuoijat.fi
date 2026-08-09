@@ -1,9 +1,16 @@
 ---
 /**
- * Delat sajt-formulär (Netlify Forms, name="liity" + honeypot). Renderas
- * IDENTISKT på /liity och /yhteys → ett enda formulär i Netlify. Fälten är
- * gemensamma; "Aihe/Ämne" skiljer studio-anmälan från kontakt/rättelse/
- * borttagning. Nivån från /hinnasto-korten fylls i dolt taso-fält via ?taso=.
+ * Delat sajt-formulär (Netlify Forms, name="liity" + honeypot). Renderas på
+ * /liity och /yhteys → ett enda formulär i Netlify. "Aihe/Ämne" skiljer
+ * studio-anmälan från kontakt/rättelse/borttagning. Nivån från /hinnasto-
+ * korten fylls i dolt taso-fält via ?taso=.
+ *
+ * TVÅ LÄGEN (Calles beslut 2026-08-09): `simple` ger ett vanligt
+ * kontaktformulär — namn, e-post, meddelande — och inget annat. Det används
+ * på /liity, där det gamla 6-fältsformuläret läste som en registrering och
+ * fick folk att hoppa av efter e-postfältet (två övergivna inskick 27/7 och
+ * 5/8). Aihe skickas då som dolt fält i stället för som en väljare.
+ * /yhteys behåller det fulla formuläret — där ÄR ämnesvalet poängen.
  */
 import type { CollectionEntry } from 'astro:content';
 import { type Locale } from '../i18n/ui';
@@ -17,9 +24,11 @@ interface Props {
   action: string;
   /** Förvald aihe-slug (t.ex. 'liity' på /liity, 'kysymys' på /yhteys). */
   defaultReason?: string;
+  /** Avskalat läge: bara namn/e-post/meddelande. Aihe blir dolt fält. */
+  simple?: boolean;
 }
 
-const { locale, cities, action, defaultReason = 'kysymys' } = Astro.props;
+const { locale, cities, action, defaultReason = 'kysymys', simple = false } = Astro.props;
 const f = contactForm[locale];
 ---
 
@@ -37,21 +46,27 @@ const f = contactForm[locale];
     <label>Bot field <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
   </p>
 
-  <div class="form-field">
-    <label for="cf-reason">{f.reason}</label>
-    <div class="select-wrap">
-      <select id="cf-reason" name="aihe" required>
-        {
-          f.reasons.map((r) => (
-            <option value={r.value} selected={r.value === defaultReason}>
-              {r.label}
-            </option>
-          ))
-        }
-      </select>
-      <span class="caret" aria-hidden="true">▾</span>
-    </div>
-  </div>
+  {
+    simple ? (
+      <input type="hidden" name="aihe" value={defaultReason} />
+    ) : (
+      <div class="form-field">
+        <label for="cf-reason">{f.reason}</label>
+        <div class="select-wrap">
+          <select id="cf-reason" name="aihe" required>
+            {f.reasons.map((r) => (
+              <option value={r.value} selected={r.value === defaultReason}>
+                {r.label}
+              </option>
+            ))}
+          </select>
+          <span class="caret" aria-hidden="true">
+            ▾
+          </span>
+        </div>
+      </div>
+    )
+  }
 
   <div class="form-field">
     <label for="cf-name">{f.name}</label>
@@ -63,31 +78,46 @@ const f = contactForm[locale];
     <input id="cf-email" name="sahkoposti" type="email" required autocomplete="email" />
   </div>
 
-  <div class="form-field">
-    <label for="cf-city">
-      {f.city} <span class="optional">{f.optional}</span>
-    </label>
-    <div class="select-wrap">
-      <select id="cf-city" name="kaupunki">
-        <option value="" selected>{f.cityNone}</option>
-        {cities.map((city) => <option value={city.id}>{cityDisplayName(city, locale)}</option>)}
-      </select>
-      <span class="caret" aria-hidden="true">▾</span>
-    </div>
-  </div>
+  {
+    !simple && (
+      <div class="form-field">
+        <label for="cf-city">
+          {f.city} <span class="optional">{f.optional}</span>
+        </label>
+        <div class="select-wrap">
+          <select id="cf-city" name="kaupunki">
+            <option value="" selected>
+              {f.cityNone}
+            </option>
+            {cities.map((city) => (
+              <option value={city.id}>{cityDisplayName(city, locale)}</option>
+            ))}
+          </select>
+          <span class="caret" aria-hidden="true">
+            ▾
+          </span>
+        </div>
+      </div>
+    )
+  }
 
-  <div class="form-field">
-    <label for="cf-ig">
-      {f.instagram} <span class="optional">{f.optional}</span>
-    </label>
-    <input id="cf-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
-  </div>
+  {
+    !simple && (
+      <div class="form-field">
+        <label for="cf-ig">
+          {f.instagram} <span class="optional">{f.optional}</span>
+        </label>
+        <input id="cf-ig" name="instagram" type="text" autocomplete="off" placeholder="@" />
+      </div>
+    )
+  }
 
   <div class="form-field">
     <label for="cf-message">
-      {f.message} <span class="optional">{f.optional}</span>
+      {f.message}
+      {!simple && <span class="optional">{f.optional}</span>}
     </label>
-    <textarea id="cf-message" name="viesti" rows="4"></textarea>
+    <textarea id="cf-message" name="viesti" rows="4" required={simple}></textarea>
   </div>
 
   <button class="btn-cta" type="submit">{f.submit}</button>

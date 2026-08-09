@@ -98,12 +98,26 @@ const cities = defineCollection({
 });
 
 // Intro-texter (fi + `## sv`) för stilsidor — unikt innehåll per sida.
+// Attributformerna nedan finns för att finskan (och svenskan) behandlar
+// tyylinamnen olika beroende på ordklass: substantiv/lainasanat bildar
+// yhdyssana med bindestreck ("blackwork-tatuointi"), medan adjektiv är egna
+// ord och böjs ("japanilainen tatuointi", "japanilaisia tatuointeja").
+// Utan detta blev det "Japanilainen-tatuointi" och "tekee japanilainen-
+// tatuointeja" — omedelbart fel för en finsk läsare. Fälten är rena
+// PREFIX som konkateneras direkt mot substantivet, så de bär sitt eget
+// bindestreck eller mellanslag.
 const styles = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/styles' }),
   schema: z.object({
     name: z.string(), // Realismi
     nameSv: z.string().optional(), // Realism
     order: z.number().default(99),
+    // "blackwork-" → blackwork-tatuointi · "japanilainen " → japanilainen tatuointi
+    fiAttr: z.string().optional(),
+    // Partitiv plural: "blackwork-" → blackwork-tatuointeja · "japanilaisia " → japanilaisia tatuointeja
+    fiPart: z.string().optional(),
+    // Svenska: "fineline-" → fineline-tatuering · "japansk " → japansk tatuering
+    svAttr: z.string().optional(),
   }),
 });
 

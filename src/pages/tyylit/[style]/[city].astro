@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import StyleCityPage from '../../../components/pages/StyleCityPage.astro';
+import { getStyleCityPairs } from '../../../lib/content';
+import { citySlug } from '../../../lib/routes';
+
+// Endast kombinationer över tröskeln får en URL — se getStyleCityPairs().
+export async function getStaticPaths() {
+  const [pairs, styles, cities] = await Promise.all([
+    getStyleCityPairs(),
+    getCollection('styles'),
+    getCollection('cities'),
+  ]);
+  const styleById = new Map(styles.map((style) => [style.id, style]));
+  const cityById = new Map(cities.map((city) => [city.id, city]));
+  return pairs.flatMap(({ styleId, cityId }) => {
+    const style = styleById.get(styleId);
+    const city = cityById.get(cityId);
+    if (!style || !city) return [];
+    return [{ params: { style: style.id, city: citySlug(city, 'fi') }, props: { style, city } }];
+  });
+}
+
+const { style, city } = Astro.props;
+---
+
+<StyleCityPage style={style} city={city} locale="fi" />

@@ -1,6 +1,9 @@
 ---
 name: "Neotraditional"
 order: 7
+fiAttr: "neotraditional-"
+fiPart: "neotraditional-"
+svAttr: "neotraditional-"
 ---
 Neotraditional vie perinteisen tatuoinnin nykyaikaan: paksut ääriviivat ja kirkkaat värit säilyvät, mutta kuvasto laajenee, sävyt syvenevät ja yksityiskohdat tarkentuvat. Lopputulos on näyttävä ja kestävä — koristeellisempi serkku old schoolille.
 

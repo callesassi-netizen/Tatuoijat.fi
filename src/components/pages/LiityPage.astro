@@ -1,10 +1,16 @@
 ---
 /**
- * Liity mukaan / För studios — BANTAD till ren ansökningssida. Kort intro,
- * en kompakt nivå-teaser (läser namn/priser ur src/data/pricing.ts, delad
- * källa med /hinnasto) som länkar till hela hinnastot, och Netlify-formen.
- * Prisjämförelsen och FAQ:n flyttade till /hinnasto. Sidan är tunn →
- * noindex,follow så /hinnasto är den som rankar (Calles beslut 2026-07-06).
+ * Liity mukaan / För studios — kort intro, en kompakt nivå-teaser (läser
+ * namn/priser ur src/data/pricing.ts, delad källa med /hinnasto) som länkar
+ * till hela hinnastot, och Netlify-formen. Prisjämförelsen och FAQ:n bor på
+ * /hinnasto. Sidan är tunn → noindex,follow så /hinnasto är den som rankar
+ * (Calles beslut 2026-07-06).
+ *
+ * Formuläret körs i `simple`-läge (Calles beslut 2026-08-09): namn, e-post,
+ * meddelande — inget mer. Sidan lovar INTE ett konto eller en självbetjänings-
+ * profil, för sajten har ingen; Calle lägger upp studion manuellt efter
+ * kontakt. Det gamla formuläret läste som en registrering och båda inskicken
+ * (27/7, 5/8) övergavs efter e-postfältet.
  */
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -88,10 +94,17 @@ const breadcrumb = breadcrumbLd([
         <span class="teaser-cta">{c.teaserCta} →</span>
       </a>
 
-      <!-- Delat sajt-formulär (Netlify name="liity"), aihe förvalt "liity" -->
+      <!-- Delat sajt-formulär (Netlify name="liity"), aihe dolt = "liity" -->
       <section class="form-col" aria-labelledby="liity-form-title" id="ilmoittaudu">
         <h2 class="col-title" id="liity-form-title">{c.formTitle}</h2>
-        <ContactForm locale={locale} cities={cities} action={p('/liity/')} defaultReason="liity" />
+        <p class="col-lead">{c.formLead}</p>
+        <ContactForm
+          locale={locale}
+          cities={cities}
+          action={p('/liity/')}
+          defaultReason="liity"
+          simple
+        />
       </section>
     </div>
   </div>
@@ -219,7 +232,14 @@ const breadcrumb = breadcrumbLd([
   .col-title {
     font-size: 22px;
     color: var(--text);
-    margin-bottom: 16px;
+    margin-bottom: 10px;
+  }
+  .col-lead {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--meta);
+    margin: 0 0 18px;
+    max-width: 56ch;
   }
 
   @media (min-width: 1024px) {
@@ -265,7 +285,11 @@ const breadcrumb = breadcrumbLd([
     }
     .col-title {
       font-size: 30px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+    }
+    .col-lead {
+      font-size: 15px;
+      margin-bottom: 24px;
     }
   }
 </style>

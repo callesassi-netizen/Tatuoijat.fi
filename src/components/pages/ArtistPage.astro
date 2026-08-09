@@ -108,15 +108,32 @@ const fullTitle = t('artist.metaTitle', { name: data.name, city: displayPlace, s
 const title = fullTitle.length <= 60
   ? fullTitle
   : t('artist.metaTitleShort', { name: data.name, site: t('site.name') });
+// P2a (GSC-analys 2026-08-09): utan bio fick alla profiler samma generiska
+// beskrivning. Har studion tyylit i datan skriver vi i stället ut dem plus
+// artistmängden — den överblick som studions egen träff inte ger i SERPen.
+const metaStyleNames = styleNames.map((name) => name.toLowerCase());
+const artistCountSentence =
+  allStudioArtists.length === 1
+    ? t('artist.artistCount.one')
+    : allStudioArtists.length > 1
+      ? t('artist.artistCount.many', { n: allStudioArtists.length })
+      : '';
 const description = bio
   ? bio.length > 155
     ? `${bio.slice(0, 152)}…`
     : bio
-  : t('artist.metaDescriptionFallback', {
-      name: data.name,
-      place: displayPlace,
-      site: t('site.name'),
-    });
+  : metaStyleNames.length > 0
+    ? t('artist.metaDescriptionData', {
+        name: data.name,
+        place: displayPlace,
+        styles: metaStyleNames.join(', '),
+        artists: artistCountSentence,
+      })
+    : t('artist.metaDescriptionFallback', {
+        name: data.name,
+        place: displayPlace,
+        site: t('site.name'),
+      });
 
 const breadcrumbItems = [{ name: t('breadcrumb.home'), url: new URL(p('/'), site).href }];
 if (city && h1City) {

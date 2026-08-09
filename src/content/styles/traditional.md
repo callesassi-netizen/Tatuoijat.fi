@@ -1,6 +1,9 @@
 ---
 name: "Traditional"
 order: 4
+fiAttr: "traditional-"
+fiPart: "traditional-"
+svAttr: "traditional-"
 ---
 Traditional eli old school on tatuoinnin klassikko: paksut ääriviivat, rajattu väripaletti ja ajattomat aiheet ankkureista joutseniin. Tyyli kestää aikaa sekä ihossa että silmässä.
 

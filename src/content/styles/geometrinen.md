@@ -2,6 +2,9 @@
 name: "Geometrinen"
 nameSv: "Geometrisk"
 order: 6
+fiAttr: "geometrinen "
+fiPart: "geometrisiä "
+svAttr: "geometrisk "
 ---
 Geometrinen tatuointi yhdistää tarkat kuviot, symmetrian ja pisteytystekniikan. Mandala-kuviot, kolmiulotteiset muodot ja viivaverkot vaativat tekijältä millintarkkaa kättä.
 

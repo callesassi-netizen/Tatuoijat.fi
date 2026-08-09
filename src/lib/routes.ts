@@ -21,3 +21,18 @@ export function citySlug(city: CollectionEntry<'cities'>, locale: Locale): strin
 export function cityPath(city: CollectionEntry<'cities'>, locale: Locale): string {
   return `${citiesIndexPath(locale)}${citySlug(city, locale)}/`;
 }
+
+/**
+ * Stil × stad (`/tyylit/{stil}/{stad}/`, sv `/sv/tyylit/{stil}/{stad}/`).
+ * Sidtypen byggd 2026-08-09 efter GSC-månad 1: "fine line tattoo turku" gav
+ * 21 % CTR på position 7 och stilsidorna har sajtens högsta CTR (9 % mot
+ * 3 % snitt) — men det fanns ingen sida som matchade stil+stad-frasen.
+ * Stads-slugen är språkig precis som cityPath(); stil-sluggen är gemensam.
+ */
+export function styleCityPath(
+  styleId: string,
+  city: CollectionEntry<'cities'>,
+  locale: Locale,
+): string {
+  return `/tyylit/${styleId}/${citySlug(city, locale)}/`;
+}

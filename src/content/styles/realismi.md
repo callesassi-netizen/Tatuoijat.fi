@@ -2,6 +2,9 @@
 name: "Realismi"
 nameSv: "Realism"
 order: 1
+fiAttr: "realismi-"
+fiPart: "realismi-"
+svAttr: "realism-"
 ---
 Realistinen tatuointi jäljittelee valokuvaa: muotokuvia, eläimiä ja luontoaiheita, joissa varjostus ja yksityiskohdat ratkaisevat. Tyyli vaatii tekijältä vahvaa piirustustaitoa — katso portfolio huolella ennen valintaa.
 
