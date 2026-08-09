@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { CITY_INDEX_MIN_STUDIOS, svCitySlug } from './src/lib/indexing.mjs';
+import { guidesIndexPath, guidesIndexIsThin } from './src/lib/guides.mjs';
 
 // Domän KÖPT 2026-07-04: tatuoijat.fi (Hostingpalvelu, DNS ska pekas
 // mot Netlify DNS). Allt (canonical, hreflang, sitemap, schema.org)
@@ -67,6 +68,16 @@ for (const file of readdirSync('./src/content/studios')) {
 if (walkInCount < CITY_INDEX_MIN_STUDIOS) {
   noindexedCityPaths.add('/walk-in/');
   noindexedCityPaths.add('/sv/walk-in/');
+}
+
+// Opashubben /oppaat/ (sv /sv/guider/) är noindex,follow tills tillräckligt
+// många guider är publicerade — en hubb med en enda guide är tunn på precis
+// samma sätt som en stadssida med en studio (§3.1). Tröskeln bor i
+// src/lib/guides.mjs, så meta-roboten (GuidesIndexPage) och sitemap-filtret
+// kan aldrig glida isär. Publicerade GUIDESIDOR indexeras alltid.
+if (guidesIndexIsThin()) {
+  noindexedCityPaths.add(guidesIndexPath('fi'));
+  noindexedCityPaths.add(`/sv${guidesIndexPath('sv')}`);
 }
 
 export default defineConfig({

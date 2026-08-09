@@ -1,0 +1,226 @@
+---
+/**
+ * Opashubbi (/oppaat/, sv /sv/guider/).
+ *
+ * DOORWAY-SKYDD (seo-handoff §3.1, samma princip som tunna stadssidor): en
+ * hubb som listar EN guide är tunn. Sidan sätts därför noindex,follow och
+ * hålls utanför sitemap tills GUIDES_INDEX_MIN_GUIDES guider är publicerade —
+ * tröskeln och sitemap-filtret läser SAMMA funktion (src/lib/guides.mjs), så
+ * indexeringen slår på av sig själv när den tredje guiden landar.
+ *
+ * Planerade guider listas som ren text utan länk. Att listan syns är ärligt
+ * (den beskriver vart ytan är på väg) och ger noll tomma URL:er.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import { guideCards, plannedGuideTitles } from '../../data/guides';
+import { guidesIndexPath, guidePath } from '../../lib/routes';
+import { jsonLdString, breadcrumbLd, collectionPageLd } from '../../lib/schema';
+import { publishedGuides, plannedGuides, guidesIndexIsThin } from '../../lib/guides.mjs';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+const other: Locale = locale === 'fi' ? 'sv' : 'fi';
+
+const path = guidesIndexPath(locale);
+const altPath = guidesIndexPath(other);
+const pageUrl = new URL(p(path), site).href;
+
+const published = publishedGuides.flatMap((route) => {
+  const card = guideCards[route.key]?.[locale];
+  return card ? [{ route, card }] : [];
+});
+
+const upcoming = plannedGuides
+  .map((route) => plannedGuideTitles[route.key]?.[locale])
+  .filter((title): title is string => Boolean(title));
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('guides.h1'), url: pageUrl },
+]);
+const collection = collectionPageLd(
+  t('guides.h1'),
+  pageUrl,
+  published.map((entry) => new URL(p(guidePath(entry.route, locale)), site).href),
+);
+---
+
+<BaseLayout
+  title={t('guides.metaTitle', { site: t('site.name') })}
+  description={t('guides.metaDescription')}
+  locale={locale}
+  path={path}
+  altPath={altPath}
+  hasAlternate
+  noindex={guidesIndexIsThin()}
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(collection)} slot="head" />
+
+  <section class="hub-hero">
+    <div class="container hub-hero-inner">
+      <p class="eyebrow">{t('guides.eyebrow')}</p>
+      <h1 class="hub-title">{t('guides.h1')}</h1>
+      <p class="hub-intro">{t('guides.intro')}</p>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <section aria-labelledby="published-title">
+        <h2 class="section-title" id="published-title">{t('guides.publishedTitle')}</h2>
+        <ul class="guide-cards">
+          {
+            published.map((entry) => (
+              <li class="guide-card">
+                <a class="guide-card-link" href={p(guidePath(entry.route, locale))}>
+                  <h3 class="guide-card-title">{entry.card.title}</h3>
+                  <p class="guide-card-text">{entry.card.summary}</p>
+                  <span class="guide-card-cta">{t('guides.read')} →</span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      {
+        upcoming.length > 0 && (
+          <section aria-labelledby="upcoming-title" class="upcoming-block">
+            <h2 class="section-title" id="upcoming-title">
+              {t('guides.upcomingTitle')}
+            </h2>
+            <p class="upcoming-note">{t('guides.upcomingNote')}</p>
+            <ul class="upcoming">
+              {upcoming.map((title) => (
+                <li>{title}</li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .hub-hero {
+    position: relative;
+    z-index: 0;
+    background: var(--ink);
+  }
+  .hub-hero-inner {
+    padding: 28px var(--page-pad) 52px;
+  }
+  .hub-title {
+    font-size: 36px;
+    line-height: 1.04;
+    color: var(--text-light);
+    max-width: 560px;
+  }
+  .hub-intro {
+    margin: 14px 0 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--meta);
+    max-width: 520px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 28px var(--page-pad) 48px;
+  }
+
+  .guide-cards {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .guide-card {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card-lg);
+  }
+  .guide-card-link {
+    display: block;
+    padding: 20px;
+    text-decoration: none;
+  }
+  .guide-card-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    line-height: 1.1;
+    color: var(--text);
+    margin: 0;
+  }
+  .guide-card-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--meta);
+    margin: 8px 0 0;
+  }
+  .guide-card-cta {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--flash);
+  }
+
+  .upcoming-block {
+    margin-top: 44px;
+  }
+  .upcoming-note {
+    font-size: 13px;
+    color: var(--meta);
+    margin: 0 0 12px;
+  }
+  .upcoming {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 6px;
+  }
+  .upcoming li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--meta);
+  }
+
+  @media (min-width: 1024px) {
+    .hub-hero-inner {
+      padding: 44px var(--page-pad) 76px;
+    }
+    .hub-title {
+      font-size: 60px;
+    }
+    .hub-intro {
+      font-size: 16px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .sheet-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .guide-cards {
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+  }
+</style>

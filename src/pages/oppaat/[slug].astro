@@ -1,0 +1,21 @@
+---
+/**
+ * Alla publicerade guider på finska. Slugarna kommer ur registret
+ * (src/lib/guides.mjs) — planerade guider har status 'planned' och får
+ * därför ingen URL alls. Samma doorway-logik som stil × stad-sidorna:
+ * hellre ingen sida än en tom.
+ */
+import GuidePage from '../../components/pages/GuidePage.astro';
+import { publishedGuides, guideSlug } from '../../lib/guides.mjs';
+
+export function getStaticPaths() {
+  return publishedGuides.map((guide) => ({
+    params: { slug: guideSlug(guide, 'fi') },
+    props: { guideKey: guide.key },
+  }));
+}
+
+const { guideKey } = Astro.props;
+---
+
+<GuidePage guideKey={guideKey} locale="fi" />

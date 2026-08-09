@@ -1,6 +1,13 @@
 import type { CollectionEntry } from 'astro:content';
 import type { Locale } from '../i18n/ui';
 import { svCitySlug } from './indexing.mjs';
+import { guidesIndexPath, guidePath } from './guides.mjs';
+
+// Oppaat/guider (/oppaat/{slug}/, sv /sv/guider/{slug}/). Routing-logiken bor
+// i guides.mjs eftersom astro.config.mjs behöver den för sitemap-filtret —
+// re-exporteras här så att sidkomponenterna har EN plats att importera
+// URL-byggare från, precis som för städer och stil × stad.
+export { guidesIndexPath, guidePath };
 
 /**
  * Stadskatalogens URL:er är språkiga (handoff §4): /tatuoijat/helsinki/

@@ -1,0 +1,187 @@
+---
+/**
+ * Produktsektionen på oppaat/guider — AFFILIATE-READY, men tom på produkter.
+ *
+ * BESLUT (dokumenterat även i src/data/affiliate.ts):
+ * En produkt utan `affiliateUrl` renderas INTE ALLS. Alternativet — ett grått,
+ * icke-klickbart platshållarkort — läser som en trasig butik och sänker
+ * sidans redaktionella trovärdighet, vilket är precis fel signal för en ny
+ * domän som ska bli den citerade källan (GEO.md). I stället bär
+ * KATEGORIBLOCKEN sektionen: de säger vad man ska titta efter i en produkt,
+ * utan att nämna ett enda märke. De står på egna ben som innehåll i dag och
+ * blir rubriker över riktiga produktkort den dag ett affiliateprogram är
+ * godkänt — ingen omskrivning behövs.
+ *
+ * MÄRKNING: annonsmärkningen ("Mainoslinkki" / "Annonslänk") renderas FÖRST i
+ * sektionen, före första kortet, och bara när minst en klickbar produkt finns.
+ * Så länge listan är tom finns ingen märkning att visa — och inget att märka.
+ */
+import type { Locale } from '../i18n/ui';
+import type { GuideProductCategory } from '../data/guides/types';
+import {
+  AFFILIATE_CTA,
+  AFFILIATE_DISCLOSURE,
+  hasLinkableProducts,
+  linkableProducts,
+} from '../data/affiliate';
+
+interface Props {
+  locale: Locale;
+  title: string;
+  intro: string;
+  categories: GuideProductCategory[];
+}
+
+const { locale, title, intro, categories } = Astro.props;
+
+const disclosure = AFFILIATE_DISCLOSURE[locale];
+const ctaLabel = AFFILIATE_CTA[locale];
+const showDisclosure = hasLinkableProducts();
+
+// Produkterna slås upp per kategori. Tom lista = bara kriterietexten renderas.
+const blocks = categories.map((category) => ({
+  ...category,
+  products: linkableProducts(category.category),
+}));
+---
+
+<section aria-labelledby="products-title" class="block">
+  <h2 class="block-title" id="products-title">{title}</h2>
+  <p class="products-intro">{intro}</p>
+
+  {
+    showDisclosure && (
+      <p class="disclosure">
+        <span class="disclosure-label">{disclosure.label}</span>
+        <span class="disclosure-text">{disclosure.text}</span>
+      </p>
+    )
+  }
+
+  <div class="product-categories">
+    {
+      blocks.map((block) => (
+        <div class="product-category">
+          <h3 class="product-category-title">{block.title}</h3>
+          <p class="product-category-text">{block.text}</p>
+          {block.products.length > 0 && (
+            <ul class="product-list">
+              {block.products.map((product) => (
+                <li class="product-card">
+                  <span class="product-name">{product.name}</span>
+                  <span class="product-text">{product.description[locale]}</span>
+                  <a
+                    class="product-cta"
+                    href={product.affiliateUrl}
+                    rel="sponsored nofollow noopener"
+                    target="_blank"
+                  >
+                    {ctaLabel}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .products-intro {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--meta);
+    margin: 0 0 20px;
+    max-width: 640px;
+  }
+
+  .disclosure {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 12px 14px;
+    margin: 0 0 20px;
+  }
+  .disclosure-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .disclosure-text {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .product-categories {
+    display: grid;
+    gap: 16px;
+  }
+  .product-category {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 16px 18px;
+  }
+  .product-category-title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+  .product-category-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--meta);
+    margin: 6px 0 0;
+  }
+
+  .product-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border-top: var(--card-border);
+    padding-top: 12px;
+  }
+  .product-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .product-text {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--meta);
+  }
+  .product-cta {
+    margin-top: 4px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--flash);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+
+  @media (min-width: 1024px) {
+    .product-categories {
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+  }
+</style>

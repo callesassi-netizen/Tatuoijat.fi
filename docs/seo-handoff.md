@@ -165,3 +165,79 @@ en garanti.
   — datan finns inte i katalogen i dag.
 - **12 studios saknar `city`** och hamnar därför utanför både stads- och
   stil × stad-sidorna. Enkel datafix med direkt SEO-effekt.
+
+## 12. Oppaat + affiliate-grund (TILLÄGG 2026-08-09 — inget ovan ändrat)
+
+**Avvikelse från §9, medvetet.** §9 säger "ingen aftercare-content i fas 1
+(hård konkurrens, fel intention)". Calle valde 2026-08-09 att bygga ytan ändå.
+Skälet är inte SEO-trafik i sig utan **intäktsmodellen**: aftercare är den enda
+sidtypen i katalogen som har en naturlig produktkoppling, och den ska bli basen
+för en affiliate-del. §9 står kvar oförändrad som den bedömning den var —
+detta avsnitt är beslutet att gå emot den, med öppna ögon om konkurrensen.
+
+**Vad som byggdes.**
+
+- Ny sidtyp `/oppaat/{slug}/` (sv `/sv/guider/{slug}/`) — long-form guide med
+  svara-först-block, frågeformade H2, riktiga `<table>`, FAQ och
+  Article + HowTo + FAQPage + BreadcrumbList.
+- Första guiden: **`/oppaat/tatuoinnin-jalkihoito/`** (sv
+  `/sv/guider/eftervard-av-tatuering/`), ~1 600 ord fi. Täcker tatuoinnin
+  jälkihoito, uuden tatuoinnin hoito, tatuoinnin pesu, tatuoinnin rasvaus,
+  tatuoinnin paraneminen samt sauna/uiminen/aurinko.
+- Hubb `/oppaat/` (sv `/sv/guider/`).
+- Registret `src/lib/guides.mjs` (routing, språkiga slugs, status) +
+  innehållet i `src/data/guides/{key}.ts`. En ny guide = innehållsmodul + en
+  rad i registret. Inga sid-filer behöver röras.
+- `llms.txt` fick ett eget Oppaat-block. Footer fick "Oppaat"/"Guider".
+
+**Doorway-skyddet (§3.1 gäller fullt ut).**
+
+- Planerade guider har `status: 'planned'` och genererar **ingen URL alls** —
+  samma logik som stil × stad under tröskeln (§11).
+- **Hubben** `/oppaat/` är `noindex,follow` och utanför sitemap tills
+  `GUIDES_INDEX_MIN_GUIDES` (= 3) guider är publicerade. En hubb som listar en
+  enda guide är lika tunn som en stadssida med en studio. Tröskeln läses av
+  BÅDE `GuidesIndexPage.astro` och sitemap-filtret i `astro.config.mjs`, så de
+  kan inte glida isär — indexeringen slår på av sig själv vid guide nummer tre.
+- De publicerade guidesidorna indexeras alltid; de är long-form med unikt
+  innehåll.
+
+**Kannibalisering.** `/hinnat/` äger prisintentionen ("tatuoinnin hinta",
+"tatuointi hinta esimerkki"). Den planerade prisguiden i registret heter därför
+`tatuoinnin-hinta-kehonosittain` och riktar mot kroppsdels-modifierarna ur
+§11.3 P3 (käsivarsi, koko selkä, pieni tatuointi, puoli hiha) — aldrig mot
+huvudfrasen. Samma resonemang gäller framtida guider: kolla registret innan en
+ny slug läggs till.
+
+**Affiliate — status och regler (viktigt).**
+
+Calle är per 2026-08-09 **inte godkänd i något affiliateprogram**. Sidan är
+därför affiliate-*ready*, inte affiliate-*aktiv*:
+
+- All produktdata bor i `src/data/affiliate.ts`. `affiliateProducts` är TOM.
+- Fält per produkt: `name`, `category`, `description` (fi/sv, vår egen text),
+  `affiliateUrl`, `partner`. Kategorier: aftercare, fragrance-free, cleansing,
+  moisturising, spf.
+- **Beslut: produkt utan `affiliateUrl` renderas inte alls** — inget grått
+  "kommer snart"-kort. Ett tomt platshållarkort läser som en trasig butik och
+  sänker den redaktionella trovärdigheten som hela GEO-strategin vilar på. I
+  stället bär KATEGORIBLOCKEN sektionen: de säger vad man ska titta efter i en
+  produkt, utan att nämna ett enda märke, och står på egna ben som innehåll.
+  Produktkort tillkommer under samma rubriker den dag länkar finns — ingen
+  omskrivning behövs.
+- Annonsmärkningen ("Mainoslinkki" / "Annonslänk") renderas FÖRST i sektionen,
+  före första kortet, och bara när minst en klickbar produkt finns. Länkarna
+  får `rel="sponsored nofollow noopener"`.
+- Planerade partners (intern anteckning, syns aldrig på sidan): Apteekki 360,
+  Lyko Finland, Stories & Ink. Monsters Ink är avsett för framtida B2B-innehåll
+  mot tatuerare, inte konsumentguiderna.
+- Inga priser, inga påhittade produkter, inga externa länkar i dag. Guiden
+  innehåller noll externa `href` (verifierat i byggd HTML).
+
+**Kvar att göra.**
+
+- Skriv guide 2 och 3 (paraneminen, sauna) → hubben blir indexerbar automatiskt.
+- Länka från `/hinnat/` och stadssidorna till jälkihoito-guiden när ytan vuxit
+  (i dag går länken via footern på varje sida).
+- När ett affiliateprogram godkänns: fyll `affiliateProducts`, verifiera att
+  märkningen syns först och att `rel`-attributen följer med.

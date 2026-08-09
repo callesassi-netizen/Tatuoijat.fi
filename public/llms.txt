@@ -1,7 +1,7 @@
 # Tatuoijat.fi
 
-> Kurerattu hakemisto Suomen tatuoijista ja tatuointiliikkeistä (fi/sv). Artistit kaupungeittain ja tyyleittäin, portfoliot, hintaopas.
-> Curated catalog of tattoo artists and studios in Finland (fi/sv). Artists by city and style, portfolios, price guide.
+> Kurerattu hakemisto Suomen tatuoijista ja tatuointiliikkeistä (fi/sv). Artistit kaupungeittain ja tyyleittäin, portfoliot, hintaopas ja hoito-oppaat.
+> Curated catalog of tattoo artists and studios in Finland (fi/sv). Artists by city and style, portfolios, price guide and aftercare guides.
 
 ## Nyckelsidor / Key pages
 
@@ -13,4 +13,9 @@
 - /walk-in/: Walk-in-tatuoinnit kaupungeittain
 - /hinnasto/: Studioille — liity mukaan (for studios: join)
 
-Ruotsinkieliset sivut / Swedish pages under /sv/.
+## Oppaat / Guides
+
+- /oppaat/: Tatuointioppaat (guide hub)
+- /oppaat/tatuoinnin-jalkihoito/: Tatuoinnin jälkihoito — kalvo, pesu, rasvaus, paraneminen päivä päivältä sekä sauna, uiminen ja aurinko (tattoo aftercare: washing, moisturising, healing timeline, sauna/swimming/sun)
+
+Ruotsinkieliset sivut / Swedish pages under /sv/ (oppaat = /sv/guider/).

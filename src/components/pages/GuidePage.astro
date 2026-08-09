@@ -1,0 +1,765 @@
+---
+/**
+ * Guidesida (/oppaat/{slug}/, sv /sv/guider/{slug}/).
+ *
+ * EN komponent för ALLA guider: innehållet kommer ur src/data/guides/{key}.ts
+ * och routingen ur src/lib/guides.mjs. Att lägga till "tatuointi ja sauna"
+ * kräver därför noll ändringar här.
+ *
+ * SEO/GEO: svara-först-stycke direkt under H1 (GEO.md §1), frågeformade H2
+ * (§2), Article + HowTo + FAQPage + BreadcrumbList (§3), riktiga <table>
+ * med hårda siffror (§4), synlig färskhetsstämpel (§5), tät internlänkning
+ * till stads-, stil- och prissidorna (§9).
+ *
+ * VARFÖR SIDTYPEN FINNS trots seo-handoff §9 ("ingen aftercare-content i
+ * fas 1"): se seo-handoff §12 — Calle valde 2026-08-09 medvetet att bygga
+ * ytan ändå, som bas för affiliate. Produktsektionen är affiliate-ready men
+ * innehåller inga externa länkar (AffiliateSection.astro).
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AffiliateSection from '../AffiliateSection.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import { getGuideContent, plannedGuideTitles } from '../../data/guides';
+import { guideImage } from '../../lib/guideImages';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  studioCountByCity,
+  cityDisplayName,
+  styleDisplayName,
+} from '../../lib/content';
+import {
+  jsonLdString,
+  breadcrumbLd,
+  articleLd,
+  howToLd,
+  faqLd,
+  CONTENT_UPDATED,
+} from '../../lib/schema';
+import { citiesIndexPath, cityPath, guidesIndexPath, guidePath } from '../../lib/routes';
+import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
+import { guides, plannedGuides } from '../../lib/guides.mjs';
+
+interface Props {
+  guideKey: string;
+  locale: Locale;
+}
+
+const { guideKey, locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+const other: Locale = locale === 'fi' ? 'sv' : 'fi';
+
+const c = getGuideContent(guideKey, locale);
+if (!c) throw new Error(`Guide "${guideKey}" saknar innehåll i src/data/guides/index.ts`);
+
+// Routing-posten för DEN HÄR guiden hämtas ur registret via key.
+const route = guides.find((entry) => entry.key === guideKey);
+if (!route) throw new Error(`Guide "${guideKey}" saknar rad i src/lib/guides.mjs`);
+
+const path = guidePath(route, locale);
+const altPath = guidePath(route, other);
+const pageUrl = new URL(p(path), site).href;
+
+const heroImage = guideImage(guideKey);
+
+// --- Internlänkar: bara städer som FAKTISKT indexeras (seo-handoff §3.1) ---
+const cities = await getCitiesSorted();
+const counts = await studioCountByCity();
+const topCities = cities
+  .filter((city) => (counts.get(city.id) ?? 0) >= CITY_INDEX_MIN_STUDIOS)
+  .sort((a, b) => (counts.get(b.id) ?? 0) - (counts.get(a.id) ?? 0))
+  .slice(0, 10);
+const styles = await getStylesSorted();
+
+// --- Schema (GEO.md §3) ---
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('guides.h1'), url: new URL(p(guidesIndexPath(locale)), site).href },
+  { name: c.h1, url: pageUrl },
+]);
+const article = articleLd({
+  headline: c.h1,
+  description: c.metaDescription,
+  url: pageUrl,
+  locale,
+  siteName: t('site.name'),
+  siteUrl: site.href,
+});
+const faq = faqLd(c.faq);
+const howToSteps = c.howTo
+  ? (c.sections.find((section) => section.id === c.howTo!.stepsFromSection)?.steps ?? [])
+  : [];
+const howTo =
+  c.howTo && howToSteps.length > 0
+    ? howToLd({
+        name: c.howTo.name,
+        description: c.howTo.description,
+        url: pageUrl,
+        steps: howToSteps,
+      })
+    : null;
+
+// Kommande guider — ren text, ingen URL (status 'planned' i guides.mjs).
+const upcoming = plannedGuides
+  .map((entry) => plannedGuideTitles[entry.key]?.[locale])
+  .filter((title): title is string => Boolean(title));
+---
+
+<BaseLayout
+  title={c.metaTitle}
+  description={c.metaDescription}
+  locale={locale}
+  path={path}
+  altPath={altPath}
+  hasAlternate
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+  <script type="application/ld+json" set:html={jsonLdString(article)} slot="head" />
+  {howTo && <script type="application/ld+json" set:html={jsonLdString(howTo)} slot="head" />}
+  <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
+
+  <section class="guide-hero">
+    <div class="container guide-hero-inner">
+      <div>
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h1 class="guide-title">{c.h1}</h1>
+      </div>
+      <div class="guide-hero-media" aria-hidden="true">
+        <Image
+          src={heroImage}
+          alt=""
+          widths={[500, 900]}
+          sizes="(min-width: 1024px) 38vw, 100vw"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <div class="prose-col">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href={p('/')}>{t('breadcrumb.home')}</a>
+          <span aria-hidden="true">/</span>
+          <a href={p(guidesIndexPath(locale))}>{t('guides.h1')}</a>
+        </nav>
+
+        <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
+
+        <!-- Svara-först (GEO.md §1) -->
+        <p class="answer">{c.answer}</p>
+
+        {c.intro.map((paragraph) => <p class="lead">{paragraph}</p>)}
+
+        <!-- Sisällys -->
+        <nav class="toc" aria-label={t('guide.contentsTitle')}>
+          <p class="toc-title">{t('guide.contentsTitle')}</p>
+          <ol>
+            {
+              c.sections.map((section) => (
+                <li>
+                  <a href={`#${section.id}`}>{section.title}</a>
+                </li>
+              ))
+            }
+            <li><a href="#faq">{c.faqTitle}</a></li>
+          </ol>
+        </nav>
+
+        {
+          c.sections.map((section) => (
+            <section aria-labelledby={`${section.id}-title`} class="block">
+              <h2 class="block-title" id={`${section.id}-title`}>
+                <span id={section.id} class="anchor" />
+                {section.title}
+              </h2>
+
+              {section.lead && <p class="section-lead">{section.lead}</p>}
+              {section.paragraphs?.map((paragraph) => <p class="body-text">{paragraph}</p>)}
+
+              {section.bullets && (
+                <ul class="bullets">
+                  {section.bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+                </ul>
+              )}
+
+              {section.steps && (
+                <ol class="steps">
+                  {section.steps.map((step, index) => (
+                    <li class="step" id={`vaihe-${index + 1}`}>
+                      <span class="step-number" aria-hidden="true">
+                        {String(index + 1).padStart(2, '0')}
+                      </span>
+                      <div>
+                        <h3 class="step-title">{step.title}</h3>
+                        <p class="step-text">{step.text}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              )}
+
+              {section.table && (
+                <>
+                  <div class="table-card">
+                    <table>
+                      <thead>
+                        <tr>
+                          {section.table.columns.map((column) => (
+                            <th scope="col">{column}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {section.table.rows.map((row) => (
+                          <tr>
+                            {row.map((cell, index) =>
+                              index === 0 ? <th scope="row">{cell}</th> : <td>{cell}</td>,
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {section.table.note && <p class="table-note">{section.table.note}</p>}
+                </>
+              )}
+
+              {section.callout && (
+                <div class:list={['callout', section.callout.tone === 'warning' && 'callout--warn']}>
+                  <p class="callout-title">{section.callout.title}</p>
+                  {section.callout.text && <p class="callout-text">{section.callout.text}</p>}
+                  {section.callout.bullets && (
+                    <ul class="callout-list">
+                      {section.callout.bullets.map((bullet) => (
+                        <li>{bullet}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </section>
+          ))
+        }
+
+        <!-- FAQ (FAQPage) -->
+        <section aria-labelledby="faq-title" class="block">
+          <h2 class="block-title" id="faq-title"><span id="faq" class="anchor"></span>{c.faqTitle}</h2>
+          <div class="faq-list">
+            {
+              c.faq.map((item) => (
+                <details class="faq-item">
+                  <summary>
+                    <span class="faq-q">{item.q}</span>
+                    <span class="faq-icon" aria-hidden="true">
+                      +
+                    </span>
+                  </summary>
+                  <p class="faq-a">{item.a}</p>
+                </details>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- Produktsektion: affiliate-ready, inga externa länkar i dag -->
+        <AffiliateSection
+          locale={locale}
+          title={c.productsTitle}
+          intro={c.productsIntro}
+          categories={c.productCategories}
+        />
+
+        <p class="disclaimer">
+          <strong>{t('guide.disclaimer')}.</strong>{' '}{c.disclaimer}
+        </p>
+
+        <!-- Internlänkar: stad, stil, hinnat -->
+        <section aria-labelledby="related-title" class="block">
+          <h2 class="block-title" id="related-title">{c.relatedTitle}</h2>
+          <p class="body-text">{c.relatedIntro}</p>
+
+          <h3 class="sub-title">{t('guide.citiesTitle')}</h3>
+          <div class="chip-row">
+            {
+              topCities.map((city) => (
+                <a class="chip" href={p(cityPath(city, locale))}>
+                  {cityDisplayName(city, locale)}
+                </a>
+              ))
+            }
+            <a class="chip" href={p(citiesIndexPath(locale))}>{t('nav.cities')}</a>
+          </div>
+
+          <h3 class="sub-title">{t('guide.stylesTitle')}</h3>
+          <div class="chip-row">
+            {
+              styles.map((style) => (
+                <a class="chip" href={p(`/tyylit/${style.id}/`)}>
+                  {styleDisplayName(style, locale)}
+                </a>
+              ))
+            }
+          </div>
+
+          <p class="price-link">
+            <a class="ink-link" href={p('/hinnat/')}>{t('guide.priceLink')} →</a>
+          </p>
+        </section>
+
+        <!-- Tulossa: planerade guider, ren text (ingen URL genereras) -->
+        {
+          upcoming.length > 0 && (
+            <section aria-labelledby="upcoming-title" class="block">
+              <h2 class="block-title" id="upcoming-title">
+                {c.upcomingTitle}
+              </h2>
+              <ul class="upcoming">
+                {upcoming.map((title) => (
+                  <li>{title}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <section class="cta-block">
+          <h2 class="cta-title">{c.ctaTitle}</h2>
+          <p class="cta-text">{c.ctaText}</p>
+          <a class="btn-cta cta-btn" href={p(citiesIndexPath(locale))}>{c.ctaLabel}</a>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .guide-hero {
+    position: relative;
+    z-index: 0;
+    background: var(--ink);
+  }
+  .guide-hero-inner {
+    padding: 28px var(--page-pad) 52px;
+  }
+  .guide-hero-media {
+    margin-top: 20px;
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .guide-hero-media :global(img) {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.9);
+  }
+  .guide-title {
+    font-size: 36px;
+    line-height: 1.04;
+    color: var(--text-light);
+    max-width: 560px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 28px var(--page-pad) 48px;
+  }
+  .prose-col {
+    max-width: 720px;
+  }
+
+  .crumbs {
+    display: flex;
+    gap: 8px;
+    font-size: 11.5px;
+    color: var(--meta);
+    margin-bottom: 10px;
+  }
+  .crumbs a {
+    color: var(--meta);
+    text-decoration: none;
+  }
+  .crumbs a:hover {
+    color: var(--text);
+  }
+
+  .freshness {
+    margin: 0 0 16px;
+    font-size: 11.5px;
+    color: var(--meta);
+  }
+
+  /* Svara-först — visuellt lyft, det är sidans viktigaste stycke */
+  .answer {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    font-weight: 500;
+    margin: 0 0 20px;
+    padding-left: 16px;
+    border-left: 3px solid var(--flash);
+  }
+
+  .lead,
+  .body-text {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+  .section-lead {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+
+  /* Ankare kompenserar inte för sticky header (det finns ingen) men ger
+     sektionerna ett id skilt från rubrikens aria-id. */
+  .anchor {
+    display: block;
+    height: 0;
+    scroll-margin-top: 16px;
+  }
+
+  .toc {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 14px 18px 16px;
+    margin: 22px 0 8px;
+  }
+  .toc-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin: 0 0 8px;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 5px;
+  }
+  .toc a {
+    font-size: 13.5px;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-on-paper);
+  }
+  .toc a:hover {
+    border-color: var(--text);
+  }
+
+  .block {
+    margin-top: 40px;
+  }
+  .block-title {
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .sub-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    margin: 22px 0 10px;
+  }
+
+  .bullets {
+    margin: 0 0 14px;
+    padding-left: 20px;
+    display: grid;
+    gap: 7px;
+  }
+  .bullets li {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+  }
+  .step {
+    display: flex;
+    gap: 14px;
+    scroll-margin-top: 16px;
+  }
+  .step-number {
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.1;
+    color: var(--border-on-paper);
+  }
+  .step-title {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+  .step-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--meta);
+    margin: 4px 0 0;
+  }
+
+  .table-card {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  thead th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+    padding: 14px 16px 10px;
+    border-bottom: var(--card-border);
+    white-space: nowrap;
+  }
+  tbody th,
+  tbody td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: var(--card-border);
+    color: var(--text);
+    font-weight: 400;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tbody tr:last-child th,
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  tbody th {
+    font-weight: 600;
+  }
+  tbody td:last-child {
+    color: var(--meta);
+  }
+  .table-note {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--meta);
+    margin: 12px 2px 0;
+  }
+
+  .callout {
+    background: var(--surface);
+    border: var(--card-border);
+    border-left: 3px solid var(--border-on-paper);
+    border-radius: var(--r-card);
+    padding: 14px 18px;
+    margin-top: 16px;
+  }
+  .callout--warn {
+    border-left-color: var(--flash);
+  }
+  .callout-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+  }
+  .callout-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 6px 0 0;
+  }
+  .callout-list {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+  }
+  .callout-list li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .faq-item {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 0 16px;
+  }
+  .faq-item summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 0;
+    cursor: pointer;
+  }
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .faq-icon {
+    font-size: 18px;
+    color: var(--meta);
+    transition: transform var(--t-fast) ease-out;
+  }
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    padding: 0 0 16px;
+  }
+
+  .disclaimer {
+    margin-top: 28px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--meta);
+    border-top: var(--card-border);
+    padding-top: 14px;
+  }
+  .disclaimer strong {
+    color: var(--text);
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .price-link {
+    margin: 22px 0 0;
+    font-size: 14px;
+  }
+
+  .upcoming {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 6px;
+  }
+  .upcoming li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--meta);
+  }
+
+  .cta-block {
+    margin-top: 48px;
+    background: var(--ink);
+    border-radius: var(--r-card-lg);
+    padding: 26px 22px;
+    text-align: center;
+  }
+  .cta-title {
+    font-size: 22px;
+    color: var(--text-light);
+  }
+  .cta-text {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 380px;
+    margin: 8px auto 18px;
+  }
+  .cta-btn {
+    display: inline-block;
+    width: auto;
+    padding: 14px 30px;
+  }
+
+  @media (min-width: 1024px) {
+    .guide-hero-inner {
+      padding: 44px var(--page-pad) 76px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .guide-hero-media {
+      margin-top: 0;
+      border-radius: var(--r-card-lg);
+    }
+    .guide-hero-media :global(img) {
+      height: 260px;
+    }
+    .guide-title {
+      font-size: 60px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .sheet-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .answer {
+      font-size: 18px;
+    }
+    .lead,
+    .body-text,
+    .section-lead {
+      font-size: 16px;
+    }
+    .block {
+      margin-top: 56px;
+    }
+    .block-title {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+    table {
+      font-size: 14px;
+    }
+    .cta-block {
+      padding: 40px;
+    }
+    .cta-title {
+      font-size: 30px;
+    }
+  }
+</style>

@@ -135,3 +135,60 @@ export function faqLd(questions: { q: string; a: string }[]) {
     })),
   };
 }
+
+/**
+ * Article — oppaat/guider (/oppaat/{slug}/). Katalogsidorna är CollectionPage,
+ * men en guide är redaktionellt innehåll och ska märkas som sådant: det är den
+ * signal AI-sök läser för "vem skrev det här och när". `author`/`publisher` är
+ * sajten själv (ingen personbyline finns), `dateModified` följer CONTENT_UPDATED
+ * precis som övriga sidtyper (GEO.md §5).
+ */
+export function articleLd(options: {
+  headline: string;
+  description: string;
+  url: string;
+  locale: string;
+  siteName: string;
+  siteUrl: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: options.headline,
+    description: options.description,
+    inLanguage: options.locale,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': options.url },
+    url: options.url,
+    dateModified: CONTENT_UPDATED,
+    datePublished: CONTENT_UPDATED,
+    author: { '@type': 'Organization', name: options.siteName, url: options.siteUrl },
+    publisher: { '@type': 'Organization', name: options.siteName, url: options.siteUrl },
+  };
+}
+
+/**
+ * HowTo — de numrerade stegen i en guide (t.ex. "näin peset tuoreen
+ * tatuoinnin"). Google visar inte längre HowTo som rich result, men typen är
+ * fortfarande giltig schema.org och läses av AI-sök; GEO.md §3 räknar upp den
+ * uttryckligen. Emitteras BARA när guiden faktiskt har en stegsektion.
+ */
+export function howToLd(options: {
+  name: string;
+  description: string;
+  url: string;
+  steps: { title: string; text: string }[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: options.name,
+    description: options.description,
+    step: options.steps.map((step, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: step.title,
+      text: step.text,
+      url: `${options.url}#vaihe-${index + 1}`,
+    })),
+  };
+}

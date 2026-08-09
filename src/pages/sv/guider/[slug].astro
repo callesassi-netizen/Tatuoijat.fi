@@ -1,0 +1,16 @@
+---
+/** Svenska motsvarigheten — egen slug per guide, se src/lib/guides.mjs. */
+import GuidePage from '../../../components/pages/GuidePage.astro';
+import { publishedGuides, guideSlug } from '../../../lib/guides.mjs';
+
+export function getStaticPaths() {
+  return publishedGuides.map((guide) => ({
+    params: { slug: guideSlug(guide, 'sv') },
+    props: { guideKey: guide.key },
+  }));
+}
+
+const { guideKey } = Astro.props;
+---
+
+<GuidePage guideKey={guideKey} locale="sv" />

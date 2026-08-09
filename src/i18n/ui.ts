@@ -220,6 +220,28 @@ export const ui = {
     'city.walkin.title': 'Walk-in-tatuoinnit {city}',
     'card.walkin': 'Walk-in',
     'artist.walkin': 'Walk-in mahdollista',
+    // --- Oppaat (/oppaat/) — hubb + guidesidor, tillägg 2026-08-09 ---
+    // Hubben är noindex,follow tills GUIDES_INDEX_MIN_GUIDES guider är
+    // publicerade (src/lib/guides.mjs) — samma doorway-skydd som tunna
+    // stadssidor. Guidesidorna själva indexeras alltid.
+    'nav.guides': 'Oppaat',
+    'guides.metaTitle': 'Tatuointioppaat — jälkihoito ja paraneminen | {site}',
+    'guides.metaDescription':
+      'Tatuointioppaat: jälkihoito, paraneminen, sauna, uiminen ja aurinko. Käytännön ohjeet ennen ja jälkeen tatuoinnin — ilman turhaa hämmennystä.',
+    'guides.eyebrow': 'Oppaat',
+    'guides.h1': 'Tatuointioppaat',
+    'guides.intro':
+      'Käytännön oppaat tatuoinnin ympärille: mitä iholla tapahtuu, mitä tehdään ja mitä vältetään. Kirjoitettu niin, että ohje toimii myös silloin, kun studion lappu on hukassa.',
+    'guides.publishedTitle': 'Julkaistut oppaat',
+    'guides.upcomingTitle': 'Tulossa',
+    'guides.upcomingNote': 'Nämä oppaat kirjoitetaan seuraavaksi. Sivua ei vielä ole.',
+    'guides.read': 'Lue opas',
+    'guide.eyebrow': 'Opas',
+    'guide.contentsTitle': 'Tässä oppaassa',
+    'guide.disclaimer': 'Huomioi',
+    'guide.citiesTitle': 'Tatuoijat kaupungeittain',
+    'guide.stylesTitle': 'Selaa tyylin mukaan',
+    'guide.priceLink': 'Mitä tatuointi maksaa? Katso hintaopas',
     'notFound.title': 'Sivua ei löytynyt',
     'notFound.text': 'Etsimääsi sivua ei ole olemassa tai se on siirretty.',
     'notFound.cta': 'Takaisin etusivulle',
@@ -407,6 +429,25 @@ export const ui = {
     'city.walkin.title': 'Walk-in-tatuering i {city}',
     'card.walkin': 'Walk-in',
     'artist.walkin': 'Walk-in möjligt',
+    // --- Guider (/sv/guider/) — se fi-kommentaren ovan.
+    'nav.guides': 'Guider',
+    'guides.metaTitle': 'Tatueringsguider — eftervård och läkning | {site}',
+    'guides.metaDescription':
+      'Tatueringsguider: eftervård, läkning, bastu, bad och sol. Praktiska råd före och efter tatueringen — utan onödigt krångel.',
+    'guides.eyebrow': 'Guider',
+    'guides.h1': 'Tatueringsguider',
+    'guides.intro':
+      'Praktiska guider kring tatueringar: vad som händer i huden, vad du gör och vad du undviker. Skrivna så att rådet fungerar även när studions lapp har kommit bort.',
+    'guides.publishedTitle': 'Publicerade guider',
+    'guides.upcomingTitle': 'På väg',
+    'guides.upcomingNote': 'De här guiderna skrivs härnäst. Någon sida finns ännu inte.',
+    'guides.read': 'Läs guiden',
+    'guide.eyebrow': 'Guide',
+    'guide.contentsTitle': 'I den här guiden',
+    'guide.disclaimer': 'Observera',
+    'guide.citiesTitle': 'Tatuerare per stad',
+    'guide.stylesTitle': 'Bläddra efter stil',
+    'guide.priceLink': 'Vad kostar en tatuering? Se prisguiden',
     'notFound.title': 'Sidan hittades inte',
     'notFound.text': 'Sidan du letar efter finns inte eller har flyttats.',
     'notFound.cta': 'Tillbaka till startsidan',
