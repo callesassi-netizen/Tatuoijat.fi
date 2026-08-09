@@ -274,8 +274,20 @@ const webSite = webSiteLd(
             <p class="eyebrow">{t('home.styles.eyebrow')}</p>
             <h2 class="section-title" id="styles-title">{t('home.styles.title')}</h2>
           </div>
+          <!-- Pilar för pekdon. Raden har alltid gått att dra på touch, men med
+               mus fanns ingen synlig väg vidare (scrollbaren är dold). Renderas
+               dolda och slås på av skriptet nedan — utan JS skulle de inte göra
+               något, och då ska de inte synas. -->
+          <div class="rail-nav" hidden data-rail-nav>
+            <button class="rail-btn" type="button" data-rail-prev aria-label={t('home.styles.prev')}>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button class="rail-btn" type="button" data-rail-next aria-label={t('home.styles.next')}>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
-        <div class="style-strip reveal-stagger">
+        <div class="style-strip reveal-stagger" data-style-strip>
           {
             styles.map((style, index) => (
               <a class="style-card" href={p(`/tyylit/${style.id}/`)}>
@@ -386,6 +398,46 @@ const webSite = webSiteLd(
       );
       observer.observe(hero);
     }
+  }
+
+  // Tyyliraidan pilar (vain osoitinlaitteilla — kosketuksella raitaa vedetään).
+  // Askel = yhden kortin leveys + gap, luettuna layoutista, jotta se seuraa
+  // mediakyselyiden kortti- ja gap-kokoja ilman kovakoodattuja pikseleitä.
+  const strip = document.querySelector('[data-style-strip]');
+  const railNav = document.querySelector('[data-rail-nav]');
+  const railPrev = document.querySelector('[data-rail-prev]');
+  const railNext = document.querySelector('[data-rail-next]');
+  if (
+    strip instanceof HTMLElement &&
+    railNav instanceof HTMLElement &&
+    railPrev instanceof HTMLButtonElement &&
+    railNext instanceof HTMLButtonElement
+  ) {
+    const step = () => {
+      const card = strip.querySelector('.style-card');
+      if (!(card instanceof HTMLElement)) return strip.clientWidth * 0.8;
+      const styles = getComputedStyle(strip);
+      const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+      return card.getBoundingClientRect().width + gap;
+    };
+    const update = () => {
+      const max = strip.scrollWidth - strip.clientWidth;
+      // Ingen overflow (t.ex. mycket bred skärm) → dölj hela kontrollen.
+      railNav.hidden = max <= 4;
+      railPrev.disabled = strip.scrollLeft <= 2;
+      railNext.disabled = strip.scrollLeft >= max - 2;
+    };
+    const nudge = (dir) => {
+      strip.scrollBy({
+        left: dir * step(),
+        behavior: reduceMotion ? 'auto' : 'smooth',
+      });
+    };
+    railPrev.addEventListener('click', () => nudge(-1));
+    railNext.addEventListener('click', () => nudge(1));
+    strip.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   }
 </script>
 
@@ -754,6 +806,49 @@ const webSite = webSiteLd(
     .premium-example:hover .pe-media :global(img) {
       transform: none;
     }
+  }
+
+  /* Pilkontroll för stilraden — bara pekdon (hover: hover). På touch drar man
+     raden direkt och knapparna vore bara i vägen. Ligger i section-head, inte
+     som overlay över korten, eftersom raden bleeder ut till högerkanten. */
+  .rail-nav {
+    display: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .rail-nav:not([hidden]) {
+      display: flex;
+      gap: 8px;
+      align-self: center;
+    }
+  }
+  .rail-btn {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: var(--card-border-strong);
+    border-radius: 50%;
+    background: var(--paper);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      background var(--t-fast) var(--ease-out),
+      color var(--t-fast) var(--ease-out),
+      opacity var(--t-fast) var(--ease-out);
+  }
+  .rail-btn:hover:not(:disabled) {
+    background: var(--ink);
+    color: var(--text-light);
+  }
+  .rail-btn:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 2px;
+  }
+  .rail-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
   }
 
   /* Stilgalleriet: bläck-gradientplattor, horisontell scroll-snap med peek */

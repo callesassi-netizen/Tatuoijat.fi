@@ -2,6 +2,12 @@
 /**
  * /yhteys — allmän kontaktsida med rättelse-/borttagningsbegäran (CLAUDE.md,
  * juridik). Renderar det DELADE formuläret (ContactForm, Netlify name="liity")
+ * i `simple`-läge (Calles beslut 9/8 2026): namn, e-post, meddelande — samma
+ * avskalade formulär som /liity. Ämnesväljaren är borta som SYNLIGT fält, men
+ * `aihe` skickas fortfarande dolt ("kysymys" här, "liity" på /liity) så
+ * inskicken går att skilja åt i Netlify-inkorgen utan att kosta besökaren ett
+ * extra val. Vem som vill ha en rättelse eller borttagning skriver det i
+ * meddelandet — ingressen ovanför formuläret ber redan om det.
  * — samma form som /liity, inget separat Netlify-formulär. Indexerbar
  * (trust-/E-E-A-T-sida), länkad i footern.
  */
@@ -51,7 +57,13 @@ const breadcrumb = breadcrumbLd([
     <div class="container sheet-inner">
       <section class="form-col" aria-labelledby="yht-form-title">
         <h2 class="col-title" id="yht-form-title">{c.formTitle}</h2>
-        <ContactForm locale={locale} cities={cities} action={p('/yhteys/')} defaultReason="kysymys" />
+        <ContactForm
+          locale={locale}
+          cities={cities}
+          action={p('/yhteys/')}
+          defaultReason="kysymys"
+          simple
+        />
       </section>
 
       <!-- Rättelse-/borttagningsnotis (juridik) -->

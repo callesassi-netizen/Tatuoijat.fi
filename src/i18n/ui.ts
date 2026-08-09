@@ -38,6 +38,10 @@ export const ui = {
     'home.all': 'Kaikki',
     'home.styles.eyebrow': 'Tyylit',
     'home.styles.title': 'Selaa tyylin mukaan',
+    // Piilinapit tyyliraidalle: kosketuksella raitaa voi vetää, hiirellä ei —
+    // siksi nuolet näkyvät vain osoitinlaitteilla (ks. HomePage.astro).
+    'home.styles.prev': 'Edelliset tyylit',
+    'home.styles.next': 'Seuraavat tyylit',
     'home.cities.eyebrow': 'Kaupungit',
     'home.cities.title': 'Selaa kaupungin mukaan',
     'home.artistCount.one': '1 tatuoija',
@@ -249,6 +253,8 @@ export const ui = {
     'home.all': 'Alla',
     'home.styles.eyebrow': 'Stilar',
     'home.styles.title': 'Bläddra efter stil',
+    'home.styles.prev': 'Föregående stilar',
+    'home.styles.next': 'Fler stilar',
     'home.cities.eyebrow': 'Städer',
     'home.cities.title': 'Bläddra efter stad',
     'home.artistCount.one': '1 tatuerare',
