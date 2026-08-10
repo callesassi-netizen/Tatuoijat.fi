@@ -179,8 +179,18 @@ const personEntries = persons.map((person) =>
           </p>
         )
       }
-      <h1 class="artist-name">{data.name}</h1>
-      {placeLine && <p class="artist-place">{placeLine}</p>}
+      <div class="artist-ident">
+        {/* Mockupens runda avatar bredvid namnet. Studios har inga egna
+            porträtt (Bildpolicyn) — monogramplattan är sajtens egna yta
+            och fungerar som identitetsmarkör utan att låtsas vara ett foto. */}
+        <span class="artist-avatar" aria-hidden="true">
+          <MonogramPlate name={data.name} featured={featured} />
+        </span>
+        <span class="artist-ident-text">
+          <h1 class="artist-name">{data.name}</h1>
+          {placeLine && <p class="artist-place">{placeLine}</p>}
+        </span>
+      </div>
       {
         styleNames.length > 0 && (
           <p class="artist-chips">
@@ -458,6 +468,23 @@ const personEntries = persons.map((person) =>
   .badge-row {
     margin: 18px 0 8px;
   }
+  .artist-ident {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .artist-avatar {
+    flex: none;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    border: var(--card-border-strong);
+  }
+  .artist-ident-text {
+    min-width: 0;
+  }
   .artist-name {
     font-size: 36px;
     line-height: 1.04;
@@ -682,7 +709,7 @@ const personEntries = persons.map((person) =>
      aldrig smalare än IG kräver. */
   .portfolio-embeds {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(326px, 100%), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
     gap: 12px;
   }
   .portfolio-embeds .portfolio-item {
@@ -818,6 +845,10 @@ const personEntries = persons.map((person) =>
   @media (min-width: 1024px) {
     .artist-hero-inner {
       padding: 32px var(--page-pad) 84px;
+    }
+    .artist-avatar {
+      width: 96px;
+      height: 96px;
     }
     .artist-name {
       font-size: 64px;

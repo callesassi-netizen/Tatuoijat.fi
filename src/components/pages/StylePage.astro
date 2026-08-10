@@ -6,7 +6,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ArtistCard from '../ArtistCard.astro';
+import ArtistRow from '../ArtistRow.astro';
 import { styleImages } from '../../lib/styleImages';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
@@ -166,14 +166,13 @@ const collectionPage = collectionPageLd(
           studios.length > 0 ? (
             <div class="artist-grid">
               {studios.map((studio) => (
-                <ArtistCard
+                <ArtistRow
                   slug={studio.id}
                   name={studio.data.name}
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
                   premium={isFeatured(studio)}
                   walkIn={isWalkIn(studio)}
-                  size="featured"
                   locale={locale}
                 />
               ))}
@@ -286,7 +285,7 @@ const collectionPage = collectionPageLd(
     z-index: 1;
     background: var(--paper);
     border-radius: var(--r-sheet) var(--r-sheet) 0 0;
-    margin-top: -20px;
+    margin-top: var(--sheet-overlap);
   }
   .sheet-inner {
     padding: 28px var(--page-pad) 40px;
@@ -397,7 +396,7 @@ const collectionPage = collectionPageLd(
       max-width: 560px;
     }
     .sheet {
-      margin-top: -26px;
+      margin-top: var(--sheet-overlap);
     }
     .sheet-inner {
       padding: 44px var(--page-pad) 60px;

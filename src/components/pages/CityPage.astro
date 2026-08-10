@@ -7,7 +7,7 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SearchForm from '../SearchForm.astro';
-import ArtistCard from '../ArtistCard.astro';
+import ArtistRow from '../ArtistRow.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
@@ -116,17 +116,6 @@ function studioStyleNames(studio: (typeof studios)[number]): string[] {
   });
 }
 
-// Filmremsa: bläck-gradientplattor som klipps av arket
-const ink = (angle: number, from: string, to: string) =>
-  `linear-gradient(${angle}deg, ${from} 0%, ${to} 100%)`;
-const filmstrip: [string, number, number][] = [
-  [ink(160, '#1e1e1e', '#2e2429'), 92, 64],
-  [ink(200, '#222222', '#33272c'), 118, 50],
-  [ink(150, '#1a1a1a', '#2a2126'), 76, 72],
-  [ink(215, '#242424', '#3a2a2e'), 108, 56],
-  [ink(170, '#202020', '#35272b'), 96, 66],
-  [ink(190, '#1e1e1e', '#2c2328'), 124, 48],
-];
 
 // Thin-content-regeln (handoff §3.1): under tröskeln → noindex,follow.
 // Sitemap-filtret i astro.config.mjs utesluter samma sidor.
@@ -169,16 +158,6 @@ const collectionPage = collectionPageLd(
       <p class="eyebrow">{t('city.eyebrow')}</p>
       <h1 class="city-title">{t('city.h1', { city: h1City })}</h1>
       <p class="city-intro">{answerSentence} {intro}</p>
-      <div class="filmstrip" aria-hidden="true">
-        {
-          filmstrip.map(([gradient, width, height]) => (
-            <div
-              class="film-tile grain-dark"
-              style={`width:${width}px;height:${height}px;background:${gradient}`}
-            />
-          ))
-        }
-      </div>
     </div>
   </section>
 
@@ -233,14 +212,13 @@ const collectionPage = collectionPageLd(
                 data-artist-card
                 data-styles={studio.data.styles.join(' ')}
               >
-                <ArtistCard
+                <ArtistRow
                   slug={studio.id}
                   name={studio.data.name}
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
                   premium
                   walkIn={isWalkIn(studio)}
-                  size="featured"
                   locale={locale}
                 />
               </div>
@@ -259,13 +237,12 @@ const collectionPage = collectionPageLd(
                 data-artist-card
                 data-styles={studio.data.styles.join(' ')}
               >
-                <ArtistCard
+                <ArtistRow
                   slug={studio.id}
                   name={studio.data.name}
                   meta={studioMeta(studio)}
                   styleNames={studioStyleNames(studio)}
                   walkIn={isWalkIn(studio)}
-                  size="compact"
                   locale={locale}
                 />
               </div>
@@ -424,24 +401,13 @@ const collectionPage = collectionPageLd(
     color: var(--meta);
     max-width: 340px;
   }
-  .filmstrip {
-    display: flex;
-    gap: 6px;
-    align-items: flex-end;
-    margin-top: 18px;
-    overflow: hidden;
-  }
-  .film-tile {
-    flex: none;
-    border-radius: 6px 6px 0 0;
-  }
 
   .sheet {
     position: relative;
     z-index: 1;
     background: var(--paper);
     border-radius: var(--r-sheet) var(--r-sheet) 0 0;
-    margin-top: -20px;
+    margin-top: var(--sheet-overlap);
   }
   .sheet-inner {
     padding: 0 var(--page-pad) 36px;
@@ -491,9 +457,10 @@ const collectionPage = collectionPageLd(
     display: none;
   }
   .regular-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    /* Mockupens resultatlista: rader i en kolumn, inte rutnät. */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 14px;
   }
 
@@ -646,12 +613,8 @@ const collectionPage = collectionPageLd(
       font-size: 15px;
       max-width: 560px;
     }
-    .filmstrip {
-      margin-top: 26px;
-      gap: 10px;
-    }
     .sheet {
-      margin-top: -26px;
+      margin-top: var(--sheet-overlap);
     }
     .float-search {
       max-width: 880px;
@@ -672,9 +635,9 @@ const collectionPage = collectionPageLd(
     }
     .featured-list,
     .regular-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
     .regular-grid {
       margin-top: 20px;

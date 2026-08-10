@@ -245,6 +245,8 @@ export const ui = {
       'Walk-in-liikkeitä ei ole vielä listattu. Täydennämme tietoja jatkuvasti.',
     'city.walkin.title': 'Walk-in-tatuoinnit {city}',
     'card.walkin': 'Walk-in',
+    // Mockupens "VISA PROFIL" pa listraderna (ArtistRow).
+    'card.viewProfile': 'Näytä profiili',
     'artist.walkin': 'Walk-in mahdollista',
     // --- Oppaat (/oppaat/) — hubb + guidesidor, tillägg 2026-08-09 ---
     // Hubben är noindex,follow tills GUIDES_INDEX_MIN_GUIDES guider är
@@ -479,6 +481,7 @@ export const ui = {
       'Inga walk-in-studior är listade ännu. Vi fyller på informationen löpande.',
     'city.walkin.title': 'Walk-in-tatuering i {city}',
     'card.walkin': 'Walk-in',
+    'card.viewProfile': 'Visa profil',
     'artist.walkin': 'Walk-in möjligt',
     // --- Guider (/sv/guider/) — se fi-kommentaren ovan.
     'nav.guides': 'Guider',

@@ -9,7 +9,7 @@
  */
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ArtistCard from '../ArtistCard.astro';
+import ArtistRow from '../ArtistRow.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
@@ -112,13 +112,12 @@ const collectionPage =
                 <h2 class="city-heading">{cityName}</h2>
                 <div class="artist-grid">
                   {group.studios.map((studio) => (
-                    <ArtistCard
+                    <ArtistRow
                       slug={studio.id}
                       name={studio.data.name}
                       meta={studioMeta(studio, cityName)}
                       styleNames={studioStyleNames(studio)}
                       premium={isFeatured(studio)}
-                      size="featured"
                       locale={locale}
                     />
                   ))}

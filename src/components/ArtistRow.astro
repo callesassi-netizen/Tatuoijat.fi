@@ -1,0 +1,199 @@
+---
+/**
+ * Listrad för sökresultat och stads-/stilsidor — mockupens "Hitta
+ * tatuerare"-mönster: kvadratisk miniatyr till vänster, namn/plats/stilar
+ * i mitten, tydlig "Näytä profiili"-knapp till höger.
+ *
+ * VARFÖR RAD OCH INTE KORT: mockupen listar resultat som rader med en
+ * synlig åtgärdsknapp, inte som ett rutnät av kort. Raden packar också in
+ * mer information per skärmhöjd, vilket spelar roll när 83 % av besökarna
+ * är på mobil och en stadssida kan lista 41 studios (Helsingfors).
+ *
+ * ArtistCard finns kvar för ytor där bilden ska bära — startsidans
+ * nostetut och stilgalleriet.
+ */
+import MonogramPlate from './MonogramPlate.astro';
+import { useTranslations, type Locale } from '../i18n/ui';
+
+interface Props {
+  slug: string;
+  name: string;
+  meta: string;
+  styleNames: string[];
+  premium?: boolean;
+  walkIn?: boolean;
+  locale: Locale;
+  href?: string;
+}
+
+const {
+  slug,
+  name,
+  meta,
+  styleNames,
+  premium = false,
+  walkIn = false,
+  locale,
+  href,
+} = Astro.props;
+const t = useTranslations(locale);
+const target = href ?? `${locale === 'sv' ? '/sv' : ''}/artistit/${slug}/`;
+---
+
+<a class:list={['artist-row', premium && 'artist-row--featured']} href={target}>
+  <span class="row-media" style={`view-transition-name: artist-image-${slug};`}>
+    <MonogramPlate name={name} featured={premium} />
+  </span>
+
+  <span class="row-body">
+    <span class="row-top">
+      <span class="row-name">{name}</span>
+      {premium && <span class="badge-featured row-badge">★ {t('card.featured')}</span>}
+      {walkIn && <span class="row-walkin">{t('card.walkin')}</span>}
+    </span>
+    <span class="row-meta">{meta}</span>
+    {
+      styleNames.length > 0 && (
+        <span class="row-chips">
+          {styleNames.slice(0, 3).map((styleName) => (
+            <span class="row-chip">{styleName}</span>
+          ))}
+        </span>
+      )
+    }
+  </span>
+
+  <span class="row-cta">{t('card.viewProfile')}</span>
+</a>
+
+<style>
+  .artist-row {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    grid-template-areas:
+      'media body'
+      'cta cta';
+    gap: 12px 14px;
+    align-items: center;
+    padding: 12px;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    color: inherit;
+    transition:
+      border-color var(--t-fast) var(--ease-out),
+      background var(--t-fast) var(--ease-out);
+  }
+  .artist-row:hover {
+    background: var(--surface-2);
+    border-color: var(--flash);
+  }
+  .artist-row--featured {
+    border-color: rgba(201, 162, 39, 0.45);
+  }
+
+  .row-media {
+    grid-area: media;
+    display: block;
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .row-body {
+    grid-area: body;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .row-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .row-name {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 18px;
+    line-height: 1.15;
+    color: var(--text);
+  }
+  .row-badge {
+    font-size: 10px;
+  }
+  .row-walkin {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--flash);
+  }
+  .row-meta {
+    font-size: 13px;
+    color: var(--meta);
+  }
+  .row-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 4px;
+  }
+  .row-chip {
+    font-size: 11px;
+    line-height: 1;
+    padding: 4px 8px;
+    border: var(--chip-border-card);
+    border-radius: var(--r-chip);
+    color: var(--meta);
+  }
+
+  /* Mockupens "VISA PROFIL": outline-knapp, alltid synlig. På mobil
+     ligger den på egen rad under innehållet i stället för att klämma
+     ihop namnet. */
+  .row-cta {
+    grid-area: cta;
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text);
+    border: var(--btn-outline-border);
+    border-radius: var(--r-btn);
+    padding: 9px 14px;
+    transition:
+      background var(--t-fast) var(--ease-out),
+      color var(--t-fast) var(--ease-out),
+      border-color var(--t-fast) var(--ease-out);
+  }
+  .artist-row:hover .row-cta {
+    background: var(--flash);
+    border-color: var(--flash);
+    color: var(--text-on-flash);
+  }
+
+  @media (min-width: 640px) {
+    .artist-row {
+      grid-template-columns: 88px 1fr auto;
+      grid-template-areas: 'media body cta';
+      gap: 16px;
+      padding: 14px;
+    }
+    .row-media {
+      width: 88px;
+      height: 88px;
+    }
+    .row-name {
+      font-size: 20px;
+    }
+    .row-cta {
+      white-space: nowrap;
+    }
+  }
+</style>

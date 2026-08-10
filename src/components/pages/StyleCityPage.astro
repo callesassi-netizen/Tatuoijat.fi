@@ -22,7 +22,7 @@
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ArtistCard from '../ArtistCard.astro';
+import ArtistRow from '../ArtistRow.astro';
 import { styleImages } from '../../lib/styleImages';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
@@ -209,7 +209,7 @@ const collectionPage = collectionPageLd(
         <div class="artist-grid">
           {
             studios.map((studio) => (
-              <ArtistCard
+              <ArtistRow
                 slug={studio.id}
                 name={studio.data.name}
                 meta={studioMeta(studio)}
@@ -353,7 +353,7 @@ const collectionPage = collectionPageLd(
     z-index: 1;
     background: var(--paper);
     border-radius: var(--r-sheet) var(--r-sheet) 0 0;
-    margin-top: -20px;
+    margin-top: var(--sheet-overlap);
   }
   .sheet-inner {
     padding: 30px var(--page-pad) 52px;
@@ -367,9 +367,9 @@ const collectionPage = collectionPageLd(
     margin: 0 0 16px;
   }
   .artist-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
   .sc-allcity {
     margin: 18px 0 0;
@@ -437,10 +437,7 @@ const collectionPage = collectionPageLd(
   }
 
   @media (min-width: 768px) {
-    .artist-grid {
-      grid-template-columns: 1fr 1fr;
     }
-  }
   @media (min-width: 1024px) {
     .sc-hero-inner {
       padding: 40px var(--page-pad) 76px;
@@ -461,9 +458,6 @@ const collectionPage = collectionPageLd(
     }
     .sheet-inner {
       padding: 44px var(--page-pad) 72px;
-    }
-    .artist-grid {
-      grid-template-columns: repeat(3, 1fr);
     }
     .section-title {
       font-size: 28px;
