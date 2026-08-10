@@ -74,6 +74,17 @@ button {
   cursor: pointer;
 }
 
+/* Native select: se --select-scheme i tokens.css. color-scheme far
+   webblasaren att rita popupen i ratt lage; option-reglerna ar balte och
+   hangslen for de webblasare som ignorerar den pa element-niva. */
+select {
+  color-scheme: var(--select-scheme);
+}
+option {
+  background-color: var(--surface);
+  color: var(--text);
+}
+
 /* Synlig fokusring för tangentbordsnavigering */
 :focus-visible {
   outline: 2px solid var(--flash);

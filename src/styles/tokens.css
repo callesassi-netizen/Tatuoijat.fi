@@ -46,6 +46,12 @@
   --btn-outline-border: 1.5px solid rgba(242, 242, 242, 0.3);
   --hairline-dark: 1px solid rgba(242, 242, 242, 0.12);
 
+  /* Native formulärkontroller (select-popup, datumväljare) ritas av OS:et.
+     Utan color-scheme: dark får <option> vår ljusa textfärg men behåller
+     systemets VITA popup-bakgrund — ljusgrått på vitt, i praktiken oläsligt.
+     Syns bara på desktop; mobilens select renderas som ett eget ark. */
+  --select-scheme: dark;
+
   /* Bildton: moodboardens foton är avmättade och kontrastrika */
   --img-filter: saturate(0.85) contrast(1.04);
 
@@ -106,6 +112,7 @@
   --btn-outline-border: 1.5px solid rgba(13, 13, 13, 0.25);
 
   --shadow-float: 0 12px 32px rgba(13, 13, 13, 0.18);
+  --select-scheme: light;
 
   color: var(--text);
   background: var(--paper);
