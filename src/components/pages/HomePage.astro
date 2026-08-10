@@ -108,12 +108,15 @@ const styleGradients = [
 // ger naturlig exakt träff på "tatuoijat"-sökningar (handoff §7).
 const title = `${t('site.name')} — ${t('home.metaSuffix')}`;
 
-// WebSite-entiteten pekar alltid på sajtroten, oavsett locale
+// WebSite-entiteten pekar alltid på sajtroten, oavsett locale.
+// SearchAction pekar sedan 2026-08-10 på den riktiga fritextsökningen
+// (/haku/?q=). Tidigare pekade den på ?tyyli= — en select-parameter som
+// bara accepterade tio fasta slugs, alltså inte en sökning alls.
 const site = Astro.site!;
 const webSite = webSiteLd(
   t('site.name'),
   site.href,
-  `${new URL('/tatuoijat/', site).href}?tyyli={search_term_string}`,
+  `${new URL('/haku/', site).href}?q={search_term_string}`,
 );
 ---
 
@@ -150,6 +153,7 @@ const webSite = webSiteLd(
           styles={styles}
           idPrefix="hm"
           popularCities={popularCities}
+          withQuery
         />
       </div>
 
@@ -427,7 +431,7 @@ const webSite = webSiteLd(
       railPrev.disabled = strip.scrollLeft <= 2;
       railNext.disabled = strip.scrollLeft >= max - 2;
     };
-    const nudge = (dir) => {
+    const nudge = (dir: number) => {
       strip.scrollBy({
         left: dir * step(),
         behavior: reduceMotion ? 'auto' : 'smooth',

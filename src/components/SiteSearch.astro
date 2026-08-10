@@ -1,0 +1,653 @@
+---
+/**
+ * Fritextsökning över hela katalogen — studios, artister, städer, stadsdelar
+ * och stilar. Klientsidan matchar mot ett förgenererat JSON-index
+ * (`src/lib/search.ts`), eftersom sajten är statisk och saknar backend.
+ *
+ * PROGRESSIVE ENHANCEMENT: utan JS är det här ett vanligt `<input name="q">`
+ * i ett GET-formulär som skickar besökaren till /haku/ (sv /sok/), där hela
+ * katalogen ligger som ett A–Ö-hakemisto grupperat per stad. Ingen
+ * återvändsgränd, ingen tom sida.
+ *
+ * TILLGÄNGLIGHET: riktig `<label>`, combobox-mönstret (aria-expanded,
+ * aria-controls, aria-activedescendant), piltangenter + Home/End + Esc i
+ * resultatlistan, och antalet träffar i ett `aria-live="polite"`-fält.
+ *
+ * Komponenten renderar INGET eget `<form>` — den används både fristående
+ * (SearchPage) och som första fält i det befintliga sökkortet (SearchForm),
+ * och nästlade formulär är ogiltig HTML.
+ */
+import { useTranslations, type Locale } from '../i18n/ui';
+import { searchIndexPath } from '../lib/routes';
+
+interface Props {
+  locale: Locale;
+  /** Unikt prefix — komponenten kan finnas flera gånger på samma sida. */
+  idPrefix: string;
+  /** 'inline' = fält i sökkortet (dropdown), 'page' = /haku/ (resultat i flödet). */
+  variant?: 'inline' | 'page';
+  /** Läs ?q= ur URL:en och sök direkt vid sidladdning (används på /haku/). */
+  readQueryParam?: boolean;
+  autofocus?: boolean;
+}
+
+const { locale, idPrefix, variant = 'inline', readQueryParam = false, autofocus = false } =
+  Astro.props;
+
+const t = useTranslations(locale);
+const inputId = `${idPrefix}-q`;
+const listId = `${idPrefix}-results`;
+const hintId = `${idPrefix}-hint`;
+---
+
+<div
+  class:list={['sitesearch', `sitesearch--${variant}`]}
+  data-sitesearch
+  data-index={searchIndexPath(locale)}
+  data-read-query={readQueryParam ? '1' : undefined}
+  data-label-city={t('search.type.city')}
+  data-label-style={t('search.type.style')}
+  data-label-artist={t('search.type.artist')}
+  data-count-one={t('search.count.one')}
+  data-count-many={t('search.count.many')}
+  data-count-zero={t('search.count.zero')}
+  data-studio-count-one={t('home.artistCount.one')}
+  data-studio-count-many={t('home.artistCount.many')}
+>
+  <div class="field">
+    <label for={inputId}>{t('search.query')}</label>
+    <input
+      id={inputId}
+      class="q"
+      type="search"
+      name="q"
+      autocomplete="off"
+      autocorrect="off"
+      spellcheck="false"
+      enterkeyhint="search"
+      placeholder={t('search.queryPlaceholder')}
+      aria-describedby={hintId}
+      data-q
+    />
+    <span class="icon" aria-hidden="true">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+        <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.6"></circle>
+        <path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.6"></path>
+      </svg>
+    </span>
+  </div>
+
+  <p class="hint" id={hintId}>{t('search.hint')}</p>
+
+  <div class="panel" hidden data-panel>
+    <ul class="results" id={listId} role="listbox" aria-label={t('search.resultsLabel')} data-list>
+    </ul>
+    <p class="empty" hidden data-empty>{t('search.noResults')}</p>
+  </div>
+
+  <p class="visually-hidden" role="status" aria-live="polite" data-status></p>
+</div>
+
+<script>
+  // ---------------------------------------------------------------------
+  // Textnormalisering. NFD + strip av kombinerande diakriter gör å/ä/ö → a/a/o
+  // och é → e, så finska OCH svenska stavningar hittar varandra ("Jyvaskyla"
+  // hittar Jyväskylä, "Abo" hittar Åbo). Allt som inte är a–z0–9 blir
+  // mellanslag, vilket också hanterar bindestreck och &.
+  // ---------------------------------------------------------------------
+  const norm = (value: string): string =>
+    value
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/ø/g, 'o')
+      .replace(/æ/g, 'ae')
+      .replace(/ß/g, 'ss')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+
+  /**
+   * Levenshtein-avstånd med tak: returnerar max+1 så fort raden inte längre
+   * kan nå under taket. Gör stavfelstoleransen billig — vi behöver bara veta
+   * "≤ 1 fel" eller "≤ 2 fel", aldrig det exakta avståndet.
+   */
+  function editDistance(a: string, b: string, max: number): number {
+    if (Math.abs(a.length - b.length) > max) return max + 1;
+    let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let i = 1; i <= a.length; i++) {
+      const row = [i];
+      let best = i;
+      for (let j = 1; j <= b.length; j++) {
+        const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+        row[j] = Math.min(prev[j]! + 1, row[j - 1]! + 1, prev[j - 1]! + cost);
+        if (row[j]! < best) best = row[j]!;
+      }
+      if (best > max) return max + 1;
+      prev = row;
+    }
+    return prev[b.length]!;
+  }
+
+  interface Field {
+    text: string;
+    words: string[];
+  }
+  const field = (value: string): Field => {
+    const text = norm(value);
+    return { text, words: text ? text.split(' ') : [] };
+  };
+
+  /**
+   * Poäng för EN sökterm mot ETT fält. Skalan är avsiktligt gles så att
+   * matchningstypen alltid dominerar över småjusteringar: exakt (100) >
+   * fältet börjar med termen (82) > något ord börjar med termen (66) >
+   * substring (48) > stavfel (30–38). Fuzzy-matchning tillåts först från
+   * 4 tecken (kortare ord blir annars allt) och med två fel först från 8.
+   */
+  function scoreField(term: string, f: Field): number {
+    if (!f.text) return 0;
+    if (f.text === term) return 100;
+    if (f.text.startsWith(term)) return 82;
+    for (const word of f.words) if (word.startsWith(term)) return 66;
+    if (f.text.includes(term)) return 48;
+    if (term.length < 4) return 0;
+    const max = term.length >= 8 ? 2 : 1;
+    for (const word of f.words) {
+      // Jämför både mot hela ordet och mot dess inledning: "grey bul" ska
+      // kunna matcha "grey bull" utan att ordets svans räknas som fel.
+      const d = Math.min(
+        editDistance(term, word, max),
+        editDistance(term, word.slice(0, term.length + max), max),
+      );
+      if (d <= max) return 38 - d * 8;
+    }
+    return 0;
+  }
+
+  interface Entry {
+    label: string;
+    meta: string;
+    url: string;
+    boost: number;
+    /** Primärfält (namnet) väger fullt; sekundärfälten 0.45. */
+    name: Field;
+    sec: Field[];
+  }
+
+  type CityRow = [string, string, number, string | 0];
+  type StyleRow = [string, string, string | 0];
+  type StudioRow = [string, string, number, string | 0, string | 0, number[], number];
+  type ArtistRow = [string, number];
+  interface RawIndex {
+    v: number;
+    base: { studio: string; city: string; style: string };
+    c: CityRow[];
+    y: StyleRow[];
+    s: StudioRow[];
+    a: ArtistRow[];
+  }
+
+  const SEC_WEIGHT = 0.45;
+  const MAX_RESULTS = 8;
+
+  function buildEntries(raw: RawIndex, root: HTMLElement): Entry[] {
+    const d = root.dataset;
+    const cityLabel = d.labelCity ?? '';
+    const styleLabel = d.labelStyle ?? '';
+    const artistLabel = d.labelArtist ?? '';
+    const countOne = d.studioCountOne ?? '1';
+    const countMany = d.studioCountMany ?? '{n}';
+
+    const entries: Entry[] = [];
+    const cityNames = raw.c.map((row) => row[1]);
+    const styleNames = raw.y.map((row) => row[1]);
+
+    raw.c.forEach((row) => {
+      const [slug, name, count, alias] = row;
+      entries.push({
+        label: name,
+        meta: `${cityLabel} · ${count === 1 ? countOne : countMany.replace('{n}', String(count))}`,
+        url: `${raw.base.city}${slug}/`,
+        // Stora städer före små när textträffen är likvärdig.
+        boost: 6 + Math.min(count / 10, 4),
+        name: field(name),
+        sec: alias ? [field(alias)] : [],
+      });
+    });
+
+    raw.y.forEach((row) => {
+      const [slug, name, alias] = row;
+      entries.push({
+        label: name,
+        meta: styleLabel,
+        url: `${raw.base.style}${slug}/`,
+        boost: 5,
+        name: field(name),
+        sec: alias ? [field(alias)] : [],
+      });
+    });
+
+    const studioLabels: string[] = [];
+    raw.s.forEach((row) => {
+      const [name, slug, ci, place, district, styleIdx, boost] = row;
+      const cityName = ci >= 0 ? (cityNames[ci] ?? '') : String(place || '');
+      const styleList = styleIdx.map((i) => styleNames[i] ?? '').filter(Boolean);
+      const metaParts = [district || '', cityName].filter(Boolean) as string[];
+      studioLabels.push(name);
+      entries.push({
+        label: name,
+        meta: [metaParts.join(', '), styleList.slice(0, 3).join(' · ')]
+          .filter(Boolean)
+          .join(' — '),
+        url: `${raw.base.studio}${slug}/`,
+        boost,
+        name: field(name),
+        sec: [field(cityName), field(String(district || '')), field(styleList.join(' '))].filter(
+          (f) => f.text,
+        ),
+      });
+    });
+
+    raw.a.forEach((row) => {
+      const [name, si] = row;
+      const studio = raw.s[si];
+      if (!studio) return;
+      const cityName = studio[2] >= 0 ? (cityNames[studio[2]] ?? '') : String(studio[3] || '');
+      entries.push({
+        label: name,
+        meta: [artistLabel, studioLabels[si], cityName].filter(Boolean).join(' · '),
+        url: `${raw.base.studio}${studio[1]}/`,
+        // Artister leder till studions sida — håll dem strax under studion
+        // själv så samma sida inte listas två gånger i toppen.
+        boost: studio[6] - 1,
+        name: field(name),
+        sec: [field(studioLabels[si] ?? ''), field(cityName)].filter((f) => f.text),
+      });
+    });
+
+    return entries;
+  }
+
+  function search(entries: Entry[], query: string): Entry[] {
+    const terms = norm(query).split(' ').filter(Boolean);
+    if (!terms.length) return [];
+    const scored: { entry: Entry; score: number }[] = [];
+    for (const entry of entries) {
+      let total = 0;
+      let ok = true;
+      for (const term of terms) {
+        let best = scoreField(term, entry.name);
+        for (const f of entry.sec) {
+          const s = scoreField(term, f) * SEC_WEIGHT;
+          if (s > best) best = s;
+        }
+        // AND-logik: varje sökord måste träffa något fält. "grey bull turku"
+        // ska inte matcha allt som råkar ligga i Åbo.
+        if (best <= 0) {
+          ok = false;
+          break;
+        }
+        total += best;
+      }
+      if (ok) scored.push({ entry, score: total + entry.boost });
+    }
+    scored.sort((a, b) => b.score - a.score || a.entry.label.localeCompare(b.entry.label));
+    // Deduplicera på MÅL, inte på post. Artisterna saknar egna sidor och
+    // pekar på sin studio, så en sökning på "manala" annars gav fem rader
+    // som alla ledde till /artistit/manala-tattoo/. Den högst rankade posten
+    // vinner: matchar studionamnet visas studion, matchar bara artistnamnet
+    // visas artisten (med studion i metaraden).
+    const seen = new Set<string>();
+    const unique: Entry[] = [];
+    for (const item of scored) {
+      if (seen.has(item.entry.url)) continue;
+      seen.add(item.entry.url);
+      unique.push(item.entry);
+      if (unique.length >= MAX_RESULTS) break;
+    }
+    return unique;
+  }
+
+  // ---------------------------------------------------------------------
+  // UI
+  // ---------------------------------------------------------------------
+  const indexCache = new Map<string, Promise<RawIndex>>();
+  const loadIndex = (url: string): Promise<RawIndex> => {
+    let pending = indexCache.get(url);
+    if (!pending) {
+      pending = fetch(url).then((response) => {
+        if (!response.ok) throw new Error(`search index ${response.status}`);
+        return response.json() as Promise<RawIndex>;
+      });
+      indexCache.set(url, pending);
+    }
+    return pending;
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-sitesearch]').forEach((root, rootIndex) => {
+    const input = root.querySelector<HTMLInputElement>('[data-q]');
+    const panel = root.querySelector<HTMLElement>('[data-panel]');
+    const list = root.querySelector<HTMLUListElement>('[data-list]');
+    const empty = root.querySelector<HTMLElement>('[data-empty]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    if (!input || !panel || !list || !empty || !status) return;
+
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-expanded', 'false');
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-controls', list.id);
+
+    let entries: Entry[] | null = null;
+    let results: Entry[] = [];
+    let active = -1;
+
+    const ensureIndex = () => {
+      if (entries) return Promise.resolve(entries);
+      return loadIndex(root.dataset.index ?? '/haku-index.json')
+        .then((raw) => {
+          entries = buildEntries(raw, root);
+          return entries;
+        })
+        .catch(() => {
+          // Nätverksfel: låt formuläret falla tillbaka på /haku/ i stället
+          // för att låtsas att katalogen är tom.
+          entries = [];
+          return entries;
+        });
+    };
+
+    const close = () => {
+      panel.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
+      active = -1;
+    };
+
+    const setActive = (next: number) => {
+      const options = list.querySelectorAll<HTMLElement>('[role="option"]');
+      options.forEach((option) => option.setAttribute('aria-selected', 'false'));
+      active = next;
+      if (active < 0 || active >= options.length) {
+        input.removeAttribute('aria-activedescendant');
+        return;
+      }
+      const option = options[active]!;
+      option.setAttribute('aria-selected', 'true');
+      input.setAttribute('aria-activedescendant', option.id);
+      option.scrollIntoView({ block: 'nearest' });
+    };
+
+    const render = () => {
+      list.textContent = '';
+      results.forEach((entry, i) => {
+        const li = document.createElement('li');
+        li.id = `${input.id}-opt-${rootIndex}-${i}`;
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', 'false');
+        const link = document.createElement('a');
+        link.href = entry.url;
+        link.tabIndex = -1;
+        const name = document.createElement('span');
+        name.className = 'r-name';
+        name.textContent = entry.label;
+        link.append(name);
+        if (entry.meta) {
+          const meta = document.createElement('span');
+          meta.className = 'r-meta';
+          meta.textContent = entry.meta;
+          link.append(meta);
+        }
+        li.append(link);
+        li.addEventListener('mousemove', () => setActive(i));
+        list.append(li);
+      });
+      empty.hidden = results.length > 0;
+      panel.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      setActive(-1);
+    };
+
+    const announce = (count: number) => {
+      const d = root.dataset;
+      status.textContent =
+        count === 0
+          ? (d.countZero ?? '')
+          : count === 1
+            ? (d.countOne ?? '')
+            : (d.countMany ?? '').replace('{n}', String(count));
+    };
+
+    const run = () => {
+      const query = input.value.trim();
+      if (query.length < 2) {
+        results = [];
+        close();
+        status.textContent = '';
+        return;
+      }
+      void ensureIndex().then((data) => {
+        // Fältet kan ha ändrats medan indexet hämtades.
+        if (input.value.trim() !== query) return;
+        results = search(data, query);
+        render();
+        announce(results.length);
+      });
+    };
+
+    const go = (index: number) => {
+      const entry = results[index];
+      if (!entry) return false;
+      window.location.href = entry.url;
+      return true;
+    };
+
+    input.addEventListener('focus', () => void ensureIndex(), { once: true });
+    input.addEventListener('input', run);
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        close();
+        return;
+      }
+      if (event.key === 'Enter') {
+        // Utan träffar: låt formuläret submitta som vanligt (→ /haku/).
+        if (!panel.hidden && results.length > 0) {
+          event.preventDefault();
+          go(active >= 0 ? active : 0);
+        }
+        return;
+      }
+      if (panel.hidden || results.length === 0) return;
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setActive(active + 1 >= results.length ? 0 : active + 1);
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setActive(active <= 0 ? results.length - 1 : active - 1);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        setActive(0);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        setActive(results.length - 1);
+      } else if (event.key === 'Tab') {
+        close();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!root.contains(event.target as Node)) close();
+    });
+
+    // /haku/?q=… — förifyll och sök direkt (t.ex. när ett formulär utan JS
+    // hann skicka besökaren hit, eller vid delad länk).
+    if (root.dataset.readQuery) {
+      const initial = new URLSearchParams(window.location.search).get('q');
+      if (initial) {
+        input.value = initial;
+        run();
+      }
+      input.focus({ preventScroll: true });
+    }
+  });
+</script>
+
+<style>
+  .sitesearch {
+    position: relative;
+  }
+
+  /* Samma fältanatomi som stads-/stilväljarna i SearchForm — label i
+     versal-mikrotypografi ovanför värdet, hela fältet ett klickbart block. */
+  .field {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1px;
+    background: var(--paper);
+    border: var(--card-border-strong);
+    border-radius: var(--r-btn);
+    padding: 10px 38px 10px 14px;
+  }
+  .field label {
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .q {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-body);
+    /* 16px så iOS inte zoomar in vid fokus */
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 0;
+    width: 100%;
+  }
+  .q::placeholder {
+    color: var(--meta);
+    font-weight: 400;
+  }
+  .q::-webkit-search-cancel-button {
+    appearance: none;
+  }
+  .q:focus-visible {
+    outline: 2px solid var(--flash);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .icon {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    translate: 0 -50%;
+    color: var(--meta);
+    pointer-events: none;
+  }
+
+  .hint {
+    font-size: 11.5px;
+    color: var(--meta);
+    margin: 8px 2px 0;
+  }
+  /* I sökkortet skulle en hjälptext bryta enradslayouten — den finns kvar
+     för skärmläsare via aria-describedby. */
+  .sitesearch--inline .hint {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .panel {
+    background: var(--surface);
+    border: var(--card-border-strong);
+    border-radius: var(--r-card);
+    box-shadow: var(--shadow-float);
+    overflow: hidden;
+  }
+  .sitesearch--inline .panel {
+    position: absolute;
+    z-index: 30;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+  }
+  .sitesearch--page .panel {
+    margin-top: 12px;
+    box-shadow: none;
+  }
+
+  .results {
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    max-height: min(58vh, 420px);
+    overflow-y: auto;
+  }
+  .results li + li {
+    border-top: var(--card-border);
+  }
+  .results a {
+    display: block;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+  }
+  .r-name {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .r-meta {
+    display: block;
+    font-size: 12px;
+    color: var(--meta);
+    margin-top: 2px;
+  }
+  .results li[aria-selected='true'] a,
+  .results a:hover {
+    background: var(--paper);
+  }
+  .results li[aria-selected='true'] a {
+    box-shadow: inset 2px 0 0 var(--flash);
+  }
+  .empty {
+    font-size: 13px;
+    color: var(--meta);
+    margin: 0;
+    padding: 14px 16px;
+  }
+
+  @media (min-width: 1024px) {
+    .sitesearch--inline .field {
+      background: none;
+      border: 0;
+      padding: 12px 30px 12px 18px;
+    }
+    .sitesearch--inline .q {
+      font-size: 14.5px;
+    }
+    .sitesearch--inline .icon {
+      right: 8px;
+    }
+    /* Dropdownen får egen bredd — fältet är bara en tredjedel av kortet. */
+    .sitesearch--inline .panel {
+      left: -1px;
+      right: auto;
+      width: min(520px, 90vw);
+    }
+  }
+</style>

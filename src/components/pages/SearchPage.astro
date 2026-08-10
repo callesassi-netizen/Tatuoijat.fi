@@ -1,0 +1,301 @@
+---
+/**
+ * Fritextsökning (/haku/, sv /sv/sok/) — delad mellan fi och sv.
+ *
+ * Två lager i samma sida:
+ *  1. Sökfältet (SiteSearch) som filtrerar det förgenererade indexet i
+ *     webbläsaren. Läser ?q= ur URL:en, så en delad länk fungerar.
+ *  2. Hela katalogen som ett A–Ö-hakemisto grupperat per stad, server-
+ *     renderad i HTML. Detta ÄR no-JS-fallbacken — den som skickar
+ *     sökformuläret utan JS landar här och ser varenda studio i klartext,
+ *     inte en tom sida med ett "aktivera JavaScript"-meddelande. Samma
+ *     lager gör sidan läsbar för AI-crawlare som inte kör JS (GEO.md §6).
+ *
+ * INDEXERING: noindex,follow. Sökresultatsidor hör inte hemma i Googles
+ * index (och ?q=-varianter vore ren indexuppblåsning), men `follow` gör
+ * hakemistot till en internlänksnav som platt-länkar alla 190 profiler.
+ * Sidan är också utesluten ur sitemap i astro.config.mjs.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteSearch from '../SiteSearch.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import {
+  getCitiesSorted,
+  getStylesSorted,
+  getStudios,
+  sortStudios,
+  cityDisplayName,
+  styleDisplayName,
+} from '../../lib/content';
+import { getCollection } from 'astro:content';
+import { cityPath, searchPath } from '../../lib/routes';
+import { jsonLdString, breadcrumbLd } from '../../lib/schema';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+
+const cities = await getCitiesSorted();
+const styles = await getStylesSorted();
+const studios = await getStudios();
+const artists = await getCollection('artists');
+
+// Gruppera per stad i samma ordning som stadskatalogen (order-fältet).
+const byCity = cities
+  .map((city) => ({
+    city,
+    studios: sortStudios(studios.filter((studio) => studio.data.city === city.id)),
+  }))
+  .filter((group) => group.studios.length > 0);
+
+// De studios som saknar `city` i frontmatter faller idag utanför BÅDE
+// stads- och stil × stad-sidorna (seo-handoff §11.3). Här syns de — vilket
+// gör hakemistot till den enda sidan som länkar hela katalogen, och till
+// en synlig påminnelse om datahålet.
+const withoutCity = sortStudios(studios.filter((studio) => !studio.data.city));
+
+const counts = {
+  studios: String(studios.length),
+  artists: String(artists.length),
+  cities: String(byCity.length),
+};
+
+const title = t('searchPage.metaTitle', { site: t('site.name') });
+const description = t('searchPage.metaDescription', counts);
+const altPath = locale === 'fi' ? searchPath('sv') : searchPath('fi');
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: t('searchPage.eyebrow'), url: new URL(p(searchPath(locale)), site).href },
+]);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  locale={locale}
+  path={searchPath(locale)}
+  altPath={altPath}
+  noindex
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+
+  <section class="index-hero">
+    <div class="container index-hero-inner">
+      <p class="eyebrow">{t('searchPage.eyebrow')}</p>
+      <h1 class="index-title">{t('searchPage.h1')}</h1>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <!-- GET-formuläret är no-JS-vägen: submit laddar om /haku/?q=… och
+           besökaren har hakemistot nedanför. Med JS tar SiteSearch över. -->
+      <form class="search-card" action={p(searchPath(locale))} method="get" role="search">
+        <SiteSearch locale={locale} idPrefix="hakusivu" variant="page" readQueryParam />
+      </form>
+
+      <p class="answer">{t('searchPage.answer', counts)}</p>
+
+      <section class="block" aria-labelledby="haku-tyylit">
+        <h2 class="block-title" id="haku-tyylit">{t('searchPage.stylesTitle')}</h2>
+        <p class="chips">
+          {
+            styles.map((style) => (
+              <a class="chip" href={p(`/tyylit/${style.id}/`)}>
+                {styleDisplayName(style, locale)}
+              </a>
+            ))
+          }
+        </p>
+      </section>
+
+      <section class="block" aria-labelledby="haku-hakemisto">
+        <h2 class="block-title" id="haku-hakemisto">{t('searchPage.directoryTitle')}</h2>
+        <div class="directory">
+          {
+            byCity.map(({ city, studios: cityStudios }) => (
+              <section class="city-block">
+                <h3 class="city-title">
+                  <a class="ink-link" href={p(cityPath(city, locale))}>
+                    {cityDisplayName(city, locale)}
+                  </a>
+                  <span class="city-count">{cityStudios.length}</span>
+                </h3>
+                <ul class="studio-list">
+                  {cityStudios.map((studio) => (
+                    <li>
+                      <a href={p(`/artistit/${studio.id}/`)}>{studio.data.name}</a>
+                      {studio.data.district && <span class="district">{studio.data.district}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ))
+          }
+          {
+            withoutCity.length > 0 && (
+              <section class="city-block">
+                <h3 class="city-title">
+                  <span>{t('searchPage.otherPlaces')}</span>
+                  <span class="city-count">{withoutCity.length}</span>
+                </h3>
+                <ul class="studio-list">
+                  {withoutCity.map((studio) => (
+                    <li>
+                      <a href={p(`/artistit/${studio.id}/`)}>{studio.data.name}</a>
+                      {studio.data.place && <span class="district">{studio.data.place}</span>}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .index-hero {
+    position: relative;
+    z-index: 0;
+    background: var(--ink);
+  }
+  .index-hero-inner {
+    padding: 28px var(--page-pad) 46px;
+  }
+  .index-title {
+    font-size: 34px;
+    line-height: 1.06;
+    color: var(--text-light);
+  }
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: var(--sheet-overlap);
+  }
+  .sheet-inner {
+    padding: 0 var(--page-pad) 44px;
+  }
+
+  /* Samma flytande vita kort som sökningen på startsidan */
+  .search-card {
+    position: relative;
+    margin-top: -30px;
+    background: var(--surface);
+    border-radius: var(--r-float);
+    box-shadow: var(--shadow-float);
+    padding: 14px;
+  }
+
+  .answer {
+    margin: 22px 2px 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text);
+    max-width: 68ch;
+  }
+
+  .block {
+    margin-top: 34px;
+  }
+  .block-title {
+    font-size: 20px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .directory {
+    display: grid;
+    gap: 26px;
+  }
+  .city-block {
+    break-inside: avoid;
+  }
+  .city-title {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-on-paper);
+  }
+  .city-title a {
+    text-decoration: none;
+  }
+  .city-count {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--meta);
+  }
+  .studio-list {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 7px;
+  }
+  .studio-list a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .studio-list a:hover {
+    border-bottom-color: var(--text);
+  }
+  .district {
+    font-size: 12px;
+    color: var(--meta);
+    margin-left: 7px;
+  }
+
+  @media (min-width: 1024px) {
+    .index-hero-inner {
+      padding: 44px var(--page-pad) 64px;
+    }
+    .index-title {
+      font-size: 52px;
+    }
+    .sheet-inner {
+      padding: 0 var(--page-pad) 64px;
+    }
+    .search-card {
+      max-width: 880px;
+      margin: -34px auto 0;
+      padding: 16px;
+    }
+    .answer {
+      margin-top: 30px;
+      font-size: 16px;
+    }
+    .block {
+      margin-top: 52px;
+    }
+    .block-title {
+      font-size: 26px;
+    }
+    .directory {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px 32px;
+      align-items: start;
+    }
+  }
+</style>

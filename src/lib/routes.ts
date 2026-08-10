@@ -30,6 +30,24 @@ export function cityPath(city: CollectionEntry<'cities'>, locale: Locale): strin
 }
 
 /**
+ * Fritextsökningen. Egen sida per språk med språkigt slug — `haku` är den
+ * finska termen och `sok` den svenska (samma logik som stadskatalogens
+ * /tatuoijat/ vs /tatuerare/). Sidan är noindex,follow: sökresultatsidor
+ * hör inte hemma i index, men A–Ö-hakemistot på sidan ska crawlas.
+ */
+export function searchPath(locale: Locale): string {
+  return locale === 'sv' ? '/sok/' : '/haku/';
+}
+
+/**
+ * Det förgenererade sökindexet (absolut path, redan språkprefixat —
+ * skickas ALDRIG genom localePath()).
+ */
+export function searchIndexPath(locale: Locale): string {
+  return locale === 'sv' ? '/sv/haku-index.json' : '/haku-index.json';
+}
+
+/**
  * Stil × stad (`/tyylit/{stil}/{stad}/`, sv `/sv/tyylit/{stil}/{stad}/`).
  * Sidtypen byggd 2026-08-09 efter GSC-månad 1: "fine line tattoo turku" gav
  * 21 % CTR på position 7 och stilsidorna har sajtens högsta CTR (9 % mot

@@ -49,6 +49,12 @@ for (const file of readdirSync('./src/content/cities')) {
 noindexedCityPaths.add('/liity/');
 noindexedCityPaths.add('/sv/liity/');
 
+// Fritextsökningen (SearchPage) är noindex,follow: sökresultatsidor hör
+// inte hemma i index, men A–Ö-hakemistot på sidan ska crawlas så alla 190
+// profiler nås på ett klicks djup från startsidan.
+noindexedCityPaths.add('/haku/');
+noindexedCityPaths.add('/sv/sok/');
+
 // Tack-sidorna efter Stripe-betalning (betalflode-och-kiitos.md) — statiska,
 // noindex,follow (KiitosPage), ingen anledning att ligga i sitemap.
 noindexedCityPaths.add('/kiitos-pro/');

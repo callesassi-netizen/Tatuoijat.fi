@@ -7,9 +7,10 @@
  * och stadskorts-länkarna.
  */
 import type { CollectionEntry } from 'astro:content';
+import SiteSearch from './SiteSearch.astro';
 import { useTranslations, localePath, type Locale } from '../i18n/ui';
 import { cityDisplayName, styleDisplayName } from '../lib/content';
-import { citiesIndexPath, citySlug, cityPath } from '../lib/routes';
+import { citiesIndexPath, citySlug, cityPath, searchPath } from '../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -23,6 +24,14 @@ interface Props {
   chipsLabel?: string;
   /** Stads-slug som markeras som aktiv (röd) chip. */
   activeCityChip?: string;
+  /**
+   * Lägg fritextfältet först i kortet (startsidan). 78 % av trafiken är
+   * navigerande sökningar på studionamn (docs/seo-analys-2026-08-09.md §3.1)
+   * — de besökarna vet exakt vilken studio de vill åt och hjälps inte av
+   * stads-/stilväljarna. Stadssidan behåller det avskalade kortet: där HAR
+   * besökaren redan valt stad, och ett tredje fält vore brus.
+   */
+  withQuery?: boolean;
 }
 
 const {
@@ -34,12 +43,17 @@ const {
   popularCities = [],
   chipsLabel,
   activeCityChip = '',
+  withQuery = false,
 } = Astro.props;
 
 const t = useTranslations(locale);
 // Stadskatalogens bas med locale-prefix (/tatuoijat/ resp. /sv/tatuerare/) —
 // både formulärets fallback-action och JS-navigeringen bygger på den.
 const citiesBase = localePath(locale, citiesIndexPath(locale));
+// Med fritextfältet blir /haku/ formulärets no-JS-mål: där ligger hela
+// katalogen som hakemisto. Utan fältet är stadskatalogen fortsatt rätt mål.
+const searchBase = localePath(locale, searchPath(locale));
+const formAction = withQuery ? searchBase : citiesBase;
 const chipsLabelText = chipsLabel ?? t('search.popular');
 // Dropdownen alfabetisk — lättare att hitta sin stad i en lång lista
 const citiesAlpha = [...cities].sort((a, b) =>
@@ -48,8 +62,27 @@ const citiesAlpha = [...cities].sort((a, b) =>
 ---
 
 <div class="search">
-  <form data-search data-cities-base={citiesBase} action={citiesBase} method="get">
+  <form
+    data-search
+    data-cities-base={citiesBase}
+    data-search-base={searchBase}
+    action={formAction}
+    method="get"
+    role="search"
+  >
     <div class="fields">
+      {
+        withQuery && (
+          <>
+            {/* SiteSearch renderar sin egen .field med samma anatomi som
+                select-fälten — wrappern finns bara för flex-storleken. */}
+            <div class="query-slot">
+              <SiteSearch locale={locale} idPrefix={`${idPrefix}-site`} variant="inline" />
+            </div>
+            <div class="divider" aria-hidden="true" />
+          </>
+        )
+      }
       <div class="field">
         <label for={`${idPrefix}-city`}>{t('search.city')}</label>
         <select id={`${idPrefix}-city`} name="kaupunki">
@@ -105,6 +138,17 @@ const citiesAlpha = [...cities].sort((a, b) =>
   document.querySelectorAll<HTMLFormElement>('form[data-search]').forEach((form) => {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
+      // Fritext vinner över stad/stil: har besökaren skrivit ett namn är det
+      // DET hen letar efter. SiteSearch fångar normalt Enter och går direkt
+      // till träffen — hit kommer vi bara när sökningen gav noll träffar
+      // eller när submit skedde via knappen.
+      const queryField = form.elements.namedItem('q');
+      const query = queryField instanceof HTMLInputElement ? queryField.value.trim() : '';
+      if (query) {
+        const searchBase = form.dataset.searchBase ?? '/haku/';
+        window.location.href = `${searchBase}?q=${encodeURIComponent(query)}`;
+        return;
+      }
       const base = form.dataset.citiesBase ?? '/tatuoijat/';
       const city = (form.elements.namedItem('kaupunki') as HTMLSelectElement).value;
       const style = (form.elements.namedItem('tyyli') as HTMLSelectElement).value;
@@ -130,6 +174,12 @@ const citiesAlpha = [...cities].sort((a, b) =>
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+  /* Fritextfältet: SiteSearch bär sin egen fältstyling, wrappern bara
+     storleken (och min-width: 0 så långa placeholders inte spränger raden). */
+  .query-slot {
+    display: block;
+    min-width: 0;
   }
   .field {
     position: relative;
@@ -208,6 +258,11 @@ const citiesAlpha = [...cities].sort((a, b) =>
       background: var(--paper);
       border: var(--card-border-strong);
       border-radius: var(--r-btn);
+    }
+    .query-slot {
+      /* Störst av fälten — det är den vanligaste ingången (78 % av
+         trafiken söker på studionamn). */
+      flex: 1.5;
     }
     .field {
       flex: 1;
