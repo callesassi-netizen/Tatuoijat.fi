@@ -1,15 +1,26 @@
 ---
 /**
- * Strukturerat intag-formulär på tack-sidorna. ÅTERANVÄNDER medvetet
- * Netlify-formuläret "liity" (samma name= som ContactForm.astro/liity+
- * yhteys) i stället för ett nytt formulärnamn — Netlify Forms e-post-
- * notiser är kopplade PER FORMULÄRNAMN i dashboarden, och "liity" är
- * redan konfigurerat och bekräftat fungerande. Ett nytt namn (t.ex.
- * "aloitus") hade krävt en helt ny, oskapad notis-inställning — det var
- * bakgrunden till att inget mejl kom fram första gången (2026-07-15).
- * Dolt `aihe`-fält ("aloitus-pro"/"aloitus-premium") skiljer ut dessa
- * inskick i samma Netlify-formulär. multipart/form-data för bilduppladdn-
- * ingen. Fälten matchar exakt studio-frontmatterns profilfält (betalflode-
+ * Strukturerat intag-formulär på tack-sidorna.
+ *
+ * ⚠️ FORMULÄRNAMNET ÄNDRADES 2026-08-09 (docs/betalflode-analys-2026-08-09.md).
+ * Tidigare delade det här formuläret Netlify-namnet "liity" med
+ * ContactForm.astro. Netlify kopplar fältdefinitionen till NAMNET, så
+ * intagets ~20 fält visades på vanliga kontaktinskick och tvärtom —
+ * inkorgen blev oläslig och fält kunde tappas. Nu har intaget eget namn.
+ *
+ * INNAN DEPLOY: e-postnotisen i Netlify-dashboarden hänger PER
+ * FORMULÄRNAMN. Notisen för NETLIFY_FORM_NAME nedan måste skapas
+ * (Site configuration → Forms → Form notifications → Email notification,
+ * välj formuläret, ange Calles adress) INNAN detta går live — annars
+ * landar inskicken bara i Netlifys inkorg utan att något mejl skickas.
+ * Det hände redan en gång (2026-07-15).
+ *
+ * NÖDBROMS: sätt NETLIFY_FORM_NAME tillbaka till 'liity' — en rad — så är
+ * beteendet exakt som förut (rörig inkorg, men notis som fungerar).
+ *
+ * multipart/form-data för bilduppladdningen. Netlify avvisar POST över
+ * 8 MB på CDN-nivå (kan inte höjas), därför storlekskontrollen i skriptet
+ * längst ned. Fälten matchar studio-frontmatterns profilfält (betalflode-
  * och-kiitos.md). Granskning (bildtillstånd/kvalitet) sker fortfarande
  * innan bilderna läggs i galleriet (Bildpolicy).
  */
@@ -17,11 +28,14 @@ import type { Locale } from '../i18n/ui';
 import type { PaidTier } from '../data/pricing';
 import { intakeForm } from '../data/intakeForm';
 
+/** Eget Netlify-formulärnamn för intaget — se blocket ovan. */
+const NETLIFY_FORM_NAME = 'studiotiedot';
+
 interface Props {
   locale: Locale;
   tier: PaidTier;
   styles: { id: string; name: string }[];
-  /** Path (med locale-prefix) formuläret postar till. */
+  /** Path (med locale-prefix) formuläret postar till efter lyckad submit. */
   action: string;
 }
 
@@ -32,14 +46,14 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
 
 <form
   class="intake"
-  name="liity"
+  name={NETLIFY_FORM_NAME}
   method="POST"
   enctype="multipart/form-data"
   data-netlify="true"
   netlify-honeypot="bot-field"
   action={action}
 >
-  <input type="hidden" name="form-name" value="liity" />
+  <input type="hidden" name="form-name" value={NETLIFY_FORM_NAME} />
   <input type="hidden" name="aihe" value={`aloitus-${tier}`} />
   <input type="hidden" name="taso" value={tier} />
   <p class="hp" aria-hidden="true">
@@ -126,7 +140,9 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
   <div class="form-field">
     <label for="if-photos">{f.photos}</label>
     <p class="field-hint">{f.photosHint[tier]}</p>
-    <input id="if-photos" name="kuvat" type="file" accept="image/*,video/*" multiple />
+    <p class="field-hint">{f.sizeHint}</p>
+    <input id="if-photos" name="kuvat" type="file" accept="image/*" multiple />
+    <p class="size-warning" data-size-warning hidden>{f.sizeWarning}</p>
   </div>
 
   <label class="checkbox-item permission">
@@ -137,6 +153,35 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
   <button class="btn-cta" type="submit">{f.submit}</button>
   <p class="form-note">{f.note}</p>
 </form>
+
+<script>
+  // Netlify avvisar POST över 8 MB på CDN-nivå — gränsen går inte att höja
+  // och gäller hela förfrågan, bilder inklusive. Utan den här kontrollen
+  // fyller studion i ~20 fält, trycker skicka och möts av ett rått felsvar
+  // med allt innehåll förlorat. Vi stoppar vid 7 MB för att lämna marginal
+  // åt textfälten. Progressiv förbättring: utan JS är beteendet som förut.
+  const MAX_UPLOAD_BYTES = 7 * 1024 * 1024;
+
+  for (const form of document.querySelectorAll('form.intake')) {
+    const fileInput = form.querySelector('input[type="file"]');
+    const warning = form.querySelector('[data-size-warning]');
+    if (!(fileInput instanceof HTMLInputElement) || !(warning instanceof HTMLElement)) continue;
+
+    const withinLimit = () => {
+      const total = Array.from(fileInput.files ?? []).reduce((sum, file) => sum + file.size, 0);
+      const ok = total <= MAX_UPLOAD_BYTES;
+      warning.hidden = ok;
+      return ok;
+    };
+
+    fileInput.addEventListener('change', withinLimit);
+    form.addEventListener('submit', (event) => {
+      if (withinLimit()) return;
+      event.preventDefault();
+      warning.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    });
+  }
+</script>
 
 <style>
   .intake {
@@ -227,6 +272,19 @@ const artistSlots = tier === 'premium' ? [1, 2, 3] : [];
     font-size: 12px;
     color: var(--meta);
     margin: 2px 0 4px;
+  }
+  .size-warning {
+    margin: 8px 0 0;
+    padding: 9px 11px;
+    border: 1px solid rgba(201, 162, 39, 0.55);
+    border-radius: var(--r-btn);
+    background: rgba(201, 162, 39, 0.09);
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .size-warning[hidden] {
+    display: none;
   }
   .artist-row {
     display: flex;

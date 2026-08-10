@@ -26,6 +26,9 @@ export interface IntakeFormContent {
   artistInstagram: string;
   photos: string;
   photosHint: Record<'pro' | 'premium', string>;
+  /** Netlifys hårda gräns: hela POST:en får väga max 8 MB (CDN-nivå). */
+  sizeHint: string;
+  sizeWarning: string;
   photoPermission: string;
   optional: string;
   submit: string;
@@ -51,8 +54,11 @@ export const intakeForm: Record<Locale, IntakeFormContent> = {
     photos: 'Kuvat',
     photosHint: {
       pro: '3–5 parasta työtäsi (jpg/png).',
-      premium: 'Laajempi valikoima töistäsi — halutessasi mukaan myös video.',
+      premium: 'Laajempi valikoima töistäsi (jpg/png). Videosta sovitaan erikseen — mainitse siitä kuvauksessa.',
     },
+    sizeHint: 'Kuvat yhteensä enintään 7 Mt per lähetys. Jos kuvia on enemmän, lähetä ne kahdessa erässä.',
+    sizeWarning:
+      'Valitsemasi kuvat ovat yhteensä liian isot (yli 7 Mt) eivätkä menisi perille. Poista osa kuvista tai lähetä ne kahdessa erässä.',
     photoPermission: 'Annan luvan julkaista tässä lähettämäni kuvat Tatuoijat.fi-profiilissani.',
     optional: '(valinnainen)',
     submit: 'Lähetä tiedot',
@@ -76,8 +82,11 @@ export const intakeForm: Record<Locale, IntakeFormContent> = {
     photos: 'Bilder',
     photosHint: {
       pro: '3–5 av dina bästa arbeten (jpg/png).',
-      premium: 'Ett bredare urval av dina arbeten — gärna även video.',
+      premium: 'Ett bredare urval av dina arbeten (jpg/png). Video kommer vi överens om separat — nämn det i beskrivningen.',
     },
+    sizeHint: 'Bilderna får väga högst 7 MB tillsammans per inskick. Har du fler, skicka dem i två omgångar.',
+    sizeWarning:
+      'Bilderna du valt väger för mycket tillsammans (över 7 MB) och skulle inte komma fram. Ta bort några eller skicka dem i två omgångar.',
     photoPermission: 'Jag ger tillstånd att publicera bilderna jag skickar här på min Tatuoijat.fi-profil.',
     optional: '(valfritt)',
     submit: 'Skicka uppgifterna',

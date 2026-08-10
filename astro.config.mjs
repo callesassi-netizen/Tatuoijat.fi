@@ -62,6 +62,11 @@ noindexedCityPaths.add('/kiitos-premium/');
 noindexedCityPaths.add('/sv/tack-pro/');
 noindexedCityPaths.add('/sv/tack-premium/');
 
+// Kvittosidan efter intag-formuläret (LahetettyPage) — nås bara via Netlifys
+// form-redirect, noindex,follow och utanför sitemap.
+noindexedCityPaths.add('/tiedot-vastaanotettu/');
+noindexedCityPaths.add('/sv/uppgifter-mottagna/');
+
 // /walk-in samlingssida (handoff §3.4): datan fylls senare av Morpheus.
 // Tills antalet walk-in-studios når CITY_INDEX_MIN_STUDIOS är sidan
 // noindex,follow (WalkInPage) och hålls ur sitemap — samma tröskel och

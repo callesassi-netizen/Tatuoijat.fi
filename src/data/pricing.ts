@@ -40,6 +40,29 @@ export const STRIPE_LINKS: Record<PaidTier, string> = {
  */
 export const PAYMENTS_LIVE = true;
 
+// ── MOMS (Calle momsregistrerad 13/7 2026, Stripe Tax AV) ─────────────
+// Stripe Tax är avstängt, så Payment Link debiterar EXAKT det belopp som
+// står här (199 / 499 €) — ingen moms läggs på i kassan. Därför måste
+// sajten säga vilket av två fall som gäller, annars gissar köparen:
+//   VAT_INCLUDED = true  → 199 € är totalpris, momsen ingår (Calle
+//                          redovisar 25,5 % ur beloppet, netto 158,57 €).
+//   VAT_INCLUDED = false → priset är exkl. moms, men då MÅSTE Stripe-
+//                          priset höjas i motsvarande grad, annars lovar
+//                          sidan ett påslag kassan inte gör.
+// ÄNDRA HÄR — texten på /hinnasto (prisnot + FAQ) byggs ur dessa två.
+export const VAT_INCLUDED: boolean = true;
+export const VAT_RATE_LABEL = '25,5 %';
+
+const vatNote: Record<Locale, string> = VAT_INCLUDED
+  ? {
+      fi: `Hinnat sisältävät arvonlisäveron ${VAT_RATE_LABEL}.`,
+      sv: `Priserna innehåller moms ${VAT_RATE_LABEL}.`,
+    }
+  : {
+      fi: `Hintoihin lisätään arvonlisävero ${VAT_RATE_LABEL}.`,
+      sv: `Moms ${VAT_RATE_LABEL} tillkommer på priserna.`,
+    };
+
 /** Formaterat pris, t.ex. "0 €" / "199 €". Samma format fi/sv. */
 export function priceLabel(tier: Tier): string {
   return `${TIER_PRICE[tier]} €`;
@@ -87,6 +110,18 @@ interface BenefitCard {
   tier?: PaidTier; // diskret nivåkoppling; utelämnas = gäller alla
 }
 
+/**
+ * Ett steg i "Näin se etenee"-raden på /hinnasto. SAMMA fyra steg återges
+ * (komprimerat) på tack-sidorna, där steg 3 markeras som aktivt — köparen
+ * ska aldrig behöva gissa var i flödet hen befinner sig. Ändras stegen här
+ * måste `kiitos.steps` i data/kiitos.ts hållas i synk (fyra steg, samma
+ * ordning).
+ */
+export interface FlowStep {
+  title: string;
+  text: string;
+}
+
 export interface PricingContent {
   metaTitle: string;
   metaDescription: string;
@@ -95,6 +130,12 @@ export interface PricingContent {
   intro: string;
   popularLabel: string; // "Suosituin" ovanpå Pro-kortet
   campaignEyebrow: string; // liten etikett ovanför kampanjbadgen ("Aloitustarjous")
+  /** Klargör att kortet inte debiteras under kokeilujakso (badgens baksida). */
+  trialNote: string;
+  /** Momsnot under priskorten — byggs ur VAT_INCLUDED/VAT_RATE_LABEL. */
+  priceNote: string;
+  /** "Näin se etenee": 1 valitse → 2 maksa → 3 täytä tiedot → 4 julkaisu. */
+  steps: { title: string; intro: string; items: FlowStep[] };
   tiers: Record<Tier, TierCard>;
   matrixTitle: string;
   matrixFeatureHead: string; // kolumnrubrik för feature-kolumnen
@@ -121,6 +162,30 @@ export const pricing: Record<Locale, PricingContent> = {
       'Perusprofiili on ilmainen ja tuo sinut mukaan kaupunki- ja tyylihakuun. Pro tekee profiilistasi täyden ja tavoitettavan. Premium nostaa sinut kärkeen ja etusivulle.',
     popularLabel: 'Suosituin',
     campaignEyebrow: 'Aloitustarjous',
+    trialNote: 'Korttia ei veloiteta kokeilujakson aikana. Voit peruuttaa ennen jakson päättymistä.',
+    priceNote: `${vatNote.fi} Maksun hoitaa Stripe, ja kuitti tulee sähköpostiisi.`,
+    steps: {
+      title: 'Näin se etenee',
+      intro: 'Neljä vaihetta maksusta julkaistuun profiiliin — ei tunnuksia, ei kirjautumista.',
+      items: [
+        {
+          title: 'Valitse taso',
+          text: 'Vertaa Pro ja Premium alta. Ilmainen perusprofiili ei vaadi maksua eikä lomaketta.',
+        },
+        {
+          title: 'Maksa Stripellä',
+          text: 'Siirryt Stripen suojatulle maksusivulle. Saat kuitin sähköpostiisi heti.',
+        },
+        {
+          title: 'Täytä studiosi tiedot',
+          text: 'Maksun jälkeen avautuu lomake: kuvaus, yhteystiedot, tyylit ja kuvat. Ilman näitä profiili ei voi päivittyä.',
+        },
+        {
+          title: 'Julkaisemme profiilisi',
+          text: 'Tarkistamme tiedot ja julkaisemme päivitetyn profiilin kahden arkipäivän kuluessa lomakkeen lähettämisestä.',
+        },
+      ],
+    },
     tiers: {
       perus: {
         name: 'Ilmainen',
@@ -270,7 +335,15 @@ export const pricing: Record<Locale, PricingContent> = {
       },
       {
         q: 'Miten maksu toimii?',
-        a: 'Jokaisella maksullisella tasolla on oma turvallinen Stripe-maksulinkki. Hinta on vuosimaksu ilman automaattista uusiutumista — saat muistutuksen ennen kauden päättymistä.',
+        a: 'Jokaisella maksullisella tasolla on oma turvallinen Stripe-maksulinkki, ja hinta on vuosimaksu. Näet tarkat ehdot — kokeilujakson pituuden sekä sen, milloin ja miten veloitus tapahtuu — Stripen maksusivulla ennen kuin vahvistat tilauksen. Kuitti tulee sähköpostiisi.',
+      },
+      {
+        q: 'Mitä tapahtuu maksun jälkeen?',
+        a: 'Sinut ohjataan sivulle, jolla täytät studiosi tiedot: kuvauksen, yhteystiedot, tyylit ja kuvat. Profiilisi ei päivity pelkällä maksulla — tarvitsemme nämä tiedot. Kun lomake on lähetetty, tarkistamme tiedot ja julkaisemme päivitetyn profiilin kahden arkipäivän kuluessa.',
+      },
+      {
+        q: 'Sisältyykö hintaan arvonlisävero?',
+        a: vatNote.fi,
       },
       {
         q: 'Voinko vaihtaa tasoa myöhemmin?',
@@ -298,6 +371,30 @@ export const pricing: Record<Locale, PricingContent> = {
       'Basprofilen är gratis och tar med dig i stads- och stilsökningen. Pro gör din profil komplett och nåbar. Premium lyfter dig till toppen och till startsidan.',
     popularLabel: 'Populärast',
     campaignEyebrow: 'Introduktionserbjudande',
+    trialNote: 'Kortet debiteras inte under provperioden. Du kan avsluta innan den tar slut.',
+    priceNote: `${vatNote.sv} Betalningen sköts av Stripe och kvittot kommer till din e-post.`,
+    steps: {
+      title: 'Så går det till',
+      intro: 'Fyra steg från betalning till publicerad profil — inga konton, ingen inloggning.',
+      items: [
+        {
+          title: 'Välj nivå',
+          text: 'Jämför Pro och Premium nedan. Den gratis basprofilen kräver varken betalning eller formulär.',
+        },
+        {
+          title: 'Betala med Stripe',
+          text: 'Du kommer till Stripes säkra betalsida. Kvittot kommer till din e-post direkt.',
+        },
+        {
+          title: 'Fyll i studions uppgifter',
+          text: 'Efter betalningen öppnas ett formulär: beskrivning, kontaktuppgifter, stilar och bilder. Utan dem kan profilen inte uppdateras.',
+        },
+        {
+          title: 'Vi publicerar din profil',
+          text: 'Vi går igenom uppgifterna och publicerar den uppdaterade profilen inom två vardagar från att formuläret skickats.',
+        },
+      ],
+    },
     tiers: {
       perus: {
         name: 'Gratis',
@@ -447,7 +544,15 @@ export const pricing: Record<Locale, PricingContent> = {
       },
       {
         q: 'Hur fungerar betalningen?',
-        a: 'Varje betald nivå har en egen säker Stripe-betalningslänk. Priset är en årsavgift utan automatisk förnyelse — du får en påminnelse innan perioden löper ut.',
+        a: 'Varje betald nivå har en egen säker Stripe-betalningslänk och priset är en årsavgift. De exakta villkoren — provperiodens längd samt när och hur debiteringen sker — ser du på Stripes betalsida innan du bekräftar. Kvittot kommer till din e-post.',
+      },
+      {
+        q: 'Vad händer efter betalningen?',
+        a: 'Du kommer till en sida där du fyller i studions uppgifter: beskrivning, kontaktuppgifter, stilar och bilder. Profilen uppdateras inte av betalningen ensam — vi behöver uppgifterna. När formuläret är skickat går vi igenom det och publicerar den uppdaterade profilen inom två vardagar.',
+      },
+      {
+        q: 'Ingår moms i priset?',
+        a: vatNote.sv,
       },
       {
         q: 'Kan jag byta nivå senare?',

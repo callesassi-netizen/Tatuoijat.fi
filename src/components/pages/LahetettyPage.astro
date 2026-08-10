@@ -1,0 +1,181 @@
+---
+/**
+ * Kvittosida efter att intag-formuläret skickats — /tiedot-vastaanotettu/
+ * (fi) och /sv/uppgifter-mottagna/ (sv). Netlify redirectar hit vid lyckad
+ * submit (IntakeForm.astro `action`).
+ *
+ * Varför den finns (docs/betalflode-analys-2026-08-09.md): tidigare postade
+ * formuläret tillbaka till tack-sidan, så studion landade på en identisk
+ * sida med ett tomt formulär och kunde inte veta om inskicket gått igenom.
+ * Sidan bekräftar mottagandet och sätter förväntan på ledtiden.
+ *
+ * Statisk, noindex (får inte hamna i sök — den ska bara nås via redirect).
+ * Ingen PII och ingen betalningsdata i URL eller innehåll.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { useTranslations, localePath, type Locale } from '../../i18n/ui';
+import { jsonLdString, breadcrumbLd } from '../../lib/schema';
+import { kiitos, SUBMITTED_PATHS } from '../../data/kiitos';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const p = (path: string) => localePath(locale, path);
+const site = Astro.site!;
+const c = kiitos[locale].submitted;
+
+const path = SUBMITTED_PATHS[locale];
+const altPath = SUBMITTED_PATHS[locale === 'fi' ? 'sv' : 'fi'];
+
+const breadcrumb = breadcrumbLd([
+  { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
+  { name: c.h1, url: new URL(p(path), site).href },
+]);
+---
+
+<BaseLayout
+  title={c.metaTitle}
+  description={c.metaDescription}
+  locale={locale}
+  path={path}
+  altPath={altPath}
+  hasAlternate
+  noindex
+>
+  <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
+
+  <section class="done-hero">
+    <div class="container done-hero-inner">
+      <p class="done-mark" aria-hidden="true">✓</p>
+      <h1 class="done-title">{c.h1}</h1>
+      <p class="done-intro">{c.intro}</p>
+    </div>
+  </section>
+
+  <div class="sheet grain">
+    <div class="container sheet-inner">
+      <section class="what-next" aria-labelledby="what-next-title">
+        <h2 class="what-next-title" id="what-next-title">{c.listTitle}</h2>
+        <ol class="what-next-list">
+          {c.list.map((item) => <li>{item}</li>)}
+        </ol>
+      </section>
+
+      <p class="late-note">
+        {c.contactText}{' '}
+        <a class="ink-link" href={p('/yhteys/')}>{c.contactCta}</a>.
+      </p>
+
+      <a class="ink-link back-home" href={p('/')}>← {c.backHome}</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .done-hero {
+    position: relative;
+    z-index: 0;
+    background:
+      radial-gradient(110% 100% at 80% 0%, rgba(77, 50, 48, 0.2) 0%, rgba(16, 16, 20, 0) 55%),
+      var(--ink);
+  }
+  .done-hero-inner {
+    padding: 28px var(--page-pad) 52px;
+  }
+  .done-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 21px;
+    line-height: 1;
+    margin: 0 0 14px;
+  }
+  .done-title {
+    font-size: 38px;
+    line-height: 1.04;
+    color: var(--text-light);
+  }
+  .done-intro {
+    margin: 12px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 460px;
+  }
+
+  .sheet {
+    position: relative;
+    z-index: 1;
+    background: var(--paper);
+    border-radius: var(--r-sheet) var(--r-sheet) 0 0;
+    margin-top: -20px;
+  }
+  .sheet-inner {
+    padding: 30px var(--page-pad) 48px;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .what-next-title {
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  .what-next-list {
+    margin: 0;
+    padding: 0 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .what-next-list li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  .late-note {
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--meta);
+    text-align: center;
+  }
+  .back-home {
+    display: block;
+    margin-top: 18px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .done-hero-inner {
+      padding: 44px var(--page-pad) 68px;
+      text-align: center;
+    }
+    .done-intro {
+      margin-inline: auto;
+    }
+    .done-title {
+      font-size: 56px;
+    }
+    .sheet {
+      margin-top: -26px;
+    }
+    .sheet-inner {
+      padding: 48px var(--page-pad) 72px;
+    }
+    .what-next-title {
+      font-size: 28px;
+    }
+  }
+</style>

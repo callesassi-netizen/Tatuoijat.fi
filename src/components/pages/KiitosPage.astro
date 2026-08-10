@@ -5,14 +5,27 @@
  * så checklistan blir skräddarsydd. Statisk, noindex, ingen betalningsdata/
  * PII i URL:en. Länkar Stripe-redirecten till en fungerande sida; själva
  * redirect-inställningen görs av Calle i Stripe-dashboarden.
+ *
+ * OMBYGGD 2026-08-09 (docs/betalflode-analys-2026-08-09.md). Tre tillägg som
+ * täpper till hålen köparen föll igenom:
+ *   1. Bekräftelsekort överst — nivå, var kvittot finns, vad som händer nu.
+ *      Sajten kan INTE verifiera betalningen (statisk, ingen webhook), så
+ *      kortet pekar ärligt på Stripes kvittomejl som tosite i stället för att
+ *      låtsas bekräfta något den inte vet.
+ *   2. Stegrad 3/4 — samma fyra steg som /hinnasto, aktivt steg markerat.
+ *   3. Varningsruta — betalningen ensam publicerar ingenting. Detta var den
+ *      egentliga bristen: gamla texten lät som att profilen uppdaterades av
+ *      sig själv inom 48 h.
+ * Formuläret postar numera till en EGEN kvittosida (SUBMITTED_PATHS), inte
+ * tillbaka till den här sidan.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import IntakeForm from '../IntakeForm.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getStylesSorted, styleDisplayName } from '../../lib/content';
 import { jsonLdString, breadcrumbLd } from '../../lib/schema';
-import { kiitos } from '../../data/kiitos';
-import type { PaidTier } from '../../data/pricing';
+import { kiitos, KIITOS_PATHS, SUBMITTED_PATHS } from '../../data/kiitos';
+import { pricing, type PaidTier } from '../../data/pricing';
 
 interface Props {
   locale: Locale;
@@ -24,12 +37,9 @@ const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const c = kiitos[locale];
+const tierName = pricing[locale].tiers[tier].name;
 
 // Tack-sidorna har olika slug per nivå OCH per språk (fi: kiitos-, sv: tack-).
-const KIITOS_PATHS: Record<Locale, Record<PaidTier, string>> = {
-  fi: { pro: '/kiitos-pro/', premium: '/kiitos-premium/' },
-  sv: { pro: '/tack-pro/', premium: '/tack-premium/' },
-};
 const path = KIITOS_PATHS[locale][tier];
 const altPath = KIITOS_PATHS[locale === 'fi' ? 'sv' : 'fi'][tier];
 
@@ -62,6 +72,53 @@ const breadcrumb = breadcrumbLd([
 
   <div class="sheet grain">
     <div class="container sheet-inner">
+      <!-- Bekräftelsekort: det närmaste en kvittering en statisk sajt kan ge.
+           Säger vad som beställts, var det riktiga kvittot finns och vad som
+           återstår — utan att påstå sig ha verifierat betalningen. -->
+      <section class="receipt" aria-labelledby="receipt-title">
+        <h2 class="receipt-title" id="receipt-title">{c.receiptTitle}</h2>
+        <dl class="receipt-list">
+          <div class="receipt-row">
+            <dt>{c.receiptTierLabel}</dt>
+            <dd><strong>{tierName}</strong></dd>
+          </div>
+          <div class="receipt-row">
+            <dt>{c.receiptReceiptLabel}</dt>
+            <dd>{c.receiptReceiptValue}</dd>
+          </div>
+          <div class="receipt-row">
+            <dt>{c.receiptNextLabel}</dt>
+            <dd>{c.receiptNextValue}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Stegrad: samma fyra steg som på /hinnasto, steg 3 aktivt. -->
+      <section class="steps" aria-labelledby="steps-title">
+        <h2 class="steps-title" id="steps-title">{c.stepsTitle}</h2>
+        <p class="steps-status">{c.stepsStatus}</p>
+        <ol class="steps-list">
+          {
+            c.steps.map((label, i) => {
+              const n = i + 1;
+              const state = n < c.stepCurrent ? 'done' : n === c.stepCurrent ? 'now' : 'todo';
+              return (
+                <li class:list={['step', `step--${state}`]} aria-current={state === 'now' ? 'step' : undefined}>
+                  <span class="step-num" aria-hidden="true">{state === 'done' ? '✓' : n}</span>
+                  <span class="step-label">{label}</span>
+                </li>
+              );
+            })
+          }
+        </ol>
+      </section>
+
+      <!-- Den avgörande upplysningen: maksu yksin ei julkaise mitään. -->
+      <aside class="warning" aria-labelledby="warning-title">
+        <h2 class="warning-title" id="warning-title">{c.warningTitle}</h2>
+        <p class="warning-text">{c.warningText}</p>
+      </aside>
+
       <section class="next-step" aria-labelledby="next-step-title">
         <h2 class="next-step-title" id="next-step-title">{c.nextStepTitle}</h2>
         <p class="checklist-intro">{c.checklistIntro[tier]}</p>
@@ -72,7 +129,18 @@ const breadcrumb = breadcrumbLd([
 
       <section class="form-section" aria-labelledby="form-title">
         <h2 class="form-title" id="form-title">{c.formTitle}</h2>
-        <IntakeForm locale={locale} tier={tier} styles={styleOptions} action={path} />
+        <p class="form-intro">{c.formIntro}</p>
+        <IntakeForm
+          locale={locale}
+          tier={tier}
+          styles={styleOptions}
+          action={p(SUBMITTED_PATHS[locale])}
+        />
+      </section>
+
+      <section class="later" aria-labelledby="later-title">
+        <h2 class="later-title" id="later-title">{c.laterTitle}</h2>
+        <p class="later-text">{c.laterText}</p>
       </section>
 
       <p class="late-note">
@@ -122,6 +190,136 @@ const breadcrumb = breadcrumbLd([
     margin-inline: auto;
   }
 
+  /* ── Bekräftelsekort ── */
+  .receipt {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card-lg);
+    padding: 18px 20px;
+  }
+  .receipt-title {
+    font-size: 17px;
+    color: var(--text);
+    margin: 0 0 12px;
+  }
+  .receipt-list {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .receipt-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .receipt-row dt {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--meta);
+  }
+  .receipt-row dd {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+
+  /* ── Stegrad ── */
+  .steps {
+    margin-top: 28px;
+  }
+  .steps-title {
+    font-size: 17px;
+    color: var(--text);
+    margin: 0 0 2px;
+  }
+  .steps-status {
+    font-size: 12px;
+    color: var(--meta);
+    margin: 0 0 12px;
+  }
+  .steps-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--meta);
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    font-size: 11px;
+    line-height: 1;
+  }
+  .step--done {
+    color: var(--text);
+  }
+  .step--now {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .step--now .step-num {
+    background: var(--flash);
+    border-color: var(--flash);
+    color: var(--text-light);
+  }
+
+  /* ── Varning: betalningen ensam publicerar ingenting ── */
+  .warning {
+    margin-top: 28px;
+    border: 1px solid rgba(201, 162, 39, 0.55);
+    border-left-width: 3px;
+    border-radius: var(--r-card);
+    background: rgba(201, 162, 39, 0.07);
+    padding: 16px 18px;
+  }
+  .warning-title {
+    font-size: 14px;
+    color: var(--text);
+    margin: 0 0 6px;
+  }
+  .warning-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+
+  /* ── "Etkö ehdi nyt?" ── */
+  .later {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: var(--card-border);
+  }
+  .later-title {
+    font-size: 14px;
+    color: var(--text);
+    margin: 0 0 5px;
+  }
+  .later-text {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--meta);
+  }
+
   .next-step-title {
     font-size: 22px;
     color: var(--text);
@@ -151,7 +349,13 @@ const breadcrumb = breadcrumbLd([
   .form-title {
     font-size: 20px;
     color: var(--text);
-    margin-bottom: 14px;
+    margin-bottom: 6px;
+  }
+  .form-intro {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--meta);
+    margin: 0 0 14px;
   }
 
   .late-note {
@@ -188,6 +392,28 @@ const breadcrumb = breadcrumbLd([
     }
     .next-step-title {
       font-size: 28px;
+    }
+    .receipt {
+      padding: 24px 26px;
+    }
+    .receipt-row {
+      flex-direction: row;
+      gap: 16px;
+    }
+    .receipt-row dt {
+      flex: 0 0 92px;
+      padding-top: 3px;
+    }
+    .steps {
+      margin-top: 36px;
+    }
+    .steps-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+    }
+    .next-step {
+      margin-top: 36px;
     }
     .form-section {
       margin-top: 48px;
