@@ -64,6 +64,15 @@ const styleFreq = new Map<string, number>();
 for (const studio of studios) {
   for (const slug of studio.data.styles) styleFreq.set(slug, (styleFreq.get(slug) ?? 0) + 1);
 }
+// Filterchipsen visade ALLA tio stilar aven i stader som saknar dem helt:
+// i Helsingfors gav "Lettering" 0 traffar eftersom ingen av stadens 41
+// studios gor lettering (10 i hela landet, ingen i Helsingfors). Ett chip som
+// bara kan ge noll ar en atervandsgrand — visa bara stilar som finns har,
+// sorterade efter hur vanliga de ar i staden.
+const stylesInCity = styles
+  .filter((style) => (styleFreq.get(style.id) ?? 0) > 0)
+  .sort((a, b) => (styleFreq.get(b.id) ?? 0) - (styleFreq.get(a.id) ?? 0));
+
 const topStyles = [...styleFreq.entries()]
   .sort((a, b) => b[1] - a[1])
   .slice(0, 4)
@@ -189,9 +198,10 @@ const heroBg = await heroBgFor('city');
       <div class="filter-bar" data-filter-bar role="group" aria-label={t('city.filterLabel')}>
         <button class="chip chip--active" type="button" data-style="">{t('city.filterAll')}</button>
         {
-          styles.map((style) => (
+          stylesInCity.map((style) => (
             <button class="chip" type="button" data-style={style.id}>
               {styleDisplayName(style, locale)}
+              <span class="chip-count">{styleFreq.get(style.id)}</span>
             </button>
           ))
         }
@@ -421,6 +431,18 @@ const heroBg = await heroBgFor('city');
     margin-top: -40px;
   }
 
+  .chip-count {
+    /* Antalet gor valet forutsagbart: man ser att Fineline ger 12 traffar
+       innan man klickar. */
+    margin-left: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--meta);
+  }
+  .chip--active .chip-count {
+    color: inherit;
+    opacity: 0.75;
+  }
   .filter-bar {
     display: flex;
     gap: 8px;
