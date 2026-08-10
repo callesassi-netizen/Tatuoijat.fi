@@ -151,7 +151,7 @@ p {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--flash);
+  color: var(--flash-text);
   margin-bottom: 6px;
 }
 @media (min-width: 1024px) {

@@ -23,6 +23,11 @@
   --bone: #f2f2f2; /* ljus yta / text på mörkt */
   --flash: #8b1e3f; /* vinröd: ENDAST CTA + aktiva val */
   --flash-hover: #a5254a; /* ljusare vid hover — på mörkt ska hover lysa upp */
+  /* Vinrött som TEXT. Ren #8b1e3f mot #0d0d0d ger 2.2:1 — de små
+     versala kickerna (.eyebrow, 10 px) var i praktiken oläsliga på de
+     mörka banden. Den ljusare tonen ger 5.6:1 mot #0d0d0d och 5.0:1
+     mot #1a1a1a. Bara text: fyllda ytor använder fortfarande --flash. */
+  --flash-text: #d4677f;
   --gold: #c9a227; /* ENDAST Featured-badge. Behålls: det är den
                       enda färgen som skiljer betalande studios,
                       och guld mot #0d0d0d bär bättre än på papper. */
@@ -36,6 +41,11 @@
   --text-on-flash: #ffffff;
   --meta: #9b9ba3; /* sekundärtext. Ljusare än det gamla #8a8890
                       för att klara 4.5:1 mot #0d0d0d. */
+  /* Sekundärtext som ALLTID ligger på en bläcksvart yta, oavsett läge —
+     premiumkorten och "ledig plats"-rutorna är svarta även på ett ljust ark.
+     Utan detta ärvde de --meta:#5c5c66 från .reading och blev mörkgrått på
+     nästan svart, alltså oläsligt. */
+  --meta-on-ink: #9b9ba3;
   --border-on-paper: #2b2b2b;
 
   --card-border: 1px solid rgba(242, 242, 242, 0.1);
@@ -103,6 +113,7 @@
   --text: #1a1a1a;
   --text-light: #f2f2f2; /* för ev. mörka block inuti ett ljust ark */
   --meta: #5c5c66;
+  --flash-text: #8b1e3f; /* ren vinröd bär utmärkt på benvitt (7.8:1) */
   --border-on-paper: #dcdcdc;
 
   --card-border: 1px solid rgba(13, 13, 13, 0.1);
@@ -113,6 +124,37 @@
 
   --shadow-float: 0 12px 32px rgba(13, 13, 13, 0.18);
   --select-scheme: light;
+
+  color: var(--text);
+  background: var(--paper);
+}
+
+/* ============================================================
+   INKED — motsatsen till .reading: tar tillbaka de MÖRKA semantiska
+   färgerna på ett delträd inuti ett ljust ark. Används för fullbredds-
+   band där bilderna ska bära (startsidans stilgalleri), så sidan får en
+   rytm ljus → mörk → ljus i stället för en enda svart massa.
+   Samma värden som :root; medvetet dubblerade eftersom CSS saknar
+   mixins och :root inte kan återanvändas på ett delträd.
+   ============================================================ */
+.inked {
+  --paper: var(--ink);
+  --surface: var(--ink-2);
+  --surface-2: var(--ink-3);
+  --text: var(--bone);
+  --text-light: var(--bone);
+  --meta: #9b9ba3;
+  /* Måste sättas explicit: ligger bandet inuti ett `.reading`-ark ärver det
+     annars den mörka vinröda tonen, som inte bär mot #0d0d0d. */
+  --flash-text: #d4677f;
+  --border-on-paper: #2b2b2b;
+
+  --card-border: 1px solid rgba(242, 242, 242, 0.1);
+  --card-border-strong: 1px solid rgba(242, 242, 242, 0.16);
+  --chip-border: 1px solid rgba(242, 242, 242, 0.22);
+  --chip-border-card: 1px solid rgba(242, 242, 242, 0.18);
+  --btn-outline-border: 1.5px solid rgba(242, 242, 242, 0.3);
+  --select-scheme: dark;
 
   color: var(--text);
   background: var(--paper);

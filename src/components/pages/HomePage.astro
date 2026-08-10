@@ -142,8 +142,13 @@ const webSite = webSiteLd(
     </div>
   </section>
 
-  <!-- ================= BENVIT "ARK" — glider över heron ================= -->
-  <div class="sheet grain">
+  <!-- ================= BENVIT "ARK" — glider över heron =================
+       10/8 2026: arket är LJUST igen (klassen `reading`). Startsidan låg helt
+       på #0d0d0d och blev en enda svart massa — bandindelningen räckte inte.
+       Nu bär mörkret bara där bilden bär: hero i toppen, stilgalleriet som
+       mörkt band i mitten, "Näin se toimii" som mörk fot. Allt däremellan
+       ligger på benvitt, precis som guiderna och /hinnasto redan gör. -->
+  <div class="sheet grain reading">
     <div class="container sheet-inner">
       <!-- Flytande sökkort ÖVER skarven — halva på mörkt, halva på ljust -->
       <div class="float-search" id="haku">
@@ -246,7 +251,7 @@ const webSite = webSiteLd(
            om inga verifierade finns. -->
       {
         popular.length > 0 && (
-          <section class="section band" aria-labelledby="popular-title">
+          <section class="section" aria-labelledby="popular-title">
             <div class="section-head">
               <div>
                 <p class="eyebrow">{t('home.popular.eyebrow')}</p>
@@ -272,7 +277,7 @@ const webSite = webSiteLd(
       }
 
       <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
-      <section class="section section--styles band" aria-labelledby="styles-title">
+      <section class="section section--styles inked" aria-labelledby="styles-title">
         <div class="section-head">
           <div>
             <p class="eyebrow">{t('home.styles.eyebrow')}</p>
@@ -446,24 +451,13 @@ const webSite = webSiteLd(
 </script>
 
 <style>
-  /* SEKTIONSRYTM (Calle 10/8: "startsidan ar lite for svart").
-     Hela sidan lag pa exakt #0d0d0d, sa sektionerna flot ihop till en enda
-     svart massa utan borjan eller slut. `.band` lyfter varannan yta en niva
-     till --surface och drar ut den till fullbredd med negativa marginaler,
-     sa den lasas som ett eget band i stallet for ett kort. Djup gors med
-     ytniva, inte med skuggor — skuggor bar inte pa svart. */
-  .band {
-    background: var(--surface);
-    margin-inline: calc(-1 * var(--page-pad));
-    padding-inline: var(--page-pad);
-    padding-block: 32px;
-    border-block: var(--hairline-dark);
-  }
-  @media (min-width: 1024px) {
-    .band {
-      padding-block: 48px;
-    }
-  }
+  /* SEKTIONSRYTM (Calle 10/8: "gillar fortfarande inte startsidan, den ar
+     for mork"). Forsta forsoket lyfte varannan sektion fran #0d0d0d till
+     #1a1a1a — tva svarta som knappt gar att skilja at, sa sidan lastes
+     fortfarande som en enda svart massa. Nu ar grundytan i stallet LJUS
+     (arket har klassen `reading`) och mörkret anvands som accent:
+       hero (foto)  ->  ljust ark  ->  mörkt stilband  ->  ljust  ->  mörk fot.
+     Kontrasten mellan banden ar da 15:1 i stallet for 1.2:1. */
 
   /* ================= Hero: fullbredds-bild ================= */
   .hero {
@@ -597,9 +591,18 @@ const webSite = webSiteLd(
     margin-top: 34px;
     padding: 0 4px;
   }
+  /* Mörkt fullbreddsband inuti det ljusa arket — sajtens visuella centrum.
+     `.inked` (tokens.css) deklarerar om de semantiska färgerna, så rubrik,
+     pilknappar och kort följer med utan en enda extra regel här. Negativ
+     margin-inline motsvarar exakt .sheet-inner-paddingen + .section-paddingen,
+     så bandet går kant i kant med arket. Måste ligga EFTER `.section` —
+     samma specificitet, och padding skulle annars skrivas över. */
   .section--styles {
     margin-top: 48px;
     margin-bottom: 48px;
+    margin-inline: -20px; /* .sheet-inner 16px + .section 4px */
+    padding: 30px 20px 34px;
+    border-block: 1px solid rgba(13, 13, 13, 0.12);
   }
   .section-head {
     display: flex;
@@ -676,7 +679,9 @@ const webSite = webSiteLd(
   .premium-slot-text {
     font-size: 12.5px;
     line-height: 1.5;
-    color: var(--meta);
+    /* Kortet är svart även på det ljusa arket — därför den bläckfasta
+       varianten, inte --meta (som är mörkgrå i ljust läge). */
+    color: var(--meta-on-ink);
     max-width: 22ch;
   }
   .premium-slot-cta {
@@ -726,7 +731,7 @@ const webSite = webSiteLd(
   .premium-cta-text {
     font-size: 13.5px;
     line-height: 1.55;
-    color: var(--meta);
+    color: var(--meta-on-ink);
     margin: 8px 0 0;
     max-width: 420px;
   }
@@ -806,7 +811,7 @@ const webSite = webSiteLd(
   .pe-meta {
     display: block;
     font-size: 12.5px;
-    color: var(--meta);
+    color: var(--meta-on-ink);
     margin: 3px 0 10px;
   }
   .pe-chips {
@@ -861,9 +866,12 @@ const webSite = webSiteLd(
       color var(--t-fast) var(--ease-out),
       opacity var(--t-fast) var(--ease-out);
   }
+  /* Vinröd hover i stället för "bläck" — knappen sitter numera i det mörka
+     stilbandet, där bläck-på-bläck vore osynligt. */
   .rail-btn:hover:not(:disabled) {
-    background: var(--ink);
-    color: var(--text-light);
+    background: var(--flash);
+    border-color: var(--flash);
+    color: var(--text-on-flash, #fff);
   }
   .rail-btn:focus-visible {
     outline: 2px solid var(--flash);
@@ -880,7 +888,7 @@ const webSite = webSiteLd(
     gap: 10px;
     overflow-x: auto;
     padding: 0 0 8px;
-    margin-right: -16px;
+    margin-right: -20px; /* bleed ut till bandets högerkant (band-padding 20px) */
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
   }
@@ -1033,11 +1041,14 @@ const webSite = webSiteLd(
     display: block;
     font-family: var(--font-display);
     font-size: 26px;
-    color: var(--border-on-paper);
-    transition: color var(--t-med) ease-out;
+    /* Dekorativ siffra: --meta nedtonad. Tidigare --border-on-paper, vilket i
+       ljust läge blir #dcdcdc på vitt kort — i praktiken osynligt. */
+    color: var(--meta);
+    opacity: 0.5;
+    transition: opacity var(--t-med) ease-out;
   }
   .city-card:hover .city-num {
-    color: var(--meta);
+    opacity: 1;
   }
   .city-num-label {
     display: block;
@@ -1064,6 +1075,8 @@ const webSite = webSiteLd(
     .section--styles {
       margin-top: 88px;
       margin-bottom: 88px;
+      margin-inline: calc(-1 * var(--page-pad));
+      padding: 56px var(--page-pad) 62px;
     }
     .section-head {
       margin-bottom: 22px;
