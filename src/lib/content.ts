@@ -86,6 +86,18 @@ export async function studioCountByCity(): Promise<Map<string, number>> {
   return counts;
 }
 
+/** Antal studios per stil. En studio räknas i varje stil den listar. */
+export async function studioCountByStyle(): Promise<Map<string, number>> {
+  const studios = await getStudios();
+  const counts = new Map<string, number>();
+  for (const studio of studios) {
+    for (const style of studio.data.styles) {
+      counts.set(style, (counts.get(style) ?? 0) + 1);
+    }
+  }
+  return counts;
+}
+
 /** Artisterna (personerna) på en studio, alfabetiskt. */
 export async function getStudioArtists(
   studioId: string,

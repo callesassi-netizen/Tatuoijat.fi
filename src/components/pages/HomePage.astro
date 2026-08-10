@@ -22,6 +22,7 @@ import {
   isVerified,
   isWalkIn,
   studioCountByCity,
+  studioCountByStyle,
   cityDisplayName,
   styleDisplayName,
 } from '../../lib/content';
@@ -40,6 +41,7 @@ const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
 const studios = await getStudios();
 const counts = await studioCountByCity();
+const styleCounts = await studioCountByStyle();
 
 const cityById = new Map(cities.map((city) => [city.id, city]));
 const styleById = new Map(styles.map((style) => [style.id, style]));
@@ -286,7 +288,10 @@ const webSite = webSiteLd(
           <!-- Pilar för pekdon. Raden har alltid gått att dra på touch, men med
                mus fanns ingen synlig väg vidare (scrollbaren är dold). Renderas
                dolda och slås på av skriptet nedan — utan JS skulle de inte göra
-               något, och då ska de inte synas. -->
+               något, och då ska de inte synas. "Kaikki" ligger bredvid som den
+               JS-fria vägen till hela stillistan. -->
+          <div class="rail-aside">
+          <a class="ink-link section-all styles-all" href={p('/tyylit/')}>{t('home.all')} →</a>
           <div class="rail-nav" hidden data-rail-nav>
             <button class="rail-btn" type="button" data-rail-prev aria-label={t('home.styles.prev')}>
               <span aria-hidden="true">←</span>
@@ -295,7 +300,9 @@ const webSite = webSiteLd(
               <span aria-hidden="true">→</span>
             </button>
           </div>
+          </div>
         </div>
+        <div class="style-rail">
         <div class="style-strip reveal-stagger" data-style-strip>
           {
             styles.map((style, index) => (
@@ -306,7 +313,7 @@ const webSite = webSiteLd(
                     src={styleImages[style.id]!}
                     alt=""
                     widths={[400, 800]}
-                    sizes="(min-width: 1024px) 33vw, 40vw"
+                    sizes="(min-width: 1024px) 320px, 62vw"
                     loading="lazy"
                   />
                 ) : (
@@ -316,11 +323,25 @@ const webSite = webSiteLd(
                     aria-hidden="true"
                   />
                 )}
-                <span class="style-name">{styleDisplayName(style, locale)}</span>
-                <span class="style-arrow" aria-hidden="true">→</span>
+                {/* Slöjan ligger i markup, inte som ::after, så den kan skalas
+                    med korthöjden — foton som Blackwork är nästan svarta i
+                    botten och behöver en djupare fot än ljusa som Fineline. */}
+                <span class="style-veil" aria-hidden="true" />
+                <span class="style-foot">
+                  <span class="style-text">
+                    <span class="style-name">{styleDisplayName(style, locale)}</span>
+                    {(styleCounts.get(style.id) ?? 0) > 0 && (
+                      <span class="style-count">
+                        {t('home.artistCount.many', { n: styleCounts.get(style.id) ?? 0 })}
+                      </span>
+                    )}
+                  </span>
+                  <span class="style-go" aria-hidden="true">→</span>
+                </span>
               </a>
             ))
           }
+        </div>
         </div>
       </section>
 
@@ -429,12 +450,16 @@ const webSite = webSiteLd(
       const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
       return card.getBoundingClientRect().width + gap;
     };
+    const rail = strip.parentElement;
     const update = () => {
       const max = strip.scrollWidth - strip.clientWidth;
       // Ingen overflow (t.ex. mycket bred skärm) → dölj hela kontrollen.
       railNav.hidden = max <= 4;
       railPrev.disabled = strip.scrollLeft <= 2;
       railNext.disabled = strip.scrollLeft >= max - 2;
+      // Kantfaden mot bandets högerkant syns bara så länge det finns mer att
+      // scrolla; annars ser den ut som ett fel på det sista kortet.
+      if (rail) rail.toggleAttribute('data-more', !railNext.disabled);
     };
     const nudge = (dir: number) => {
       strip.scrollBy({
@@ -598,11 +623,43 @@ const webSite = webSiteLd(
      så bandet går kant i kant med arket. Måste ligga EFTER `.section` —
      samma specificitet, och padding skulle annars skrivas över. */
   .section--styles {
+    position: relative;
     margin-top: 48px;
     margin-bottom: 48px;
     margin-inline: -20px; /* .sheet-inner 16px + .section 4px */
     padding: 30px 20px 34px;
     border-block: 1px solid rgba(13, 13, 13, 0.12);
+    /* Svag vinröd glöd uppe till höger — annars blir bandet en platt svart
+       rektangel. Radial i stället för linjär: en linjär gradient över hela
+       bredden syns som en rand, en radial läses som ljus. */
+    background-image: radial-gradient(
+      120% 90% at 88% 0%,
+      rgba(139, 30, 63, 0.22) 0%,
+      rgba(13, 13, 13, 0) 62%
+    );
+  }
+  /* Rälsen bär kantfaden. Den sitter INTE på .style-strip, eftersom en mask
+     på ett scrollande element följer med innehållet i stället för att ligga
+     still mot bandkanten. */
+  .style-rail {
+    position: relative;
+  }
+  .style-rail::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 8px;
+    right: -20px; /* ut till bandets kant */
+    width: 56px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--t-med) var(--ease-out);
+    background: linear-gradient(90deg, rgba(13, 13, 13, 0) 0%, rgba(13, 13, 13, 0.8) 66%, var(--paper) 100%);
+  }
+  /* Sätts av skriptet så länge det finns mer att scrolla — en fade som ligger
+     kvar när raden tagit slut ser ut som en bugg, inte som en signal. */
+  .style-rail[data-more]::after {
+    opacity: 1;
   }
   .section-head {
     display: flex;
@@ -839,6 +896,14 @@ const webSite = webSiteLd(
   /* Pilkontroll för stilraden — bara pekdon (hover: hover). På touch drar man
      raden direkt och knapparna vore bara i vägen. Ligger i section-head, inte
      som overlay över korten, eftersom raden bleeder ut till högerkanten. */
+  .rail-aside {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .styles-all {
+    white-space: nowrap;
+  }
   .rail-nav {
     display: none;
   }
@@ -885,7 +950,7 @@ const webSite = webSiteLd(
   /* Stilgalleriet: bläck-gradientplattor, horisontell scroll-snap med peek */
   .style-strip {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     overflow-x: auto;
     padding: 0 0 8px;
     margin-right: -20px; /* bleed ut till bandets högerkant (band-padding 20px) */
@@ -895,16 +960,28 @@ const webSite = webSiteLd(
   .style-strip::-webkit-scrollbar {
     display: none;
   }
+  /* Stilkortet: stående gallerimått i stället för de gamla liggande
+     plattorna. Ett tatueringsmotiv sitter nästan alltid på en arm, en rygg
+     eller ett ben — stående ram beskär det snällare, och raden får en
+     tydligare rytm. */
   .style-card {
     flex: none;
     position: relative;
-    width: 148px;
-    height: 178px;
-    border-radius: 10px;
+    width: 168px;
+    height: 224px;
+    border-radius: var(--r-card);
     overflow: hidden;
     scroll-snap-align: start;
     text-decoration: none;
     isolation: isolate;
+    border: 1px solid rgba(242, 242, 242, 0.08);
+    transition:
+      border-color var(--t-med) var(--ease-out),
+      transform var(--t-med) var(--ease-out);
+  }
+  .style-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(242, 242, 242, 0.22);
   }
   .style-bg {
     position: absolute;
@@ -924,51 +1001,104 @@ const webSite = webSiteLd(
     transition: transform var(--t-med) var(--ease-out);
   }
   .style-card:hover :global(.style-photo) {
-    transform: scale(1.03);
+    transform: scale(1.04);
   }
-  .style-card::after {
-    /* mörkare fot så namnet alltid har kontrast */
+  .style-card:hover .style-bg {
+    transform: scale(1.04);
+  }
+
+  /* Slöjan gör foten läsbar oavsett foto. Två stopp i mitten i stället för
+     ett: en rak gradient från 0 till 0.9 lägger halva sin täthet över
+     bildens mitt och grumlar motivet, vilket är just det man vill se. */
+  .style-veil {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(13, 13, 13, 0.1) 0%,
+      rgba(13, 13, 13, 0) 34%,
+      rgba(13, 13, 13, 0.42) 62%,
+      rgba(13, 13, 13, 0.88) 100%
+    );
+  }
+
+  .style-foot {
+    position: absolute;
+    inset: auto 12px 12px;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .style-text {
+    display: block;
+    min-width: 0;
+  }
+  .style-name {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 18px;
+    line-height: 1.1;
+    color: #fff;
+  }
+  /* Vinröd understrykning som växer fram — samma bläck-gest som .ink-link
+     använder i resten av sajten, så raden känns som en del av systemet. */
+  .style-name::after {
     content: '';
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 0;
-    height: 60%;
-    pointer-events: none;
-    background: linear-gradient(180deg, rgba(16, 16, 20, 0) 0%, rgba(16, 16, 20, 0.45) 100%);
-  }
-  .style-name {
-    position: absolute;
-    left: 14px;
-    bottom: 12px;
-    z-index: 1;
-    font-family: var(--font-display);
-    font-size: 17px;
-    color: #fff;
-    text-shadow: 0 1px 8px rgba(16, 16, 20, 0.5);
+    bottom: -3px;
+    height: 2px;
+    background: var(--flash);
+    transform: scaleX(0);
+    transform-origin: left center;
     transition: transform var(--t-med) var(--ease-out);
   }
-  .style-arrow {
-    position: absolute;
-    right: 14px;
-    bottom: 12px;
-    z-index: 1;
-    color: var(--text-light);
-    font-size: 15px;
-    opacity: 0.55;
+  .style-card:hover .style-name::after {
+    transform: scaleX(1);
+  }
+  .style-count {
+    display: block;
+    margin-top: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(242, 242, 242, 0.66);
+  }
+  .style-go {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(242, 242, 242, 0.32);
+    color: #fff;
+    font-size: 13px;
+    line-height: 1;
     transition:
-      transform var(--t-med) var(--ease-out),
-      opacity var(--t-med) var(--ease-out);
+      background var(--t-med) var(--ease-out),
+      border-color var(--t-med) var(--ease-out),
+      transform var(--t-med) var(--ease-out);
   }
-  .style-card:hover .style-bg {
-    transform: scale(1.03);
+  .style-card:hover .style-go {
+    background: var(--flash);
+    border-color: var(--flash);
+    transform: translateX(2px);
   }
-  .style-card:hover .style-name {
-    transform: translateY(-4px);
-  }
-  .style-card:hover .style-arrow {
-    opacity: 1;
-    transform: translateX(3px);
+  @media (prefers-reduced-motion: reduce) {
+    .style-card:hover {
+      transform: none;
+    }
+    .style-card:hover .style-go {
+      transform: none;
+    }
   }
 
   /* Stads-kort: namn med bläck-underline, antal som stor siffra, glidande pil */
@@ -1129,20 +1259,29 @@ const webSite = webSiteLd(
       margin-right: calc(-1 * var(--page-pad));
       padding: 0 0 10px;
     }
+    .style-rail::after {
+      right: calc(-1 * var(--page-pad));
+      width: 132px;
+    }
     .style-card {
-      width: 320px;
-      height: 220px;
-      border-radius: var(--r-card);
+      width: 288px;
+      height: 380px;
+      border-radius: var(--r-card-lg);
+    }
+    .style-foot {
+      inset: auto 18px 18px;
     }
     .style-name {
-      left: 18px;
-      bottom: 15px;
-      font-size: 22px;
+      font-size: 26px;
     }
-    .style-arrow {
-      right: 18px;
-      bottom: 15px;
-      font-size: 17px;
+    .style-count {
+      margin-top: 9px;
+      font-size: 12px;
+    }
+    .style-go {
+      width: 36px;
+      height: 36px;
+      font-size: 15px;
     }
     .city-grid {
       grid-template-columns: repeat(3, 1fr);
