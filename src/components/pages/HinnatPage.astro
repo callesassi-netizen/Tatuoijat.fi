@@ -4,6 +4,7 @@
  * prisfaktorer och FAQ (FAQPage-schema enligt CLAUDE.md).
  */
 import { heroBgFor } from '../../lib/heroImages';
+import { bodyPartImages } from '../../lib/bodyPartImages';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
@@ -82,6 +83,38 @@ const heroBg = await heroBgFor('prices');
           <p class="table-note">{c.tableNote}</p>
         </section>
 
+        <!-- Hintaesimerkit kehonosittain: keyword-researchen 9/8 visade att
+             den finska prisefterfrågan är KROPPSDEL + pris, inte den
+             generiska huvudtermen. Bild + spann per placering. -->
+        <section aria-labelledby="bodyparts-title" class="block">
+          <h2 class="block-title" id="bodyparts-title">{c.bodyPartsTitle}</h2>
+          <p class="block-lead">{c.bodyPartsIntro}</p>
+          <div class="bodyparts">
+            {
+              c.bodyParts.map((part) => (
+                <article class="bodypart">
+                  {bodyPartImages[part.key] && (
+                    <Image
+                      class="bodypart-img"
+                      src={bodyPartImages[part.key]!}
+                      alt=""
+                      widths={[300, 600]}
+                      sizes="(min-width: 1024px) 30vw, 90vw"
+                      loading="lazy"
+                    />
+                  )}
+                  <div class="bodypart-body">
+                    <h3 class="bodypart-label">{part.label}</h3>
+                    <p class="bodypart-price">{part.price}</p>
+                    <p class="bodypart-size">{part.size}</p>
+                    <p class="bodypart-text">{part.text}</p>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+
         <!-- Prisfaktorer -->
         <section aria-labelledby="factors-title" class="block">
           <h2 class="block-title" id="factors-title">{c.factorsTitle}</h2>
@@ -132,6 +165,77 @@ const heroBg = await heroBgFor('prices');
 </BaseLayout>
 
 <style>
+  /* Hintaesimerkit kehonosittain */
+  .block-lead {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--meta);
+    margin: 0 0 20px;
+    max-width: 62ch;
+  }
+  .bodyparts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .bodypart {
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .bodypart :global(.bodypart-img) {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    display: block;
+    filter: var(--img-filter);
+  }
+  .bodypart-body {
+    padding: 14px 16px 18px;
+  }
+  .bodypart-label {
+    font-size: 19px;
+    color: var(--text);
+    margin: 0;
+  }
+  .bodypart-price {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display-strong);
+    font-size: 22px;
+    color: var(--flash);
+    margin: 6px 0 0;
+  }
+  .bodypart-size {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin: 2px 0 0;
+  }
+  .bodypart-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--meta);
+    margin: 10px 0 0;
+  }
+  @media (min-width: 700px) {
+    .bodyparts {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1024px) {
+    .bodyparts {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .bodypart :global(.bodypart-img) {
+      height: 190px;
+    }
+  }
+
   .guide-hero {
     position: relative;
     z-index: 0;

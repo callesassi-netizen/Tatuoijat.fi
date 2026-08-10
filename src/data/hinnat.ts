@@ -15,6 +15,10 @@ export interface HinnatContent {
   tableColumns: [string, string, string];
   rows: { label: string; size: string; price: string }[];
   tableNote: string;
+  /** Hintaesimerkit kehonosittain — bild + prisspann per kroppsdel. */
+  bodyPartsTitle: string;
+  bodyPartsIntro: string;
+  bodyParts: { key: string; label: string; size: string; price: string; text: string }[];
   factorsTitle: string;
   factors: { title: string; text: string }[];
   faqTitle: string;
@@ -49,6 +53,53 @@ export const hinnat: Record<Locale, HinnatContent> = {
     ],
     tableNote:
       'Hinnat vaihtelevat kaupungin, artistin kokemuksen ja tyylin mukaan. Realismi ja japanilainen vievät tyypillisesti enemmän aikaa kuin yksinkertainen fineline — ja aika on hinnan suurin tekijä.',
+    bodyPartsTitle: 'Hintaesimerkit kehonosittain',
+    bodyPartsIntro:
+      'Sama motiivi maksaa eri verran eri paikassa: iho venyy ja tuntuu eri tavoin, ja ahtaat kohdat vievät enemmän aikaa. Alla tyypilliset hinta-arviot yleisimmille sijoituspaikoille.',
+    bodyParts: [
+      {
+        key: 'kasivarsi',
+        label: 'Käsivarsi',
+        size: '10–20 cm',
+        price: '250–700 €',
+        text: 'Suosituin ensimmäinen paikka: tasainen pinta, kohtuullinen kipu ja helppo suojata auringolta paranemisen aikana.',
+      },
+      {
+        key: 'olkavarsi',
+        label: 'Olkavarsi',
+        size: '12–25 cm',
+        price: '300–900 €',
+        text: 'Paksumpi iho ja pyöreä muoto antavat tilaa varjostuksille. Hyvä paikka värikkäälle työlle, joka halutaan piiloon paidan alle.',
+      },
+      {
+        key: 'hiha',
+        label: 'Kokohiha',
+        size: 'koko käsivarsi',
+        price: '1 500–3 500 €',
+        text: 'Rakennetaan useassa istunnossa, tyypillisesti 4–10 kertaa. Suunnittele kokonaisuus alusta asti — paikkailu jälkikäteen tulee kalliimmaksi.',
+      },
+      {
+        key: 'selka',
+        label: 'Selkä',
+        size: 'useita istuntoja',
+        price: '2 000–6 000 €',
+        text: 'Suurin yhtenäinen pinta kehossa. Hinta kertyy tunneista: iso selkätyö on projekti, ei yksi istunto.',
+      },
+      {
+        key: 'solisluu',
+        label: 'Olkapää ja solisluu',
+        size: '10–20 cm',
+        price: '250–650 €',
+        text: 'Luun päällä tuntuu terävämmin, ja ornamentiikka vaatii tarkkuutta myötäillessään kehon linjoja. Aikaa kuluu enemmän kuin koko antaisi olettaa.',
+      },
+      {
+        key: 'teksti',
+        label: 'Teksti',
+        size: '5–15 cm',
+        price: '120–350 €',
+        text: 'Hinta riippuu fontista ja pituudesta enemmän kuin koosta. Käsin piirretty kalligrafia maksaa enemmän kuin valmis fontti — ja kestää katsoa pidempään.',
+      },
+    ],
     factorsTitle: 'Mistä hinta muodostuu?',
     factors: [
       {
@@ -130,6 +181,53 @@ export const hinnat: Record<Locale, HinnatContent> = {
     ],
     tableNote:
       'Priserna varierar med stad, artistens erfarenhet och stil. Realism och japanskt tar typiskt längre tid än enkel fineline — och tiden är prisets största faktor.',
+    bodyPartsTitle: 'Prisexempel per kroppsdel',
+    bodyPartsIntro:
+      'Samma motiv kostar olika mycket på olika ställen: huden töjer och känns olika, och trånga partier tar mer tid. Här är typiska prisuppskattningar för de vanligaste placeringarna.',
+    bodyParts: [
+      {
+        key: 'kasivarsi',
+        label: 'Underarm',
+        size: '10–20 cm',
+        price: '250–700 €',
+        text: 'Den populäraste första placeringen: jämn yta, hanterbar smärta och lätt att skydda från solen under läkningen.',
+      },
+      {
+        key: 'olkavarsi',
+        label: 'Överarm',
+        size: '12–25 cm',
+        price: '300–900 €',
+        text: 'Tjockare hud och rund form ger utrymme för skuggning. Bra plats för ett färgstarkt arbete som ska kunna döljas under en tröja.',
+      },
+      {
+        key: 'hiha',
+        label: 'Hel ärm',
+        size: 'hela armen',
+        price: '1 500–3 500 €',
+        text: 'Byggs i flera sittningar, typiskt 4–10 gånger. Planera helheten från början — att lappa ihop i efterhand blir dyrare.',
+      },
+      {
+        key: 'selka',
+        label: 'Rygg',
+        size: 'flera sittningar',
+        price: '2 000–6 000 €',
+        text: 'Kroppens största sammanhängande yta. Priset byggs av timmar: ett stort ryggarbete är ett projekt, inte en sittning.',
+      },
+      {
+        key: 'solisluu',
+        label: 'Axel och nyckelben',
+        size: '10–20 cm',
+        price: '250–650 €',
+        text: 'Ovanpå ben känns det skarpare, och ornamentik kräver precision när den ska följa kroppens linjer. Det tar mer tid än storleken antyder.',
+      },
+      {
+        key: 'teksti',
+        label: 'Text',
+        size: '5–15 cm',
+        price: '120–350 €',
+        text: 'Priset beror mer på font och längd än på storlek. Handritad kalligrafi kostar mer än en färdig font — och håller för ögat längre.',
+      },
+    ],
     factorsTitle: 'Vad avgör priset?',
     factors: [
       {
