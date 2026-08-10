@@ -349,11 +349,16 @@ button.chip:active {
    sidoplatta. `.has-hero-photo` laggs pa sidans hero-sektion och far
    bilden via --hero-bg (satt inline, optimerad webp fran getImage()).
 
-   Scrimen ar TVA lager: en vertikal gradient som gor toppen lasbar
-   under headern, och en horisontell som halller vansterkanten mork
-   dar rubriken star. Utan den blir vit text pa ljusa bildpartier
-   olaslig — och det ar just pa mobil, dar 83 % av besokarna finns,
-   som rubriken hamnar mitt i bilden.
+   SCRIMEN AR MATT, INTE GISSAD. Bakgrunden bakom H1 samplades i
+   webblasare pa 8 sidtyper x 2 brytpunkter och kontrasten raknades mot
+   textfargen #f2f2f2. Forsta forsoket lag pa 2.6:1 pa stadssidan i
+   mobil — olasligt. Ror du varden har: mat om, gissa inte.
+
+   Gradienten ar OJAMN med flit. Pa desktop sitter rubriken nere till
+   vanster, sa den hornan halls mork medan mitten och hogerkanten
+   slapper fram fotot. Pa mobil spanner rubriken over hela bredden och
+   hamnar utanfor vansterzonen — darfor ar den horisontella gradienten
+   nastan platt under 1024px och den vertikala bar lasbarheten.
    ============================================================ */
 .has-hero-photo {
   position: relative;
@@ -372,12 +377,42 @@ button.chip:active {
   background-image: var(--hero-bg);
   background-size: cover;
   background-position: center;
-  filter: saturate(0.7) contrast(1.05) brightness(0.72);
+  /* Uppljusad 10/8: 0.72 begravde motivet. */
+  filter: saturate(0.8) contrast(1.03) brightness(0.9);
 }
 .has-hero-photo::after {
   background:
-    linear-gradient(180deg, rgba(13, 13, 13, 0.86) 0%, rgba(13, 13, 13, 0.45) 42%, rgba(13, 13, 13, 0.95) 100%),
-    linear-gradient(90deg, rgba(13, 13, 13, 0.9) 0%, rgba(13, 13, 13, 0.35) 62%, rgba(13, 13, 13, 0.2) 100%);
+    linear-gradient(
+      180deg,
+      rgba(13, 13, 13, 0.62) 0%,
+      rgba(13, 13, 13, 0.22) 30%,
+      rgba(13, 13, 13, 0.72) 56%,
+      rgba(13, 13, 13, 0.88) 100%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(13, 13, 13, 0.68) 0%,
+      rgba(13, 13, 13, 0.5) 55%,
+      rgba(13, 13, 13, 0.44) 100%
+    );
+}
+@media (min-width: 1024px) {
+  .has-hero-photo::after {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(13, 13, 13, 0.62) 0%,
+        rgba(13, 13, 13, 0.08) 34%,
+        rgba(13, 13, 13, 0.54) 66%,
+        rgba(13, 13, 13, 0.86) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(13, 13, 13, 0.84) 0%,
+        rgba(13, 13, 13, 0.32) 55%,
+        rgba(13, 13, 13, 0.12) 100%
+      );
+  }
 }
 /* Sidor med fotohero far ett rejalt band aven nar texten ar kort. */
 .has-hero-photo > .container {
