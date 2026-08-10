@@ -1,6 +1,12 @@
 import type { Locale } from '../../i18n/ui';
 import type { GuideCardByLocale, GuideContentByLocale } from './types';
 import { tatuoinninJalkihoito, tatuoinninJalkihoitoCard } from './tatuoinnin-jalkihoito';
+import { tatuoinninParaneminen, tatuoinninParaneminenCard } from './tatuoinnin-paraneminen';
+import { tatuointiJaAurinko, tatuointiJaAurinkoCard } from './tatuointi-ja-aurinko';
+import {
+  tatuoinninHoitotuotteet,
+  tatuoinninHoitotuotteetCard,
+} from './tatuoinnin-hoitotuotteet';
 
 /**
  * Kopplingen mellan routing-registret (src/lib/guides.mjs) och innehållet.
@@ -9,11 +15,17 @@ import { tatuoinninJalkihoito, tatuoinninJalkihoitoCard } from './tatuoinnin-jal
  */
 export const guideContent: Record<string, GuideContentByLocale> = {
   'tatuoinnin-jalkihoito': tatuoinninJalkihoito,
+  'tatuoinnin-paraneminen': tatuoinninParaneminen,
+  'tatuointi-ja-aurinko': tatuointiJaAurinko,
+  'tatuoinnin-hoitotuotteet': tatuoinninHoitotuotteet,
 };
 
 /** Kort-texterna på hubben. Samma nycklar som guideContent. */
 export const guideCards: Record<string, GuideCardByLocale> = {
   'tatuoinnin-jalkihoito': tatuoinninJalkihoitoCard,
+  'tatuoinnin-paraneminen': tatuoinninParaneminenCard,
+  'tatuointi-ja-aurinko': tatuointiJaAurinkoCard,
+  'tatuoinnin-hoitotuotteet': tatuoinninHoitotuotteetCard,
 };
 
 /**
@@ -23,10 +35,6 @@ export const guideCards: Record<string, GuideCardByLocale> = {
  * + flytta status till 'published' när en guide skrivs.
  */
 export const plannedGuideTitles: Record<string, Record<Locale, string>> = {
-  'tatuoinnin-paraneminen': {
-    fi: 'Tatuoinnin paraneminen vaihe vaiheelta',
-    sv: 'Tatueringens läkning steg för steg',
-  },
   'tatuointi-ja-sauna': {
     fi: 'Tatuointi ja sauna',
     sv: 'Tatuering och bastu',
@@ -34,14 +42,6 @@ export const plannedGuideTitles: Record<string, Record<Locale, string>> = {
   'tatuointi-ja-uiminen': {
     fi: 'Tatuointi ja uiminen',
     sv: 'Tatuering och bad',
-  },
-  'tatuointi-ja-aurinko': {
-    fi: 'Tatuointi ja aurinko',
-    sv: 'Tatuering och sol',
-  },
-  'tatuoinnin-hoitotuotteet': {
-    fi: 'Tatuoinnin hoitotuotteet',
-    sv: 'Produkter för tatueringsvård',
   },
   'tatuoinnin-hinta-kehonosittain': {
     fi: 'Tatuoinnin hinta kehonosittain',

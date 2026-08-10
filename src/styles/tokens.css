@@ -28,6 +28,10 @@
      mörka banden. Den ljusare tonen ger 5.6:1 mot #0d0d0d och 5.0:1
      mot #1a1a1a. Bara text: fyllda ytor använder fortfarande --flash. */
   --flash-text: #d4677f;
+  /* Guld som TEXT. Ren #c9a227 på vitt ger 2,4:1 — läsbart på svart, inte på
+     papper. Den mörkare tonen ger 5,8:1 mot vitt. Gäller bara text; fyllningar,
+     ramar och Featured-badgen använder fortfarande --gold. */
+  --gold-text: #c9a227;
   --gold: #c9a227; /* ENDAST Featured-badge. Behålls: det är den
                       enda färgen som skiljer betalande studios,
                       och guld mot #0d0d0d bär bättre än på papper. */
@@ -114,6 +118,7 @@
   --text-light: #f2f2f2; /* för ev. mörka block inuti ett ljust ark */
   --meta: #5c5c66;
   --flash-text: #8b1e3f; /* ren vinröd bär utmärkt på benvitt (7.8:1) */
+  --gold-text: #7d6210; /* mörkare guld — 5,8:1 mot vitt, 5,1:1 mot guldtonen */
   --border-on-paper: #dcdcdc;
 
   --card-border: 1px solid rgba(13, 13, 13, 0.1);
@@ -147,6 +152,7 @@
   /* Måste sättas explicit: ligger bandet inuti ett `.reading`-ark ärver det
      annars den mörka vinröda tonen, som inte bär mot #0d0d0d. */
   --flash-text: #d4677f;
+  --gold-text: #c9a227;
   --border-on-paper: #2b2b2b;
 
   --card-border: 1px solid rgba(242, 242, 242, 0.1);

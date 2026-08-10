@@ -29,6 +29,115 @@ import type { Locale } from '../i18n/ui';
  * före första produktkortet — inte som fotnot. Se AFFILIATE_DISCLOSURE.
  */
 
+/**
+ * PARTNERREGISTER — ansökt 2026-08-10 via Adtraction, kanal tatuoijat.fi
+ * (kanal-ID 2101505499). `brandId` är Adtractions Brand ID, samma nummer som
+ * hamnar i spårningslänkens `a=`-parameter. Det står här för spårbarhet: när
+ * en länk beter sig konstigt är första frågan alltid "vilket program?".
+ *
+ * `status` är en ANTECKNING, inte en spärr. Spärren är att `affiliateUrl`
+ * saknas — se renderingsregeln ovan. Uppdatera status när Adtraction svarar,
+ * så att den som läser filen om ett halvår vet var saker står.
+ */
+export type PartnerKey =
+  | 'olo-apteekki'
+  | 'apteekki-360'
+  | 'dermosil'
+  | 'cocopanda'
+  | 'nordicfeel'
+  | 'lyko'
+  | 'bearel';
+
+export interface AffiliatePartner {
+  name: string;
+  /** Adtraction Brand ID (= spårningslänkens `a=`). */
+  brandId: string;
+  status: 'pending' | 'approved' | 'declined';
+  /** Provision och EPC vid ansökningstillfället — för senare jämförelse. */
+  note: string;
+}
+
+export const affiliatePartners: Record<PartnerKey, AffiliatePartner> = {
+  'olo-apteekki': {
+    name: 'Olo-apteekki',
+    brandId: '1665046581',
+    status: 'pending',
+    note: '7,5 % · EPC 0,73 GBP · konv. 16,1 % · spårning 14 dagar',
+  },
+  'apteekki-360': {
+    name: 'Apteekki 360',
+    brandId: '1869094917',
+    status: 'pending',
+    note: '9 % · EPC 0,21 GBP · konv. 12,5 %',
+  },
+  dermosil: {
+    name: 'Dermosil',
+    brandId: '1666118743',
+    status: 'pending',
+    note: '3,9 % · EPC 0,44 GBP · konv. 31,7 %',
+  },
+  cocopanda: {
+    name: 'Cocopanda FI',
+    brandId: '1786468186',
+    status: 'pending',
+    note: '6 % · EPC 0,30 GBP · konv. 13,8 %',
+  },
+  nordicfeel: {
+    name: 'Nordicfeel FI',
+    brandId: '997227792',
+    status: 'pending',
+    note: '6 % · EPC 0,23 GBP · konv. 10,6 %',
+  },
+  lyko: {
+    name: 'Lyko FI',
+    brandId: '1278344847',
+    status: 'pending',
+    note: '8 % · EPC 0,17 GBP · konv. 3,2 %',
+  },
+  bearel: {
+    name: 'Bearel',
+    brandId: '1747599574',
+    status: 'pending',
+    note: '10 % · EPC 0,91 GBP · konv. 11,1 %',
+  },
+};
+
+/**
+ * EPI = Adtractions sub-id. Utan den syns bara "något på tatuoijat.fi sålde";
+ * med den syns VILKEN guide och VILKET block. Konventionen är
+ * `{guide-key}-{kategori}`, t.ex. `hoitotuotteet-spf`.
+ *
+ * FALLGROP: `epi` måste ligga FÖRE `url=` i länken, annars räknas den som en
+ * del av destinations-URL:en och försvinner. Därför sköts inflätningen här i
+ * stället för att klistras ihop för hand i produktlistan.
+ */
+export function withEpi(trackingUrl: string, epi: string): string {
+  const safe = epi
+    .toLowerCase()
+    .replace(/[^a-z0-9-]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+  if (!safe) return trackingUrl;
+
+  const urlAt = trackingUrl.search(/[?&]url=/);
+  const epiMatch = /[?&]epi=([^&]*)/.exec(trackingUrl);
+
+  // Redan satt för hand: värdet respekteras, men positionen rättas. En epi som
+  // klistrats in EFTER url= räknas av Adtraction som en del av destinationen
+  // och försvinner ur rapporten — det är just den tysta buggen den här
+  // funktionen finns för att stoppa, också när någon skrivit länken själv.
+  if (epiMatch) {
+    if (urlAt === -1 || epiMatch.index < urlAt) return trackingUrl;
+    const cleaned = trackingUrl.replace(/[?&]epi=[^&]*/, '');
+    const cleanedUrlAt = cleaned.search(/[?&]url=/);
+    return `${cleaned.slice(0, cleanedUrlAt)}&epi=${epiMatch[1]}${cleaned.slice(cleanedUrlAt)}`;
+  }
+
+  const separator = trackingUrl.includes('?') ? '&' : '?';
+  if (urlAt === -1) return `${trackingUrl}${separator}epi=${safe}`;
+  return `${trackingUrl.slice(0, urlAt)}&epi=${safe}${trackingUrl.slice(urlAt)}`;
+}
+
 /** Produktkategorier på hoito-/jälkihoito-ytorna. */
 export type AffiliateCategory =
   | 'aftercare' // tatuoinnin hoitovoiteet

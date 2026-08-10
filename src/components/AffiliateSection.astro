@@ -23,6 +23,7 @@ import {
   AFFILIATE_DISCLOSURE,
   hasLinkableProducts,
   linkableProducts,
+  withEpi,
 } from '../data/affiliate';
 
 interface Props {
@@ -30,17 +31,23 @@ interface Props {
   title: string;
   intro: string;
   categories: GuideProductCategory[];
+  /** Guidens key — blir första ledet i epi (`{guide}-{kategori}`). */
+  epiPrefix: string;
 }
 
-const { locale, title, intro, categories } = Astro.props;
+const { locale, title, intro, categories, epiPrefix } = Astro.props;
 
 const disclosure = AFFILIATE_DISCLOSURE[locale];
 const ctaLabel = AFFILIATE_CTA[locale];
 const showDisclosure = hasLinkableProducts();
 
 // Produkterna slås upp per kategori. Tom lista = bara kriterietexten renderas.
+// epi sätts per KATEGORI, inte per produkt: frågan vi vill kunna svara på är
+// "vilket block i vilken guide säljer", inte "vilken av två burkar salva".
+// Fler epi-värden än så gör rapporten svårläst utan att ge mer att agera på.
 const blocks = categories.map((category) => ({
   ...category,
+  epi: `${epiPrefix}-${category.category}`,
   products: linkableProducts(category.category),
 }));
 ---
@@ -72,7 +79,7 @@ const blocks = categories.map((category) => ({
                   <span class="product-text">{product.description[locale]}</span>
                   <a
                     class="product-cta"
-                    href={product.affiliateUrl}
+                    href={withEpi(product.affiliateUrl!, block.epi)}
                     rel="sponsored nofollow noopener"
                     target="_blank"
                   >

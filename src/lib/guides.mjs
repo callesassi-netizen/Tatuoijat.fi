@@ -46,7 +46,7 @@ export const guides = [
   },
   {
     key: 'tatuoinnin-paraneminen',
-    status: 'planned',
+    status: 'published',
     order: 2,
     slug: { fi: 'tatuoinnin-paraneminen', sv: 'sa-laker-en-tatuering' },
     targetPhrase: 'tatuoinnin paraneminen, kuinka kauan tatuointi paranee',
@@ -67,14 +67,14 @@ export const guides = [
   },
   {
     key: 'tatuointi-ja-aurinko',
-    status: 'planned',
+    status: 'published',
     order: 5,
     slug: { fi: 'tatuointi-ja-aurinko', sv: 'tatuering-och-sol' },
     targetPhrase: 'tatuointi ja aurinko, tatuointi aurinkorasva',
   },
   {
     key: 'tatuoinnin-hoitotuotteet',
-    status: 'planned',
+    status: 'published',
     order: 6,
     slug: { fi: 'tatuoinnin-hoitotuotteet', sv: 'produkter-for-tatueringsvard' },
     targetPhrase: 'tatuoinnin hoitotuotteet, tatuointivoide',

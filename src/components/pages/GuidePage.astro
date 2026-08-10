@@ -41,6 +41,7 @@ import {
 import { citiesIndexPath, cityPath, guidesIndexPath, guidePath } from '../../lib/routes';
 import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
 import { guides, plannedGuides } from '../../lib/guides.mjs';
+import { AFFILIATE_DISCLOSURE, hasLinkableProducts } from '../../data/affiliate';
 
 interface Props {
   guideKey: string;
@@ -110,6 +111,13 @@ const upcoming = plannedGuides
 
 // Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
 const heroBg = await heroBgFor('guides');
+
+// Annonsmärkning ÖVERST. Adtractions egen regel (och KKV:s riktlinje) säger att
+// om märkningen vid själva länken inte syns direkt när läsaren ser sidan, ska
+// den stå i början av publikationen. Produktsektionen ligger långt ned — därför
+// båda. Renderas bara när det faktiskt FINNS en klickbar länk att märka.
+const showTopDisclosure = hasLinkableProducts();
+const disclosure = AFFILIATE_DISCLOSURE[locale];
 ---
 
 <BaseLayout
@@ -144,6 +152,15 @@ const heroBg = await heroBgFor('guides');
         </nav>
 
         <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
+
+        {
+          showTopDisclosure && (
+            <p class="top-disclosure">
+              <span class="top-disclosure-label">{disclosure.label}</span>
+              {disclosure.text}
+            </p>
+          )
+        }
 
         <!-- Svara-först (GEO.md §1) -->
         <p class="answer">{c.answer}</p>
@@ -269,6 +286,7 @@ const heroBg = await heroBgFor('guides');
           title={c.productsTitle}
           intro={c.productsIntro}
           categories={c.productCategories}
+          epiPrefix={guideKey}
         />
 
         <p class="disclaimer">
@@ -395,6 +413,28 @@ const heroBg = await heroBgFor('guides');
     margin: 0 0 16px;
     font-size: 11.5px;
     color: var(--meta);
+  }
+
+  /* Annonsmärkning överst. Diskret men inte gömd: den ska gå att läsa utan att
+     man letar, och den ska inte konkurrera med svara-först-stycket. */
+  .top-disclosure {
+    margin: 0 0 18px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--meta);
+    background: var(--surface);
+    border-left: 3px solid var(--flash);
+    border-radius: 0 var(--r-btn) var(--r-btn) 0;
+  }
+  .top-disclosure-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--flash-text);
+    margin-bottom: 2px;
   }
 
   /* Svara-först — visuellt lyft, det är sidans viktigaste stycke */
@@ -698,7 +738,7 @@ const heroBg = await heroBgFor('guides');
   .cta-text {
     font-size: 13.5px;
     line-height: 1.55;
-    color: var(--meta);
+    color: var(--meta-on-ink);
     max-width: 380px;
     margin: 8px auto 18px;
   }

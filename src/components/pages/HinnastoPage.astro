@@ -360,9 +360,15 @@ const heroBg = await heroBgFor('pricing');
     font-size: 34px;
     color: inherit;
   }
+  /* "/vuosi" sitter på TRE kort med olika bakgrund: Perus och Pro är ljusa,
+     Premium är svart. Varken --meta eller --meta-on-ink klarar båda — den ena
+     ger 2,9:1 på det svarta kortet, den andra 2,8:1 på de ljusa. currentColor
+     med nedtoning följer kortet: 6,9:1 på svart, 4,8:1 på vitt. Samma lösning
+     som .plan-amount redan använder med color: inherit. */
   .plan-period {
     font-size: 13px;
-    color: var(--meta);
+    color: currentColor;
+    opacity: 0.62;
     margin-left: 4px;
   }
 
@@ -548,7 +554,7 @@ const heroBg = await heroBgFor('pricing');
     border: 1px solid var(--flash);
   }
   .benefit-tier--premium {
-    color: var(--gold);
+    color: var(--gold-text);
     border: 1px solid rgba(201, 162, 39, 0.5);
   }
   .benefit-title {
@@ -610,7 +616,7 @@ const heroBg = await heroBgFor('pricing');
     color: var(--text);
   }
   thead th.col--premium {
-    color: var(--gold);
+    color: var(--gold-text);
     box-shadow: inset 0 3px 0 0 var(--gold);
   }
   tbody th {
