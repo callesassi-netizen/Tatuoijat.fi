@@ -1,5 +1,6 @@
 ---
 /** Stilar-index (/tyylit/) — delad mellan fi och sv. */
+import { heroBgFor } from '../../lib/heroImages';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
@@ -33,6 +34,9 @@ const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
   { name: t('nav.styles'), url: new URL(p('/tyylit/'), site).href },
 ]);
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('styles');
 ---
 
 <BaseLayout
@@ -43,7 +47,7 @@ const breadcrumb = breadcrumbLd([
   hasAlternate
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
-  <section class="index-hero">
+  <section class="index-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container index-hero-inner">
       <p class="eyebrow">{t('home.styles.eyebrow')}</p>
       <h1 class="index-title">{t('home.styles.title')}</h1>

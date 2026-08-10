@@ -16,6 +16,7 @@
  * hakemistot till en internlänksnav som platt-länkar alla 190 profiler.
  * Sidan är också utesluten ur sitemap i astro.config.mjs.
  */
+import { heroBgFor } from '../../lib/heroImages';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteSearch from '../SiteSearch.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
@@ -73,6 +74,9 @@ const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
   { name: t('searchPage.eyebrow'), url: new URL(p(searchPath(locale)), site).href },
 ]);
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('search');
 ---
 
 <BaseLayout
@@ -85,7 +89,7 @@ const breadcrumb = breadcrumbLd([
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
 
-  <section class="index-hero">
+  <section class="index-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container index-hero-inner">
       <p class="eyebrow">{t('searchPage.eyebrow')}</p>
       <h1 class="index-title">{t('searchPage.h1')}</h1>

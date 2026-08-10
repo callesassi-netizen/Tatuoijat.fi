@@ -331,3 +331,58 @@ button.chip:active {
   white-space: nowrap;
   border: 0;
 }
+
+/* ============================================================
+   STOR FOTOHERO (Calles beslut 10/8 2026)
+   Mockupen har ett fotoband bakom varje sidrubrik, inte en liten
+   sidoplatta. `.has-hero-photo` laggs pa sidans hero-sektion och far
+   bilden via --hero-bg (satt inline, optimerad webp fran getImage()).
+
+   Scrimen ar TVA lager: en vertikal gradient som gor toppen lasbar
+   under headern, och en horisontell som halller vansterkanten mork
+   dar rubriken star. Utan den blir vit text pa ljusa bildpartier
+   olaslig — och det ar just pa mobil, dar 83 % av besokarna finns,
+   som rubriken hamnar mitt i bilden.
+   ============================================================ */
+.has-hero-photo {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--ink);
+}
+.has-hero-photo::before,
+.has-hero-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.has-hero-photo::before {
+  background-image: var(--hero-bg);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.7) contrast(1.05) brightness(0.72);
+}
+.has-hero-photo::after {
+  background:
+    linear-gradient(180deg, rgba(13, 13, 13, 0.86) 0%, rgba(13, 13, 13, 0.45) 42%, rgba(13, 13, 13, 0.95) 100%),
+    linear-gradient(90deg, rgba(13, 13, 13, 0.9) 0%, rgba(13, 13, 13, 0.35) 62%, rgba(13, 13, 13, 0.2) 100%);
+}
+/* Sidor med fotohero far ett rejalt band aven nar texten ar kort. */
+.has-hero-photo > .container {
+  position: relative;
+  z-index: 1;
+  padding-top: 40px;
+  padding-bottom: 48px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+@media (min-width: 1024px) {
+  .has-hero-photo > .container {
+    padding-top: 64px;
+    padding-bottom: 72px;
+    min-height: 420px;
+  }
+}

@@ -12,6 +12,7 @@
  * kontakt. Det gamla formuläret läste som en registrering och båda inskicken
  * (27/7, 5/8) övergavs efter e-postfältet.
  */
+import { heroBgFor } from '../../lib/heroImages';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
@@ -39,6 +40,9 @@ const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
   { name: c.h1, url: new URL(p(path), site).href },
 ]);
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('join');
 ---
 
 <BaseLayout
@@ -51,21 +55,12 @@ const breadcrumb = breadcrumbLd([
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
 
-  <section class="liity-hero">
+  <section class="liity-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container liity-hero-inner">
       <div class="liity-hero-copy">
         <p class="eyebrow">{c.eyebrow}</p>
         <h1 class="liity-title">{c.h1}</h1>
         <p class="liity-intro">{c.intro}</p>
-      </div>
-      <div class="liity-hero-media" aria-hidden="true">
-        <Image
-          src={heroImage}
-          alt=""
-          widths={[500, 900]}
-          sizes="(min-width: 1024px) 40vw, 100vw"
-          loading="eager"
-        />
       </div>
     </div>
   </section>

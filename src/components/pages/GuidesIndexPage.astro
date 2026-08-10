@@ -11,6 +11,7 @@
  * Planerade guider listas som ren text utan länk. Att listan syns är ärligt
  * (den beskriver vart ytan är på väg) och ger noll tomma URL:er.
  */
+import { heroBgFor } from '../../lib/heroImages';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { guideCards, plannedGuideTitles } from '../../data/guides';
@@ -50,6 +51,9 @@ const collection = collectionPageLd(
   pageUrl,
   published.map((entry) => new URL(p(guidePath(entry.route, locale)), site).href),
 );
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('guides');
 ---
 
 <BaseLayout
@@ -64,7 +68,7 @@ const collection = collectionPageLd(
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
   <script type="application/ld+json" set:html={jsonLdString(collection)} slot="head" />
 
-  <section class="hub-hero">
+  <section class="hub-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container hub-hero-inner">
       <p class="eyebrow">{t('guides.eyebrow')}</p>
       <h1 class="hub-title">{t('guides.h1')}</h1>

@@ -3,6 +3,7 @@
  * Stilsida (/tyylit/{style}/): stilbeskrivning (unik fi/sv ur content),
  * artister som gör stilen, korslänkar till städerna (stad + ?tyyli=).
  */
+import { heroBg, heroBgFor } from '../../lib/heroImages';
 import type { CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -125,6 +126,13 @@ const collectionPage = collectionPageLd(
   new URL(p(path), site).href,
   studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
 );
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+// Stilens EGEN bild bar heron — generisk hero vore ett sloseri nar
+// varje stil redan har en egen platta.
+const heroBgUrl = styleImages[style.id]
+  ? await heroBg(styleImages[style.id]!)
+  : await heroBgFor('styles');
 ---
 
 <BaseLayout title={title} description={description} locale={locale} path={path} hasAlternate>
@@ -133,7 +141,7 @@ const collectionPage = collectionPageLd(
   <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
 
   <!-- Mörk hero med stilbeskrivning -->
-  <section class="style-hero">
+  <section class="style-hero has-hero-photo" style={`--hero-bg:url(${heroBgUrl})`}>
     <div class="container style-hero-inner">
       <div class="style-hero-copy">
         <a class="back-link ink-link" href={p('/tyylit/')}>← {t('nav.styles')}</a>
@@ -141,19 +149,6 @@ const collectionPage = collectionPageLd(
         <h1 class="style-title">{styleName}</h1>
         <p class="style-intro">{answerSentence} {intro}</p>
       </div>
-      {
-        styleImages[style.id] && (
-          <div class="style-hero-media" aria-hidden="true">
-            <Image
-              src={styleImages[style.id]!}
-              alt=""
-              widths={[500, 900]}
-              sizes="(min-width: 1024px) 38vw, 100vw"
-              loading="eager"
-            />
-          </div>
-        )
-      }
     </div>
   </section>
 
@@ -411,9 +406,7 @@ const collectionPage = collectionPageLd(
       font-size: 24px;
     }
     .artist-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 12px;
     }
   }
 </style>

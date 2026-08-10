@@ -11,6 +11,7 @@
  * — samma form som /liity, inget separat Netlify-formulär. Indexerbar
  * (trust-/E-E-A-T-sida), länkad i footern.
  */
+import { heroBgFor } from '../../lib/heroImages';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getCitiesSorted } from '../../lib/content';
@@ -34,6 +35,9 @@ const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
   { name: c.h1, url: new URL(p(path), site).href },
 ]);
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('contact');
 ---
 
 <BaseLayout
@@ -45,7 +49,7 @@ const breadcrumb = breadcrumbLd([
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
 
-  <section class="yht-hero">
+  <section class="yht-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container yht-hero-inner">
       <p class="eyebrow">{c.eyebrow}</p>
       <h1 class="yht-title">{c.h1}</h1>

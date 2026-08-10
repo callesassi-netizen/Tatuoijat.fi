@@ -5,6 +5,7 @@
  * därunder ALLA städer som kompakt alfabetisk katalog-lista
  * (46 likadana kort i en ändlös grid skalade inte).
  */
+import { heroBgFor } from '../../lib/heroImages';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getCitiesSorted, studioCountByCity, cityDisplayName } from '../../lib/content';
@@ -39,6 +40,9 @@ const breadcrumb = breadcrumbLd([
   { name: t('breadcrumb.home'), url: new URL(p('/'), site).href },
   { name: t('nav.cities'), url: new URL(p(citiesIndexPath(locale)), site).href },
 ]);
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('cities');
 ---
 
 <BaseLayout
@@ -50,7 +54,7 @@ const breadcrumb = breadcrumbLd([
   hasAlternate
 >
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
-  <section class="index-hero">
+  <section class="index-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container index-hero-inner">
       <p class="eyebrow">{t('home.cities.eyebrow')}</p>
       <h1 class="index-title">{t('home.cities.title')}</h1>

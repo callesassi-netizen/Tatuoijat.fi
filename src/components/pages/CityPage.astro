@@ -4,6 +4,7 @@
  * filmremsa, flytande sökkort med staden förvald, stil-filterchips
  * (filtrering utan sidladdning), featured först, sedan grid.
  */
+import { heroBgFor } from '../../lib/heroImages';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import SearchForm from '../SearchForm.astro';
@@ -136,6 +137,9 @@ const collectionPage = collectionPageLd(
   new URL(p(path), site).href,
   studios.map((studio) => new URL(p(`/artistit/${studio.id}/`), site).href),
 );
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('city');
 ---
 
 <BaseLayout
@@ -152,7 +156,7 @@ const collectionPage = collectionPageLd(
   <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
 
   <!-- Kompakt mörk hero -->
-  <section class="city-hero">
+  <section class="city-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container city-hero-inner">
       <a class="back-link ink-link" href={p('/')}>← {t('city.back')}</a>
       <p class="eyebrow">{t('city.eyebrow')}</p>

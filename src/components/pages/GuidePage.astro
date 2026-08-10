@@ -16,6 +16,7 @@
  * ytan ändå, som bas för affiliate. Produktsektionen är affiliate-ready men
  * innehåller inga externa länkar (AffiliateSection.astro).
  */
+import { heroBgFor } from '../../lib/heroImages';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateSection from '../AffiliateSection.astro';
@@ -106,6 +107,9 @@ const howTo =
 const upcoming = plannedGuides
   .map((entry) => plannedGuideTitles[entry.key]?.[locale])
   .filter((title): title is string => Boolean(title));
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('guides');
 ---
 
 <BaseLayout
@@ -121,20 +125,11 @@ const upcoming = plannedGuides
   {howTo && <script type="application/ld+json" set:html={jsonLdString(howTo)} slot="head" />}
   <script type="application/ld+json" set:html={jsonLdString(faq)} slot="head" />
 
-  <section class="guide-hero">
+  <section class="guide-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container guide-hero-inner">
       <div>
         <p class="eyebrow">{c.eyebrow}</p>
         <h1 class="guide-title">{c.h1}</h1>
-      </div>
-      <div class="guide-hero-media" aria-hidden="true">
-        <Image
-          src={heroImage}
-          alt=""
-          widths={[500, 900]}
-          sizes="(min-width: 1024px) 38vw, 100vw"
-          loading="eager"
-        />
       </div>
     </div>
   </section>

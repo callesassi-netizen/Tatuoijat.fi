@@ -7,6 +7,7 @@
  * follow och utesluts ur sitemap (astro.config.mjs) — samma doorway-skydd
  * som tunna stadssidor (§3.1). Med tom data renderas hero + tomt-läge.
  */
+import { heroBgFor } from '../../lib/heroImages';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArtistRow from '../ArtistRow.astro';
@@ -80,6 +81,9 @@ const collectionPage =
         ),
       )
     : null;
+
+// Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
+const heroBg = await heroBgFor('walkin');
 ---
 
 <BaseLayout
@@ -93,7 +97,7 @@ const collectionPage =
   <script type="application/ld+json" set:html={jsonLdString(breadcrumb)} slot="head" />
   {collectionPage && <script type="application/ld+json" set:html={jsonLdString(collectionPage)} slot="head" />}
 
-  <section class="index-hero">
+  <section class="index-hero has-hero-photo" style={`--hero-bg:url(${heroBg})`}>
     <div class="container index-hero-inner">
       <p class="eyebrow">{t('walkin.eyebrow')}</p>
       <h1 class="index-title">{t('walkin.h1')}</h1>
@@ -211,9 +215,7 @@ const collectionPage =
       margin-bottom: 18px;
     }
     .artist-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+      gap: 12px;
     }
   }
 </style>
