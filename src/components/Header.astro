@@ -1,7 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { useTranslations, localePath, type Locale } from '../i18n/ui';
-import { citiesIndexPath, searchPath } from '../lib/routes';
+import { citiesIndexPath, guidesIndexPath, searchPath } from '../lib/routes';
 
 interface Props {
   locale: Locale;
@@ -16,11 +16,16 @@ const currentPath = Astro.url.pathname;
 const isActive = (prefix: string) => currentPath.startsWith(p(prefix));
 
 const citiesBase = citiesIndexPath(locale);
+const guidesBase = guidesIndexPath(locale);
 const navLinks = [
   { href: p(citiesBase), label: t('nav.cities'), active: isActive(citiesBase) },
   { href: p('/tyylit/'), label: t('nav.styles'), active: isActive('/tyylit') },
   // Prisguiden /hinnat (konsument-SEO) — visas i BÅDE desktop- och mobilnav.
   { href: p('/hinnat/'), label: t('nav.prices'), active: isActive('/hinnat') },
+  // Oppaat/Guider låg bara i footern; en hel innehållsgren utan väg in från
+  // navigationen hittas i praktiken inte. Hubben är noindex tills tre guider
+  // finns, men noindex,follow — länken passerar länkvärde till guiderna.
+  { href: p(guidesBase), label: t('nav.guides'), active: isActive(guidesBase) },
   { href: p('/yhteys/'), label: t('nav.contact'), active: isActive('/yhteys') },
 ];
 // "Studioille"-navet pekar på säljsidan /hinnasto (ansökningsformen /liity
