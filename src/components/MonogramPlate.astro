@@ -24,9 +24,9 @@ const hash = [...name].reduce((acc, ch) => (acc * 31 + ch.charCodeAt(0)) >>> 0, 
 const patterns = ['lines', 'dots', 'arcs', 'grid'] as const;
 const pattern = patterns[hash % patterns.length];
 
-// Bläck-gradienter i olika valörer (#1c1c22 → #4d3230-spannet)
+// Bläck-gradienter i olika valörer (#1e1e1e → #3a2a2e-spannet, lyft för mörk bas 10/8 2026)
 const inkStops = [
-  ['#1c1c22', '#33262a'],
+  ['#1e1e1e', '#2e2429'],
   ['#201e27', '#3c2b2b'],
   ['#23202a', '#452f2e'],
 ] as const;
@@ -49,35 +49,35 @@ const uid = `mp${hash % 9973}`;
     {
       pattern === 'lines' && (
         <pattern id={`${uid}-p`} width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="14" stroke="#F6F2EA" stroke-width="1" />
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#F2F2F2" stroke-width="1" />
         </pattern>
       )
     }
     {
       pattern === 'dots' && (
         <pattern id={`${uid}-p`} width="18" height="18" patternUnits="userSpaceOnUse">
-          <circle cx="4" cy="4" r="1.4" fill="#F6F2EA" />
+          <circle cx="4" cy="4" r="1.4" fill="#F2F2F2" />
         </pattern>
       )
     }
     {
       pattern === 'arcs' && (
         <pattern id={`${uid}-p`} width="40" height="40" patternUnits="userSpaceOnUse">
-          <path d="M0 40 A40 40 0 0 1 40 0" fill="none" stroke="#F6F2EA" stroke-width="1" />
+          <path d="M0 40 A40 40 0 0 1 40 0" fill="none" stroke="#F2F2F2" stroke-width="1" />
         </pattern>
       )
     }
     {
       pattern === 'grid' && (
         <pattern id={`${uid}-p`} width="22" height="22" patternUnits="userSpaceOnUse">
-          <path d="M22 0H0V22" fill="none" stroke="#F6F2EA" stroke-width="1" />
+          <path d="M22 0H0V22" fill="none" stroke="#F2F2F2" stroke-width="1" />
         </pattern>
       )
     }
     {
       featured && (
         <pattern id={`${uid}-dot`} width="11" height="11" patternUnits="userSpaceOnUse">
-          <circle cx="2.5" cy="2.5" r="0.9" fill="#F6F2EA" />
+          <circle cx="2.5" cy="2.5" r="0.9" fill="#F2F2F2" />
         </pattern>
       )
     }
@@ -91,7 +91,7 @@ const uid = `mp${hash % 9973}`;
     cy="160"
     r="92"
     fill={inkFrom}
-    stroke={featured ? '#C9A227' : '#F6F2EA'}
+    stroke={featured ? '#C9A227' : '#F2F2F2'}
     stroke-opacity={featured ? '0.85' : '0.18'}
     stroke-width={featured ? '2' : '1.5'}
   ></circle>

@@ -1,31 +1,66 @@
 /* ============================================================
-   MUSTE — brand-tokens (källa: docs/design-brief-och-handoff.md
-   + MUSTE Handoff README, sektion Design Tokens)
+   TATUOIJAT.FI — brand-tokens
+   Omgjord 2026-08-10 efter Calles moodboard: mörk bas, vinröd
+   accent, Oswald som rubriktypsnitt.
+
+   TVÅ LÄGEN. Sajten är mörk som standard. Långa lästexter
+   (guider, /hinnat, FAQ-tunga sidor) får klassen `.reading` på
+   sitt ark, vilket deklarerar om de semantiska färgerna till
+   ljust. Allt komponent-CSS läser bara de semantiska namnen
+   (--paper/--surface/--text/--meta/--card-border), så samma
+   komponent fungerar i båda lägena utan en enda if-sats.
+
+   Calles beslut 10/8: mörkt där bilderna bär (start, stad, stil,
+   profiler), ljust där man läser 2 000 ord. 83 % av besökarna är
+   på mobil — vit-på-svart brödtext i dagsljus är tyngre att läsa,
+   och det är hela skälet till att lägena finns.
    ============================================================ */
 :root {
-  /* Färger */
-  --ink: #101014;            /* bläcksvart: hero, header, footer, mörka sektioner */
-  --paper: #f6f2ea;          /* benvit/papper: sidbakgrund, "arket" */
-  --surface: #ffffff;        /* vita kort, flytande sökkort */
-  --flash: #c7361b;          /* ENDAST CTA + aktiva val */
-  --flash-hover: #a92d16;
-  --gold: #c9a227;           /* ENDAST Featured-badge */
-  --text: #2b2b30;           /* brödtext/rubriker på ljust */
-  --text-light: #edeae2;     /* text på mörkt */
-  --meta: #8a8890;           /* sekundär text, labels, eyebrows */
-  --border-on-paper: #ddd8cc;
+  /* ---- Råa varumärkesfärger (moodboardens palett) ---- */
+  --ink: #0d0d0d; /* djupaste svart: sidbakgrund */
+  --ink-2: #1a1a1a; /* kort och ytor på mörkt */
+  --ink-3: #2b2b2b; /* höjda ytor, linjer, inputfält */
+  --bone: #f2f2f2; /* ljus yta / text på mörkt */
+  --flash: #8b1e3f; /* vinröd: ENDAST CTA + aktiva val */
+  --flash-hover: #a5254a; /* ljusare vid hover — på mörkt ska hover lysa upp */
+  --gold: #c9a227; /* ENDAST Featured-badge. Behålls: det är den
+                      enda färgen som skiljer betalande studios,
+                      och guld mot #0d0d0d bär bättre än på papper. */
 
-  --card-border: 1px solid rgba(16, 16, 20, 0.08);
-  --card-border-strong: 1px solid rgba(16, 16, 20, 0.1);
-  --chip-border: 1px solid rgba(16, 16, 20, 0.18);
-  --chip-border-card: 1px solid rgba(16, 16, 20, 0.16);
-  --chip-border-dark: 1px solid rgba(237, 234, 226, 0.3);
-  --btn-outline-border: 1.5px solid rgba(16, 16, 20, 0.25);
-  --hairline-dark: 1px solid rgba(237, 234, 226, 0.12);
+  /* ---- Semantiska färger: MÖRKT LÄGE (standard) ---- */
+  --paper: var(--ink); /* "arket" — sidans läsyta */
+  --surface: var(--ink-2); /* kort, sökkort, FAQ-rader */
+  --surface-2: var(--ink-3); /* inputfält, chips, höjda ytor */
+  --text: var(--bone); /* brödtext och rubriker */
+  --text-light: var(--bone); /* text på mörka block (samma i mörkt läge) */
+  --text-on-flash: #ffffff;
+  --meta: #9b9ba3; /* sekundärtext. Ljusare än det gamla #8a8890
+                      för att klara 4.5:1 mot #0d0d0d. */
+  --border-on-paper: #2b2b2b;
 
-  /* Typografi */
-  --font-display: 'Archivo Black', 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
+  --card-border: 1px solid rgba(242, 242, 242, 0.1);
+  --card-border-strong: 1px solid rgba(242, 242, 242, 0.16);
+  --chip-border: 1px solid rgba(242, 242, 242, 0.22);
+  --chip-border-card: 1px solid rgba(242, 242, 242, 0.18);
+  --chip-border-dark: 1px solid rgba(242, 242, 242, 0.3);
+  --btn-outline-border: 1.5px solid rgba(242, 242, 242, 0.3);
+  --hairline-dark: 1px solid rgba(242, 242, 242, 0.12);
+
+  /* Bildton: moodboardens foton är avmättade och kontrastrika */
+  --img-filter: saturate(0.85) contrast(1.04);
+
+  /* ---- Typografi ---- */
+  /* Oswald är kondenserat — finska sammansättningar som
+     "Neotraditional-tatuointi Helsinki" ryms på färre rader.
+     Archivo Black är kvar som varumärkesmarkör i logotyp/badges
+     (Calles beslut 10/8). */
+  --font-display: 'Oswald Variable', Oswald, 'Archivo Black', Impact, sans-serif;
+  --font-brand: 'Archivo Black', 'Arial Black', 'Franklin Gothic Heavy', sans-serif;
   --font-body: 'Inter Variable', Inter, 'Segoe UI', system-ui, sans-serif;
+  /* Oswald är tunnare i sina lägre vikter än Archivo Black var i
+     sin enda — rubriker behöver därför en explicit vikt. */
+  --weight-display: 600;
+  --weight-display-strong: 700;
 
   /* Radius */
   --r-chip: 999px;
@@ -35,8 +70,10 @@
   --r-float: 16px;
   --r-sheet: 24px;
 
-  /* Skugga — ENDAST flytande sök-/kontaktkort */
-  --shadow-float: 0 12px 32px rgba(16, 16, 20, 0.22);
+  /* Skugga — på mörk bakgrund bär skuggor dåligt, så djup görs
+     med ytnivå (ink → ink-2 → ink-3) i stället. Skuggan är kvar
+     för det flytande sökkortet där lyftet behövs. */
+  --shadow-float: 0 16px 40px rgba(0, 0, 0, 0.55);
 
   /* Layout */
   --page-pad: 20px;
@@ -46,6 +83,32 @@
   --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
   --t-fast: 180ms;
   --t-med: 300ms;
+}
+
+/* ============================================================
+   LJUST LÄGE — sätts som klass på det ark som bär lång brödtext.
+   Deklarerar bara om de semantiska namnen; de råa
+   varumärkesfärgerna (--flash, --gold) är desamma i båda lägena.
+   ============================================================ */
+.reading {
+  --paper: #f2f2f2;
+  --surface: #ffffff;
+  --surface-2: #e9e9e9;
+  --text: #1a1a1a;
+  --text-light: #f2f2f2; /* för ev. mörka block inuti ett ljust ark */
+  --meta: #5c5c66;
+  --border-on-paper: #dcdcdc;
+
+  --card-border: 1px solid rgba(13, 13, 13, 0.1);
+  --card-border-strong: 1px solid rgba(13, 13, 13, 0.14);
+  --chip-border: 1px solid rgba(13, 13, 13, 0.2);
+  --chip-border-card: 1px solid rgba(13, 13, 13, 0.16);
+  --btn-outline-border: 1.5px solid rgba(13, 13, 13, 0.25);
+
+  --shadow-float: 0 12px 32px rgba(13, 13, 13, 0.18);
+
+  color: var(--text);
+  background: var(--paper);
 }
 
 @media (min-width: 1024px) {

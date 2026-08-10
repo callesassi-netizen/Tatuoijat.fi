@@ -40,28 +40,46 @@ export const STRIPE_LINKS: Record<PaidTier, string> = {
  */
 export const PAYMENTS_LIVE = true;
 
-// ── MOMS (Calle momsregistrerad 13/7 2026, Stripe Tax AV) ─────────────
-// Stripe Tax är avstängt, så Payment Link debiterar EXAKT det belopp som
-// står här (199 / 499 €) — ingen moms läggs på i kassan. Därför måste
-// sajten säga vilket av två fall som gäller, annars gissar köparen:
-//   VAT_INCLUDED = true  → 199 € är totalpris, momsen ingår (Calle
-//                          redovisar 25,5 % ur beloppet, netto 158,57 €).
-//   VAT_INCLUDED = false → priset är exkl. moms, men då MÅSTE Stripe-
-//                          priset höjas i motsvarande grad, annars lovar
-//                          sidan ett påslag kassan inte gör.
-// ÄNDRA HÄR — texten på /hinnasto (prisnot + FAQ) byggs ur dessa två.
-export const VAT_INCLUDED: boolean = true;
+// ── MOMS + PRENUMERATION (Calles besked 10/8 2026) ────────────────────
+// FAKTA SOM GÄLLER:
+//   • Årsprenumeration som förnyas AUTOMATISKT efter ett år.
+//   • 199 / 499 € är det belopp Stripe drar. Stripe Tax är AV.
+//   • Calle är svensk momsregistrerad (SE930727641101) och fakturerar
+//     INGEN moms till finska företag → omvänd betalningsskyldighet
+//     (käännetty verovelvollisuus), ALV 0 %.
+//
+// DÄRFÖR ÄR "priset innehåller moms 25,5 %" FEL och borttaget. Om ingen
+// moms faktureras innehåller priset ingen moms — det är ett veroton
+// belopp, inte ett bruttopris.
+//
+// ⚠️ FÖRUTSÄTTNING som måste vara uppfylld för att detta ska stämma:
+// omvänd betalningsskyldighet kräver att köparen är ett momsregistrerat
+// företag och att köparens ALV-numero (VAT-nummer) samlas in och står på
+// fakturan. Görs det inte kan Calle bli skyldig att redovisa moms ändå
+// (privatperson/icke-momsregistrerad → tjänsten beskattas i köparens land,
+// dvs. finsk moms via OSS). Slå på "Collect business customer tax IDs" på
+// båda Stripe Payment Links innan detta går live, och stäm av upplägget
+// med bokföraren. Se docs/betalflode-analys-2026-08-09.md §7.2.
+export type VatMode = 'reverse-charge' | 'included' | 'excluded';
+export const VAT_MODE: VatMode = 'reverse-charge';
 export const VAT_RATE_LABEL = '25,5 %';
 
-const vatNote: Record<Locale, string> = VAT_INCLUDED
-  ? {
-      fi: `Hinnat sisältävät arvonlisäveron ${VAT_RATE_LABEL}.`,
-      sv: `Priserna innehåller moms ${VAT_RATE_LABEL}.`,
-    }
-  : {
-      fi: `Hintoihin lisätään arvonlisävero ${VAT_RATE_LABEL}.`,
-      sv: `Moms ${VAT_RATE_LABEL} tillkommer på priserna.`,
-    };
+const VAT_NOTES: Record<VatMode, Record<Locale, string>> = {
+  'reverse-charge': {
+    fi: 'Hinnat ovat verottomia (ALV 0 %). Myynti yrityksille toiseen EU-maahan on käännetyn verovelvollisuuden alaista: ostaja tilittää arvonlisäveron omassa maassaan. Tarvitsemme ALV-tunnisteesi tilauksen yhteydessä.',
+    sv: 'Priserna är utan moms (0 %). Försäljning till företag i ett annat EU-land sker med omvänd betalningsskyldighet: köparen redovisar momsen i sitt eget land. Vi behöver ditt VAT-nummer vid beställningen.',
+  },
+  included: {
+    fi: `Hinnat sisältävät arvonlisäveron ${VAT_RATE_LABEL}.`,
+    sv: `Priserna innehåller moms ${VAT_RATE_LABEL}.`,
+  },
+  excluded: {
+    fi: `Hintoihin lisätään arvonlisävero ${VAT_RATE_LABEL}.`,
+    sv: `Moms ${VAT_RATE_LABEL} tillkommer på priserna.`,
+  },
+};
+
+const vatNote: Record<Locale, string> = VAT_NOTES[VAT_MODE];
 
 /** Formaterat pris, t.ex. "0 €" / "199 €". Samma format fi/sv. */
 export function priceLabel(tier: Tier): string {
@@ -132,7 +150,7 @@ export interface PricingContent {
   campaignEyebrow: string; // liten etikett ovanför kampanjbadgen ("Aloitustarjous")
   /** Klargör att kortet inte debiteras under kokeilujakso (badgens baksida). */
   trialNote: string;
-  /** Momsnot under priskorten — byggs ur VAT_INCLUDED/VAT_RATE_LABEL. */
+  /** Momsnot under priskorten — byggs ur VAT_MODE. */
   priceNote: string;
   /** "Näin se etenee": 1 valitse → 2 maksa → 3 täytä tiedot → 4 julkaisu. */
   steps: { title: string; intro: string; items: FlowStep[] };
@@ -335,7 +353,7 @@ export const pricing: Record<Locale, PricingContent> = {
       },
       {
         q: 'Miten maksu toimii?',
-        a: 'Jokaisella maksullisella tasolla on oma turvallinen Stripe-maksulinkki, ja hinta on vuosimaksu. Näet tarkat ehdot — kokeilujakson pituuden sekä sen, milloin ja miten veloitus tapahtuu — Stripen maksusivulla ennen kuin vahvistat tilauksen. Kuitti tulee sähköpostiisi.',
+        a: 'Jokaisella maksullisella tasolla on oma turvallinen Stripe-maksulinkki, ja hinta on vuosimaksu, joka uusiutuu automaattisesti. Näet tarkat ehdot — kokeilujakson pituuden sekä sen, milloin ja miten veloitus tapahtuu — Stripen maksusivulla ennen kuin vahvistat tilauksen. Kuitti tulee sähköpostiisi.',
       },
       {
         q: 'Mitä tapahtuu maksun jälkeen?',
@@ -344,6 +362,10 @@ export const pricing: Record<Locale, PricingContent> = {
       {
         q: 'Sisältyykö hintaan arvonlisävero?',
         a: vatNote.fi,
+      },
+      {
+        q: 'Uusiutuuko tilaus automaattisesti?',
+        a: 'Kyllä. Tilaus on vuositilaus, joka uusiutuu automaattisesti vuoden välein samaan hintaan. Voit peruuttaa milloin tahansa ennen seuraavaa laskutuspäivää — profiilisi pysyy maksullisella tasolla kauden loppuun asti, minkä jälkeen se palaa ilmaiselle perustasolle. Peruutus onnistuu vastaamalla tilausvahvistukseen.',
       },
       {
         q: 'Voinko vaihtaa tasoa myöhemmin?',
@@ -544,7 +566,7 @@ export const pricing: Record<Locale, PricingContent> = {
       },
       {
         q: 'Hur fungerar betalningen?',
-        a: 'Varje betald nivå har en egen säker Stripe-betalningslänk och priset är en årsavgift. De exakta villkoren — provperiodens längd samt när och hur debiteringen sker — ser du på Stripes betalsida innan du bekräftar. Kvittot kommer till din e-post.',
+        a: 'Varje betald nivå har en egen säker Stripe-betalningslänk och priset är en årsavgift som förnyas automatiskt. De exakta villkoren — provperiodens längd samt när och hur debiteringen sker — ser du på Stripes betalsida innan du bekräftar. Kvittot kommer till din e-post.',
       },
       {
         q: 'Vad händer efter betalningen?',
@@ -553,6 +575,10 @@ export const pricing: Record<Locale, PricingContent> = {
       {
         q: 'Ingår moms i priset?',
         a: vatNote.sv,
+      },
+      {
+        q: 'Förnyas prenumerationen automatiskt?',
+        a: 'Ja. Det är en årsprenumeration som förnyas automatiskt varje år till samma pris. Du kan säga upp när som helst före nästa debiteringsdag — profilen ligger kvar på den betalda nivån perioden ut och går sedan tillbaka till gratisnivån. Säg upp genom att svara på orderbekräftelsen.',
       },
       {
         q: 'Kan jag byta nivå senare?',

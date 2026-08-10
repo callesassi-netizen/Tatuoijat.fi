@@ -9,6 +9,13 @@
   font-display: swap;
 }
 @font-face {
+  font-family: 'Oswald Variable';
+  src: url('/fonts/oswald-latin-wght-normal.woff2') format('woff2-variations');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
   font-family: 'Inter Variable';
   src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2-variations');
   font-weight: 100 900;
@@ -52,8 +59,14 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: var(--weight-display);
+  /* Oswald ar kondenserat och versal-tungt; en gnutta letter-spacing
+     hindrar att stora rubriker klumpar ihop sig. */
+  letter-spacing: 0.005em;
   margin: 0;
+}
+h1 {
+  font-weight: var(--weight-display-strong);
 }
 
 button {

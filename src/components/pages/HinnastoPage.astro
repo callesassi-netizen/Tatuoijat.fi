@@ -79,7 +79,7 @@ const cellClass = (v: boolean | string): string =>
     </div>
   </section>
 
-  <div class="sheet grain">
+  <div class="sheet grain reading">
     <div class="container sheet-inner">
       <!-- Tre priskort -->
       <div class="plans">
@@ -459,7 +459,8 @@ const cellClass = (v: boolean | string): string =>
 
   /* ── Benefit-/teaser-sektion ── */
   /* Momsnot direkt under priskorten — B2B-köparen ska aldrig behöva gissa
-     om 199 € är med eller utan alv (VAT_INCLUDED i data/pricing.ts). */
+     vilket momsläge som gäller (VAT_MODE i data/pricing.ts — nu
+     reverse-charge: ingen moms faktureras till finska företag). */
   .price-note {
     max-width: 1040px;
     margin: 14px auto 0;

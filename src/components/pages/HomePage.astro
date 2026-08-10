@@ -87,7 +87,7 @@ function studioStyleNames(studio: (typeof studios)[number]): string[] {
   });
 }
 
-// Bläck-gradienter i olika valörer (#1c1c22 → #4d3230-spannet, effekt-demon).
+// Bläck-gradienter i olika valörer (#1e1e1e → #3a2a2e-spannet, lyft för mörk bas 10/8 2026).
 // Byts mot egna/licensierade miljöbilder senare (Bildpolicy §4).
 const ink = (angle: number, from: string, to: string, mid?: string) =>
   mid
@@ -96,12 +96,12 @@ const ink = (angle: number, from: string, to: string, mid?: string) =>
 
 // Fallback-gradienter för stilar utan foto i styleImages
 const styleGradients = [
-  ink(160, '#1c1c22', '#2f2732'),
-  ink(200, '#232029', '#3d2f34'),
-  ink(150, '#17171c', '#2b2229'),
-  ink(215, '#241f26', '#4d3230'),
-  ink(170, '#1e1c26', '#43302f'),
-  ink(190, '#211f2b', '#35282b'),
+  ink(160, '#1e1e1e', '#2d2430'),
+  ink(200, '#222222', '#33272c'),
+  ink(150, '#1a1a1a', '#2a2126'),
+  ink(215, '#242424', '#3a2a2e'),
+  ink(170, '#202020', '#35272b'),
+  ink(190, '#1e1e1e', '#2c2328'),
 ];
 
 // Domän = brand: "Tatuoijat.fi — Suomen tatuoijat ja tatuointiliikkeet"
@@ -478,7 +478,7 @@ const webSite = webSiteLd(
         rgba(16, 16, 20, 0.25) 0%,
         rgba(16, 16, 20, 0.1) 40%,
         rgba(16, 16, 20, 0.72) 82%,
-        #101014 100%
+        #0d0d0d 100%
       ),
       linear-gradient(90deg, rgba(16, 16, 20, 0.7) 0%, rgba(16, 16, 20, 0.15) 55%, rgba(16, 16, 20, 0) 100%);
   }
