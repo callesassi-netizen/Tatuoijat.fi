@@ -23,6 +23,14 @@ export interface HinnatContent {
   factors: { title: string; text: string }[];
   faqTitle: string;
   faq: { q: string; a: string }[];
+  /**
+   * Brygga till oppaat-grenen. Priset på sidan gäller stunden i stolen; det
+   * som avgör om pengarna var värda något är vad som händer de tre veckorna
+   * efter. Det är den enda ärliga anledningen att länka härifrån — en naken
+   * lista "läs också våra guider" hade varit länkstoppning.
+   */
+  guidesTitle: string;
+  guidesIntro: string;
   ctaTitle: string;
   ctaText: string;
   ctaLabel: string;
@@ -154,6 +162,9 @@ export const hinnat: Record<Locale, HinnatContent> = {
         a: 'Tuntihinta, työnopeus ja tekniikka vaihtelevat. Kokeneempi artisti voi olla nopeampi mutta kalliimpi tunnilta — ja tyylierikoistuminen vaikuttaa siihen, kuinka monta istuntoa työ vaatii.',
       },
     ],
+    guidesTitle: 'Mitä hinta ei sisällä',
+    guidesIntro:
+      'Taulukon hinnat koskevat itse työtä. Lopputulos ratkeaa kuitenkin vasta parantumisen aikana, ja siihen kuluu vielä 15–30 € hoitotuotteita. Se on pieni summa suhteessa siihen, mitä huono jälkihoito maksaa: laikukas väri ja korjausistunto. Nämä oppaat käyvät sen läpi.',
     ctaTitle: 'Valmis etsimään tekijää?',
     ctaText:
       'Selaa portfolioita kaupungin tai tyylin mukaan ja pyydä hinta-arvio suoraan artistilta.',
@@ -282,6 +293,9 @@ export const hinnat: Record<Locale, HinnatContent> = {
         a: 'Timpris, arbetstempo och teknik varierar. En mer erfaren artist kan vara snabbare men dyrare per timme — och stilspecialisering påverkar hur många sittningar arbetet kräver.',
       },
     ],
+    guidesTitle: 'Vad priset inte täcker',
+    guidesIntro:
+      'Priserna i tabellen gäller själva arbetet. Slutresultatet avgörs ändå först under läkningen, och där tillkommer 15–30 € i vårdprodukter. Det är en liten summa jämfört med vad dålig eftervård kostar: fläckig färg och en retuschsession. De här guiderna går igenom det.',
     ctaTitle: 'Redo att hitta din artist?',
     ctaText: 'Bläddra bland portfolios per stad eller stil och be om en prisuppskattning direkt av artisten.',
     ctaLabel: 'Visa tatuerare',

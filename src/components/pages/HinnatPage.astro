@@ -10,7 +10,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { hinnat } from '../../data/hinnat';
 import { jsonLdString, breadcrumbLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
-import { citiesIndexPath } from '../../lib/routes';
+import { citiesIndexPath, guidePath, guidesIndexPath } from '../../lib/routes';
+import { publishedGuides } from '../../lib/guides.mjs';
+import { guideCards } from '../../data/guides';
 import heroImage from '../../assets/bilder/jalkihoito.png';
 
 interface Props {
@@ -22,6 +24,16 @@ const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const c = hinnat[locale];
+
+// Guidelänkarna läses ur registret, inte hårdkodade: en ny publicerad guide
+// dyker upp här av sig själv, och en avpublicerad försvinner. Jälkihoito och
+// hoitotuotteet först — de är de två som faktiskt hör ihop med prisfrågan.
+const GUIDE_ORDER = ['tatuoinnin-hoitotuotteet', 'tatuoinnin-jalkihoito', 'tatuoinnin-paraneminen'];
+const relatedGuides = publishedGuides
+  .filter((guide) => GUIDE_ORDER.includes(guide.key))
+  .sort((a, b) => GUIDE_ORDER.indexOf(a.key) - GUIDE_ORDER.indexOf(b.key))
+  .map((guide) => ({ guide, card: guideCards[guide.key]?.[locale] }))
+  .filter((entry) => Boolean(entry.card));
 
 const path = '/hinnat/';
 const breadcrumb = breadcrumbLd([
@@ -153,6 +165,29 @@ const heroBg = await heroBgFor('prices');
           </div>
         </section>
 
+        <!-- Brygga till oppaat: priset gäller stolen, resultatet avgörs efteråt -->
+        {
+          relatedGuides.length > 0 && (
+            <section aria-labelledby="guides-title" class="block">
+              <h2 class="block-title" id="guides-title">{c.guidesTitle}</h2>
+              <p class="block-lead">{c.guidesIntro}</p>
+              <ul class="guide-links">
+                {relatedGuides.map(({ guide, card }) => (
+                  <li>
+                    <a class="guide-link" href={p(guidePath(guide, locale))}>
+                      <span class="guide-link-title">{card!.title}</span>
+                      <span class="guide-link-text">{card!.summary}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p class="guide-all">
+                <a class="ink-link" href={p(guidesIndexPath(locale))}>{t('guides.h1')} →</a>
+              </p>
+            </section>
+          )
+        }
+
         <!-- CTA -->
         <section class="cta-block">
           <h2 class="cta-title">{c.ctaTitle}</h2>
@@ -165,6 +200,68 @@ const heroBg = await heroBgFor('prices');
 </BaseLayout>
 
 <style>
+  /* Guidelänkar — kort med rubrik + sammanfattning, inte en naken lista.
+     Sammanfattningen är det som gör att någon faktiskt klickar. */
+  .guide-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .guide-link {
+    display: block;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    padding: 15px 16px;
+    text-decoration: none;
+    transition:
+      border-color var(--t-fast) var(--ease-out),
+      transform var(--t-fast) var(--ease-out);
+  }
+  .guide-link:hover {
+    border-color: var(--flash);
+    transform: translateY(-2px);
+  }
+  .guide-link-title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 17px;
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .guide-link-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--meta);
+  }
+  .guide-all {
+    margin: 14px 0 0;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .guide-all a {
+    color: var(--text);
+  }
+  @media (min-width: 1024px) {
+    .guide-links {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .guide-link {
+      padding: 18px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .guide-link:hover {
+      transform: none;
+    }
+  }
+
   /* Hintaesimerkit kehonosittain */
   .block-lead {
     font-size: 15px;

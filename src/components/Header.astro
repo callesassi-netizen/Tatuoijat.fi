@@ -84,9 +84,34 @@ const studioActive = isActive('/hinnasto') || isActive('/liity');
 </header>
 
 <style>
+  /* STICKY (Calle 10/8). z-index måste ligga över startsidans hero, som själv
+     är sticky med z-index 0, och över arket som ligger på z-index 1. */
   .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     background: var(--ink);
     color: var(--text-light);
+    transition:
+      transform var(--t-med) var(--ease-out),
+      box-shadow var(--t-med) var(--ease-out),
+      border-color var(--t-med) var(--ease-out);
+    border-bottom: 1px solid transparent;
+  }
+
+  /* Bara när sidan faktiskt scrollats. Överst på sidan ska headern se ut som
+     en del av heron, inte som ett pålagt fält. */
+  .site-header.is-stuck {
+    border-bottom-color: rgba(242, 242, 242, 0.12);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+  }
+
+  /* Auto-dölj vid scroll nedåt — MOBIL ENDAST. 83 % av besökarna är på mobil,
+     där en permanent bar äter ~15 % av skärmhöjden i en 2 000 ords guide.
+     Kommer tillbaka direkt vid minsta scroll uppåt. På desktop finns höjden,
+     så där står headern kvar hela tiden. */
+  .site-header.is-hidden {
+    transform: translateY(-100%);
   }
   .header-inner {
     display: flex;
@@ -165,6 +190,9 @@ const studioActive = isActive('/hinnasto') || isActive('/liity');
   }
 
   @media (min-width: 1024px) {
+    .site-header.is-hidden {
+      transform: none;
+    }
     .header-inner {
       padding-top: 18px;
       padding-bottom: 18px;
@@ -216,4 +244,78 @@ const studioActive = isActive('/hinnasto') || isActive('/liity');
       color: var(--ink);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header {
+      transition: none;
+    }
+    /* En header som hoppar bort utan övergång läser som ett fel, inte som en
+       gest. Med reducerad rörelse står den därför kvar. */
+    .site-header.is-hidden {
+      transform: none;
+    }
+  }
 </style>
+
+<script>
+  // Sticky-headerns tre uppgifter: mäta sin egen höjd åt scroll-padding-top,
+  // markera att sidan är scrollad, och gömma sig vid scroll nedåt på mobil.
+  // Progressive enhancement: utan JS är headern fortfarande sticky, bara utan
+  // auto-döljning, och scroll-padding faller tillbaka på 74 px.
+  const header = document.querySelector('.site-header');
+  const menu = document.querySelector('.mobile-menu');
+  if (header instanceof HTMLElement) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const measure = () => {
+      document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`);
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    // Webbfonterna byter höjd på logotypen när de laddat — mät om då.
+    if (document.fonts?.ready) document.fonts.ready.then(measure);
+
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const y = window.scrollY;
+      const delta = y - lastY;
+
+      header.classList.toggle('is-stuck', y > 8);
+
+      // Gömning kräver tre saker: att vi är förbi headerns egen höjd (annars
+      // gömmer den sig redan vid första hjulklicket), att rörelsen är
+      // avsiktlig (> 6 px, filtrerar bort skakningar) och att menyn inte står
+      // öppen — en öppen panel som glider ut ur bild är en bugg, inte en gest.
+      const menuOpen = menu instanceof HTMLDetailsElement && menu.open;
+      if (!reduceMotion && !menuOpen && y > header.offsetHeight * 1.5) {
+        if (delta > 6) header.classList.add('is-hidden');
+        else if (delta < -6) header.classList.remove('is-hidden');
+      } else if (y <= header.offsetHeight * 1.5 || menuOpen) {
+        header.classList.remove('is-hidden');
+      }
+
+      lastY = y;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(update);
+        }
+      },
+      { passive: true },
+    );
+
+    // Ankarklick i innehållsförteckningen: headern ska aldrig ligga över
+    // rubriken man just hoppade till.
+    document.addEventListener('click', (event) => {
+      const link = (event.target as HTMLElement | null)?.closest?.('a[href^="#"]');
+      if (link) header.classList.remove('is-hidden');
+    });
+  }
+</script>

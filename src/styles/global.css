@@ -33,6 +33,12 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Headern är sticky sedan 2026-08-10. Utan detta landar varje ankarlänk
+     BAKOM headern — mest kännbart i guidernas innehållsförteckning, där man
+     klickar på en rubrik och hamnar mitt i brödtexten under den. Värdet sätts
+     av skriptet i Header.astro från headerns verkliga höjd; siffran här är
+     fallback för det fall JS inte kör. */
+  scroll-padding-top: var(--header-h, 74px);
 }
 
 body {
