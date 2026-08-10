@@ -261,6 +261,7 @@ export const ui = {
     'guides.intro':
       'Käytännön oppaat tatuoinnin ympärille: mitä iholla tapahtuu, mitä tehdään ja mitä vältetään. Kirjoitettu niin, että ohje toimii myös silloin, kun studion lappu on hukassa.',
     'guides.publishedTitle': 'Julkaistut oppaat',
+    'guides.upcomingFlag': 'Tulossa',
     'guides.upcomingTitle': 'Tulossa',
     'guides.upcomingNote': 'Nämä oppaat kirjoitetaan seuraavaksi. Sivua ei vielä ole.',
     'guides.read': 'Lue opas',
@@ -493,6 +494,7 @@ export const ui = {
     'guides.intro':
       'Praktiska guider kring tatueringar: vad som händer i huden, vad du gör och vad du undviker. Skrivna så att rådet fungerar även när studions lapp har kommit bort.',
     'guides.publishedTitle': 'Publicerade guider',
+    'guides.upcomingFlag': 'Kommer',
     'guides.upcomingTitle': 'På väg',
     'guides.upcomingNote': 'De här guiderna skrivs härnäst. Någon sida finns ännu inte.',
     'guides.read': 'Läs guiden',

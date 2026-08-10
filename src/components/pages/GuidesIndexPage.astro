@@ -12,6 +12,8 @@
  * (den beskriver vart ytan är på väg) och ger noll tomma URL:er.
  */
 import { heroBgFor } from '../../lib/heroImages';
+import { Image } from 'astro:assets';
+import { guideImage } from '../../lib/guideImages';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { guideCards, plannedGuideTitles } from '../../data/guides';
@@ -85,9 +87,19 @@ const heroBg = await heroBgFor('guides');
             published.map((entry) => (
               <li class="guide-card">
                 <a class="guide-card-link" href={p(guidePath(entry.route, locale))}>
-                  <h3 class="guide-card-title">{entry.card.title}</h3>
-                  <p class="guide-card-text">{entry.card.summary}</p>
-                  <span class="guide-card-cta">{t('guides.read')} →</span>
+                  <Image
+                    class="guide-card-img"
+                    src={guideImage(entry.route.key)}
+                    alt=""
+                    widths={[400, 800]}
+                    sizes="(min-width: 700px) 45vw, 92vw"
+                    loading="lazy"
+                  />
+                  <span class="guide-card-body">
+                    <h3 class="guide-card-title">{entry.card.title}</h3>
+                    <p class="guide-card-text">{entry.card.summary}</p>
+                    <span class="guide-card-cta">{t('guides.read')} →</span>
+                  </span>
                 </a>
               </li>
             ))
@@ -104,7 +116,10 @@ const heroBg = await heroBgFor('guides');
             <p class="upcoming-note">{t('guides.upcomingNote')}</p>
             <ul class="upcoming">
               {upcoming.map((title) => (
-                <li>{title}</li>
+                <li class="upcoming-card">
+                  <span class="upcoming-title">{title}</span>
+                  <span class="upcoming-flag">{t('guides.upcomingFlag')}</span>
+                </li>
               ))}
             </ul>
           </section>
@@ -159,11 +174,32 @@ const heroBg = await heroBgFor('guides');
     background: var(--surface);
     border: var(--card-border);
     border-radius: var(--r-card-lg);
+    overflow: hidden;
+    transition:
+      transform var(--t-med) var(--ease-out),
+      border-color var(--t-fast) var(--ease-out);
+  }
+  .guide-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--flash);
+  }
+  .guide-card :global(.guide-card-img) {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    filter: var(--img-filter);
+  }
+  .guide-card-body {
+    display: block;
   }
   .guide-card-link {
     display: block;
-    padding: 20px;
+    padding: 0 0 4px;
     text-decoration: none;
+  }
+  .guide-card-body {
+    padding: 18px 20px 20px;
   }
   .guide-card-title {
     font-family: var(--font-display);
@@ -194,11 +230,47 @@ const heroBg = await heroBgFor('guides');
     color: var(--meta);
     margin: 0 0 12px;
   }
+  /* "Tulossa" var en naken punktlista i ett stort tomt ark. Dampade kort
+     ger samma information men lasas som en plan i stallet for en rest. */
   .upcoming {
+    list-style: none;
     margin: 0;
-    padding-left: 20px;
+    padding: 0;
     display: grid;
-    gap: 6px;
+    gap: 8px;
+  }
+  .upcoming-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 13px 16px;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-card);
+    opacity: 0.72;
+  }
+  .upcoming-title {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 16px;
+    color: var(--text);
+  }
+  .upcoming-flag {
+    flex: none;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--meta);
+    border: var(--chip-border-card);
+    border-radius: var(--r-chip);
+    padding: 4px 9px;
+  }
+  @media (min-width: 700px) {
+    .upcoming {
+      grid-template-columns: 1fr 1fr;
+    }
   }
   .upcoming li {
     font-size: 13.5px;

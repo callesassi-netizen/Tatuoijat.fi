@@ -246,7 +246,7 @@ const webSite = webSiteLd(
            om inga verifierade finns. -->
       {
         popular.length > 0 && (
-          <section class="section" aria-labelledby="popular-title">
+          <section class="section band" aria-labelledby="popular-title">
             <div class="section-head">
               <div>
                 <p class="eyebrow">{t('home.popular.eyebrow')}</p>
@@ -272,7 +272,7 @@ const webSite = webSiteLd(
       }
 
       <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
-      <section class="section section--styles" aria-labelledby="styles-title">
+      <section class="section section--styles band" aria-labelledby="styles-title">
         <div class="section-head">
           <div>
             <p class="eyebrow">{t('home.styles.eyebrow')}</p>
@@ -446,6 +446,25 @@ const webSite = webSiteLd(
 </script>
 
 <style>
+  /* SEKTIONSRYTM (Calle 10/8: "startsidan ar lite for svart").
+     Hela sidan lag pa exakt #0d0d0d, sa sektionerna flot ihop till en enda
+     svart massa utan borjan eller slut. `.band` lyfter varannan yta en niva
+     till --surface och drar ut den till fullbredd med negativa marginaler,
+     sa den lasas som ett eget band i stallet for ett kort. Djup gors med
+     ytniva, inte med skuggor — skuggor bar inte pa svart. */
+  .band {
+    background: var(--surface);
+    margin-inline: calc(-1 * var(--page-pad));
+    padding-inline: var(--page-pad);
+    padding-block: 32px;
+    border-block: var(--hairline-dark);
+  }
+  @media (min-width: 1024px) {
+    .band {
+      padding-block: 48px;
+    }
+  }
+
   /* ================= Hero: fullbredds-bild ================= */
   .hero {
     position: sticky;
@@ -1164,8 +1183,10 @@ const webSite = webSiteLd(
   .how {
     position: relative;
     z-index: 1;
-    background: var(--ink);
+    /* Lyft en niva over sidbakgrunden — se .band ovan. */
+    background: var(--surface);
     color: var(--text-light);
+    border-block: var(--hairline-dark);
   }
   .how-inner {
     padding: 34px var(--page-pad) 40px;
