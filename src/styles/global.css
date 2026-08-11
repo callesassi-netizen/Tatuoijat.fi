@@ -336,6 +336,45 @@ button.chip:active {
   margin-inline: auto;
 }
 
+/* ============================================================
+   LÅNGLÄSNINGSLAYOUT (Calle 11/8 2026: "allt är centrerat till
+   vänster och ser mastigt ut")
+
+   Brödtexten låg i en 720px-kolumn fastnitad i vänsterkanten, så på
+   en 1440px-skärm var halva sidan tom grå yta och texten såg ut som
+   en mobilsida utsträckt på en desktopduk. Två åtgärder: kolumnen
+   centreras, och från 1200px får den sällskap av en sidokolumn så
+   att bredden används till något.
+
+   HÄR OCH INTE I SIDKOMPONENTEN därför att både /oppaat/ och
+   /hinnat/ använder den. Andra gången samma 40 rader skulle skrivas
+   av är också den sista gången de garanterat är identiska.
+   ============================================================ */
+.prose-grid {
+  display: block;
+}
+.prose-col {
+  max-width: 720px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1200px) {
+  .prose-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 720px) 290px;
+    gap: 56px;
+    justify-content: center;
+    /* INTE align-items: start. Med start blir sidokolumnen bara så hög som
+       sitt innehåll, och då slutar sticky-barnet klistra så fort man
+       scrollat förbi den höjden — kolumnen står tom resten av sidan.
+       Default (stretch) gör kolumnen lika hög som raden, vilket är precis
+       vad position: sticky behöver för att följa med hela vägen. */
+  }
+  .prose-col {
+    margin-inline: 0;
+  }
+}
+
 /* Skärmläsartext */
 .visually-hidden {
   position: absolute;

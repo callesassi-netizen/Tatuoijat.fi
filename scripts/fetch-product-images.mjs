@@ -33,9 +33,10 @@
  * redan hanterar. Kör därför gärna lokalt och committa resultatet, så är
  * bygget dessutom oberoende av butikernas upptid.
  */
-import { mkdir, writeFile, readdir } from 'node:fs/promises';
+import { mkdir, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { writeOptimized, sizeNote, hasSharp } from './lib/optimize-image.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = path.join(ROOT, 'src/assets/tuotteet');
@@ -150,6 +151,14 @@ const EXT_BY_TYPE = {
   'image/avif': '.avif',
 };
 
+/**
+ * Bredaste yta ett produktkort får. Korten ligger i ett rutnät inne i
+ * textkolumnen och blir aldrig bredare än ~320 px — 640 räcker för dubbel
+ * pixeltäthet. Butikernas bilder är ofta 1200–2000 px kvadratiska, så det här
+ * är den överlägset största besparingen i hela bildkedjan.
+ */
+const PRODUCT_MAX_WIDTH = 640;
+
 async function download(id, imageUrl) {
   const res = await fetchWithTimeout(imageUrl);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -157,9 +166,16 @@ async function download(id, imageUrl) {
   const ext = EXT_BY_TYPE[type] ?? path.extname(new URL(imageUrl).pathname) ?? '.jpg';
   const buffer = Buffer.from(await res.arrayBuffer());
   if (buffer.byteLength < 1024) throw new Error('för liten fil, troligen platshållare');
-  const file = path.join(OUT_DIR, `${id}${ext}`);
-  await writeFile(file, buffer);
-  return { file: path.basename(file), bytes: buffer.byteLength };
+  // fallbackExt: utan sharp behåller vi butikens eget format i stället för att
+  // döpa om en jpeg till .png och lura Astros bildpipeline.
+  return writeOptimized({
+    dir: OUT_DIR,
+    base: id,
+    buffer,
+    maxWidth: PRODUCT_MAX_WIDTH,
+    quality: 82,
+    fallbackExt: ext,
+  });
 }
 
 async function main() {
@@ -182,6 +198,10 @@ async function main() {
     return;
   }
 
+  if (!(await hasSharp())) {
+    console.warn('[tuotekuvat] sharp kunde inte laddas — bilderna sparas okomprimerade.');
+  }
+
   let fetched = 0;
   let skipped = 0;
   let failed = 0;
@@ -193,8 +213,8 @@ async function main() {
     }
     try {
       const imageUrl = product.imageUrl ?? (await findImageUrl(product.productPage));
-      const { file, bytes } = await download(product.id, imageUrl);
-      console.log(`[tuotekuvat] ✓ ${file} (${Math.round(bytes / 1024)} kB)`);
+      const result = await download(product.id, imageUrl);
+      console.log(`[tuotekuvat] ✓ ${result.file} (${sizeNote(result)})`);
       fetched += 1;
     } catch (error) {
       // Medvetet bara en varning. Se filhuvudet: ett bygge ska inte falla på

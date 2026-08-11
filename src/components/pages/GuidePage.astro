@@ -20,9 +20,11 @@ import { heroBgFor } from '../../lib/heroImages';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AffiliateSection from '../AffiliateSection.astro';
+import ProseAside from '../ProseAside.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getGuideContent, plannedGuideTitles } from '../../data/guides';
 import { guideImage } from '../../lib/guideImages';
+import { sectionImageAfter } from '../../lib/guideSectionImages';
 import {
   getCitiesSorted,
   getStylesSorted,
@@ -118,6 +120,12 @@ const heroBg = await heroBgFor('guides');
 // båda. Renderas bara när det faktiskt FINNS en klickbar länk att märka.
 const showTopDisclosure = hasLinkableProducts();
 const disclosure = AFFILIATE_DISCLOSURE[locale];
+
+// Sidokolumnens innehållsförteckning — samma poster som den i brödtexten.
+const asideItems = [
+  ...c.sections.map((section) => ({ href: `#${section.id}`, label: section.title })),
+  { href: '#faq', label: c.faqTitle },
+];
 ---
 
 <BaseLayout
@@ -144,7 +152,7 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
 
   <div class="sheet grain reading">
     <div class="container sheet-inner">
-      <div class="guide-grid">
+      <div class="prose-grid">
       <div class="prose-col">
         <nav class="crumbs" aria-label="Breadcrumb">
           <a href={p('/')}>{t('breadcrumb.home')}</a>
@@ -268,6 +276,27 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
                   )}
                 </div>
               )}
+
+              {(() => {
+                // Bilden ligger INNE i sektionen, sist. Då hör den till det man
+                // just läst i stället för att bli ett stumt avbrott mellan två
+                // rubriker — och den ärver sektionens aria-labelledby.
+                const image = sectionImageAfter(guideKey, section.id, locale);
+                return (
+                  image && (
+                    <figure class="section-figure">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        widths={[720, 1440]}
+                        sizes="(min-width: 1200px) 720px, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
+                  )
+                );
+              })()}
             </section>
           ))
         }
@@ -365,28 +394,16 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
              blir sticky, och produkterna får en genväg redan i första skärmen
              i stället för efter 1 400 ord. Under 1200px döljs hela kolumnen och
              den vanliga innehållsförteckningen i brödtexten tar över. -->
-        <aside class="guide-aside" aria-label={t('guide.contentsTitle')}>
-          <div class="aside-sticky">
-            <nav class="aside-toc">
-              <p class="aside-title">{t('guide.contentsTitle')}</p>
-              <ol>
-                {
-                  c.sections.map((section) => (
-                    <li>
-                      <a href={`#${section.id}`}>{section.title}</a>
-                    </li>
-                  ))
-                }
-                <li><a href="#faq">{c.faqTitle}</a></li>
-              </ol>
-            </nav>
-            <a class="aside-products" href="#products">
-              <span class="aside-products-title">{t('guide.asideProducts')}</span>
-              <span class="aside-products-text">{t('guide.productsTeaser.text')}</span>
-              <span class="aside-products-cta">{t('guide.productsTeaser.cta')} →</span>
-            </a>
-          </div>
-        </aside>
+        <ProseAside
+          title={t('guide.contentsTitle')}
+          items={asideItems}
+          card={{
+            href: '#products',
+            title: t('guide.asideProducts'),
+            text: t('guide.productsTeaser.text'),
+            cta: t('guide.productsTeaser.cta'),
+          }}
+        />
       </div>
     </div>
   </div>
@@ -430,130 +447,15 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
   .sheet-inner {
     padding: 28px var(--page-pad) 48px;
   }
-  /* LAYOUT (Calle 11/8: "allt är centrerat till vänster och ser mastigt ut").
-     Brödtexten låg i en 720px-kolumn fastnitad i vänsterkanten, så på en
-     1440px-skärm var halva sidan tom grå yta och texten såg ut som en mobilsida
-     utsträckt på en desktopduk. Två åtgärder: kolumnen centreras, och från
-     1200px får den sällskap av en sidokolumn så bredden används till något. */
-  .guide-grid {
-    display: block;
-  }
-  .prose-col {
-    max-width: 720px;
-    margin-inline: auto;
-  }
-  .guide-aside {
-    display: none;
-  }
-
+  /* Layouten (.prose-grid/.prose-col) och sidokolumnen bor i
+     src/styles/global.css respektive ProseAside.astro — /hinnat/ använder
+     samma två. Kvar här är bara det som är guidespecifikt. */
   @media (min-width: 1200px) {
-    .guide-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 720px) 290px;
-      gap: 56px;
-      justify-content: center;
-      /* INTE align-items: start. Med start blir sidokolumnen bara så hög som
-         sitt innehåll, och då slutar sticky-barnet klistra så fort man
-         scrollat förbi den höjden — kolumnen står tom resten av sidan.
-         Default (stretch) gör kolumnen lika hög som raden, vilket är precis
-         vad position: sticky behöver för att följa med hela vägen. */
-    }
-    .guide-aside {
-      height: 100%;
-    }
-    .prose-col {
-      margin-inline: 0;
-    }
-    .guide-aside {
-      display: block;
-    }
-    /* Sticky under headern. --header-h sätts av Header.astro från den verkliga
-       höjden, så avståndet stämmer även när logotypens webbfont laddat om. */
-    .aside-sticky {
-      position: sticky;
-      top: calc(var(--header-h, 74px) + 24px);
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
     /* Innehållsförteckningen i brödtexten är överflödig när den finns i
        sidokolumnen. Duplicerad markup men bara en synlig åt gången. */
     .toc {
       display: none;
     }
-  }
-
-  .aside-title {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--meta);
-    margin: 0 0 10px;
-  }
-  .aside-toc ol {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    counter-reset: aside;
-  }
-  .aside-toc li {
-    counter-increment: aside;
-  }
-  .aside-toc a {
-    display: block;
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--meta);
-    text-decoration: none;
-    padding: 6px 10px 6px 12px;
-    border-left: 2px solid var(--border-on-paper);
-    transition:
-      color var(--t-fast) var(--ease-out),
-      border-color var(--t-fast) var(--ease-out);
-  }
-  .aside-toc a:hover {
-    color: var(--text);
-    border-left-color: var(--flash);
-  }
-
-  .aside-products {
-    display: block;
-    background: var(--surface);
-    border: var(--card-border);
-    border-left: 3px solid var(--flash);
-    border-radius: 0 var(--r-card) var(--r-card) 0;
-    padding: 15px 16px;
-    text-decoration: none;
-    transition: border-color var(--t-fast) var(--ease-out);
-  }
-  .aside-products:hover {
-    border-color: var(--flash);
-  }
-  .aside-products-title {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: var(--weight-display);
-    font-size: 17px;
-    line-height: 1.2;
-    color: var(--text);
-  }
-  .aside-products-text {
-    display: block;
-    margin-top: 6px;
-    font-size: 12.5px;
-    line-height: 1.5;
-    color: var(--meta);
-  }
-  .aside-products-cta {
-    display: block;
-    margin-top: 10px;
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--flash-text);
   }
 
   /* Produktnotisen i brödtexten — syns i alla bredder, till skillnad från
@@ -834,6 +736,30 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
     line-height: 1.55;
     color: var(--meta);
     margin: 12px 2px 0;
+  }
+
+  /* Sektionsbild. Poängen är luft, inte längd: bilden är beskuren extremt
+     brett så att den bryter textmassan utan att skjuta ned nästa rubrik mer
+     än ett par rader. 3/1 vid 720 px kolumn = 240 px. På mobil vore samma
+     förhållande en remsa — där släpps den till 2/1. aspect-ratio sätts på
+     bilden själv, inte på figure, så höjden är reserverad redan innan
+     bilden laddats (CLS). */
+  .section-figure {
+    margin: 30px 0 6px;
+  }
+  .section-figure :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: var(--r-card);
+    border: var(--card-border);
+  }
+  @media (min-width: 720px) {
+    .section-figure :global(img) {
+      aspect-ratio: 3 / 1;
+    }
   }
 
   .callout {

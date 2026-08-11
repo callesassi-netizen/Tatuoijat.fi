@@ -25,4 +25,14 @@ export function brandImage(name: string, fallback: ImageMetadata): ImageMetadata
   return byName.get(name) ?? fallback;
 }
 
+/**
+ * Samma uppslag men utan fallback, för ytor som helt enkelt utgår när bilden
+ * saknas. Sektionsbilderna i guiderna är dekor — en guide utan dem är
+ * fortfarande komplett, och att tvinga fram en fallback där skulle bara sätta
+ * tillbaka de dubbletter vi nyss blev av med.
+ */
+export function optionalBrandImage(name: string): ImageMetadata | undefined {
+  return byName.get(name);
+}
+
 export const brandImageCount = byName.size;

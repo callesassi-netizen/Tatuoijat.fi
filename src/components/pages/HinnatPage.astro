@@ -7,6 +7,7 @@ import { heroBgFor } from '../../lib/heroImages';
 import { bodyPartImages } from '../../lib/bodyPartImages';
 import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProseAside from '../ProseAside.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { hinnat } from '../../data/hinnat';
 import { jsonLdString, breadcrumbLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
@@ -25,15 +26,25 @@ const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const c = hinnat[locale];
 
-// Guidelänkarna läses ur registret, inte hårdkodade: en ny publicerad guide
-// dyker upp här av sig själv, och en avpublicerad försvinner. Jälkihoito och
-// hoitotuotteet först — de är de två som faktiskt hör ihop med prisfrågan.
+/**
+ * Guidelänkarna läses ur registret, inte hårdkodade: en ny publicerad guide
+ * dyker upp här av sig själv, och en avpublicerad försvinner.
+ *
+ * GUIDE_ORDER är en PRIORITERING, inte ett filter (Calle 11/8: "det är bara
+ * länkat till 3 guider"). Tidigare var den båda delarna, och när de tre sista
+ * guiderna skrevs blev de tysta bortsorterade härifrån — listan såg komplett
+ * ut men var det inte. Nu styr ordningen bara vad som kommer först;
+ * resten följer i registrets ordning.
+ */
 const GUIDE_ORDER = ['tatuoinnin-hoitotuotteet', 'tatuoinnin-jalkihoito', 'tatuoinnin-paraneminen'];
+const guideRank = (key: string) => {
+  const index = GUIDE_ORDER.indexOf(key);
+  return index === -1 ? GUIDE_ORDER.length : index;
+};
 const relatedGuides = publishedGuides
-  .filter((guide) => GUIDE_ORDER.includes(guide.key))
-  .sort((a, b) => GUIDE_ORDER.indexOf(a.key) - GUIDE_ORDER.indexOf(b.key))
-  .map((guide) => ({ guide, card: guideCards[guide.key]?.[locale] }))
-  .filter((entry) => Boolean(entry.card));
+  .map((guide, index) => ({ guide, index, card: guideCards[guide.key]?.[locale] }))
+  .filter((entry) => Boolean(entry.card))
+  .sort((a, b) => guideRank(a.guide.key) - guideRank(b.guide.key) || a.index - b.index);
 
 const path = '/hinnat/';
 const breadcrumb = breadcrumbLd([
@@ -44,6 +55,20 @@ const faq = faqLd(c.faq);
 
 // Stor fotohero (Calles beslut 10/8) — optimerad webp via getImage().
 const heroBg = await heroBgFor('prices');
+
+/**
+ * Sidokolumnens innehållsförteckning. Rubrikerna på den här sidan bär redan
+ * sina id:n för aria-labelledby, så ankarna pekar rakt på dem — inga extra
+ * ankarelement behövs. scroll-padding-top i global.css håller dem fria från
+ * den sticky headern.
+ */
+const asideItems = [
+  { href: '#table-title', label: c.tableTitle },
+  { href: '#bodyparts-title', label: c.bodyPartsTitle },
+  { href: '#factors-title', label: c.factorsTitle },
+  { href: '#faq-title', label: c.faqTitle },
+  { href: '#guides-title', label: c.guidesTitle },
+];
 ---
 
 <BaseLayout
@@ -67,6 +92,7 @@ const heroBg = await heroBgFor('prices');
 
   <div class="sheet grain reading">
     <div class="container sheet-inner">
+      <div class="prose-grid">
       <div class="prose-col">
         <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
         {c.intro.map((paragraph) => <p class="lead">{paragraph}</p>)}
@@ -195,6 +221,21 @@ const heroBg = await heroBgFor('prices');
           <a class="btn-cta cta-btn" href={p(citiesIndexPath(locale))}>{c.ctaLabel}</a>
         </section>
       </div>
+
+        <!-- Sidokolumn, endast desktop. Kortet upprepar sidans CTA i stället
+             för att uppfinna en ny: den som läst prisspannet och blivit klar
+             ska kunna gå vidare utan att scrolla till botten. -->
+        <ProseAside
+          title={t('guide.contentsTitle')}
+          items={asideItems}
+          card={{
+            href: p(citiesIndexPath(locale)),
+            title: c.ctaTitle,
+            text: c.ctaText,
+            cta: c.ctaLabel,
+          }}
+        />
+      </div>
     </div>
   </div>
 </BaseLayout>
@@ -247,9 +288,14 @@ const heroBg = await heroBgFor('prices');
   .guide-all a {
     color: var(--text);
   }
-  @media (min-width: 1024px) {
+  /* TVÅ kolumner, inte tre. Korten ligger inne i textkolumnens 720 px, och
+     tre spalter där ger ~230 px per kort — sammanfattningen bryts då på sex
+     rader och det är sammanfattningen som får någon att klicka. Sedan alla
+     sex guider listas här (11/8) blev det dessutom två fulla rader smala kort
+     i stället för en. */
+  @media (min-width: 640px) {
     .guide-links {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
     .guide-link {
@@ -370,9 +416,8 @@ const heroBg = await heroBgFor('prices');
   .sheet-inner {
     padding: 28px var(--page-pad) 48px;
   }
-  .prose-col {
-    max-width: 720px;
-  }
+  /* .prose-grid/.prose-col bor i src/styles/global.css — samma layout som
+     guidesidorna. Sidokolumnen är ProseAside.astro. */
   .lead {
     font-size: 15px;
     line-height: 1.65;
