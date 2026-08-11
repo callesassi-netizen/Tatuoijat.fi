@@ -61,7 +61,9 @@ const blocks = categories.map((category) => ({
 ---
 
 <section aria-labelledby="products-title" class="block">
-  <h2 class="block-title" id="products-title">{title}</h2>
+  <h2 class="block-title" id="products-title">
+    <span id="products" class="anchor"></span>{title}
+  </h2>
   <p class="products-intro">{intro}</p>
 
   {
@@ -99,6 +101,15 @@ const blocks = categories.map((category) => ({
                     <span class="product-name">{product.name}</span>
                     <span class="product-shop">{affiliatePartners[product.partner].name}</span>
                     <span class="product-text">{product.description[locale]}</span>
+                    {/*
+                      HELA KORTET ÄR KLICKBART via ::after-overlayen på .product-cta
+                      ("stretched link"). Alternativet — att linda in kortet i en
+                      <a> — hade gett skärmläsaren en länk vars namn är hela
+                      kortets text, och gjort rel/target svårare att hålla rätt
+                      på. Så här är länken fortfarande en riktig länk med
+                      begripligt namn; den råkar bara ha ett klickfält lika
+                      stort som kortet.
+                    */}
                     <a
                       class="product-cta"
                       href={withEpi(product.affiliateUrl!, block.epi)}
@@ -182,12 +193,39 @@ const blocks = categories.map((category) => ({
     gap: 10px;
   }
   .product-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
     border-top: var(--card-border);
     padding-top: 12px;
+    /* Marginalen ger hover-ytan luft så att den inte tangerar kriterietexten
+       ovanför. Padding + negativ margin: ytan växer, layouten står still. */
+    margin-inline: -8px;
+    padding-inline: 8px;
+    padding-bottom: 10px;
+    border-radius: var(--r-btn);
+    transition: background-color var(--t-fast) var(--ease-out);
+  }
+  .product-card:hover {
+    background: var(--surface-2);
+  }
+  /* Klickfältet. inset 0 på kortet, inte på hela sektionen. */
+  .product-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  /* Tangentbord: fokus på länken ska rita en ram runt HELA kortet, annars
+     ser det ut som att fokus försvunnit när klickytan är någon annanstans. */
+  .product-card:has(.product-cta:focus-visible) {
+    outline: 2px solid var(--flash);
+    outline-offset: 2px;
+  }
+  .product-cta:focus-visible {
+    outline: none;
   }
   /* Med bild blir kortet en rad: miniatyr vänster, text höger. Utan bild
      behåller det exakt sitt gamla utseende — layouten hänger alltså inte på
@@ -246,12 +284,15 @@ const blocks = categories.map((category) => ({
     color: var(--meta);
   }
   .product-cta {
-    margin-top: 4px;
+    margin-top: 6px;
     font-size: 12.5px;
-    font-weight: 600;
-    color: var(--flash);
+    font-weight: 700;
+    color: var(--flash-text);
     text-decoration: none;
     border-bottom: 1px solid currentColor;
+  }
+  .product-card:hover .product-cta {
+    color: var(--flash);
   }
 
   @media (min-width: 1024px) {

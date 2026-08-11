@@ -10,7 +10,8 @@
     "check": "astro check",
     "generate:og": "node scripts/generate-og.mjs",
     "images:sync": "node scripts/fetch-product-images.mjs --force",
-    "prebuild": "node scripts/fetch-product-images.mjs"
+    "prebuild": "node scripts/fetch-product-images.mjs",
+    "images:brand": "node scripts/fetch-brand-images.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

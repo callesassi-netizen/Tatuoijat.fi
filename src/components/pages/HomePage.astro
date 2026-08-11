@@ -17,7 +17,8 @@ import tatuoijaMuotokuva from '../../assets/bilder/tatuoija-muotokuva.png';
 // vara så tät att fotot försvinner. Samma fil som Realismi-plattan i
 // stilbandet, men beskuren till höger kant och nedtonad, så den läser som
 // textur här och som motiv där.
-import premiumTausta from '../../assets/bilder/enkeli-realismi.png';
+import premiumTaustaFallback from '../../assets/bilder/enkeli-realismi.png';
+import { brandImage } from '../../lib/brandImages';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import {
   getCitiesSorted,
@@ -42,6 +43,9 @@ interface Props {
 const { locale } = Astro.props;
 const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
+
+// Egen mörk studiobild i stället för Realismi-plattans, som låg på tre ställen.
+const premiumTausta = brandImage('studio-yolla', premiumTaustaFallback);
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();

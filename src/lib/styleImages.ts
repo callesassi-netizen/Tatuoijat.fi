@@ -2,6 +2,7 @@
 // licensierade bilder, aldrig något som ser ut som en listad artists verk).
 // Delas av HomePage och StylesIndexPage.
 import type { ImageMetadata } from 'astro';
+import { brandImage } from './brandImages';
 import realismi from '../assets/bilder/enkeli-realismi.png';
 import fineline from '../assets/bilder/studio-vaalea.png';
 import blackwork from '../assets/bilder/jalkihoito.png';
@@ -16,9 +17,11 @@ import animeManga from '../assets/bilder/anime-manga.png';
 import lettering from '../assets/bilder/lettering.png';
 
 export const styleImages: Record<string, ImageMetadata> = {
-  realismi,
+  // Realismi och Blackwork delade tidigare bild med premiumbannern respektive
+  // jälkihoito-guiden. Nu har de egna (11/8 2026).
+  realismi: brandImage('realismi-patsas', realismi),
   fineline,
-  blackwork,
+  blackwork: brandImage('blackwork-hiha', blackwork),
   traditional,
   japanilainen,
   geometrinen,
