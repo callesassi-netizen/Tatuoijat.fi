@@ -28,11 +28,17 @@ export const GUIDES_INDEX_MIN_GUIDES = 3;
 /**
  * Alla guider, publicerade och planerade.
  *
- * KANNIBALISERING: `/hinnat/` äger prisintentionen ("tatuoinnin hinta",
- * "tatuointi hinta esimerkki"). En framtida prisguide får därför INTE rikta
- * mot huvudfrasen utan mot kroppsdels-/stads-modifierarna som seo-analysen
- * 2026-08-09 (§11.3, P3) pekade ut: "käsivarsi", "koko selkä", "pieni
- * tatuointi", "puoli hiha". Därav slug/targetPhrase nedan.
+ * KANNIBALISERING — LÖST 2026-08-11 genom att INTE skriva sidan.
+ * Registret hade en planerad guide `tatuoinnin-hinta-kehonosittain` som
+ * skulle ta kroppsdels-modifierarna ("käsivarsi", "koko selkä", "puoli
+ * hiha") utan att röra huvudfrasen "tatuoinnin hinta", som `/hinnat/` äger.
+ *
+ * Vid genomgången visade sig `/hinnat/` redan täcka exakt de raderna i sin
+ * bodyParts-sektion: käsivarsi, olkavarsi, kokohiha, selkä, olkapää ja
+ * solisluu, teksti — plus storleksbaserad prissättning i huvudtabellen. En
+ * egen guide hade alltså inte fyllt en lucka utan konkurrerat med sajtens
+ * starkaste konsumentsida om samma sökningar. Posten är därför borttagen.
+ * Ska kroppsdelspriserna byggas ut sker det i `/hinnat/`, inte bredvid.
  *
  * @type {GuideRoute[]}
  */
@@ -53,14 +59,14 @@ export const guides = [
   },
   {
     key: 'tatuointi-ja-sauna',
-    status: 'planned',
+    status: 'published',
     order: 3,
     slug: { fi: 'tatuointi-ja-sauna', sv: 'tatuering-och-bastu' },
     targetPhrase: 'tatuointi ja sauna, milloin saunaan tatuoinnin jälkeen',
   },
   {
     key: 'tatuointi-ja-uiminen',
-    status: 'planned',
+    status: 'published',
     order: 4,
     slug: { fi: 'tatuointi-ja-uiminen', sv: 'tatuering-och-bad' },
     targetPhrase: 'tatuointi ja uiminen, uimahalli tatuoinnin jälkeen',
@@ -78,14 +84,6 @@ export const guides = [
     order: 6,
     slug: { fi: 'tatuoinnin-hoitotuotteet', sv: 'produkter-for-tatueringsvard' },
     targetPhrase: 'tatuoinnin hoitotuotteet, tatuointivoide',
-  },
-  {
-    key: 'tatuoinnin-hinta-kehonosittain',
-    status: 'planned',
-    order: 7,
-    slug: { fi: 'tatuoinnin-hinta-kehonosittain', sv: 'tatueringspris-per-kroppsdel' },
-    // EJ "tatuoinnin hinta" — se kannibaliseringsnoten ovan.
-    targetPhrase: 'käsivarsi / koko selkä / pieni tatuointi hinta (P3)',
   },
 ];
 

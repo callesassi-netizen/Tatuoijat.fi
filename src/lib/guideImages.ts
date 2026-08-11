@@ -7,6 +7,8 @@ import studioVaalea from '../assets/bilder/studio-vaalea.png';
 import japanilainenHiha from '../assets/bilder/japanilainen-hiha.png';
 import kasivarsiMotiivi from '../assets/bilder/kasivarsi-motiivi.png';
 import jalkihoitoPyyhe from '../assets/bilder/jalkihoito-pyyhe.png';
+import selkaEnkeli from '../assets/bilder/selka-enkeli.png';
+import ornamental from '../assets/bilder/ornamental.png';
 
 export const guideImages: Record<string, ImageMetadata> = {
   'tatuoinnin-jalkihoito': jalkihoito,
@@ -16,6 +18,10 @@ export const guideImages: Record<string, ImageMetadata> = {
   'tatuointi-ja-aurinko': kasivarsiMotiivi,
   // Hoitotuotteet: eftervårdsmotivet, skilt från jälkihoito-guidens egen bild.
   'tatuoinnin-hoitotuotteet': jalkihoitoPyyhe,
+  // Sauna: bar rygg i varma, mörka toner — närmast bastu vi har i biblioteket.
+  'tatuointi-ja-sauna': selkaEnkeli,
+  // Uiminen: bibliotekets ljusaste motiv. Sommar läser bättre ljust än mörkt.
+  'tatuointi-ja-uiminen': ornamental,
 };
 
 export const guideImageFallback: ImageMetadata = studioVaalea;

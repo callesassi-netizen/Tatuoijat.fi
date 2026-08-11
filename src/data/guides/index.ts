@@ -7,6 +7,8 @@ import {
   tatuoinninHoitotuotteet,
   tatuoinninHoitotuotteetCard,
 } from './tatuoinnin-hoitotuotteet';
+import { tatuointiJaSauna, tatuointiJaSaunaCard } from './tatuointi-ja-sauna';
+import { tatuointiJaUiminen, tatuointiJaUiminenCard } from './tatuointi-ja-uiminen';
 
 /**
  * Kopplingen mellan routing-registret (src/lib/guides.mjs) och innehållet.
@@ -18,6 +20,8 @@ export const guideContent: Record<string, GuideContentByLocale> = {
   'tatuoinnin-paraneminen': tatuoinninParaneminen,
   'tatuointi-ja-aurinko': tatuointiJaAurinko,
   'tatuoinnin-hoitotuotteet': tatuoinninHoitotuotteet,
+  'tatuointi-ja-sauna': tatuointiJaSauna,
+  'tatuointi-ja-uiminen': tatuointiJaUiminen,
 };
 
 /** Kort-texterna på hubben. Samma nycklar som guideContent. */
@@ -26,6 +30,8 @@ export const guideCards: Record<string, GuideCardByLocale> = {
   'tatuoinnin-paraneminen': tatuoinninParaneminenCard,
   'tatuointi-ja-aurinko': tatuointiJaAurinkoCard,
   'tatuoinnin-hoitotuotteet': tatuoinninHoitotuotteetCard,
+  'tatuointi-ja-sauna': tatuointiJaSaunaCard,
+  'tatuointi-ja-uiminen': tatuointiJaUiminenCard,
 };
 
 /**
@@ -35,18 +41,8 @@ export const guideCards: Record<string, GuideCardByLocale> = {
  * + flytta status till 'published' när en guide skrivs.
  */
 export const plannedGuideTitles: Record<string, Record<Locale, string>> = {
-  'tatuointi-ja-sauna': {
-    fi: 'Tatuointi ja sauna',
-    sv: 'Tatuering och bastu',
-  },
-  'tatuointi-ja-uiminen': {
-    fi: 'Tatuointi ja uiminen',
-    sv: 'Tatuering och bad',
-  },
-  'tatuoinnin-hinta-kehonosittain': {
-    fi: 'Tatuoinnin hinta kehonosittain',
-    sv: 'Tatueringspris per kroppsdel',
-  },
+  // Tom sedan 2026-08-11: alla planerade guider är skrivna. Prisguiden per
+  // kroppsdel ströks i stället för att skrivas — se noten i src/lib/guides.mjs.
 };
 
 export function getGuideContent(key: string, locale: Locale) {

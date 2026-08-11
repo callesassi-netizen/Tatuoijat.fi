@@ -205,6 +205,18 @@ export const affiliateProducts: AffiliateProduct[] = [
       'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=9260215&url=https://www.oloapteekki.fi/sebamed-hydrating-body-wash-pesuneste-300-ml-hajusteeton',
   },
   {
+    id: 'purito-panthenol-cleanser',
+    name: 'Purito Mighty Bamboo Panthenol Cleanser 150 ml',
+    category: 'cleansing',
+    partner: 'cocopanda',
+    description: {
+      fi: 'Matalan pH:n puhdistusaine, jossa on panteenolia. Kalliimpi kuin apteekin perussaippua, ja ero on siinä että tämä ei kiristä lainkaan — jos iho reagoi herkästi, se on tuntuva ero kolmen viikon aikana.',
+      sv: 'Rengöring med lågt pH och panthenol. Dyrare än apotekets basstvål, och skillnaden är att den inte stramar alls — reagerar din hud lätt märks det över tre veckor.',
+    },
+    affiliateUrl:
+      'https://do.cocopanda.fi/t/t?a=1786468191&as=2101505499&t=2&tk=1&cupa_sku=3315248&url=https://cocopanda.fi/product/3315248',
+  },
+  {
     id: 'apobase-creme-440',
     name: 'Apobase Creme 30 % 440 g, pumppupullo',
     category: 'aftercare',
@@ -227,6 +239,18 @@ export const affiliateProducts: AffiliateProduct[] = [
     },
     affiliateUrl:
       'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=9251855&url=https://www.oloapteekki.fi/aqualan-200-g-emulsiovoide',
+  },
+  {
+    id: 'lrp-lipikar-balm-ap-max',
+    name: 'La Roche-Posay Lipikar Balm AP+M 400 ml',
+    category: 'aftercare',
+    partner: 'olo-apteekki',
+    description: {
+      fi: 'Dermatologinen hoitovoide herkälle ja kutisevalle iholle, hajusteeton. Tämä on se taso, jolle kannattaa maksaa enemmän: 400 ml pumppupullo riittää koko paranemisen yli, eikä kutina yleensä ole ongelma sen kanssa.',
+      sv: 'Dermatologisk vårdkräm för känslig och kliande hud, oparfymerad. Det här är nivån där det är värt att betala mer: 400 ml pumpflaska räcker långt förbi läkningen, och klådan brukar inte bli ett problem med den.',
+    },
+    affiliateUrl:
+      'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=9553725&url=https://www.oloapteekki.fi/lrp-lipikar-balm-ap-max-vartalovoide-400-ml',
   },
   {
     id: 'apobase-carbamide-5',

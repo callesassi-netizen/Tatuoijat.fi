@@ -13,6 +13,16 @@ import type { GuideCardByLocale, GuideContentByLocale } from './types';
  * titta efter i innehållsförteckningen). Sidorna länkar till varandra i stället
  * för att upprepa varandra — därför står det ingen dag-för-dag-rutin här.
  *
+ * PRISVINKEL (ändrad 2026-08-11). Guiden hette tidigare läsaren att köpa
+ * billigast möjliga som uppfyller kriterierna. Det var sant men inte hela
+ * sanningen: en 400 ml pumpflaska dermatologisk vårdkräm ÄR bättre på öppen
+ * hud än en 100 g burk, och skillnaden märks under de tre veckor läsaren
+ * faktiskt använder den. Axeln går nu "vad köper ett högre pris" i stället
+ * för "billigast vinner" — samma ärlighet, mer användbart råd, och det
+ * sammanfaller med att dyrare produkter ger provision. Den ena raden som
+ * INTE fick mjukas upp: att ordet "tatuering" på etiketten inte är värt
+ * något. Den är sann, och den är hela skälet till att resten går att lita på.
+ *
  * AFFILIATE: det här är den enda guiden som är skriven för att bära
  * produktkort. Kriterietexterna i `productCategories` är redaktionella och
  * står på egna ben även utan en enda länk — se src/data/affiliate.ts. Inga
@@ -23,14 +33,14 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
   fi: {
     metaTitle: 'Tatuoinnin hoitotuotteet — mitä oikeasti tarvitset | Tatuoijat.fi',
     metaDescription:
-      'Tatuoinnin hoitotuotteet ilman turhaa: millainen rasva ja saippua tuoreelle tatuoinnille sopii, mitä ainesosia vältetään ja milloin aurinkosuoja otetaan käyttöön.',
+      'Tatuoinnin hoitotuotteet: millainen rasva ja saippua tuoreelle tatuoinnille sopii, mistä hinnassa kannattaa maksaa ja milloin aurinkosuoja otetaan käyttöön.',
     eyebrow: 'Opas',
     h1: 'Tatuoinnin hoitotuotteet',
     answer:
-      'Tuore tatuointi tarvitsee kaksi tuotetta: hajusteettoman nestesaippuan ja ohuen, hajusteettoman perusvoiteen. Erillistä tatuointivoidetta ei ole pakko ostaa — apteekin perusvoide riittää, kunhan siinä ei ole hajusteita, väriaineita eikä alkoholia. Kolmas tuote, aurinkosuoja SPF 50, otetaan käyttöön vasta kun iho on kokonaan parantunut.',
+      'Tuore tatuointi tarvitsee kaksi tuotetta: hajusteettoman nestesaippuan ja hajusteettoman hoitovoiteen. Hajusteettomuus on ainoa ehdoton kriteeri — sen jälkeen ratkaisee pakkauskoko, koostumus ja se, kestääkö iho tuotetta kolme viikkoa. Kolmas tuote, aurinkosuoja SPF 50, otetaan käyttöön vasta kun iho on kokonaan parantunut.',
     intro: [
-      'Tatuointivoide on ala, jossa markkinointi on selvästi edellä tutkimusta. Purkkeja myydään tatuointiin erikseen suunniteltuina, mutta ainesosaluettelo on useimmiten sama kuin tavallisessa apteekin perusvoiteessa — hinta vain on toinen. Tämä opas kertoo, mitä ainesosia kannattaa katsoa ja mitä ei tarvitse maksaa.',
-      'Käytännön ohje: osta ensin halvin vaihtoehto joka täyttää kriteerit. Jos iho reagoi, vaihda — mutta älä osta kolmea purkkia varmuuden vuoksi. Itse hoitorutiini eli pesun ja rasvauksen ajoitus on oma lukunsa, ja se käydään läpi jälkihoito-oppaassa.',
+      'Hoitotuotteita myydään kahdella hyvin erilaisella hintatasolla, ja ero ei ole markkinointia. Viiden euron perusvoide ja kahdenkymmenen euron dermatologinen hoitovoide täyttävät molemmat perusvaatimuksen — hajusteettomuuden — mutta ne eivät tunnu iholla samalta eivätkä riitä yhtä pitkään. Tämä opas kertoo, mistä hinnassa oikeasti maksaa.',
+      'Käytännön ohje: älä säästä siinä tuotteessa, jota levität avoimelle iholle kaksi kertaa päivässä kolmen viikon ajan. Säästä ennemmin määrässä — kaksi tuotetta riittää, ei viisi. Itse hoitorutiini eli pesun ja rasvauksen ajoitus on oma lukunsa, ja se käydään läpi jälkihoito-oppaassa.',
     ],
     sections: [
       {
@@ -43,7 +53,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
           'Aurinkosuoja SPF 50. Vasta kuoriutumisen jälkeen — tuoreelle haavalle aurinkorasvaa ei laiteta lainkaan.',
         ],
         paragraphs: [
-          'Kaikki muu on lisävarustetta. Erilliset tatuointiöljyt, balsamit ja seerumit eivät ole haitallisia, mutta ne eivät myöskään tee mitään, mitä perusvoide ei tekisi. Jos haluat ostaa tatuointiin suunnitellun tuotteen mielikuvan takia, se on täysin kelvollinen syy — kunhan tiedät maksavasi siitä.',
+          'Kaksi tuotetta, ei viittä. Erilliset seerumit, öljyt ja kuorinnat eivät kuulu paranevalle iholle lainkaan, ja jokainen ylimääräinen tuote on yksi ainesosalista lisää, joka voi ärsyttää. Raha kannattaa laittaa siihen, että nämä kaksi ovat hyviä, eikä siihen että niitä on monta.',
         ],
       },
       {
@@ -109,22 +119,44 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
         ],
       },
       {
+        id: 'mista-maksaa',
+        title: 'Mistä hoitotuotteessa kannattaa maksaa?',
+        lead: 'Kolme asiaa erottaa viiden euron purkin kahdenkymmenen euron purkista, ja kaikki kolme tuntuvat iholla. Neljäs ero — sana "tatuointi" etiketissä — ei tunnu.',
+        steps: [
+          {
+            title: 'Pakkauskoko ja annostelu',
+            text: 'Iso pumppupullo on halvempi grammaa kohden ja hygieenisempi kuin purkki, johon työnnetään sormet. Tuore tatuointi on haava, ja 400 ml riittää yli koko paranemisen — pieni tuubi loppuu kesken juuri silloin kun kuoriutuminen on pahimmillaan.',
+          },
+          {
+            title: 'Koostumus herkälle iholle',
+            text: 'Dermatologiset hoitovoiteet on muotoiltu kutisevalle ja ärtyvälle iholle. Kutina on kuoriutumisvaiheen ikävin osa, ja se on juuri se kohta, jossa moni raapaisee ja menettää väriä. Jos ihosi reagoi herkästi, tämä on se kohta, jossa lisäeuroista saa vastinetta.',
+          },
+          {
+            title: 'Aurinkosuoja',
+            text: 'Tässä ei kannata säästää lainkaan, mutta ei myöskään ostaa pientä. Aurinkosuojaa pitää levittää paksusti ja usein, ja liian pieni pullo johtaa automaattisesti liian ohueen kerrokseen. Iso pakkaus on halvempi tapa saada oikea annos.',
+          },
+        ],
+        paragraphs: [
+          'Se mistä EI kannata maksaa on markkinointi. Tatuointiin erikseen brändätty balsami on tyypillisesti 30–50 ml pientä pakkausta, jonka ainesosaluettelo ei eroa apteekin hoitovoiteesta. Maksa koosta, koostumuksesta ja pumpusta — älä sanasta etiketissä.',
+        ],
+      },
+      {
         id: 'hinta',
         title: 'Paljonko tatuoinnin hoitotuotteet maksavat?',
-        lead: 'Koko paranemisen tuotteet maksavat noin 15–30 €, jos ostaa apteekin perusvalikoimasta. Tatuointiin erikseen brändätyt tuotteet nostavat summan helposti kaksinkertaiseksi.',
+        lead: 'Koko paranemisen tuotteet maksavat noin 15–45 € riippuen siitä, ostaako perustason vai dermatologisen tason. Molemmat toimivat; kalliimpi on miellyttävämpi ja riittää pidempään.',
         table: {
-          columns: ['Tuote', 'Tyypillinen hinta', 'Riittää'],
+          columns: ['Tuote', 'Perustaso', 'Dermatologinen taso'],
           rows: [
-            ['Hajusteeton nestesaippua, 250–500 ml', '5–12 €', 'Useaan tatuointiin'],
-            ['Hajusteeton perusvoide, 100–200 ml', '7–15 €', 'Koko paranemisen ajan'],
-            ['Panteenolia sisältävä hoitovoide, 30–100 g', '8–18 €', 'Koko paranemisen ajan'],
-            ['Aurinkosuoja SPF 50, 200 ml', '10–25 €', 'Kesäkauden'],
-            ['Tatuointiin brändätty balsami, 30–50 ml', '15–30 €', 'Yhden tatuoinnin'],
+            ['Hajusteeton pesuaine', '5–8 €', '15–20 €'],
+            ['Hoitovoide ensimmäisille viikoille', '6–10 €', '18–30 €'],
+            ['Ylläpitovoide parantumisen jälkeen', '8–12 €', '15–25 €'],
+            ['Aurinkosuoja SPF 50, iso pakkaus', '12–18 €', '20–30 €'],
+            ['Yhteensä', 'noin 30 €', 'noin 75 €'],
           ],
-          note: 'Hintahaarukat ovat Suomen verkkoapteekkien ja kosmetiikkaverkkokauppojen tavanomaista tasoa elokuussa 2026. Ne vaihtelevat kampanjoiden mukaan.',
+          note: 'Hintahaarukat ovat Suomen verkkoapteekkien tavanomaista tasoa elokuussa 2026 ja vaihtelevat kampanjoiden mukaan. Sama tuote riittää useimmiten monta tatuointia.',
         },
         paragraphs: [
-          'Taulukon viimeinen rivi on se, jossa raha menee. Tatuointiin brändätty balsami on usein pieni pakkaus kalliilla — samat ainesosat isommassa purkissa maksavat vähemmän apteekin hyllyssä. Se ei tee tuotteesta huonoa, mutta hinta ei kerro tehosta.',
+          'Suhteuta summa itse tatuointiin. Pienikin työ maksaa satoja euroja, ja hoitotuotteet ovat muutaman prosentin lisä siihen. Se on halpa vakuutus sille, että viiva pysyy terävänä ja väri tasaisena — laikukas lopputulos maksaa korjausistunnon, joka on moninkertainen hoitotuotteiden hintaan nähden.',
         ],
       },
     ],
@@ -132,7 +164,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
     faq: [
       {
         q: 'Tarvitseeko tatuointiin ostaa erityistä tatuointivoidetta?',
-        a: 'Ei tarvitse. Hajusteeton apteekin perusvoide täyttää samat kriteerit kuin tatuointiin brändätty voide, usein halvemmalla ja isommassa pakkauksessa. Tatuointituotteet eivät ole huonoja, mutta ne eivät ole välttämättömiä.',
+        a: 'Ei tarvitse, mutta hoitovoiteen laadulla on merkitystä. Ratkaisevaa ei ole sana "tatuointi" etiketissä vaan hajusteettomuus, koostumus ja pakkauskoko. Apteekin dermatologinen hoitovoide täyttää kriteerit paremmin kuin pieni brändätty balsami — ja usein halvemmalla millilitraa kohden.',
       },
       {
         q: 'Käykö Bepanthen tai muu panteenolivoide tatuoinnille?',
@@ -148,12 +180,12 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
       },
       {
         q: 'Kannattaako ostaa tuotteet studiolta vai apteekista?',
-        a: 'Kumpi vain käy. Studio myy usein tuotetta, jonka se tietää toimivan omien kalvojensa kanssa, ja se on hyvä syy ostaa sieltä. Apteekin valikoima on halvempi ja pakkaukset isompia. Ainesosat ratkaisevat, ei ostopaikka.',
+        a: 'Kumpi vain käy. Studio myy usein tuotetta, jonka se tietää toimivan omien kalvojensa kanssa, ja se on hyvä syy ostaa sieltä. Apteekin valikoima on laajempi ja pakkaukset isompia, mikä tulee halvemmaksi millilitraa kohden. Ainesosat ja koko ratkaisevat, ei ostopaikka.',
       },
     ],
     productsTitle: 'Mitä katsoa tuotteesta',
     productsIntro:
-      'Alla olevat kriteerit ovat sama lista, jonka käyt läpi purkin kyljessä kaupassa. Ne pätevät riippumatta merkistä ja siitä, onko tuote markkinoitu tatuointiin vai ei.',
+      'Alla olevat kriteerit ovat sama lista, jonka käyt läpi purkin kyljessä kaupassa. Jokaisessa kategoriassa on sekä perustason että dermatologisen tason vaihtoehto — molemmat täyttävät kriteerit, ero on koostumuksessa ja pakkauskoossa.',
     productCategories: [
       {
         category: 'cleansing',
@@ -168,7 +200,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
       {
         category: 'fragrance-free',
         title: 'Hajusteeton perusvoide',
-        text: 'Perusvoide on tatuointivoiteen halvempi ja isompi vastine. Etsi merkintää hajusteeton tai fragrance free — se on ainoa kriteeri, joka oikeasti erottaa sopivan sopimattomasta.',
+        text: 'Perusvoide on hoitotuotteen edullisin taso ja täyttää perusvaatimuksen. Etsi merkintää hajusteeton tai fragrance free. Jos iho ei reagoi mitenkään, tämä riittää koko paranemisen ajan.',
       },
       {
         category: 'moisturising',
@@ -195,14 +227,14 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
   sv: {
     metaTitle: 'Produkter för tatueringsvård — vad du faktiskt behöver | Tatuoijat.fi',
     metaDescription:
-      'Produkter för tatueringsvård utan onödigt: vilken salva och tvål som passar en ny tatuering, vilka ingredienser du undviker och när solskyddet ska in.',
+      'Produkter för tatueringsvård: vilken salva och tvål som passar en ny tatuering, vad ett högre pris faktiskt köper och när solskyddet ska in.',
     eyebrow: 'Guide',
     h1: 'Produkter för tatueringsvård',
     answer:
-      'En ny tatuering behöver två produkter: en oparfymerad flytande tvål och en tunn, oparfymerad baskräm. Någon särskild tatueringssalva behöver du inte köpa — apotekets baskräm räcker, så länge den saknar parfym, färgämnen och alkohol. Den tredje produkten, solskydd SPF 50, används först när huden är helt läkt.',
+      'En ny tatuering behöver två produkter: en oparfymerad flytande tvål och en oparfymerad vårdkräm. Att den är oparfymerad är det enda absoluta kravet — därefter avgör förpackningsstorlek, konsistens och om huden tål produkten i tre veckor. Den tredje produkten, solskydd SPF 50, används först när huden är helt läkt.',
     intro: [
-      'Tatueringssalva är en bransch där marknadsföringen ligger tydligt före forskningen. Burkarna säljs som särskilt framtagna för tatueringar, men innehållsförteckningen är oftast densamma som i en vanlig baskräm från apoteket — det är priset som skiljer. Den här guiden går igenom vilka ingredienser som spelar roll och vilka du inte behöver betala för.',
-      'Praktiskt råd: köp det billigaste alternativet som uppfyller kriterierna. Reagerar huden byter du — men köp inte tre burkar för säkerhets skull. Själva rutinen, alltså när du tvättar och smörjer, hör hemma i eftervårdsguiden.',
+      'Vårdprodukter säljs på två mycket olika prisnivåer, och skillnaden är inte bara marknadsföring. En baskräm för fem euro och en dermatologisk vårdkräm för tjugo uppfyller båda grundkravet — att vara oparfymerade — men de känns inte likadana på huden och räcker inte lika länge. Den här guiden går igenom vad priset faktiskt köper.',
+      'Praktiskt råd: snåla inte med den produkt du stryker på öppen hud två gånger om dagen i tre veckor. Snåla hellre med antalet — två produkter räcker, inte fem. Själva rutinen, alltså när du tvättar och smörjer, hör hemma i eftervårdsguiden.',
     ],
     sections: [
       {
@@ -215,7 +247,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
           'Solskydd SPF 50. Först efter att huden fjällat färdigt — på ett färskt sår används inget solskydd alls.',
         ],
         paragraphs: [
-          'Allt annat är tillbehör. Separata tatueringsoljor, balsam och serum är inte skadliga, men de gör inget som baskrämen inte redan gör. Vill du köpa en produkt gjord för tatueringar för känslans skull är det ett fullt godtagbart skäl — så länge du vet att det är vad du betalar för.',
+          'Två produkter, inte fem. Separata serum, oljor och skrubb hör inte hemma på hud som läker, och varje extra produkt är ytterligare en innehållsförteckning som kan irritera. Lägg pengarna på att de två är bra, inte på att de är många.',
         ],
       },
       {
@@ -281,22 +313,44 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
         ],
       },
       {
+        id: 'mista-maksaa',
+        title: 'Vad är värt att betala för?',
+        lead: 'Tre saker skiljer en burk för fem euro från en för tjugo, och alla tre märks på huden. Den fjärde skillnaden — ordet "tatuering" på etiketten — märks inte.',
+        steps: [
+          {
+            title: 'Förpackningsstorlek och pump',
+            text: 'En stor pumpflaska är billigare per gram och mer hygienisk än en burk du stoppar fingrarna i. En ny tatuering är ett sår, och 400 ml räcker förbi hela läkningen — en liten tub tar slut precis när fjällningen är som värst.',
+          },
+          {
+            title: 'Konsistens för känslig hud',
+            text: 'Dermatologiska vårdkrämer är formulerade för hud som kliar och irriteras lätt. Klådan är fjällningsfasens jobbigaste del, och det är precis där många river och förlorar färg. Reagerar din hud lätt är det här du får något för de extra euron.',
+          },
+          {
+            title: 'Solskydd',
+            text: 'Här ska du inte snåla alls, men inte heller köpa litet. Solskydd ska läggas tjockt och ofta, och en för liten flaska leder automatiskt till ett för tunt lager. Stor förpackning är det billigare sättet att få rätt dos.',
+          },
+        ],
+        paragraphs: [
+          'Det du INTE ska betala för är marknadsföringen. Ett balsam märkt för tatueringar är typiskt en liten 30–50 ml förpackning vars innehållsförteckning inte skiljer sig från apotekets vårdkräm. Betala för storlek, konsistens och pump — inte för ordet på etiketten.',
+        ],
+      },
+      {
         id: 'hinta',
         title: 'Vad kostar produkterna?',
-        lead: 'Hela läkningen kostar ungefär 15–30 € om du köper ur apotekets basutbud. Produkter som är särskilt märkta för tatueringar dubblar lätt summan.',
+        lead: 'Hela läkningen kostar ungefär 15–45 € beroende på om du köper basnivå eller dermatologisk nivå. Båda fungerar; den dyrare är behagligare och räcker längre.',
         table: {
-          columns: ['Produkt', 'Typiskt pris', 'Räcker till'],
+          columns: ['Produkt', 'Basnivå', 'Dermatologisk nivå'],
           rows: [
-            ['Oparfymerad flytande tvål, 250–500 ml', '5–12 €', 'Flera tatueringar'],
-            ['Oparfymerad baskräm, 100–200 ml', '7–15 €', 'Hela läkningen'],
-            ['Vårdkräm med panthenol, 30–100 g', '8–18 €', 'Hela läkningen'],
-            ['Solskydd SPF 50, 200 ml', '10–25 €', 'En sommarsäsong'],
-            ['Balsam märkt för tatueringar, 30–50 ml', '15–30 €', 'En tatuering'],
+            ['Oparfymerad rengöring', '5–8 €', '15–20 €'],
+            ['Vårdkräm för de första veckorna', '6–10 €', '18–30 €'],
+            ['Underhållskräm efter läkningen', '8–12 €', '15–25 €'],
+            ['Solskydd SPF 50, stor förpackning', '12–18 €', '20–30 €'],
+            ['Totalt', 'cirka 30 €', 'cirka 75 €'],
           ],
-          note: 'Prisspannen motsvarar normalnivån hos finska nätapotek och kosmetikbutiker i augusti 2026. De varierar med kampanjer.',
+          note: 'Prisspannen motsvarar normalnivån hos finska nätapotek i augusti 2026 och varierar med kampanjer. Samma produkt räcker oftast till flera tatueringar.',
         },
         paragraphs: [
-          'Sista raden i tabellen är där pengarna går. Ett balsam märkt för tatueringar är ofta en liten förpackning till högt pris — samma ingredienser i en större burk kostar mindre på apotekshyllan. Det gör inte produkten dålig, men priset säger inget om effekten.',
+          'Sätt summan i relation till tatueringen. Även ett litet jobb kostar hundratals euro, och vårdprodukterna är några procent ovanpå det. Det är en billig försäkring för att linjen förblir skarp och färgen jämn — ett fläckigt resultat kostar en retuschsession, som är mångdubbelt dyrare än produkterna.',
         ],
       },
     ],
@@ -304,7 +358,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
     faq: [
       {
         q: 'Måste man köpa en särskild tatueringssalva?',
-        a: 'Nej. En oparfymerad baskräm från apoteket uppfyller samma kriterier som en salva märkt för tatueringar, ofta billigare och i större förpackning. Tatueringsprodukterna är inte dåliga, men de är inte nödvändiga.',
+        a: 'Nej, men vårdkrämens kvalitet spelar roll. Det avgörande är inte ordet "tatuering" på etiketten utan att den är oparfymerad, konsistensen och förpackningsstorleken. Apotekets dermatologiska vårdkräm uppfyller kriterierna bättre än ett litet märkesbalsam — och ofta billigare per milliliter.',
       },
       {
         q: 'Fungerar Bepanthen eller andra panthenolkrämer?',
@@ -320,12 +374,12 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
       },
       {
         q: 'Ska man köpa på studion eller apoteket?',
-        a: 'Båda fungerar. Studion säljer ofta en produkt de vet fungerar med sina egna filmer, vilket är ett bra skäl att köpa där. Apotekets sortiment är billigare och förpackningarna större. Det är ingredienserna som avgör, inte inköpsstället.',
+        a: 'Båda fungerar. Studion säljer ofta en produkt de vet fungerar med sina egna filmer, vilket är ett bra skäl att köpa där. Apotekets sortiment är bredare och förpackningarna större, vilket blir billigare per milliliter. Det är ingredienserna och storleken som avgör, inte inköpsstället.',
       },
     ],
     productsTitle: 'Vad du tittar efter',
     productsIntro:
-      'Kriterierna nedan är samma lista som du går igenom på burkens baksida i butiken. De gäller oavsett märke och oavsett om produkten marknadsförs för tatueringar eller inte.',
+      'Kriterierna nedan är samma lista som du går igenom på burkens baksida i butiken. Varje kategori har både ett basalternativ och ett dermatologiskt — båda uppfyller kriterierna, skillnaden ligger i konsistens och förpackningsstorlek.',
     productCategories: [
       {
         category: 'cleansing',
@@ -340,7 +394,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
       {
         category: 'fragrance-free',
         title: 'Oparfymerad baskräm',
-        text: 'Baskrämen är tatueringssalvans billigare och större motsvarighet. Leta efter märkningen oparfymerad eller fragrance free — det är det enda kriteriet som faktiskt skiljer lämpligt från olämpligt.',
+        text: 'Baskrämen är vårdproduktens billigaste nivå och uppfyller grundkravet. Leta efter märkningen oparfymerad eller fragrance free. Reagerar huden inte alls räcker den här hela läkningen.',
       },
       {
         category: 'moisturising',
@@ -370,11 +424,11 @@ export const tatuoinninHoitotuotteetCard: GuideCardByLocale = {
   fi: {
     title: 'Tatuoinnin hoitotuotteet',
     summary:
-      'Mitä tuotteita tarvitaan oikeasti, mitä ainesosia katsotaan purkin kyljestä ja mitä ei kannata maksaa.',
+      'Mitä tuotteita tarvitaan oikeasti, mitä ainesosia katsotaan purkin kyljestä ja mistä hinnassa kannattaa maksaa.',
   },
   sv: {
     title: 'Produkter för tatueringsvård',
     summary:
-      'Vilka produkter som faktiskt behövs, vilka ingredienser du läser på burken och vad du inte behöver betala för.',
+      'Vilka produkter som faktiskt behövs, vilka ingredienser du läser på burken och vad ett högre pris faktiskt köper.',
   },
 };
