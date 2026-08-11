@@ -221,6 +221,16 @@ export const affiliateProducts: AffiliateProduct[] = [
     },
     affiliateUrl:
       'https://do.cocopanda.fi/t/t?a=1786468191&as=2101505499&t=2&tk=1&cupa_sku=3315248&url=https://cocopanda.fi/product/3315248',
+    /*
+     * Manuell bild-URL. Cocopanda svarar 404 på produktsidan för allt som inte
+     * ser ut som en webbläsare, så og:image gick inte att läsa automatiskt.
+     * SJÄLVA AFFILIATELÄNKEN ÄR OPÅVERKAD — den är verifierad i webbläsare och
+     * landar på rätt produkt med at_gd-parametern satt. Det var bara
+     * bildhämtaren som blockerades. Värdet nedan är produktsidans egen
+     * og:image, avläst i webbläsaren.
+     */
+    imageUrl:
+      'https://cdn.cocopanda.fi/Media/Product/Overlay/8/5ebd1112-a05d-4ef5-926e-f6bcbb66d238_1.jpeg',
   },
   {
     id: 'apobase-creme-440',

@@ -90,10 +90,38 @@ async function fetchWithTimeout(url) {
   }
 }
 
+/**
+ * Kandidat-URL:er för en produktsida. Butiker kör ofta med www som kanonisk
+ * host och svarar mindre vänligt på den andra varianten — Cocopanda gav 404 på
+ * host utan www. Detta är att följa sajtens egen kanoniska form, inte att
+ * kringgå någon spärr: den som medvetet blockerar oss gör det på båda.
+ */
+function hostVariants(url) {
+  const out = [url];
+  try {
+    const parsed = new URL(url);
+    const swapped = new URL(url);
+    swapped.hostname = parsed.hostname.startsWith('www.')
+      ? parsed.hostname.slice(4)
+      : `www.${parsed.hostname}`;
+    out.push(swapped.href);
+  } catch {
+    /* ogiltig URL fångas av anroparen */
+  }
+  return out;
+}
+
 /** Plockar og:image (eller twitter:image) ur en produktsida. */
 async function findImageUrl(productPage) {
-  const res = await fetchWithTimeout(productPage);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  let res;
+  let lastStatus = 0;
+  for (const candidate of hostVariants(productPage)) {
+    res = await fetchWithTimeout(candidate).catch(() => null);
+    if (res?.ok) break;
+    lastStatus = res?.status ?? lastStatus;
+    res = null;
+  }
+  if (!res) throw new Error(`HTTP ${lastStatus || 'ingen kontakt'}`);
   const html = await res.text();
   const patterns = [
     /<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i,
