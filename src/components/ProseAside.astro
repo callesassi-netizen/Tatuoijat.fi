@@ -1,0 +1,156 @@
+---
+/**
+ * Sticky sidokolumn för långlästa sidor (/oppaat/, /hinnat/).
+ *
+ * Syns bara från 1200px — under den bredden finns inte utrymmet, och sidan
+ * faller tillbaka på sin egen innehållsförteckning i brödtexten. Kolumnen
+ * innehåller en innehållsförteckning och valfritt ETT kort: en genväg till det
+ * sidan faktiskt vill att läsaren gör (produkterna i en guide, tekniker­sökningen
+ * på prissidan). Fler kort och det blir en andra meny i stället för en genväg.
+ *
+ * Ligger i .prose-grid (src/styles/global.css) tillsammans med .prose-col.
+ */
+import { type Locale } from '../i18n/ui';
+
+export interface ProseAsideItem {
+  href: string;
+  label: string;
+}
+
+export interface ProseAsideCard {
+  href: string;
+  title: string;
+  text: string;
+  cta: string;
+}
+
+interface Props {
+  /** Rubrik över innehållsförteckningen, används också som aria-label. */
+  title: string;
+  items: ProseAsideItem[];
+  card?: ProseAsideCard;
+  locale?: Locale;
+}
+
+const { title, items, card } = Astro.props;
+---
+
+<aside class="prose-aside" aria-label={title}>
+  <div class="aside-sticky">
+    <nav class="aside-toc">
+      <p class="aside-title">{title}</p>
+      <ol>
+        {
+          items.map((item) => (
+            <li>
+              <a href={item.href}>{item.label}</a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+    {
+      card && (
+        <a class="aside-card" href={card.href}>
+          <span class="aside-card-title">{card.title}</span>
+          <span class="aside-card-text">{card.text}</span>
+          <span class="aside-card-cta">{card.cta} →</span>
+        </a>
+      )
+    }
+  </div>
+</aside>
+
+<style>
+  .prose-aside {
+    display: none;
+  }
+
+  @media (min-width: 1200px) {
+    .prose-aside {
+      display: block;
+      /* Full radhöjd — se noten om align-items i .prose-grid. */
+      height: 100%;
+    }
+    /* Sticky under headern. --header-h sätts av Header.astro från den verkliga
+       höjden, så avståndet stämmer även när logotypens webbfont laddat om. */
+    .aside-sticky {
+      position: sticky;
+      top: calc(var(--header-h, 74px) + 24px);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+  }
+
+  .aside-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--meta);
+    margin: 0 0 10px;
+  }
+  .aside-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .aside-toc a {
+    display: block;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--meta);
+    text-decoration: none;
+    padding: 6px 10px 6px 12px;
+    border-left: 2px solid var(--border-on-paper);
+    transition:
+      color var(--t-fast) var(--ease-out),
+      border-color var(--t-fast) var(--ease-out);
+  }
+  .aside-toc a:hover {
+    color: var(--text);
+    border-left-color: var(--flash);
+  }
+
+  .aside-card {
+    display: block;
+    background: var(--surface);
+    border: var(--card-border);
+    border-left: 3px solid var(--flash);
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    padding: 15px 16px;
+    text-decoration: none;
+    transition: border-color var(--t-fast) var(--ease-out);
+  }
+  .aside-card:hover {
+    border-color: var(--flash);
+  }
+  .aside-card-title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 17px;
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .aside-card-text {
+    display: block;
+    margin-top: 6px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--meta);
+  }
+  .aside-card-cta {
+    display: block;
+    margin-top: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    /* --flash-text, inte --flash: vinrött som TEXT på ljus botten behöver
+       den mörkare varianten för att klara 4.5:1. Se tokens.css. */
+    color: var(--flash-text);
+  }
+</style>
