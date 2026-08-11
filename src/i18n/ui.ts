@@ -267,6 +267,14 @@ export const ui = {
     'guides.read': 'Lue opas',
     'guide.eyebrow': 'Opas',
     'guide.contentsTitle': 'Tässä oppaassa',
+    // Tuotenosto ylös. Lukija, joka tuli hakemalla "mitä ostan", ei jaksa
+    // 1 400 sanaa ennen kuin näkee vastauksen — mutta tuotteet eivät myöskään
+    // saa olla ensimmäinen asia sivulla. Kompromissi: linkki ylös, sisältö alas.
+    'guide.productsTeaser.title': 'Katso tatuoinnin hoitoon sopivat tuotteet',
+    'guide.productsTeaser.text':
+      'Hajusteeton pesu, hoitovoide ja aurinkosuoja — mitä katsoa tuotteesta ja konkreettiset vaihtoehdot.',
+    'guide.productsTeaser.cta': 'Siirry tuotteisiin',
+    'guide.asideProducts': 'Suositellut tuotteet',
     'guide.disclaimer': 'Huomioi',
     'guide.citiesTitle': 'Tatuoijat kaupungeittain',
     'guide.stylesTitle': 'Selaa tyylin mukaan',
@@ -500,6 +508,11 @@ export const ui = {
     'guides.read': 'Läs guiden',
     'guide.eyebrow': 'Guide',
     'guide.contentsTitle': 'I den här guiden',
+    'guide.productsTeaser.title': 'Se produkterna som passar tatueringsvård',
+    'guide.productsTeaser.text':
+      'Oparfymerad rengöring, vårdkräm och solskydd — vad du tittar efter och konkreta alternativ.',
+    'guide.productsTeaser.cta': 'Till produkterna',
+    'guide.asideProducts': 'Rekommenderade produkter',
     'guide.disclaimer': 'Observera',
     'guide.citiesTitle': 'Tatuerare per stad',
     'guide.stylesTitle': 'Bläddra efter stil',

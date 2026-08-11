@@ -1,0 +1,6 @@
+Genererade brand-bilder. Hämtas hit av scripts/fetch-brand-images.mjs:
+
+  npm run images:brand
+
+Tills filerna finns faller sajten tillbaka på de gamla bilderna, så
+inget går sönder — dubbletterna finns bara kvar tills dess.
