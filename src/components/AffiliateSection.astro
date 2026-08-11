@@ -21,6 +21,7 @@ import type { GuideProductCategory } from '../data/guides/types';
 import {
   AFFILIATE_CTA,
   AFFILIATE_DISCLOSURE,
+  affiliatePartners,
   hasLinkableProducts,
   linkableProducts,
   withEpi,
@@ -76,6 +77,7 @@ const blocks = categories.map((category) => ({
               {block.products.map((product) => (
                 <li class="product-card">
                   <span class="product-name">{product.name}</span>
+                  <span class="product-shop">{affiliatePartners[product.partner].name}</span>
                   <span class="product-text">{product.description[locale]}</span>
                   <a
                     class="product-cta"
@@ -170,6 +172,14 @@ const blocks = categories.map((category) => ({
     font-size: 13.5px;
     font-weight: 600;
     color: var(--text);
+  }
+  /* Butiken syns före klicket, inte efter. */
+  .product-shop {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--meta);
   }
   .product-text {
     font-size: 13px;

@@ -3,18 +3,14 @@ import type { Locale } from '../i18n/ui';
 /**
  * AFFILIATE — central konfiguration.
  * ===================================================================
- * STATUS 2026-08-09: Calle är ännu INTE godkänd i något affiliateprogram.
- * `affiliateProducts` är därför TOM med flit. Ingen extern länk, inget pris
- * och ingen produkt får läggas in här förrän ett program är godkänt och
- * länkarna är riktiga — påhittade produkter/priser bryter mot både
- * CLAUDE.md (ingen påhittad data) och konsumentskyddet.
+ * STATUS 2026-08-11: alla sju ansökta program godkända. Produkterna nedan
+ * är hämtade ur annonsörernas EGNA product feeds via Adtraction, så namn,
+ * SKU och URL är verifierade — inget är påhittat.
  *
- * PLANERADE PARTNERS (intern anteckning — renderas ALDRIG på sidan):
- *   - Apteekki 360        (apotek: hajusteeton perusvoide, pesu, SPF)
- *   - Lyko Finland        (hudvård, brett sortiment)
- *   - Stories & Ink       (tattoo aftercare, egen produktlinje)
- *   - Monsters Ink        (proffssortiment — för framtida B2B-innehåll
- *                          riktat mot tatuerare, inte konsumentguiderna)
+ * INGA PRISER. Feeden hade dem, men ett pris i vår HTML är fruset vid
+ * bygget medan butikens pris rör sig. Ett för lågt pris på sajten är i
+ * praktiken vilseledande marknadsföring, och ett för högt kostar klick.
+ * Priset står där det hör hemma: hos butiken, en klick bort.
  *
  * RENDERINGSREGEL (beslut, se AffiliateSection.astro):
  * En produkt UTAN `affiliateUrl` renderas INTE ALLS — inget kort, ingen
@@ -61,43 +57,43 @@ export const affiliatePartners: Record<PartnerKey, AffiliatePartner> = {
   'olo-apteekki': {
     name: 'Olo-apteekki',
     brandId: '1665046581',
-    status: 'pending',
+    status: 'approved',
     note: '7,5 % · EPC 0,73 GBP · konv. 16,1 % · spårning 14 dagar',
   },
   'apteekki-360': {
     name: 'Apteekki 360',
     brandId: '1869094917',
-    status: 'pending',
+    status: 'approved',
     note: '9 % · EPC 0,21 GBP · konv. 12,5 %',
   },
   dermosil: {
     name: 'Dermosil',
     brandId: '1666118743',
-    status: 'pending',
+    status: 'approved',
     note: '3,9 % · EPC 0,44 GBP · konv. 31,7 %',
   },
   cocopanda: {
     name: 'Cocopanda FI',
     brandId: '1786468186',
-    status: 'pending',
+    status: 'approved',
     note: '6 % · EPC 0,30 GBP · konv. 13,8 %',
   },
   nordicfeel: {
     name: 'Nordicfeel FI',
     brandId: '997227792',
-    status: 'pending',
+    status: 'approved',
     note: '6 % · EPC 0,23 GBP · konv. 10,6 %',
   },
   lyko: {
     name: 'Lyko FI',
     brandId: '1278344847',
-    status: 'pending',
+    status: 'approved',
     note: '8 % · EPC 0,17 GBP · konv. 3,2 %',
   },
   bearel: {
     name: 'Bearel',
     brandId: '1747599574',
-    status: 'pending',
+    status: 'approved',
     note: '10 % · EPC 0,91 GBP · konv. 11,1 %',
   },
 };
@@ -166,15 +162,97 @@ export interface AffiliateProduct {
    * Fylls först när programmet är godkänt och länken är verifierad.
    */
   affiliateUrl?: string;
-  /** Programmets namn, för intern spårbarhet. Visas inte. */
-  partner?: string;
+  /**
+   * Vilket program länken går till. Visas numera OCKSÅ på kortet: läsaren ska
+   * se vart klicket leder innan hen klickar. En länk som bara säger "Katso
+   * tuote" och landar på en okänd butik är sämre för både förtroendet och
+   * konverteringen än en som säger "Olo-apteekki".
+   */
+  partner: PartnerKey;
 }
 
 /**
- * TOM tills ett affiliateprogram är godkänt. Lägg INTE in exempelprodukter
- * "för att se hur det ser ut" — de skulle gå live vid nästa deploy.
+ * LÄNKFORMAT. Adtraction ger varje annonsör en EGEN spårningsdomän
+ * (at.oloapteekki.fi, id.apteekki360.fi) — det finns ingen gemensam
+ * track.adtraction.com att gissa sig till. Länkarna nedan är därför
+ * kopierade rakt av ur plattformen, inte konstruerade för hand.
+ *
+ * `a=`   annonsörens spårnings-id (INTE samma som Brand ID i partnerregistret)
+ * `as=`  vår kanal, 2101505499 = tatuoijat.fi
+ * `cupa_sku=` produktens SKU i feeden — ger produktnivå i rapporten
+ * `url=` destinationen, oenkodad
+ *
+ * Feedens `?channable=`-parameter är medvetet borttagen: den är butikens
+ * egen feed-klick-id, tillför inget för oss och är en ren
+ * avskrivningsrisk. Apteekki 360:s `?variant=` är däremot KVAR — den
+ * väljer produktvarianten och utan den landar man på fel storlek.
+ *
+ * `epi` sätts INTE här. Den flätas in per guide och kategori av withEpi()
+ * när kortet renderas, så samma produkt kan ligga i flera guider och ändå
+ * rapporteras separat.
  */
-export const affiliateProducts: AffiliateProduct[] = [];
+export const affiliateProducts: AffiliateProduct[] = [
+  {
+    id: 'sebamed-hydrating-body-wash',
+    name: 'Sebamed Hydrating Body Wash 300 ml, hajusteeton',
+    category: 'cleansing',
+    partner: 'olo-apteekki',
+    description: {
+      fi: 'Hajusteeton nestesaippua, pH 5,5 — sama luku, joka mainitaan kriteereissä yllä. Mieto, ei antibakteerinen eikä kuoriva, ja 300 ml riittää koko paranemisen ajan.',
+      sv: 'Oparfymerad flytande tvål, pH 5,5 — samma värde som står i kriterierna ovan. Mild, varken antibakteriell eller skrubbande, och 300 ml räcker hela läkningen.',
+    },
+    affiliateUrl:
+      'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=9260215&url=https://www.oloapteekki.fi/sebamed-hydrating-body-wash-pesuneste-300-ml-hajusteeton',
+  },
+  {
+    id: 'apobase-creme-440',
+    name: 'Apobase Creme 30 % 440 g, pumppupullo',
+    category: 'aftercare',
+    partner: 'olo-apteekki',
+    description: {
+      fi: 'Keskirasvainen, nopeasti imeytyvä perusvoide ilman hajustetta. Pumppupullo on käytännöllinen tuoreen tatuoinnin kanssa: purkkiin ei tarvitse työntää sormia.',
+      sv: 'Medelfet baskräm utan parfym som drar in snabbt. Pumpflaskan är praktisk med en ny tatuering — du behöver inte stoppa fingrarna i burken.',
+    },
+    affiliateUrl:
+      'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=2206654&url=https://www.oloapteekki.fi/apobase-creme-440-g-emulsiovoide-30',
+  },
+  {
+    id: 'aqualan-200',
+    name: 'Aqualan 200 g emulsiovoide',
+    category: 'fragrance-free',
+    partner: 'olo-apteekki',
+    description: {
+      fi: 'Suomalainen perusvoiteiden peruskauppatavara: hajusteeton, väriaineeton ja halpa. Juuri se tuote, jota tarkoitetaan kun sanotaan ettei tatuointivoidetta tarvitse ostaa erikseen.',
+      sv: 'Den finska baskrämens standardval: oparfymerad, utan färgämnen och billig. Precis den produkt som avses när vi säger att du inte behöver köpa en särskild tatueringssalva.',
+    },
+    affiliateUrl:
+      'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=9251855&url=https://www.oloapteekki.fi/aqualan-200-g-emulsiovoide',
+  },
+  {
+    id: 'apobase-carbamide-5',
+    name: 'Apobase Carbamide 5 % 250 g',
+    category: 'moisturising',
+    partner: 'apteekki-360',
+    description: {
+      fi: 'Ureaa sisältävä perusvoide parantuneen tatuoinnin ylläpitoon. Urea kirvelee avoimella iholla, joten tämä otetaan käyttöön vasta kun kuoriutuminen on kokonaan ohi.',
+      sv: 'Baskräm med urea för underhåll av en läkt tatuering. Urea svider på öppen hud, så den här tas i bruk först när fjällningen är helt över.',
+    },
+    affiliateUrl:
+      'https://id.apteekki360.fi/t/t?a=1869094923&as=2101505499&t=2&tk=1&cupa_sku=7541907095804&url=https://apteekki360.fi/products/apobase-carbamide-5-percent-emulsiovoide?variant=42453239595260',
+  },
+  {
+    id: 'cerave-invisible-spf50',
+    name: 'CeraVe Invisible Hydrating Sunscreen SPF 50+, 177 ml',
+    category: 'spf',
+    partner: 'olo-apteekki',
+    description: {
+      fi: 'SPF 50+ vartalolle, 177 ml. Iso pakkaus on tässä pointti: aurinkosuojaa kuluu paljon, ja liian pieni pullo johtaa liian ohueen kerrokseen. Hajusteeton.',
+      sv: 'SPF 50+ för kroppen, 177 ml. Storleken är hela poängen: solskydd går åt fort, och en för liten flaska leder till ett för tunt lager. Oparfymerad.',
+    },
+    affiliateUrl:
+      'https://at.oloapteekki.fi/t/t?a=1665046586&as=2101505499&t=2&tk=1&cupa_sku=9553813&url=https://www.oloapteekki.fi/cerave-invisible-hydrating-sunscreen-spf50-aurinkosuojavoide-177-ml',
+  },
+];
 
 /** Klickbar = har en riktig affiliatelänk. Enda porten till extern CTA. */
 export function isLinkable(product: AffiliateProduct): boolean {
