@@ -23,6 +23,7 @@ import AffiliateSection from '../AffiliateSection.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getGuideContent, plannedGuideTitles } from '../../data/guides';
 import { guideImage } from '../../lib/guideImages';
+import { sectionImageAfter } from '../../lib/guideSectionImages';
 import {
   getCitiesSorted,
   getStylesSorted,
@@ -268,6 +269,27 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
                   )}
                 </div>
               )}
+
+              {(() => {
+                // Bilden ligger INNE i sektionen, sist. Då hör den till det man
+                // just läst i stället för att bli ett stumt avbrott mellan två
+                // rubriker — och den ärver sektionens aria-labelledby.
+                const image = sectionImageAfter(guideKey, section.id, locale);
+                return (
+                  image && (
+                    <figure class="section-figure">
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        widths={[720, 1440]}
+                        sizes="(min-width: 1200px) 720px, 100vw"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </figure>
+                  )
+                );
+              })()}
             </section>
           ))
         }
@@ -834,6 +856,30 @@ const disclosure = AFFILIATE_DISCLOSURE[locale];
     line-height: 1.55;
     color: var(--meta);
     margin: 12px 2px 0;
+  }
+
+  /* Sektionsbild. Poängen är luft, inte längd: bilden är beskuren extremt
+     brett så att den bryter textmassan utan att skjuta ned nästa rubrik mer
+     än ett par rader. 3/1 vid 720 px kolumn = 240 px. På mobil vore samma
+     förhållande en remsa — där släpps den till 2/1. aspect-ratio sätts på
+     bilden själv, inte på figure, så höjden är reserverad redan innan
+     bilden laddats (CLS). */
+  .section-figure {
+    margin: 30px 0 6px;
+  }
+  .section-figure :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: var(--r-card);
+    border: var(--card-border);
+  }
+  @media (min-width: 720px) {
+    .section-figure :global(img) {
+      aspect-ratio: 3 / 1;
+    }
   }
 
   .callout {
