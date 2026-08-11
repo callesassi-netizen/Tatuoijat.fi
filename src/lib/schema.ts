@@ -6,8 +6,14 @@ import type { CollectionEntry } from 'astro:content';
  * tooling per fil). Höj detta datum manuellt vid större innehålls-/data-
  * genomgångar (t.ex. berikningsbatcher som walkIn-importen). Används både
  * som synlig text och som `dateModified` i schema.org.
+ *
+ * Bor i content-dates.mjs sedan sitemapen fick `<lastmod>` — konfigurationen
+ * körs utanför Astro-kontexten och kan bara importera ES-moduler. Re-export
+ * här så att inget anropsställe behöver ändras, och så att den synliga
+ * stämpeln och sitemapen omöjligt kan visa olika datum.
  */
-export const CONTENT_UPDATED = '2026-07-15';
+import { CONTENT_UPDATED, GUIDES_UPDATED, lastmodFor } from './content-dates.mjs';
+export { CONTENT_UPDATED, GUIDES_UPDATED };
 
 /**
  * Serialisering för JSON-LD i set:html. JSON.stringify escapar INTE `<`,
@@ -140,8 +146,14 @@ export function faqLd(questions: { q: string; a: string }[]) {
  * Article — oppaat/guider (/oppaat/{slug}/). Katalogsidorna är CollectionPage,
  * men en guide är redaktionellt innehåll och ska märkas som sådant: det är den
  * signal AI-sök läser för "vem skrev det här och när". `author`/`publisher` är
- * sajten själv (ingen personbyline finns), `dateModified` följer CONTENT_UPDATED
- * precis som övriga sidtyper (GEO.md §5).
+ * sajten själv (ingen personbyline finns).
+ *
+ * `dateModified` läses ur samma tabell som sitemapens `<lastmod>` i stället för
+ * att alltid vara CONTENT_UPDATED. Annars hade en guide påstått 2026-07-15 i
+ * schemat medan sitemapen sa 2026-08-11 om samma URL — två motstridiga svar på
+ * en fråga Google ställer på båda ställena, vilket är sämre än att bara svara
+ * en gång. `datePublished` står kvar på CONTENT_UPDATED: den ska inte flytta
+ * sig när texten redigeras.
  */
 export function articleLd(options: {
   headline: string;
@@ -159,7 +171,7 @@ export function articleLd(options: {
     inLanguage: options.locale,
     mainEntityOfPage: { '@type': 'WebPage', '@id': options.url },
     url: options.url,
-    dateModified: CONTENT_UPDATED,
+    dateModified: lastmodFor(options.url),
     datePublished: CONTENT_UPDATED,
     author: { '@type': 'Organization', name: options.siteName, url: options.siteUrl },
     publisher: { '@type': 'Organization', name: options.siteName, url: options.siteUrl },

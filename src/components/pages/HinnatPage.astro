@@ -10,7 +10,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProseAside from '../ProseAside.astro';
 import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { hinnat } from '../../data/hinnat';
-import { jsonLdString, breadcrumbLd, faqLd, CONTENT_UPDATED } from '../../lib/schema';
+import { jsonLdString, breadcrumbLd, faqLd, GUIDES_UPDATED } from '../../lib/schema';
 import { citiesIndexPath, guidePath, guidesIndexPath } from '../../lib/routes';
 import { publishedGuides } from '../../lib/guides.mjs';
 import { guideCards } from '../../data/guides';
@@ -94,7 +94,7 @@ const asideItems = [
     <div class="container sheet-inner">
       <div class="prose-grid">
       <div class="prose-col">
-        <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
+        <p class="freshness">{t('common.updated', { date: GUIDES_UPDATED })}</p>
         {c.intro.map((paragraph) => <p class="lead">{paragraph}</p>)}
 
         <!-- Hintataulukko -->

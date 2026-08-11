@@ -38,7 +38,7 @@ import {
   articleLd,
   howToLd,
   faqLd,
-  CONTENT_UPDATED,
+  GUIDES_UPDATED,
 } from '../../lib/schema';
 import { citiesIndexPath, cityPath, guidesIndexPath, guidePath } from '../../lib/routes';
 import { CITY_INDEX_MIN_STUDIOS } from '../../lib/indexing.mjs';
@@ -160,7 +160,7 @@ const asideItems = [
           <a href={p(guidesIndexPath(locale))}>{t('guides.h1')}</a>
         </nav>
 
-        <p class="freshness">{t('common.updated', { date: CONTENT_UPDATED })}</p>
+        <p class="freshness">{t('common.updated', { date: GUIDES_UPDATED })}</p>
 
         {
           showTopDisclosure && (
