@@ -16,6 +16,14 @@
  * per definition på produktbilden. Ett manuellt `imageUrl` på produkten
  * vinner över og:image för de fall där butiken satt en logotyp där.
  *
+ * NÄR EN BUTIK BLOCKERAR HELT. Cocopanda svarar 404 på både produktsida och
+ * CDN för allt som inte är en webbläsare. Där hjälper varken host-varianten
+ * eller ett manuellt `imageUrl`. Lösningen är att spara den enda bilden för
+ * hand till src/assets/tuotteet/{id}.jpg — skriptet hoppar då över den för
+ * alltid, eftersom filen redan finns. Vi lägger medvetet INTE på en falsk
+ * webbläsar-UA eller en Referer från butikens egen domän: att kringgå en
+ * spärr som någon satt upp med flit är inte vårt beslut att fatta åt dem.
+ *
  * KÖRLÄGEN
  *   node scripts/fetch-product-images.mjs          hämtar bara det som saknas
  *   node scripts/fetch-product-images.mjs --force  hämtar om allt
@@ -192,6 +200,17 @@ async function main() {
       // Medvetet bara en varning. Se filhuvudet: ett bygge ska inte falla på
       // att en butiks CDN har en dålig dag.
       console.warn(`[tuotekuvat] ⚠ ${product.id}: ${error.message} — kortet renderas utan bild`);
+      // Har produkten redan ett manuellt imageUrl och ÄNDÅ misslyckas, är det
+      // ingen tillfällig strul: butiken släpper inte igenom automatiserade
+      // anrop. Då är nästa steg manuellt, och det ska stå här i loggen i
+      // stället för att den som kör kommandot ska behöva gissa.
+      if (product.imageUrl) {
+        console.warn(
+          `[tuotekuvat]   ↳ manuell imageUrl gick inte heller igenom. Butiken blockerar\n` +
+            `[tuotekuvat]   ↳ automatiska anrop. Spara bilden för hand från produktsidan som\n` +
+            `[tuotekuvat]   ↳ src/assets/tuotteet/${product.id}.jpg — skriptet hoppar sedan över den.`,
+        );
+      }
       failed += 1;
     }
   }
