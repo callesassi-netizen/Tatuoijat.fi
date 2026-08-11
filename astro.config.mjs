@@ -4,6 +4,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { CITY_INDEX_MIN_STUDIOS, svCitySlug } from './src/lib/indexing.mjs';
 import { guidesIndexPath, guidesIndexIsThin } from './src/lib/guides.mjs';
+import { lastmodFor } from './src/lib/content-dates.mjs';
 
 // Domän KÖPT 2026-07-04: tatuoijat.fi (Hostingpalvelu, DNS ska pekas
 // mot Netlify DNS). Allt (canonical, hreflang, sitemap, schema.org)
@@ -102,6 +103,15 @@ export default defineConfig({
     // i stället i BaseLayouts <head>.
     sitemap({
       filter: (page) => !noindexedCityPaths.has(new URL(page).pathname),
+      // <lastmod> per sidtyp (11/8 2026). Utan den har Google ingen signal om
+      // att guiderna och prissidan skrivits om — crawlern får upptäcka det
+      // genom att råka besöka sidan igen, vilket på en ny sajt kan ta veckor.
+      //
+      // Datumen kommer ur src/lib/content-dates.mjs, INTE ur byggtidpunkten:
+      // ett lastmod som ändras vid varje deploy påstår att hela katalogen
+      // skrivits om varje gång, och då slutar Google läsa fältet. Se filen
+      // för hela resonemanget.
+      serialize: (item) => ({ ...item, lastmod: lastmodFor(item.url) }),
     }),
   ],
   i18n: {
