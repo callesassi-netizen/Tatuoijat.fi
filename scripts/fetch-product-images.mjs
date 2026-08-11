@@ -26,7 +26,6 @@
  * bygget dessutom oberoende av butikernas upptid.
  */
 import { mkdir, writeFile, readdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -42,15 +41,27 @@ const UA =
  * Läser id, ev. imageUrl och destinations-URL ur affiliate.ts.
  * Regex och inte import: skriptet ska kunna köras utan att TypeScript-
  * kompilering eller Astro-kontexten finns på plats.
+ *
+ * RADBRYTNINGAR. Första versionen delade filen på `\n  {\n` och hittade noll
+ * produkter på Windows, eftersom git checkar ut med CRLF där. Filen normaliseras
+ * därför först, och uppdelningen sker på `id: '` i stället för på indentering —
+ * den är okänslig för både radslut och hur Prettier råkar bryta raderna.
  */
 async function readProducts() {
-  const src = await import('node:fs/promises').then((fs) => fs.readFile(SOURCE, 'utf8'));
-  const blocks = src.split(/\n  \{\n/).slice(1);
+  const raw = await import('node:fs/promises').then((fs) => fs.readFile(SOURCE, 'utf8'));
+  const src = raw.replace(/\r\n/g, '\n');
+
+  const arrayStart = src.indexOf('export const affiliateProducts');
+  if (arrayStart === -1) throw new Error('hittade inte affiliateProducts i affiliate.ts');
+  const arrayEnd = src.indexOf('\n];', arrayStart);
+  const body = src.slice(arrayStart, arrayEnd === -1 ? undefined : arrayEnd);
+
   const products = [];
-  for (const block of blocks) {
-    const id = /id: '([^']+)'/.exec(block)?.[1];
-    const affiliateUrl = /affiliateUrl:\s*\n?\s*'([^']+)'/.exec(block)?.[1];
-    const imageUrl = /imageUrl:\s*'([^']+)'/.exec(block)?.[1];
+  for (const chunk of body.split(/\bid: '/).slice(1)) {
+    const id = chunk.slice(0, chunk.indexOf("'"));
+    // \s* matchar radbrytningen: värdet ligger på raden efter nyckeln.
+    const affiliateUrl = /affiliateUrl:\s*'([^']+)'/.exec(chunk)?.[1];
+    const imageUrl = /imageUrl:\s*'([^']+)'/.exec(chunk)?.[1];
     if (!id || !affiliateUrl) continue;
     const target = /[?&]url=([^&]+)/.exec(affiliateUrl)?.[1];
     if (!target) continue;
@@ -122,7 +133,16 @@ async function main() {
   );
   const products = await readProducts();
   if (products.length === 0) {
-    console.log('[tuotekuvat] inga produkter med affiliateUrl — hoppar över');
+    // Skilj de två fallen åt. "Inga produkter" är ett giltigt tillstånd;
+    // "kunde inte läsa filen" är en bugg och ska inte se likadan ut.
+    const hasAny = /affiliateUrl:/.test(
+      await import('node:fs/promises').then((fs) => fs.readFile(SOURCE, 'utf8')),
+    );
+    console.log(
+      hasAny
+        ? '[tuotekuvat] ⚠ affiliate.ts innehåller affiliateUrl men inget kunde tolkas — parsern behöver ses över'
+        : '[tuotekuvat] inga produkter med affiliateUrl — hoppar över',
+    );
     return;
   }
 

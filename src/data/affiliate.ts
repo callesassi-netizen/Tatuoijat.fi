@@ -163,6 +163,12 @@ export interface AffiliateProduct {
    */
   affiliateUrl?: string;
   /**
+   * Överstyr bildhämtningen. Sätts bara när butikens og:image är fel — några
+   * butiker lägger sin logotyp där i stället för produktbilden.
+   * Se scripts/fetch-product-images.mjs.
+   */
+  imageUrl?: string;
+  /**
    * Vilket program länken går till. Visas numera OCKSÅ på kortet: läsaren ska
    * se vart klicket leder innan hen klickar. En länk som bara säger "Katso
    * tuote" och landar på en okänd butik är sämre för både förtroendet och
