@@ -8,7 +8,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "generate:og": "node scripts/generate-og.mjs"
+    "generate:og": "node scripts/generate-og.mjs",
+    "images:sync": "node scripts/fetch-product-images.mjs --force",
+    "prebuild": "node scripts/fetch-product-images.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",

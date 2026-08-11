@@ -1,0 +1,6 @@
+Produktbilder hämtas hit av scripts/fetch-product-images.mjs.
+Filnamnet är produktens id i src/data/affiliate.ts.
+
+Kör `npm run images:sync` och committa resultatet — då är bygget
+oberoende av butikernas CDN. `npm run build` kör samma skript men
+hämtar bara det som saknas, och fäller aldrig bygget.

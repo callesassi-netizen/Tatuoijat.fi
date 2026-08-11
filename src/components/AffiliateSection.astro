@@ -16,6 +16,8 @@
  * sektionen, före första kortet, och bara när minst en klickbar produkt finns.
  * Så länge listan är tom finns ingen märkning att visa — och inget att märka.
  */
+import { Image } from 'astro:assets';
+import { productImage } from '../lib/productImages';
 import type { Locale } from '../i18n/ui';
 import type { GuideProductCategory } from '../data/guides/types';
 import {
@@ -49,7 +51,12 @@ const showDisclosure = hasLinkableProducts();
 const blocks = categories.map((category) => ({
   ...category,
   epi: `${epiPrefix}-${category.category}`,
-  products: linkableProducts(category.category),
+  products: linkableProducts(category.category).map((product) => ({
+    product,
+    // Kan saknas: bilden hämtas av ett skript som medvetet inte fäller bygget
+    // om butikens CDN strular. Kortet renderas då utan bild.
+    image: productImage(product.id),
+  })),
 }));
 ---
 
@@ -74,19 +81,33 @@ const blocks = categories.map((category) => ({
           <p class="product-category-text">{block.text}</p>
           {block.products.length > 0 && (
             <ul class="product-list">
-              {block.products.map((product) => (
-                <li class="product-card">
-                  <span class="product-name">{product.name}</span>
-                  <span class="product-shop">{affiliatePartners[product.partner].name}</span>
-                  <span class="product-text">{product.description[locale]}</span>
-                  <a
-                    class="product-cta"
-                    href={withEpi(product.affiliateUrl!, block.epi)}
-                    rel="sponsored nofollow noopener"
-                    target="_blank"
-                  >
-                    {ctaLabel}
-                  </a>
+              {block.products.map(({ product, image }) => (
+                <li class:list={['product-card', image && 'product-card--media']}>
+                  {image && (
+                    <span class="product-media">
+                      <Image
+                        src={image}
+                        alt=""
+                        widths={[120, 240]}
+                        sizes="72px"
+                        loading="lazy"
+                        densities={undefined}
+                      />
+                    </span>
+                  )}
+                  <span class="product-body">
+                    <span class="product-name">{product.name}</span>
+                    <span class="product-shop">{affiliatePartners[product.partner].name}</span>
+                    <span class="product-text">{product.description[locale]}</span>
+                    <a
+                      class="product-cta"
+                      href={withEpi(product.affiliateUrl!, block.epi)}
+                      rel="sponsored nofollow noopener"
+                      target="_blank"
+                    >
+                      {ctaLabel}
+                    </a>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -167,6 +188,44 @@ const blocks = categories.map((category) => ({
     gap: 4px;
     border-top: var(--card-border);
     padding-top: 12px;
+  }
+  /* Med bild blir kortet en rad: miniatyr vänster, text höger. Utan bild
+     behåller det exakt sitt gamla utseende — layouten hänger alltså inte på
+     att bildhämtningen lyckades. */
+  .product-card--media {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .product-media {
+    flex: none;
+    width: 72px;
+    /* Fast kvadrat: höjden är reserverad innan bilden laddat, så inget hoppar.
+       Produktbilder från feeds har vitt bakgrundstryck och blir därför en vit
+       platta även i mörkt läge — det är rätt, inte en bugg. */
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #fff;
+    border: var(--card-border);
+    border-radius: 8px;
+    padding: 5px;
+  }
+  .product-media :global(img) {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+  .product-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    min-width: 0;
   }
   .product-name {
     font-size: 13.5px;
