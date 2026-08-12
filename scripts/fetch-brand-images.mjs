@@ -77,6 +77,14 @@ const BATCHES = [
       'pyyhe-lasi': '322f70a0-efeb-4c78-b012-22ffac74db35',
     },
   },
+  {
+    // Omgång 3: bilden till startsidans ledtextblock.
+    base: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Dto4zDpeXg598XhBAhP53pvrPp/hf_20260812_111116_',
+    kind: 'section',
+    images: {
+      'tyopoyta-luonnoskirja': 'f2fe6c84-fac2-4b27-bc31-ea0fa6058352',
+    },
+  },
 ];
 
 async function fetchWithTimeout(url) {

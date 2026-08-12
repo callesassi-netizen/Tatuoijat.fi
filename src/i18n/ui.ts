@@ -62,6 +62,24 @@ export const ui = {
     'home.popular.eyebrow': 'Studiot',
     'home.popular.title': 'Tutustu studioihin',
     'home.all': 'Kaikki',
+    // Ledtextblock på startsidan (Calle 12/8 2026). Startsidan hade 397 ord
+    // totalt, varav löptexten var EN mening — Google hade inget att citera och
+    // byggde sitt utdrag av studiokortens namn i stället för av meta-
+    // beskrivningen. Det här stycket är sidans enda riktiga prosa och bär
+    // därför de termer startsidan faktiskt kan vinna: tatuointiliikkeet,
+    // Suomen tatuoijat, tyyli, hinta. Skrivet som råd, inte som nyckelords-
+    // radda — texten ska tåla att läsas av en människa som just landat.
+    'home.guide.eyebrow': 'Mistä aloittaa',
+    'home.guide.title': 'Näin löydät oikean tatuoijan',
+    'home.guide.p1':
+      'Suomessa toimii satoja tatuoijia ja tatuointiliikkeitä, ja hyvä lopputulos ratkeaa jo ennen kuin neula koskee ihoa. Tekijä kannattaa valita käsialan eikä välimatkan perusteella: blackwork, fineline, realismi ja perinteinen ovat eri taitolajeja, eikä sama artisti ole vahvin kaikissa.',
+    'home.guide.p2':
+      'Aloita siis tyylistä ja katso portfolioita rinnakkain. Kun tekijä tuntuu oikealta, tarkista hintataso ja varaa aika suoraan artistilta. Lue jälkihoito-ohjeet jo ennen ensimmäistä istuntoa — väri istuu ja viiva pysyy terävänä vasta, kun iho on saanut parantua rauhassa.',
+    'home.guide.linkPrices': 'Mitä tatuointi maksaa?',
+    'home.guide.linkAftercare': 'Tatuoinnin jälkihoito',
+    'home.guide.linkAll': 'Kaikki oppaat',
+    'home.guide.imageAlt':
+      'Tatuoijan työpöytä: luonnoskirja viivapiirroksineen, tatuointikone ja mustekupit.',
     'home.styles.eyebrow': 'Tyylit',
     'home.styles.title': 'Selaa tyylin mukaan',
     // Piilinapit tyyliraidalle: kosketuksella raitaa voi vetää, hiirellä ei —
@@ -335,6 +353,17 @@ export const ui = {
     'home.popular.eyebrow': 'Studior',
     'home.popular.title': 'Utforska studior',
     'home.all': 'Alla',
+    'home.guide.eyebrow': 'Var börjar man',
+    'home.guide.title': 'Så hittar du rätt tatuerare',
+    'home.guide.p1':
+      'I Finland finns hundratals tatuerare och tatueringsstudior, och resultatet avgörs långt innan nålen möter huden. Välj artist efter handlag, inte efter avstånd: blackwork, fineline, realism och traditionellt är olika hantverk, och samma tatuerare är sällan starkast i alla.',
+    'home.guide.p2':
+      'Börja alltså med stilen och lägg portfolios bredvid varandra. När artisten känns rätt, kolla prisläget och boka tiden direkt hos hen. Läs eftervårdsråden redan före första sessionen — färgen sätter sig och linjen håller sig skarp först när huden fått läka i fred.',
+    'home.guide.linkPrices': 'Vad kostar en tatuering?',
+    'home.guide.linkAftercare': 'Eftervård av tatuering',
+    'home.guide.linkAll': 'Alla guider',
+    'home.guide.imageAlt':
+      'En tatuerares arbetsbord: skissbok med linjeteckningar, tatueringsmaskin och bläckkoppar.',
     'home.styles.eyebrow': 'Stilar',
     'home.styles.title': 'Bläddra efter stil',
     'home.styles.prev': 'Föregående stilar',
