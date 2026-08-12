@@ -34,7 +34,11 @@ import {
   styleDisplayName,
 } from '../../lib/content';
 import { jsonLdString, webSiteLd } from '../../lib/schema';
-import { citiesIndexPath, cityPath } from '../../lib/routes';
+import { citiesIndexPath, cityPath, guidePath, guidesIndexPath } from '../../lib/routes';
+import { guides } from '../../lib/guides.mjs';
+// Bild till ledtextblocket. EGEN bild, inte lånad från stilbandet — se noten i
+// scripts/fetch-brand-images.mjs om varför återanvända bilder blev ett problem.
+import tyopoytaFallback from '../../assets/bilder/tatuoija-tyossa.png';
 
 interface Props {
   locale: Locale;
@@ -46,6 +50,19 @@ const p = (path: string) => localePath(locale, path);
 
 // Egen mörk studiobild i stället för Realismi-plattans, som låg på tre ställen.
 const premiumTausta = brandImage('studio-yolla', premiumTaustaFallback);
+
+const tyopoyta = brandImage('tyopoyta-luonnoskirja', tyopoytaFallback);
+
+/**
+ * Länkarna i ledtextblocket. Jälkihoito-guiden slås upp i registret i stället
+ * för att skrivas som en sträng: slugen finns i två språkvarianter och ändras
+ * den någon gång ska startsidan följa med av sig själv. Saknas guiden (den är
+ * `published` i dag) faller blocket tillbaka på länken till hela guidelistan
+ * i stället för att rendera en död länk.
+ */
+const jalkihoitoRoute = guides.find(
+  (guide) => guide.key === 'tatuoinnin-jalkihoito' && guide.status === 'published',
+);
 
 const cities = await getCitiesSorted();
 const styles = await getStylesSorted();
@@ -296,6 +313,50 @@ const webSite = webSiteLd(
           </section>
         )
       }
+
+      <!-- Ledtext + bild (Calle 12/8 2026). Startsidan hade en enda mening
+           löptext, så Google byggde sitt sökutdrag av studiokortens namn i
+           stället för av meta-beskrivningen. Blocket ligger EFTER korten:
+           besökaren ska mötas av riktiga studios först, men texten ska ändå
+           stå högt nog för att väga i indexeringen. Det är också startsidans
+           enda interna länkar till guiderna, som annars bara nås via menyn. -->
+      <section class="section section--intro" aria-labelledby="intro-title">
+        <div class="intro-grid">
+          <div class="intro-body">
+            <p class="eyebrow">{t('home.guide.eyebrow')}</p>
+            <h2 class="section-title" id="intro-title">{t('home.guide.title')}</h2>
+            <p class="intro-text">{t('home.guide.p1')}</p>
+            <p class="intro-text">{t('home.guide.p2')}</p>
+            <ul class="intro-links">
+              <li><a class="ink-link" href={p('/hinnat/')}>{t('home.guide.linkPrices')} →</a></li>
+              {
+                jalkihoitoRoute && (
+                  <li>
+                    <a class="ink-link" href={p(guidePath(jalkihoitoRoute, locale))}>
+                      {t('home.guide.linkAftercare')} →
+                    </a>
+                  </li>
+                )
+              }
+              <li>
+                <a class="ink-link" href={p(guidesIndexPath(locale))}>
+                  {t('home.guide.linkAll')} →
+                </a>
+              </li>
+            </ul>
+          </div>
+          <figure class="intro-media">
+            <Image
+              src={tyopoyta}
+              alt={t('home.guide.imageAlt')}
+              widths={[480, 960]}
+              sizes="(min-width: 900px) 460px, 100vw"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </section>
 
       <!-- Selaa tyylin mukaan — sajtens visuella centrum, extra luft -->
       <section class="section section--styles inked" aria-labelledby="styles-title">
@@ -635,6 +696,69 @@ const webSite = webSiteLd(
     margin-top: 34px;
     padding: 0 4px;
   }
+  /* Ledtextblocket. Bilden ligger till höger på desktop och överst på mobil —
+     texten är det som ska läsas, bilden är det som ska få blocket att andas.
+     Ingen egen bakgrund: blocket ska läsa som en paus i kortflödet, inte som
+     ännu ett kort. */
+  .section--intro {
+    margin-top: 44px;
+  }
+  .intro-grid {
+    display: grid;
+    gap: 22px;
+  }
+  .intro-text {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 14px;
+    max-width: 62ch;
+  }
+  .intro-links {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .intro-media {
+    margin: 0;
+    border-radius: var(--r-card);
+    overflow: hidden;
+    border: var(--card-border);
+  }
+  .intro-media :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  @media (min-width: 900px) {
+    .intro-grid {
+      /* Textkolumnen är TAKAD, inte 1fr. Med 1fr blev spalten ~840 px medan
+         styckena stannade vid sina 62ch — mellanrummet hamnade som en tom
+         remsa mitt i blocket i stället för runt bilden. Nu tar bilden det
+         utrymme texten inte använder. */
+      grid-template-columns: minmax(0, 620px) minmax(0, 1fr);
+      gap: 44px;
+      align-items: center;
+    }
+    /* Bilden fyller sin kolumn i höjd i stället för att låsas till 4/3 —
+       texten bestämmer blockets höjd, bilden följer med. */
+    .intro-media,
+    .intro-media :global(img) {
+      height: 100%;
+    }
+    .intro-media :global(img) {
+      aspect-ratio: auto;
+      min-height: 280px;
+    }
+  }
+
   /* Mörkt fullbreddsband inuti det ljusa arket — sajtens visuella centrum.
      `.inked` (tokens.css) deklarerar om de semantiska färgerna, så rubrik,
      pilknappar och kort följer med utan en enda extra regel här. Negativ

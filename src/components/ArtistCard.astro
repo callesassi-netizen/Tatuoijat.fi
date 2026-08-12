@@ -65,7 +65,7 @@ const href = localePath(locale, `/artistit/${slug}/`);
     transform: translateY(-4px);
     box-shadow: 0 16px 32px rgba(16, 16, 20, 0.16);
   }
-  .artist-card:hover .card-media :global(svg) {
+  .artist-card:hover .card-media :global(.monogram-plate) {
     transform: scale(1.03);
   }
 
@@ -75,7 +75,7 @@ const href = localePath(locale, `/artistit/${slug}/`);
     background: var(--ink);
     overflow: hidden;
   }
-  .card-media :global(svg) {
+  .card-media :global(.monogram-plate) {
     transition: transform var(--t-med) var(--ease-out);
   }
   .card-badge {
@@ -172,7 +172,7 @@ const href = localePath(locale, `/artistit/${slug}/`);
     .artist-card:hover {
       transform: none;
     }
-    .artist-card:hover .card-media :global(svg) {
+    .artist-card:hover .card-media :global(.monogram-plate) {
       transform: none;
     }
   }
