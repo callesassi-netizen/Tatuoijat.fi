@@ -223,6 +223,26 @@ export const ui = {
     'artist.instagram.fineprint':
       'Sisältö ladataan Instagramista (Meta), joka voi asettaa evästeitä.',
     'artist.instagram.fallbackCta': 'Katso Instagramissa',
+    // --- Utbyggd profil (12/8 2026) ---
+    // Sammanfattningen sätts ihop av HELA meningar. Finskan böjer ortnamn
+    // (nameLocative: "Helsingissä") och stilnamn på olika sätt, så en enda mall
+    // med luckor blir grammatiskt fel för en läsare. Varje mening står därför
+    // för sig och läggs bara till när fältet finns.
+    'artist.summaryTitle': 'Tiivistelmä',
+    'artist.summary.inCity': '{name} on tatuointiliike {city}.',
+    'artist.summary.noCity': '{name} on tatuointiliike Suomessa.',
+    'artist.summary.styles': 'Liikkeen tyylejä ovat {styles}.',
+    'artist.summary.ftaa':
+      'Studio kuuluu Suomen Tatuointiartistien Liittoon (FTAA), jonka jäsenyys edellyttää hygienia- ja ensiapuosaamista.',
+    'artist.summary.walkIn': 'Liike ottaa myös walk in -asiakkaita ilman ajanvarausta.',
+    'artist.stylesTitle': 'Tyylit',
+    'artist.nearbyTitle': 'Muut tatuointiliikkeet {city}',
+    'artist.nearbyAll': 'Kaikki tatuoijat {city}',
+    'artist.guidesTitle': 'Ennen kuin varaat ajan',
+    'artist.guidePrices': 'Mitä tatuointi maksaa?',
+    'artist.guidePain': 'Kuinka paljon tatuointi sattuu?',
+    'artist.guideFirst': 'Ensimmäinen tatuointi',
+    'artist.guideAll': 'Kaikki oppaat',
     'artist.about': 'Tietoa',
     'artist.trust': 'Luotettavuus',
     'artist.verified': 'Vahvistettu profiili — artisti hallinnoi tietojaan itse',
@@ -518,6 +538,21 @@ export const ui = {
     'artist.instagram.fineprint':
       'Innehållet laddas från Instagram (Meta) och kan använda cookies.',
     'artist.instagram.fallbackCta': 'Se på Instagram',
+    'artist.summaryTitle': 'Sammanfattning',
+    'artist.summary.inCity': '{name} är en tatueringsstudio i {city}.',
+    'artist.summary.noCity': '{name} är en tatueringsstudio i Finland.',
+    'artist.summary.styles': 'Studions stilar är {styles}.',
+    'artist.summary.ftaa':
+      'Studion är medlem i Finlands Tatueringsartisters Förbund (FTAA), där medlemskap förutsätter hygien- och första hjälpen-kunskap.',
+    'artist.summary.walkIn': 'Studion tar även emot walk in-kunder utan tidsbokning.',
+    'artist.stylesTitle': 'Stilar',
+    'artist.nearbyTitle': 'Andra tatueringsstudior i {city}',
+    'artist.nearbyAll': 'Alla tatuerare i {city}',
+    'artist.guidesTitle': 'Innan du bokar tid',
+    'artist.guidePrices': 'Vad kostar en tatuering?',
+    'artist.guidePain': 'Hur ont gör en tatuering?',
+    'artist.guideFirst': 'Din första tatuering',
+    'artist.guideAll': 'Alla guider',
     'artist.about': 'Om',
     'artist.trust': 'Trygghet',
     'artist.verified': 'Verifierad profil — artisten hanterar sina uppgifter själv',

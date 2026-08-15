@@ -22,14 +22,28 @@ import {
   localizedBody,
   cityDisplayName,
   styleDisplayName,
+  getStyleCityPairs,
+  getStudios,
+  sortStudios,
 } from '../../lib/content';
 import { pricing } from '../../data/pricing';
 import { jsonLdString, breadcrumbLd, tattooParlorLd, personLd, CONTENT_UPDATED } from '../../lib/schema';
-import { citiesIndexPath, cityPath } from '../../lib/routes';
+import { citiesIndexPath, cityPath, styleCityPath, guidePath, guidesIndexPath } from '../../lib/routes';
+import { guides } from '../../lib/guides.mjs';
 
 interface Props {
   studio: CollectionEntry<'studios'>;
   locale: Locale;
+}
+
+/**
+ * "a, b ja c" respektive "a, b och c". Ett komma före sista ledet vore fel på
+ * båda språken, och en ren join(', ') läser som en tabell mitt i en mening.
+ */
+function listSentence(items: string[], loc: Locale): string {
+  if (items.length <= 1) return items[0] ?? '';
+  const last = items[items.length - 1]!;
+  return `${items.slice(0, -1).join(', ')} ${loc === 'sv' ? 'och' : 'ja'} ${last}`;
 }
 
 const { studio, locale } = Astro.props;
@@ -52,6 +66,85 @@ const styleNames = data.styles.map((slug) => {
 });
 
 const bio = localizedBody(studio.body, locale);
+
+/**
+ * Utbyggnaden av profilen (12/8 2026) — se filhuvudets not. Allt nedan härleds
+ * ur befintliga fält; ingenting hittas på.
+ */
+
+/** Stilarna med sin egen beskrivning och bästa möjliga vidarelänk. */
+const styleDetails = data.styles
+  .map((slug) => {
+    const style = styles.find((entry) => entry.id === slug);
+    if (!style) return null;
+    const intro = localizedBody(style.body, locale);
+    return {
+      id: style.id,
+      name: styleDisplayName(style, locale),
+      // Första meningen räcker: profilen ska ge en aning om stilen, inte
+      // upprepa hela stilsidan den länkar till.
+      intro: intro ? `${intro.split(/(?<=\.)\s/)[0]}` : '',
+      style,
+    };
+  })
+  .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
+
+/**
+ * Stil+stad-sidor genereras bara över en tröskel (getStyleCityPairs), så
+ * länken måste kontrolleras — annars pekar profilen på en 404. Finns paret
+ * inte faller vi tillbaka på stilsidan för hela landet.
+ */
+const stylePairs = await getStyleCityPairs();
+const pairKeys = new Set(stylePairs.map((pair) => `${pair.styleId}:${pair.cityId}`));
+const styleLinkFor = (styleId: string) =>
+  city && pairKeys.has(`${styleId}:${city.id}`)
+    ? styleCityPath(styleId, city, locale)
+    : `/tyylit/${styleId}/`;
+
+/** Andra liikkeet i samma stad — den överblick en katalog är ensam om. */
+const allStudios = await getStudios();
+const cityNeighbours = city
+  ? sortStudios(
+      allStudios.filter(
+        (entry) => entry.data.city === city.id && entry.id !== studio.id,
+      ),
+    ).slice(0, 6)
+  : [];
+
+/**
+ * De två guider som är mest relevanta FÖRE bokningen. Slås upp i registret så
+ * att en slug-ändring inte lämnar 182 döda länkar efter sig, och hoppas över
+ * tyst om guiden skulle avpubliceras.
+ */
+const profileGuides = [
+  { key: 'tatuoinnin-kipu', label: t('artist.guidePain') },
+  { key: 'ensimmainen-tatuointi', label: t('artist.guideFirst') },
+]
+  .map((entry) => {
+    const route = guides.find(
+      (guide) => guide.key === entry.key && guide.status === 'published',
+    );
+    return route ? { route, label: entry.label } : null;
+  })
+  .filter((entry): entry is { route: (typeof guides)[number]; label: string } => entry !== null);
+
+/**
+ * Sammanfattningen sätts ihop av hela meningar, inte av en mall med luckor.
+ * Finskan böjer ortnamn (nameLocative) och stilnamn olika, och en mall som
+ * försöker böja åt båda hållen blir fel för en finsk läsare. Varje mening är
+ * därför grammatiskt komplett i sig och läggs bara till när fältet finns.
+ */
+const summarySentences = [
+  h1City
+    ? t('artist.summary.inCity', { name: data.name, city: h1City })
+    : t('artist.summary.noCity', { name: data.name }),
+  styleNames.length > 0
+    ? t('artist.summary.styles', { styles: listSentence(styleNames, locale) })
+    : '',
+  data.ftaaMember ? t('artist.summary.ftaa') : '',
+  data.walkIn ? t('artist.summary.walkIn') : '',
+].filter(Boolean);
+
 const placeLine = [data.district, displayPlace].filter(Boolean).join(', ');
 
 // Artisterna (personerna) på studion. Ensam artist med samma namn som
@@ -368,6 +461,14 @@ const personEntries = persons.map((person) =>
       </aside>
 
       <div class="main-col">
+        <!-- Sammanfattning. Står först i arket: den som kommit hit från en
+             sökning på studions namn ska direkt se vad sidan tillför utöver
+             studions egna kanaler. -->
+        <section class="summary" aria-labelledby="summary-title">
+          <h2 class="visually-hidden" id="summary-title">{t('artist.summaryTitle')}</h2>
+          <p class="summary-text">{summarySentences.join(' ')}</p>
+        </section>
+
         <!-- Portfolio: kärnan -->
         <section class="portfolio" aria-labelledby="portfolio-title">
           <div class="portfolio-head">
@@ -462,12 +563,169 @@ const personEntries = persons.map((person) =>
             </section>
           )
         }
+
+        <!-- Stilarna förklarade, var och en länkad vidare. Det här är den enda
+             ytan på sidan som studions egna kanaler inte kan erbjuda: vem mer
+             som gör samma stil på samma ort. -->
+        {
+          styleDetails.length > 0 && (
+            <section class="about" aria-labelledby="styles-title">
+              <h2 class="about-title" id="styles-title">
+                {t('artist.stylesTitle', { name: data.name })}
+              </h2>
+              <ul class="style-list">
+                {styleDetails.map((detail) => (
+                  <li class="style-item">
+                    <a class="style-item-name ink-link" href={p(styleLinkFor(detail.id))}>
+                      {detail.name}
+                    </a>
+                    {detail.intro && <p class="style-item-text">{detail.intro}</p>}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <!-- Andra studios i samma stad. Rubriken använder h1City, inte
+             cityName: finskan kräver lokativ ("Muut tatuointiliikkeet
+             Helsingissä"), och nominativ läser som en rubrik med ett
+             påklistrat ortnamn. På svenska är de två identiska. -->
+        {
+          cityNeighbours.length > 0 && city && cityName && (
+            <section class="about" aria-labelledby="nearby-title">
+              <h2 class="about-title" id="nearby-title">
+                {t('artist.nearbyTitle', { city: h1City })}
+              </h2>
+              <ul class="nearby-list">
+                {cityNeighbours.map((neighbour) => (
+                  <li>
+                    <a class="nearby-link" href={p(`/artistit/${neighbour.id}/`)}>
+                      <span class="nearby-name">{neighbour.data.name}</span>
+                      {neighbour.data.district && (
+                        <span class="nearby-place">{neighbour.data.district}</span>
+                      )}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p class="nearby-all">
+                <a class="ink-link" href={p(cityPath(city, locale))}>
+                  {t('artist.nearbyAll', { city: h1City })} →
+                </a>
+              </p>
+            </section>
+          )
+        }
+
+        <!-- Guidelänkar. Den som söker på en studios namn har ofta inte bokat
+             än, och de här tre frågorna kommer före bokningen. -->
+        <section class="about" aria-labelledby="guides-title">
+          <h2 class="about-title" id="guides-title">{t('artist.guidesTitle')}</h2>
+          <ul class="guide-link-list">
+            <li><a class="ink-link" href={p('/hinnat/')}>{t('artist.guidePrices')} →</a></li>
+            {profileGuides.map((entry) => (
+              <li>
+                <a class="ink-link" href={p(guidePath(entry.route, locale))}>
+                  {entry.label} →
+                </a>
+              </li>
+            ))}
+            <li>
+              <a class="ink-link" href={p(guidesIndexPath(locale))}>
+                {t('artist.guideAll')} →
+              </a>
+            </li>
+          </ul>
+        </section>
       </div>
     </div>
   </div>
 </BaseLayout>
 
 <style>
+  /* Utbyggnaden 12/8 2026 — se filhuvudet. */
+  .summary {
+    margin: 0 0 4px;
+  }
+  .summary-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text);
+    margin: 0;
+    max-width: 62ch;
+  }
+  .style-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .style-item-name {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    font-size: 16px;
+    color: var(--text);
+  }
+  .style-item-text {
+    margin: 4px 0 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--meta);
+    max-width: 62ch;
+  }
+  .nearby-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 8px;
+  }
+  .nearby-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 14px;
+    background: var(--surface);
+    border: var(--card-border);
+    border-radius: var(--r-btn);
+    text-decoration: none;
+    transition: border-color var(--t-fast) var(--ease-out);
+  }
+  .nearby-link:hover {
+    border-color: var(--flash);
+  }
+  .nearby-name {
+    font-size: 14.5px;
+    color: var(--text);
+  }
+  .nearby-place {
+    font-size: 12px;
+    color: var(--meta);
+  }
+  .nearby-all {
+    margin: 14px 0 0;
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .guide-link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  @media (min-width: 700px) {
+    .nearby-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
   .artist-hero {
     position: relative;
     z-index: 0;
