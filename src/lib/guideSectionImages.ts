@@ -89,6 +89,26 @@ export const guideSectionImages: Record<string, GuideSectionImage[]> = {
       },
     },
   ],
+  'tatuoinnin-kipu': [
+    {
+      after: 'mihin-sattuu-eniten',
+      name: 'kipu-olkapaa',
+      alt: {
+        fi: 'Lähikuva olkapäästä ja yläselästä pehmeässä ikkunavalossa.',
+        sv: 'Närbild på en axel och övre rygg i mjukt fönsterljus.',
+      },
+    },
+  ],
+  'ensimmainen-tatuointi': [
+    {
+      after: 'kuka-saa-tatuoida',
+      name: 'ensimmainen-steriili',
+      alt: {
+        fi: 'Avaamattomat steriilipakatut neulat, saippua ja kertakäyttökäsineet työtasolla.',
+        sv: 'Oöppnade sterilförpackade nålar, tvål och engångshandskar på en arbetsbänk.',
+      },
+    },
+  ],
   'tatuoinnin-hoitotuotteet': [
     {
       after: 'rasva',

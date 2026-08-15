@@ -1,6 +1,7 @@
 ---
 name: "Maria Viirros"
-place: "Uusimaa"
+city: helsinki
+place: Helsinki
 styles: [blackwork]
 premium: false
 instagram: "mariaviirros"

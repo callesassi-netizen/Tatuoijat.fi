@@ -21,6 +21,10 @@ export const guideImages: Record<string, ImageMetadata> = {
   'tatuoinnin-hoitotuotteet': brandImage('hoitotuotteet-hylly', jalkihoitoPyyhe),
   'tatuointi-ja-sauna': brandImage('sauna-lauteet', selkaEnkeli),
   'tatuointi-ja-uiminen': brandImage('jarvi-laituri', ornamental),
+  // Tillagda 12/8 2026. Fallbacken är medvetet en bild som redan används som
+  // hero någon annanstans — den syns bara tills images:brand körts.
+  'tatuoinnin-kipu': brandImage('kipu-kasivarsi', kasivarsiMotiivi),
+  'ensimmainen-tatuointi': brandImage('ensimmainen-konsultaatio', studioVaalea),
 };
 
 export const guideImageFallback: ImageMetadata = studioVaalea;

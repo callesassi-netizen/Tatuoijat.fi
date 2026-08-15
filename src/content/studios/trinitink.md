@@ -1,6 +1,7 @@
 ---
 name: "TRINITINK"
-place: "Uusimaa"
+city: helsinki
+place: Helsinki
 styles: [blackwork, fineline]
 premium: false
 instagram: "miamarintattoo"

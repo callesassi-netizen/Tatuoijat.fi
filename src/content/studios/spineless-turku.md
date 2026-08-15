@@ -1,7 +1,8 @@
 ---
 name: "Spineless Turku"
+artistInstagrams: ["latkaspineless"]
 city: turku
-styles: [traditional, blackwork, lettering]
+styles: [blackwork, lettering, traditional]
 premium: false
 instagram: "mailanderminea"
 address: "Juhannuskatu 10 20100 Turku"

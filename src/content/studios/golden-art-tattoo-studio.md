@@ -1,7 +1,8 @@
 ---
 name: "Golden art tattoo studio"
+artistInstagrams: ["marianne_tattooart"]
 city: helsinki
-styles: [fineline, blackwork]
+styles: [blackwork, fineline, realismi]
 premium: false
 website: "https://www.goldenart.fi"
 instagram: "tattoosbytomi"

@@ -119,6 +119,38 @@ export const ui = {
     'footer.tagline': 'Suomen tatuoijat yhdessä paikassa.',
     'nav.prices': 'Hinnat',
     'a11y.skipToContent': 'Siirry sisältöön',
+    // --- /tyylit/ och /tatuoijat/ (12/8 2026) ---
+    // Bada indexsidorna arvde site.description och sa alltsa exakt samma sak om
+    // sig sjalva i SERPen. /tyylit/ var dessutom 75 ord totalt och lag pa
+    // position 19 for "tyylit" — hela sidan var ett rutnat utan en enda mening.
+    // Texten nedan bar de termer sidtypen kan vinna: tatuointityylit plus
+    // stilnamnen, som ocksa ar de sokningar stilsidorna redan har bast CTR pa.
+    'styles.metaTitle':
+      'Tatuointityylit — blackwork, fineline ja muut | {site}',
+    'styles.metaDescription':
+      'Kaikki tatuointityylit yhdessä paikassa: blackwork, fineline, realismi, japanilainen, traditional ja lisää. Katso mikä sopii sinulle ja löydä tekijä.',
+    'styles.answer':
+      'Tatuointityyli ratkaisee enemmän kuin motiivi. Sama aihe näyttää täysin erilaiselta ohuella fineline-viivalla ja täyteen mustattuna blackworkina, ja tekijät erikoistuvat: harva on yhtä vahva kaikissa. Valitse siis tyyli ensin ja tekijä sen mukaan.',
+    'styles.helpTitle':
+      'Miten valitset tyylin?',
+    'styles.helpP1':
+      'Katso ensin, kestääkö idea aikaa. Ohut viiva ja pienet yksityiskohdat pehmenevät vuosien mittaan, kun taas vahva mustaus ja selkeät muodot pysyvät luettavina pidempään. Sijoituspaikka vaikuttaa samaan suuntaan: kädet ja jalat kuluvat nopeammin kuin selkä tai olkavarsi.',
+    'styles.helpP2':
+      'Kun tyyli on selvillä, katso portfolioita rinnakkain ja etsi tekijä, jonka käsiala toistuu samanlaisena työstä toiseen. Se kertoo enemmän kuin yksittäinen onnistunut kuva. Hintataso vaihtelee tyylin mukaan — realismi ja iso mustaus vievät enemmän tunteja kuin pieni fineline.',
+    'styles.helpLinkPrices':
+      'Mitä tatuointi maksaa?',
+    'styles.helpLinkCities':
+      'Selaa kaupungin mukaan',
+    'styles.helpLinkAftercare':
+      'Tatuoinnin jälkihoito',
+    'cities.metaTitle':
+      'Tatuointiliikkeet Suomessa — {n} kaupunkia | {site}',
+    'cities.metaDescription':
+      'Selaa Suomen tatuointiliikkeet kaupungin mukaan: Helsinki, Tampere, Turku, Oulu ja {n} muuta paikkakuntaa. Katso tekijät, tyylit ja yhteystiedot.',
+    'cities.answer':
+      'Tatuointiliikkeitä löytyy {n} paikkakunnalta ympäri Suomen. Valitse kaupunki nähdäksesi sen tekijät, tyylit ja yhteystiedot — tai selaa tyylin mukaan, jos käsiala ratkaisee enemmän kuin välimatka.',
+    'cities.walkInLink':
+      'Walk in -tatuoinnit ilman ajanvarausta',
     'cities.top.title': 'Suurimmat kaupungit',
     'cities.all.title': 'Kaikki kaupungit A–Ö',
     'breadcrumb.home': 'Etusivu',
@@ -164,6 +196,9 @@ export const ui = {
     'artist.metaTitle': '{name} — tyylit ja yhteystiedot | {city}',
     // Fallback när studionamnet gör fullmallen längre än 60 tecken
     'artist.metaTitleShort': '{name} — tyylit ja yhteystiedot',
+    // Steg 2 i titelkaskaden (ArtistPage): kort OCH behåller staden, eftersom
+    // "tatuointiliike {stad}" är en sökning folk faktiskt gör.
+    'artist.metaTitleCity': '{name} — tatuointiliike {city}',
     'artist.book': 'Varaa aika',
     'artist.call': 'Soita',
     'artist.hours': 'Aukioloajat',
@@ -188,6 +223,26 @@ export const ui = {
     'artist.instagram.fineprint':
       'Sisältö ladataan Instagramista (Meta), joka voi asettaa evästeitä.',
     'artist.instagram.fallbackCta': 'Katso Instagramissa',
+    // --- Utbyggd profil (12/8 2026) ---
+    // Sammanfattningen sätts ihop av HELA meningar. Finskan böjer ortnamn
+    // (nameLocative: "Helsingissä") och stilnamn på olika sätt, så en enda mall
+    // med luckor blir grammatiskt fel för en läsare. Varje mening står därför
+    // för sig och läggs bara till när fältet finns.
+    'artist.summaryTitle': 'Tiivistelmä',
+    'artist.summary.inCity': '{name} on tatuointiliike {city}.',
+    'artist.summary.noCity': '{name} on tatuointiliike Suomessa.',
+    'artist.summary.styles': 'Liikkeen tyylejä ovat {styles}.',
+    'artist.summary.ftaa':
+      'Studio kuuluu Suomen Tatuointiartistien Liittoon (FTAA), jonka jäsenyys edellyttää hygienia- ja ensiapuosaamista.',
+    'artist.summary.walkIn': 'Liike ottaa myös walk in -asiakkaita ilman ajanvarausta.',
+    'artist.stylesTitle': 'Tyylit',
+    'artist.nearbyTitle': 'Muut tatuointiliikkeet {city}',
+    'artist.nearbyAll': 'Kaikki tatuoijat {city}',
+    'artist.guidesTitle': 'Ennen kuin varaat ajan',
+    'artist.guidePrices': 'Mitä tatuointi maksaa?',
+    'artist.guidePain': 'Kuinka paljon tatuointi sattuu?',
+    'artist.guideFirst': 'Ensimmäinen tatuointi',
+    'artist.guideAll': 'Kaikki oppaat',
     'artist.about': 'Tietoa',
     'artist.trust': 'Luotettavuus',
     'artist.verified': 'Vahvistettu profiili — artisti hallinnoi tietojaan itse',
@@ -216,6 +271,7 @@ export const ui = {
     // ("fine line tattoo turku") och där ingen omgivande sats kräver kasus.
     'styleCity.eyebrow': 'Tyyli ja kaupunki',
     'styleCity.metaTitle': '{attrCap}tatuointi {city} — {n} tatuoijaa | {site}',
+    'styleCity.metaTitleShort': '{attrCap}tatuointi {city} — {n} tatuoijaa',
     'styleCity.metaDescription':
       '{style}: {n} tekijää {cityLoc}. Katso portfoliot, tyylit ja yhteystiedot — ja ota yhteyttä suoraan studioon.',
     'styleCity.h1': '{attrCap}tatuointi {city}',
@@ -397,6 +453,32 @@ export const ui = {
     'footer.tagline': 'Finlands tatuerare på ett ställe.',
     'nav.prices': 'Priser',
     'a11y.skipToContent': 'Hoppa till innehållet',
+    'styles.metaTitle':
+      'Tatueringsstilar — blackwork, fineline m.fl. | {site}',
+    'styles.metaDescription':
+      'Alla tatueringsstilar på ett ställe: blackwork, fineline, realism, japansk, traditionell och fler. Se vilken som passar dig och hitta en tatuerare.',
+    'styles.answer':
+      'Stilen avgör mer än motivet. Samma idé ser helt olika ut i tunn fineline och i helsvart blackwork, och tatuerare specialiserar sig: få är lika starka i allt. Välj därför stil först och artist därefter.',
+    'styles.helpTitle':
+      'Hur väljer du stil?',
+    'styles.helpP1':
+      'Börja med att fråga om idén tål tid. Tunna linjer och små detaljer mjuknar med åren, medan kraftig svärta och tydliga former förblir läsbara längre. Placeringen drar åt samma håll: händer och fötter slits fortare än rygg och överarm.',
+    'styles.helpP2':
+      'När stilen är vald, lägg portfolios bredvid varandra och leta efter en tatuerare vars handlag ser likadant ut från verk till verk. Det säger mer än en enskild lyckad bild. Prisläget följer också stilen — realism och stora svarta ytor tar fler timmar än en liten fineline.',
+    'styles.helpLinkPrices':
+      'Vad kostar en tatuering?',
+    'styles.helpLinkCities':
+      'Bläddra efter stad',
+    'styles.helpLinkAftercare':
+      'Eftervård av tatuering',
+    'cities.metaTitle':
+      'Tatueringsstudior efter stad — {n} orter | {site}',
+    'cities.metaDescription':
+      'Bläddra bland Finlands tatueringsstudior efter stad: Helsingfors, Tammerfors, Åbo, Uleåborg och {n} orter till. Se artister, stilar och kontaktuppgifter.',
+    'cities.answer':
+      'Det finns tatueringsstudior på {n} orter runt om i Finland. Välj stad för att se dess artister, stilar och kontaktuppgifter — eller bläddra efter stil, om handlaget avgör mer än avståndet.',
+    'cities.walkInLink':
+      'Walk in-tatueringar utan tidsbokning',
     'cities.top.title': 'Största städerna',
     'cities.all.title': 'Alla städer A–Ö',
     'breadcrumb.home': 'Startsidan',
@@ -432,6 +514,7 @@ export const ui = {
     // P2a — se fi-kommentaren ovan.
     'artist.metaTitle': '{name} — stilar och kontaktuppgifter | {city}',
     'artist.metaTitleShort': '{name} — stilar och kontaktuppgifter',
+    'artist.metaTitleCity': '{name} — tatueringsstudio {city}',
     'artist.book': 'Boka tid',
     'artist.call': 'Ring',
     'artist.hours': 'Öppettider',
@@ -455,6 +538,21 @@ export const ui = {
     'artist.instagram.fineprint':
       'Innehållet laddas från Instagram (Meta) och kan använda cookies.',
     'artist.instagram.fallbackCta': 'Se på Instagram',
+    'artist.summaryTitle': 'Sammanfattning',
+    'artist.summary.inCity': '{name} är en tatueringsstudio i {city}.',
+    'artist.summary.noCity': '{name} är en tatueringsstudio i Finland.',
+    'artist.summary.styles': 'Studions stilar är {styles}.',
+    'artist.summary.ftaa':
+      'Studion är medlem i Finlands Tatueringsartisters Förbund (FTAA), där medlemskap förutsätter hygien- och första hjälpen-kunskap.',
+    'artist.summary.walkIn': 'Studion tar även emot walk in-kunder utan tidsbokning.',
+    'artist.stylesTitle': 'Stilar',
+    'artist.nearbyTitle': 'Andra tatueringsstudior i {city}',
+    'artist.nearbyAll': 'Alla tatuerare i {city}',
+    'artist.guidesTitle': 'Innan du bokar tid',
+    'artist.guidePrices': 'Vad kostar en tatuering?',
+    'artist.guidePain': 'Hur ont gör en tatuering?',
+    'artist.guideFirst': 'Din första tatuering',
+    'artist.guideAll': 'Alla guider',
     'artist.about': 'Om',
     'artist.trust': 'Trygghet',
     'artist.verified': 'Verifierad profil — artisten hanterar sina uppgifter själv',
@@ -475,6 +573,7 @@ export const ui = {
     // Svenskan böjer inte ortnamnet, så "i {city}" räcker överallt.
     'styleCity.eyebrow': 'Stil och stad',
     'styleCity.metaTitle': '{attrCap}tatuering i {city} — {n} tatuerare | {site}',
+    'styleCity.metaTitleShort': '{attrCap}tatuering i {city} — {n} tatuerare',
     'styleCity.metaDescription':
       '{style}: {n} studior i {city}. Se portfolios, stilar och kontaktuppgifter — och hör av dig direkt till studion.',
     'styleCity.h1': '{attrCap}tatuering i {city}',

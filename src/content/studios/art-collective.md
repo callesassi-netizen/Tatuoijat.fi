@@ -1,7 +1,8 @@
 ---
 name: "Art Collective"
+artistInstagrams: ["art.a.la.anna"]
 city: hyvinkaa
-styles: [realismi, blackwork]
+styles: [blackwork, realismi]
 premium: false
 website: "https://www.artcollective.fi/"
 instagram: "artelysior"

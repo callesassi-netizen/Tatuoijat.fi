@@ -1,6 +1,6 @@
 ---
 name: "Tattoo Sampo"
-place: "pirkanmaa"
+place: Nokia
 styles: [realismi, fineline, ornamental]
 premium: false
 address: "Talvitie 19"

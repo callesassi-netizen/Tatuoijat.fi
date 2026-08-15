@@ -31,7 +31,7 @@ import type { GuideCardByLocale, GuideContentByLocale } from './types';
  */
 export const tatuoinninHoitotuotteet: GuideContentByLocale = {
   fi: {
-    metaTitle: 'Tatuoinnin hoitotuotteet — mitä oikeasti tarvitset | Tatuoijat.fi',
+    metaTitle: 'Tatuoinnin hoitotuotteet — mitä tarvitset | Tatuoijat.fi',
     metaDescription:
       'Tatuoinnin hoitotuotteet: millainen rasva ja saippua tuoreelle tatuoinnille sopii, mistä hinnassa kannattaa maksaa ja milloin aurinkosuoja otetaan käyttöön.',
     eyebrow: 'Opas',
@@ -225,7 +225,7 @@ export const tatuoinninHoitotuotteet: GuideContentByLocale = {
       'Tämä opas on yleistä tietoa tuotevalinnasta, ei lääketieteellistä neuvontaa. Noudata ensisijaisesti tatuoijasi ohjetta. Jos iho tulehtuu, kuumottaa tai oireet pahenevat, ota yhteyttä terveydenhuoltoon.',
   },
   sv: {
-    metaTitle: 'Produkter för tatueringsvård — vad du faktiskt behöver | Tatuoijat.fi',
+    metaTitle: 'Produkter för tatueringsvård — vad du behöver | Tatuoijat.fi',
     metaDescription:
       'Produkter för tatueringsvård: vilken salva och tvål som passar en ny tatuering, vad ett högre pris faktiskt köper och när solskyddet ska in.',
     eyebrow: 'Guide',

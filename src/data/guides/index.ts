@@ -9,6 +9,8 @@ import {
 } from './tatuoinnin-hoitotuotteet';
 import { tatuointiJaSauna, tatuointiJaSaunaCard } from './tatuointi-ja-sauna';
 import { tatuointiJaUiminen, tatuointiJaUiminenCard } from './tatuointi-ja-uiminen';
+import { tatuoinninKipu, tatuoinninKipuCard } from './tatuoinnin-kipu';
+import { ensimmainenTatuointi, ensimmainenTatuointiCard } from './ensimmainen-tatuointi';
 
 /**
  * Kopplingen mellan routing-registret (src/lib/guides.mjs) och innehållet.
@@ -22,6 +24,8 @@ export const guideContent: Record<string, GuideContentByLocale> = {
   'tatuoinnin-hoitotuotteet': tatuoinninHoitotuotteet,
   'tatuointi-ja-sauna': tatuointiJaSauna,
   'tatuointi-ja-uiminen': tatuointiJaUiminen,
+  'tatuoinnin-kipu': tatuoinninKipu,
+  'ensimmainen-tatuointi': ensimmainenTatuointi,
 };
 
 /** Kort-texterna på hubben. Samma nycklar som guideContent. */
@@ -32,6 +36,8 @@ export const guideCards: Record<string, GuideCardByLocale> = {
   'tatuoinnin-hoitotuotteet': tatuoinninHoitotuotteetCard,
   'tatuointi-ja-sauna': tatuointiJaSaunaCard,
   'tatuointi-ja-uiminen': tatuointiJaUiminenCard,
+  'tatuoinnin-kipu': tatuoinninKipuCard,
+  'ensimmainen-tatuointi': ensimmainenTatuointiCard,
 };
 
 /**

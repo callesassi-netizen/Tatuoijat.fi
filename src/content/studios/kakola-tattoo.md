@@ -1,11 +1,12 @@
 ---
 name: "Kakola Tattoo"
-place: "Varsinais-suomi"
+city: turku
+place: Turku
 styles: [realismi, blackwork, geometrinen]
 premium: false
 website: "https://www.kakolatattoo.fi"
 instagram: "juhokakolatattoo"
-address: "Graniittilinnakatu 2 N"
+address: "Graniittilinnankatu 2 N"
 images: []
 verified: false
 ftaaMember: true

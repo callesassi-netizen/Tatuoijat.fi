@@ -1,5 +1,5 @@
 ---
-name: "Tear Garden Tattoo co/ Papa Don't Preach"
+name: "Tear Garden Tattoo"
 city: tampere
 styles: [blackwork, fineline, ornamental]
 premium: false

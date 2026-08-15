@@ -1,6 +1,6 @@
 ---
 name: "Face the pain tattoo"
-place: "Etelä-pohjanmaa"
+place: Kurikka
 styles: [realismi, blackwork]
 premium: false
 instagram: "facethepaintattoo"

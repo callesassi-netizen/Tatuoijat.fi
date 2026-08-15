@@ -1,6 +1,6 @@
 ---
 name: "Henna's Ink"
-place: "Pohjois-Pohjanmaa"
+place: Haapavesi
 styles: [fineline, blackwork]
 premium: false
 website: "https://hennavisuals.webnode.fi/"

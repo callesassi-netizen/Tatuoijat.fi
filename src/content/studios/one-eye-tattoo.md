@@ -1,7 +1,9 @@
 ---
 name: "One Eye Tattoo"
+walkIn: true
+artistInstagrams: ["lunakreativa"]
 city: helsinki
-styles: [realismi]
+styles: [ornamental, realismi, traditional]
 premium: false
 website: "https://www.oneeyetattoo.fi"
 instagram: "oneeyepete"

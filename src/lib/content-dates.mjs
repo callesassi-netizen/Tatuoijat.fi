@@ -41,11 +41,12 @@
 export const CONTENT_UPDATED = '2026-07-15';
 
 /**
- * Guiderna och prissidan. 2026-08-11: alla sex guider fick sektionsbilder och
- * produktsektioner, prissidan byggdes om till tvåkolumnslayout och länkar nu
+ * Guiderna och prissidan. 2026-08-12: två nya guider (kipu, ensimmäinen
+ * tatuointi) ur sökordsanalysen, och de sex befintliga fick sektionsbilder och
+ * produktsektioner. Prissidan byggdes om till tvåkolumnslayout och länkar nu
  * till samtliga guider.
  */
-export const GUIDES_UPDATED = '2026-08-11';
+export const GUIDES_UPDATED = '2026-08-12';
 
 /**
  * Ruttfamiljer som räknas som guide-/prisinnehåll. Både fi och sv, eftersom
