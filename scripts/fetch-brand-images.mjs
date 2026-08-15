@@ -78,6 +78,17 @@ const BATCHES = [
     },
   },
   {
+    // Omgång 4: de två nya guiderna (kipu, ensimmäinen tatuointi).
+    base: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Dto4zDpeXg598XhBAhP53pvrPp/hf_20260815_164841_',
+    kind: 'hero',
+    images: {
+      'kipu-kasivarsi': 'caecdd7c-e9cc-42df-ab79-deca14c23266',
+      'kipu-olkapaa': '2035734c-3f84-46cb-be3b-c165fc202314',
+      'ensimmainen-konsultaatio': 'fd2978f1-adb0-449b-aba0-4c908f676945',
+      'ensimmainen-steriili': '099f50f8-a223-4f31-84d9-59b446ff9033',
+    },
+  },
+  {
     // Omgång 3: bilden till startsidans ledtextblock.
     base: 'https://d8j0ntlcm91z4.cloudfront.net/user_3Dto4zDpeXg598XhBAhP53pvrPp/hf_20260812_111116_',
     kind: 'section',

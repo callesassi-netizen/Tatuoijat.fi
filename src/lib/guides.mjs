@@ -85,6 +85,23 @@ export const guides = [
     slug: { fi: 'tatuoinnin-hoitotuotteet', sv: 'produkter-for-tatueringsvard' },
     targetPhrase: 'tatuoinnin hoitotuotteet, tatuointivoide',
   },
+  // Tillagda 12/8 2026 ur sökordsanalysen. Båda klustren saknade täckning helt
+  // och ställs FÖRE studioval — alltså av besökaren katalogen vill nå, till
+  // skillnad från vårdguiderna som läses efter att tatueringen redan är gjord.
+  {
+    key: 'tatuoinnin-kipu',
+    status: 'published',
+    order: 7,
+    slug: { fi: 'tatuoinnin-kipu', sv: 'hur-ont-gor-en-tatuering' },
+    targetPhrase: 'mihin tatuointi sattuu vähiten, kuinka paljon tatuointi sattuu',
+  },
+  {
+    key: 'ensimmainen-tatuointi',
+    status: 'published',
+    order: 8,
+    slug: { fi: 'ensimmainen-tatuointi', sv: 'din-forsta-tatuering' },
+    targetPhrase: 'ensimmäinen tatuointi, tatuointi alaikäiselle, kuka saa tatuoida',
+  },
 ];
 
 /** @type {GuideRoute[]} */
