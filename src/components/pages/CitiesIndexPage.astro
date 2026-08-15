@@ -22,7 +22,10 @@ const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const cities = await getCitiesSorted();
 const counts = await studioCountByCity();
-const title = `${t('nav.cities')} — ${t('site.tagline')} | ${t('site.name')}`;
+// Egen titel och beskrivning (12/8 2026) — sidan delade site.description med
+// /tyylit/, alltsa samma mening om tva olika indexsidor.
+const cityCount = cities.length;
+const title = t('cities.metaTitle', { n: String(cityCount), site: t('site.name') });
 
 // Topp 9 efter antal (3×3-grid), resten i den kompakta listan
 const byCount = [...cities].sort(
@@ -47,7 +50,7 @@ const heroBg = await heroBgFor('cities');
 
 <BaseLayout
   title={title}
-  description={t('site.description')}
+  description={t('cities.metaDescription', { n: String(cityCount) })}
   locale={locale}
   path={citiesIndexPath(locale)}
   altPath={citiesIndexPath(locale === 'fi' ? 'sv' : 'fi')}
@@ -62,6 +65,15 @@ const heroBg = await heroBgFor('cities');
   </section>
   <div class="sheet grain">
     <div class="container sheet-inner">
+      <!-- Svara-först, och sajtens enda brödtextlänk till /walk-in/. Den sidan
+           låg helt utan inlänkar från innehåll trots att GSC visar riktig
+           efterfrågan: "turku walk in tattoo", "walk in tattoo kuopio",
+           "rovaniemi tatuointi walk in", "walk-in tatuointi jyväskylä". -->
+      <p class="index-answer">
+        {t('cities.answer', { n: String(cityCount) })}{' '}
+        <a class="ink-link" href={p('/walk-in/')}>{t('cities.walkInLink')} →</a>
+      </p>
+
       <!-- Nivå 1: de största städerna -->
       <section aria-labelledby="top-cities-title">
         <h2 class="tier-title" id="top-cities-title">{t('cities.top.title')}</h2>
@@ -119,6 +131,14 @@ const heroBg = await heroBgFor('cities');
 </BaseLayout>
 
 <style>
+  .index-answer {
+    max-width: 62ch;
+    margin: 0 0 26px;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
   .index-hero {
     position: relative;
     z-index: 0;

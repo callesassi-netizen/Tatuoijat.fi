@@ -1,7 +1,7 @@
 ---
 name: "Below Zero Tattoo"
 city: tampere
-styles: []
+styles: [blackwork]
 premium: false
 website: "https://www.belowzero.fi/"
 instagram: "tittafreebird"

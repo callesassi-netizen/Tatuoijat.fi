@@ -22,4 +22,31 @@
 /sv/tatuoijat/vaasa/ /sv/tatuerare/vasa/ 301
 /sv/tatuoijat/vantaa/ /sv/tatuerare/vanda/ 301
 /sv/tatuoijat/vihti/ /sv/tatuerare/vichtis/ 301
+
+# Sammanslagna studioprofiler (12/8 2026). Seeden lade ibland upp EN POST PER
+# ARTIST i stallet for en per studio: samma adress och samma webbplats, olika
+# personliga Instagram-konton. Resultatet var att tva av vara egna sidor slogs
+# om samma varumarkessokning - Search Console visade t.ex. /artistit/iki-tattoo
+# pa position 5,2 och /artistit/iki-tattoos pa 6,4 for samma fraga.
+#
+# Den kvarvarande profilen har arvt bada styles-listorna och den bortslagnas
+# artist-handle i artistInstagrams. 301 och inte 410: sidorna har rankat, och
+# den signalen ska folja med till den profil som blev kvar.
+/artistit/blackwellbodyart/ /artistit/blackwell-bodyart/ 301
+/artistit/iki-tattoos/ /artistit/iki-tattoo/ 301
+/artistit/spinelessturku/ /artistit/spineless-turku/ 301
+/artistit/pine-art-tattoo-2/ /artistit/pine-art-tattoo/ 301
+/artistit/golden-art-tattoo/ /artistit/golden-art-tattoo-studio/ 301
+/artistit/tattoo-parlour-art-collective/ /artistit/art-collective/ 301
+/artistit/below-zero/ /artistit/below-zero-tattoo/ 301
+/artistit/one-eye-tattoi/ /artistit/one-eye-tattoo/ 301
+/sv/artistit/blackwellbodyart/ /sv/artistit/blackwell-bodyart/ 301
+/sv/artistit/iki-tattoos/ /sv/artistit/iki-tattoo/ 301
+/sv/artistit/spinelessturku/ /sv/artistit/spineless-turku/ 301
+/sv/artistit/pine-art-tattoo-2/ /sv/artistit/pine-art-tattoo/ 301
+/sv/artistit/golden-art-tattoo/ /sv/artistit/golden-art-tattoo-studio/ 301
+/sv/artistit/tattoo-parlour-art-collective/ /sv/artistit/art-collective/ 301
+/sv/artistit/below-zero/ /sv/artistit/below-zero-tattoo/ 301
+/sv/artistit/one-eye-tattoi/ /sv/artistit/one-eye-tattoo/ 301
+
 /sv/tatuoijat/* /sv/tatuerare/:splat 301

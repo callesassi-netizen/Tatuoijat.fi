@@ -7,6 +7,8 @@ import { useTranslations, localePath, type Locale } from '../../i18n/ui';
 import { getStylesSorted, styleDisplayName } from '../../lib/content';
 import { styleImages } from '../../lib/styleImages';
 import { jsonLdString, breadcrumbLd } from '../../lib/schema';
+import { citiesIndexPath, guidePath } from '../../lib/routes';
+import { guides } from '../../lib/guides.mjs';
 
 interface Props {
   locale: Locale;
@@ -17,7 +19,12 @@ const t = useTranslations(locale);
 const p = (path: string) => localePath(locale, path);
 const site = Astro.site!;
 const styles = await getStylesSorted();
-const title = `${t('nav.styles')} — ${t('site.tagline')} | ${t('site.name')}`;
+// Egen titel och beskrivning (12/8 2026). Sidan ärvde site.description och sa
+// därför exakt samma sak om sig själv som /tatuoijat/ gjorde.
+const title = t('styles.metaTitle', { site: t('site.name') });
+const jalkihoitoRoute = guides.find(
+  (guide) => guide.key === 'tatuoinnin-jalkihoito' && guide.status === 'published',
+);
 
 const ink = (angle: number, from: string, to: string) =>
   `linear-gradient(${angle}deg, ${from} 0%, ${to} 100%)`;
@@ -41,7 +48,7 @@ const heroBg = await heroBgFor('styles');
 
 <BaseLayout
   title={title}
-  description={t('site.description')}
+  description={t('styles.metaDescription')}
   locale={locale}
   path="/tyylit/"
   hasAlternate
@@ -55,6 +62,12 @@ const heroBg = await heroBgFor('styles');
   </section>
   <div class="sheet grain">
     <div class="container sheet-inner">
+      <!-- Svara-först (GEO.md §1). Sidan var 75 ord totalt och låg på position
+           19 för "tyylit" — ett rutnät utan en enda mening. Stycket står FÖRE
+           rutnätet: det är sidans enda text, och den ska inte ligga under
+           tolv bildkort. -->
+      <p class="index-answer">{t('styles.answer')}</p>
+
       <div class="style-grid">
         {
           styles.map((style, index) => (
@@ -81,11 +94,73 @@ const heroBg = await heroBgFor('styles');
           ))
         }
       </div>
+
+      <!-- Rådgivande avsnitt under rutnätet. Bär sidans H2 och de interna
+           länkar den saknade helt: hit, till städerna och till jälkihoito. -->
+      <section class="index-help" aria-labelledby="styles-help-title">
+        <h2 class="index-help-title" id="styles-help-title">{t('styles.helpTitle')}</h2>
+        <p class="index-help-text">{t('styles.helpP1')}</p>
+        <p class="index-help-text">{t('styles.helpP2')}</p>
+        <ul class="index-help-links">
+          <li><a class="ink-link" href={p('/hinnat/')}>{t('styles.helpLinkPrices')} →</a></li>
+          <li>
+            <a class="ink-link" href={p(citiesIndexPath(locale))}>
+              {t('styles.helpLinkCities')} →
+            </a>
+          </li>
+          {
+            jalkihoitoRoute && (
+              <li>
+                <a class="ink-link" href={p(guidePath(jalkihoitoRoute, locale))}>
+                  {t('styles.helpLinkAftercare')} →
+                </a>
+              </li>
+            )
+          }
+        </ul>
+      </section>
     </div>
   </div>
 </BaseLayout>
 
 <style>
+  /* Svara-först och rådgivningsavsnitt (12/8 2026). Sidan hade ingen text
+     alls; de här två ytorna är hela dess innehåll och ska därför läsa som
+     redaktionell text, inte som bildtext. */
+  .index-answer {
+    max-width: 62ch;
+    margin: 0 0 26px;
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+  .index-help {
+    margin-top: 40px;
+    max-width: 62ch;
+  }
+  .index-help-title {
+    font-size: 22px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    color: var(--text);
+  }
+  .index-help-text {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--text);
+    margin: 0 0 14px;
+  }
+  .index-help-links {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
   .index-hero {
     position: relative;
     z-index: 0;

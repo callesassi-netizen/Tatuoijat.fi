@@ -1,7 +1,7 @@
 ---
 name: "Iki tattoo"
 city: helsinki
-styles: [traditional]
+styles: [blackwork, geometrinen, ornamental, traditional]
 premium: false
 website: "https://instagram.com/hannalehikoinen"
 instagram: "hannalehikoinen"

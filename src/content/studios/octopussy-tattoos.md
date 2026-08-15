@@ -1,6 +1,7 @@
 ---
 name: "Octopussy Tattoos"
-place: "Uusimaa"
+city: helsinki
+place: Helsinki
 styles: [geometrinen, blackwork, ornamental]
 premium: false
 instagram: "octopusytattoos"

@@ -1,7 +1,8 @@
 ---
 name: "Pine Art & Tattoo"
+artistInstagrams: ["markoberyl"]
 city: helsinki
-styles: []
+styles: [blackwork]
 premium: false
 website: "https://www.pinetattoo.fi/"
 instagram: "abstrac.tua"

@@ -136,12 +136,23 @@ function studioStyleNames(studio: (typeof studios)[number]): string[] {
 const path = styleCityPath(style.id, city, locale);
 const altPath = styleCityPath(style.id, city, locale === 'fi' ? 'sv' : 'fi');
 // Nominativ i title/H1 — matchar sökfrasen ("fine line tattoo turku").
-const title = t('styleCity.metaTitle', {
+/**
+ * Titeln tappar varumärkessuffixet när den inte ryms (12/8 2026).
+ * "Neotraditional-tatuering i Helsingfors — 9 tatuerare | Tatuoijat.fi" är 67
+ * tecken och klipptes i SERPen. Sajtnamnet är det som betyder minst här:
+ * stilen, staden och antalet är själva erbjudandet, och domänen syns ändå på
+ * raden ovanför träffen.
+ */
+const titleWithSite = t('styleCity.metaTitle', {
   attrCap,
   city: cityName,
   n: studios.length,
   site: t('site.name'),
 });
+const title =
+  titleWithSite.length <= 60
+    ? titleWithSite
+    : t('styleCity.metaTitleShort', { attrCap, city: cityName, n: studios.length });
 const description = t('styleCity.metaDescription', {
   style: styleName,
   cityLoc,

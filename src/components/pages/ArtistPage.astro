@@ -102,12 +102,28 @@ const embedPosts = data.images.length === 0 ? allEmbedPosts.slice(0, 2) : [];
 const displayWorksCount = data.images.length > 0 ? data.images.length : embedPosts.length;
 
 const path = `/artistit/${studio.id}/`;
-// Studionamn upp till 40 tecken finns i datan — faller tillbaka på kort
-// mall så att titeln aldrig passerar 60 tecken (SERP-trunkering).
-const fullTitle = t('artist.metaTitle', { name: data.name, city: displayPlace, site: t('site.name') });
-const title = fullTitle.length <= 60
-  ? fullTitle
-  : t('artist.metaTitleShort', { name: data.name, site: t('site.name') });
+/**
+ * Titeln kortas i steg tills den ryms i SERPen.
+ *
+ * Google klipper vid ungefär 60 tecken. Tvåstegsvarianten räckte inte: ett
+ * namn som "Taide- ja tatuointipalvelut JohannArt Oy" är 40 tecken, och även
+ * den korta mallen ("… — tyylit ja yhteystiedot") landade på 65. Analysen
+ * 12/8 2026 hittade 40 sådana titlar.
+ *
+ * Stegen är sorterade efter vad som är värt mest när utrymmet tar slut. STADEN
+ * offras SIST, inte först: "tatuointiliike {stad}" är en riktig sökning, medan
+ * "tyylit ja yhteystiedot" bara beskriver sidan. Därför behåller steg 2 staden
+ * och slänger beskrivningen — tvärtom mot den gamla ordningen.
+ */
+const titleCandidates = [
+  t('artist.metaTitle', { name: data.name, city: displayPlace, site: t('site.name') }),
+  displayPlace ? t('artist.metaTitleCity', { name: data.name, city: displayPlace }) : '',
+  t('artist.metaTitleShort', { name: data.name, site: t('site.name') }),
+  data.name,
+].filter(Boolean);
+// Sista kandidaten är bara namnet och släpps igenom även om det i sig är långt
+// — alternativet vore en tom titel.
+const title = titleCandidates.find((candidate) => candidate.length <= 60) ?? titleCandidates.at(-1)!;
 // P2a (GSC-analys 2026-08-09): utan bio fick alla profiler samma generiska
 // beskrivning. Har studion tyylit i datan skriver vi i stället ut dem plus
 // artistmängden — den överblick som studions egen träff inte ger i SERPen.

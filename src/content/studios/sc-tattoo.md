@@ -1,6 +1,7 @@
 ---
 name: "SC Tattoo"
-place: "uusimaa"
+city: vantaa
+place: Vantaa
 styles: [realismi, blackwork, ornamental, lettering]
 premium: false
 instagram: "ssonyachristinatattoo"

@@ -1,6 +1,6 @@
 ---
 name: "Luova"
-place: "Keski-Suomi"
+place: Saarijärvi
 styles: [fineline, ornamental]
 premium: false
 instagram: "tatuointistudioluova"
